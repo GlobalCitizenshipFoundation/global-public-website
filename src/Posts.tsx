@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { sanityClient } from "./client";
-import { PortableText } from "@portabletext/react";
+import React, { useEffect, useState } from 'react';
+import { sanityClient } from './client';
+import { PortableText } from '@portabletext/react';
 
 interface Post {
   _id: string;
   title: string;
   body?: any;
+  mainImage?: any;
 }
 
 const PostsList: React.FC = () => {
@@ -14,13 +15,13 @@ const PostsList: React.FC = () => {
 
   useEffect(() => {
     sanityClient
-      .fetch(`*[_type == "post"]{ _id, title, body }`)
+      .fetch(`*[_type == "post"]{ _id, title, body, mainImage { asset -> { _id, url }, alt} }`)
       .then((data) => {
         setPosts(data);
         setLoading(false);
       })
       .catch((err) => {
-        console.error("Sanity fetch error:", err);
+        console.error('Sanity fetch error:', err);
         setLoading(false);
       });
   }, []);
