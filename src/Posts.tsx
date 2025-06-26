@@ -35,6 +35,7 @@ const PostsList: React.FC = () => {
         <article key={post._id}>
           <h2>{post.title}</h2>
           <PortableText value={post.body} />
+          {post.mainImage && <img src={post.mainImage.asset.url} alt="" />}
         </article>
       ))}
     </div>
