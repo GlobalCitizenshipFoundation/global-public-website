@@ -2,11 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { sanityClient } from './client';
 import { PortableText } from '@portabletext/react';
 
+interface Author {
+  _id: string;
+  name: string;
+  bio: string;
+}
+
 interface Post {
   _id: string;
   title: string;
-  body?: any;
-  mainImage?: any;
+  description?: any;
+  slug: string;
+  authors?: Author[];
 }
 
 const PostsList: React.FC = () => {
@@ -15,7 +22,9 @@ const PostsList: React.FC = () => {
 
   useEffect(() => {
     sanityClient
-      .fetch(`*[_type == "post"]{ _id, title, body, mainImage { asset -> { _id, url }, alt} }`)
+      .fetch(
+        `*[_type == "issueTest"]{ _id, title, description, slug, authors[]-> {_id, name, bio} }`
+      )
       .then((data) => {
         setPosts(data);
         setLoading(false);
@@ -34,7 +43,12 @@ const PostsList: React.FC = () => {
       {posts.map((post) => (
         <article key={post._id}>
           <h2>{post.title}</h2>
-          <PortableText value={post.body} />
+          <p>{post.description}</p>
+          {post.authors?.map((author) => (
+            <h2 key={author._id}>
+              {author.name} <p>{author.bio}</p>
+            </h2>
+          ))}
         </article>
       ))}
     </div>

@@ -5,9 +5,9 @@ import {schemaTypes} from './schemaTypes'
 
 export default defineConfig({
   name: 'default',
-  title: 'Global Citizenship',
+  title: 'CMS',
 
-  projectId: 'b7aenutv',
+  projectId: 'swpg1w6y',
   dataset: 'production',
 
   plugins: [structureTool(), visionTool()],
