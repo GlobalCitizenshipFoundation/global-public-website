@@ -21,6 +21,10 @@ export const issueTest = defineType({
       type: "string",
       name: "test",
     }),
+     defineField({
+      type: "string",
+      name: "test2",
+    }),
     defineField({
       type: "string",
       name: "title",
