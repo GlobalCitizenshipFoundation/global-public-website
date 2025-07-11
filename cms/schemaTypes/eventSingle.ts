@@ -242,7 +242,7 @@ export const eventSingle = defineType({
             { title: 'Youth', value: 'youth' },
             { title: 'Institutions', value: 'institutions' },
             ],
-            layout: 'dropdown',
+            layout: 'dropdown',   
         },
     }),
     defineField({
