@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { sanityClient } from './client';
+import { sanityClient } from '../gcft-frontend/src/client';
 import { PortableText } from '@portabletext/react';
 import type { PortableTextBlock } from '@portabletext/types';
 
@@ -142,6 +142,7 @@ const PostsList: React.FC = () => {
         </article>
       ))} */}
       {eventSingle?.agendaDescription && <PortableText value={eventSingle.agendaDescription} />}
+      {eventSingle?.eventHeading && <h1>{eventSingle.eventHeading}</h1>}
     </div>
   );
 };
