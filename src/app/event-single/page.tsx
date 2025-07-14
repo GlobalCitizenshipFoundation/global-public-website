@@ -55,7 +55,7 @@ interface EventSingle {
   addToCalendarUrl?: string;
 }
 
-const PostsPage = async () => {
+const EventSingle = async () => {
   const eventSingle: EventSingle = await sanityClient.fetch(
     `*[_type == "eventSingle"][0]{
       _id,
@@ -106,4 +106,4 @@ const PostsPage = async () => {
   );
 };
 
-export default PostsPage;
+export default EventSingle;
