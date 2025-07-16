@@ -4,6 +4,7 @@
   /* custom colors */
   --color-primary: #CA1F43;
   --color-primary-darker: #C71C41;
+  --color-background-primary: #FFFFFF;
   --color-gray: #222222;
   --color-light-gray: #6B7273;
   --color-dark-blue: #060644;
@@ -14,7 +15,7 @@
   --color-secondary-borders: #D8D8D8;
   --color-titles: #181818;
   --color-subtitles: #1A1A1A;
-  --color-tickets: #F2F2F2;
+  --color-background-panel: #F2F2F2;
   --color-warning: #FFF4E4;
   --color-error: #F9EBE9;
   --color-success: #EEF6F5;
@@ -25,7 +26,7 @@
 
   /* custom fonts */
   --font-inter: "Inter", sans-serif;
-  --font-poppins: "Poppins", sans;
+  --font-poppins: "Poppins", sans-serif;
 
   /* custom breakpoints */
   --breakpoint-desktop: 480px;
@@ -33,4 +34,26 @@
 
 body {
   font-family: Inter, sans-serif;
+}
+
+h2 {
+  font-family: var(--font-poppins);
+  font-weight: 600;
+  line-height: 111%;
+  color: var(--color-gray);
+}
+
+h3 {
+  font-family: var(--font-poppins);
+  font-weight: 600;
+  font-size: 24x;
+  line-height: 103%;
+}
+
+h4 {
+  font-family: var(--font-poppins);
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 140%;
+  text-transform: uppercase;
 }
