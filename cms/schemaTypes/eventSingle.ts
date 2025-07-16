@@ -149,19 +149,19 @@ export const eventSingle = defineType({
             },
         ],
     }),
-    // defineField({
-    //   type: "array",
-    //   title: "Speakers",
-    //   name: "speakers",
-    //   of: [
-    //     defineArrayMember({
-    //       type: "reference",
-    //       to: [
-    //         { type: "contributors" },
-    //       ],
-    //     }),
-    //   ],
-    // }),
+    defineField({
+      type: "array",
+      title: "Speakers",
+      name: "speakers",
+      of: [
+        defineArrayMember({
+          type: "reference",
+          to: [
+            { type: "contributorSingle" },
+          ],
+        }),
+      ],
+    }),
     // defineField({
     //   type: "array",
     //   title: "Moderators",
@@ -176,9 +176,10 @@ export const eventSingle = defineType({
     //   ],
     // }),
     defineField({
-      type: "string",
+      type: "array",
       title: "Intro Text",
       name: "introText",
+      of: [{ type: "block" }]
     }),
     defineField({
         type: 'array',
@@ -232,9 +233,10 @@ export const eventSingle = defineType({
         ],
     }),
     defineField({
-        type: 'string',
+        type: 'array',
         name: 'audience',
         title: 'Who is this Event for',
+        of: [{ type: 'string' }],
         options: {
             list: [
             { title: 'Educators', value: 'educators' },
@@ -242,7 +244,7 @@ export const eventSingle = defineType({
             { title: 'Youth', value: 'youth' },
             { title: 'Institutions', value: 'institutions' },
             ],
-            layout: 'dropdown',   
+            layout: 'grid',
         },
     }),
     defineField({
@@ -256,32 +258,32 @@ export const eventSingle = defineType({
         title: 'Agenda Description',
         of: [{ type: "block" }]
     }),
-    // defineField({
-    //   type: "array",
-    //   title: "Agenda",
-    //   name: "agenda",
-    //   of: [
-    //     defineArrayMember({
-    //       type: "reference",
-    //       to: [
-    //         { type: "events" },
-    //       ],
-    //     }),
-    //   ],
-    // }),
-    // defineField({
-    //   type: "array",
-    //   title: "Steering Committee",
-    //   name: "steeringCommittee",
-    //   of: [
-    //     defineArrayMember({
-    //       type: "reference",
-    //       to: [
-    //         { type: "null" },
-    //       ],
-    //     }),
-    //   ],
-    // }),
+    defineField({
+      type: "array",
+      title: "Agenda",
+      name: "agenda",
+      of: [
+        defineArrayMember({
+          type: "reference",
+          to: [
+            { type: "eventSingle" },
+          ],
+        }),
+      ],
+    }),
+    defineField({
+      type: "array",
+      title: "Steering Committee",
+      name: "steeringCommittee",
+      of: [
+        defineArrayMember({
+          type: "reference",
+          to: [
+            { type: "contributorSingle" },
+          ],
+        }),
+      ],
+    }),
     // defineField({
     //   type: "array",
     //   title: "Organizer",
