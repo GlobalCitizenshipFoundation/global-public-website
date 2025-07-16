@@ -98,8 +98,6 @@ const EventSingle = async () => {
     return <p>No posts found.</p>;
   }
 
-  console.log(eventSingle.eventImage?.asset.url)
-
   return (
     <div className='flex flex-col bg-background-primary'>
       {eventSingle.eventImage?.asset && (
@@ -108,7 +106,6 @@ const EventSingle = async () => {
         </div>
       )}
       {eventSingle.eventHeading && <h1>{eventSingle.eventHeading}</h1>}
-      {/* {eventSingle.agendaDescription && <PortableText value={eventSingle.introText} />} */}
       <div className='flex flex-col w-full bg-background-panel px-7 pt-7 pb-6 rounded-xl'>
         <h4 className='text-primary-darker mb-3.5'>Panel Discussion</h4>
         <h2 className='text-3xl'>Celebrating Gender Inclusive Learning Spaces: Unpacking the Secrets to Gender-Inclusive Learning Spaces</h2>
