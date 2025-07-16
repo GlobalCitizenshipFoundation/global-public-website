@@ -7,13 +7,19 @@ export const contributorSingle = defineType({
   fields: [
     defineField({
       type: "string",
-      title: "Tite",
+      title: "Title",
       name: "title",
     }),
     defineField({
       type: "string",
       title: "Name",
       name: "name",
+    }),
+    defineField({
+      type: "image",
+      title: "Person photo",
+      name: "photo",
+      options: { hotspot: true },
     }),
     defineField({
       type: "slug",
@@ -40,7 +46,7 @@ export const contributorSingle = defineType({
     defineField({
       type: "string",
       title: "Division/Organization",
-      name: "organiation",
+      name: "organization",
     }),
     defineField({
       type: 'string',
@@ -76,7 +82,7 @@ export const contributorSingle = defineType({
     defineField({
       type: "string",
       title: "LinkedIn",
-      name: "name",
+      name: "linkedin",
     }),
     defineField({
       type: "string",

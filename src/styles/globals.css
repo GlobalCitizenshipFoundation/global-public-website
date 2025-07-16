@@ -28,7 +28,7 @@
   --font-poppins: "Poppins", sans;
 
   /* custom breakpoints */
-  --breakpoint-desktop: 480px;
+  --breakpoint-lg: 480px;
 }
 
 body {
