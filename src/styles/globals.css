@@ -23,6 +23,7 @@
   --color-text-error: #DD664F;
   --color-text-success: #148370;
   --color-lines: #E4E4E4;
+  --color-background-darker: #F6F6F6;
 
   /* custom fonts */
   --font-inter: "Inter", sans-serif;
@@ -56,4 +57,12 @@ h4 {
   font-size: 18px;
   line-height: 140%;
   text-transform: uppercase;
+}
+
+p {
+  font-family: var(--font-inter);
+  font-weight: 400;
+  font-size: 25px;
+  line-height: 142%;
+  color: var(--color-borders);
 }
