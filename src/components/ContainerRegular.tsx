@@ -5,7 +5,7 @@ interface ContainerProps {
   className?: string;
 }
 
-const Container: React.FC<ContainerProps> = ({ children, className = "" }) => {
+const ContainerRegular: React.FC<ContainerProps> = ({ children, className = "" }) => {
   return (
     <div className={`lg:max-w-[1612.62px] mx-auto px-[50px] ${className}`}>
       {children}
@@ -13,4 +13,4 @@ const Container: React.FC<ContainerProps> = ({ children, className = "" }) => {
   );
 };
 
-export default Container;
+export default ContainerRegular;
