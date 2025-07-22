@@ -57,3 +57,11 @@ h4 {
   line-height: 140%;
   text-transform: uppercase;
 }
+
+p {
+  font-family: var(--font-inter);
+  font-weight: 400;
+  line-height: 142%;
+  color: var(--color-borders);
+  margin-bottom: 20px;
+}
