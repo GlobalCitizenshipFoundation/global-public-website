@@ -21,7 +21,7 @@ interface SanityImage {
   asset: SanityImageAsset;
 }
 
-interface EventSingle {
+export interface EventSingle {
   _id: string;
   eventHeading?: string;
   slug?: {
