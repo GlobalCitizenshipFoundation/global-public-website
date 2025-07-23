@@ -5,6 +5,7 @@ import { ppid } from 'process';
 import { PortableText } from '@portabletext/react';
 import { EventSingle } from '../event-single/page';
 import Link from 'next/link';
+import ButtonPrimary from '@/components/ButtonPrimary';
 
 export interface ContributorSingle {
   _id: string
@@ -133,10 +134,9 @@ const ContributorSingle = async () => {
           <>
             <div className='flex justify-between mb-5'>
             <h2 className="text-6xl">Featured Profile</h2>
-            <div className='w-[253.5px] h-[59px] flex'>
-              <button className='w-[183.5px] flex justify-center items-center bg-primary rounded-tl-[10px] rounded-bl-[10px] text-white text-xl'>View all profiles</button>
-              <button className='h-full grow bg-white flex justify-center items-center border-[1.5px] border-frames solid rounded-tr-[10px] rounded-br-[10px]'><img src="/images/arrow.svg" alt="" className=''/></button>
-            </div>
+            <ButtonPrimary width={253.5}>
+              View all profiles
+            </ButtonPrimary>
             </div>
             <p className='mb-24'>
               Transforming education for global citizenship and sustainable development. We work to wards transforming education for global citizenship and sustainable.
