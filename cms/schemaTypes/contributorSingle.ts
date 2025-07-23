@@ -146,10 +146,15 @@ export const contributorSingle = defineType({
     //   to: [{ type: 'articleSingle' }],
     // }),
     defineField({
-      name: 'event',
-      title: 'Event',
-      type: 'reference',
-      to: [{ type: 'eventSingle' }],
+      name: 'events',
+      title: 'Events',
+      type: 'array',
+      of: [
+        {
+          type: 'reference',
+          to: [{ type: 'eventSingle' }],
+        },
+      ],
     }),
     // defineField({
     //   name: 'specialization',
