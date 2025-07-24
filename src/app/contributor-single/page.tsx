@@ -3,9 +3,15 @@ import { sanityClient } from '../../client';
 import type { PortableTextBlock } from '@portabletext/types';
 import { ppid } from 'process';
 import { PortableText } from '@portabletext/react';
-import { EventSingle } from '../event-single/page';
 import Link from 'next/link';
 import ButtonPrimary from '@/components/ButtonPrimary';
+import { getSocialLinksFromCMS } from '@/components/Social/getSocialMediaFromCMS';
+import SocialLink from '@/components/Social/SocialLink';
+import { FaPrint, FaRegEnvelope } from 'react-icons/fa6';
+import BreakLine from '@/components/BreakLine';
+import RelatedEvents from '@/components/Events/RelatedEvent';
+import { EventSingle } from '../event-single/page';
+import Newsettler from '@/components/Newsettler';
 
 export interface ContributorSingle {
   _id: string
@@ -110,6 +116,7 @@ const ContributorSingle = async () => {
           _id,
           eventHeading,
           slug,
+          startDateTime,
           eventImage {
             asset->{
               url
@@ -127,14 +134,16 @@ const ContributorSingle = async () => {
     return <p>No contributor found.</p>;
   }
 
+  const socialLinks = getSocialLinksFromCMS(contributorSingle);
+
   return (
     <>
-      <ContainerBig>
+      <ContainerBig className='mt-25'>
         {contributorSingle.featuredProfile && (
           <>
             <div className='flex justify-between mb-5'>
             <h2 className="text-6xl">Featured Profile</h2>
-            <ButtonPrimary width={253.5}>
+            <ButtonPrimary href='/' width={253.5}>
               View all profiles
             </ButtonPrimary>
             </div>
@@ -145,7 +154,7 @@ const ContributorSingle = async () => {
         )}
       </ContainerBig>
 
-      <div className='bg-background-darker p-24'>
+      <section className='bg-background-darker p-24'>
         <ContainerBig>
           <div className='flex gap-x-16 items-center'>
             {contributorSingle.photo.asset.url && (
@@ -168,17 +177,44 @@ const ContributorSingle = async () => {
               {contributorSingle.organization && <h3 className='text-[26px] text-primary font-medium mb-2'>{contributorSingle.organization}</h3>}
               {contributorSingle.country && <h3 className='text-xl text-titles font-medium mb-7'>{contributorSingle.country}</h3>}
               {contributorSingle.emailId && contributorSingle.emailDisplay && (
-                <div className='flex flex-row items-center'>
-                  <div className='w-[52px] h-[52px] bg-white mr-3.5 flex items-center justify-center rounded-md'>mail</div>
+                <div className='flex flex-row items-center mb-4'>
+                  <SocialLink
+                    href={`mailto:${contributorSingle.emailId}`}
+                    icon={<FaRegEnvelope />}
+                    variant="button"
+                    hoverColor="bg-primary"
+                    className='mr-3.5'
+                  />
                   <p className='text-xl font-medium text-titles'>{contributorSingle.emailId}</p>
                 </div>
               )}
+              <div className='flex flex-row'>
+                <div className='flex gap-4 mr-31.5'>
+                  {socialLinks && socialLinks.map((link) => (
+                    <SocialLink
+                      key={link.href}
+                      href={link.href}
+                      icon={<link.icon />}
+                      variant="button"
+                    />
+                  ))}
+                </div>
+                <div className='flex flex-row items-center'>
+                  <SocialLink
+                    href={`www.wikipedia.com`}
+                    icon={<FaPrint />}
+                    variant="button"
+                    className='mr-3.5'
+                  />
+                  <span className='font-inter font-normal text-[16px] text-borders'>Print</span>
+                </div>
+              </div>
             </div>
           </div>
         </ContainerBig>
-      </div>
+      </section>
 
-      <div className='h-12 bg-primary mb-30'>
+      <section className='h-12 bg-primary mb-30'>
         <ContainerBig>
           {contributorSingle.featuredProfile && (
             <div className='flex h-12 items-center'>
@@ -187,43 +223,50 @@ const ContributorSingle = async () => {
             </div>
           )}
         </ContainerBig>
-      </div>
+      </section>
 
       <ContainerBig>
         <p className='text-[42px] text-titles font-semibold font-poppins mb-3.5'>Biography</p>
         {contributorSingle.bio && <PortableText value={contributorSingle.bio}/>}
-        <hr />
-        <div className='flex justify-between'>
+        <BreakLine className='mt-7.5'/>
+        <section className='flex justify-between py-4.5'>
           <p>Sharing:</p>
-          <div className='flex gap-2'>
-            <p>icon</p>
-            <p>icon</p>
+          <div className='flex gap-8'>
+            {socialLinks.map((link) => (
+              <SocialLink
+                key={link.href}
+                href={link.href}
+                icon={<link.icon />}
+                label={link.label}
+                variant="inline"
+              />
+            ))}
+              <SocialLink
+              href={`www.wikipedia.com`}
+              icon={<FaPrint />}
+              variant="inline"
+              label='Print'
+            />
           </div>
-        </div>
-        <hr />
+        </section>
+        <BreakLine className='mb-30'/>
       </ContainerBig>
-      <div className='p-[154px] bg-[#C6E3DF]'>
+      <section className='py-[154px] bg-[#C6E3DF]'>
         <ContainerBig>
           {contributorSingle.events && contributorSingle.events.length > 0 && (
-            <section className='mt-20'>
-              <h2 className='text-3xl mb-4'>Events By {contributorSingle.name}</h2>
+            <>
+              <h2 className='text-[42px] mb-3.5'>Events By {contributorSingle.name}</h2>
+              <p className='mb-15'>Transforming education for global citizenship and sustainable The Global Citizen ship Foundation continues commitment Preparing young people for a smart future.</p>
               <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
-                {contributorSingle.events.map((event: EventSingle) => (
-                  <div key={event._id} className='border p-4 rounded-md'>
-                    {event && (
-                      <img src={event.eventImage?.asset.url} alt={event.eventHeading} className='w-full h-40 object-cover mb-4' />
-                    )}
-                    <h3 className='text-xl font-semibold'>{event.eventHeading}</h3>
-                    <Link href="/event-single" className='bg-emerald-600 p-2 rounded-lg'>
-                      <button className='cursor-pointer text-white'>Go to contributor event single</button>
-                    </Link>
-                  </div>
-                ))}
+              {contributorSingle.events.map((event: EventSingle) => (
+                <RelatedEvents event={event} key={event._id}/>
+              ))}
               </div>
-            </section>
+            </>
           )}
         </ContainerBig>
-      </div>
+      </section>
+      <Newsettler />
     </>
   );
 };
