@@ -149,11 +149,15 @@ const EventSingle = async () => {
     organization: speaker.organization ?? '',
   }));
 
+  const now = new Date();
+  const startDate = new Date(eventSingle.startDateTime);
+  const diff = startDate.getTime() - now.getTime();
+
   if (!eventSingle) {
     return <p>No posts found.</p>;
   }
 
-  console.log(eventSingle.speakersText)
+  console.log(eventSingle.startDateTime)
 
   return (
     <div className='flex flex-col bg-background-primary'>
@@ -172,13 +176,13 @@ const EventSingle = async () => {
                 <img className='flex w-full' src={eventSingle.eventImage.asset.url} alt="Event-image" />
               </div>
             )}
-            <ContainerRegular className='text-sm mb-9'>
+            <ContainerRegular className='lg:text-2xl text-sm mb-9'>
                 {eventSingle.introText && (
                   <PortableText value={eventSingle.introText} />
                 )}
             </ContainerRegular>
             <div className='flex flex-col gap-[15px] mb-11'>
-              <span className='lg:pl-0 text-subtitles font-semibold text-2xl pl-[50px]'>Intro Video</span>
+              <h2 className='lg:pl-0 text-subtitles font-semibold text-2xl lg:text-[42px] pl-[50px] lg:mb-6'>Intro Video</h2>
               <div className='flex w-full '></div>
             </div>
             <ContainerRegular className='text-2xl mb-11'>
@@ -234,22 +238,12 @@ const EventSingle = async () => {
                   <span>{eventSingle.attedanceMode}</span>
                   <span>Event</span>
                 </div>
-                <div className='flex flex-col gap-4 mb-11'>
-                  <span className='uppercase text-light-gray font-medium text-sm'>Start TIME</span>
-                  <EventData data={eventSingle.startDateTime} />
-                </div>
-                <div className='flex flex-col gap-4 mb-11'>
-                  <span className='uppercase text-light-gray font-medium text-sm'>End TIME</span>
-                  <EventData data={eventSingle.endDateTime} />
-                </div>
-                <div className='flex flex-col gap-4'>
-                  <span className='uppercase text-light-gray font-medium text-sm'>THIS EVENT HAS</span>
-                  <span className='uppercase text-primary-darker font-semibold text-3xl'>{eventSingle.status}</span>
-                </div>
+                {diff > 0 && <span className='font-semibold text-xl text-dark-blue mb-6'>Upcoming</span>}
+                <EventData start={eventSingle.startDateTime} end={eventSingle.endDateTime} />
               </div>
               <div className='flex flex-col px-7 pt-10 pb-6 bg-background-panel rounded-xl'>
                {eventSingle.marketingMention && (
-                <div className='mb-4'>
+                <div className='mb-4 text-sm font-normal'>
                   <PortableText value={eventSingle.marketingMention} />
                 </div>
                )}
@@ -265,11 +259,11 @@ const EventSingle = async () => {
             </ContainerRegular>
             <ContainerRegular >
               <div className='flex flex-col gap-1.5 w-full mb-9'>
-                <span className='text-subtitles font-semibold text-2xl'>Venue Location</span>
+                <span className='text-subtitles font-semibold text-2xl lg:text-3xl'>Venue Location</span>
                 <span className='text-borders font-normal text-sm'>{eventSingle.venue}</span>
               </div>
               <div className='flex flex-col gap-1.5 w-full mb-9'>
-                <span className='text-subtitles font-semibold text-2xl'>Rich Text Box</span>
+                <span className='text-subtitles font-semibold text-2xl lg:text-3xl'>Rich Text Box</span>
                 <span className='text-borders font-normal text-sm'>{eventSingle.venue}</span>
               </div>
               <ButtonRegular className='mb-4 bg-white border-borders border-1'>
@@ -279,9 +273,27 @@ const EventSingle = async () => {
                 <span className='text-white text-base font-medium '>Resources</span>
               </ButtonRegular>
               <div className='flex flex-col gap-7'>
-               <h3 className='text-3xl'>Share the Event</h3>
+               <h3 className='lg:text-3xl font-semibold'>Share the Event</h3>
                <div className='flex w-full justify-between'>
-                <img src="" alt="" />
+                <a className='flex' href="">
+                  <img src="/images/insta.svg" alt="Logo-instagram" />
+                </a>
+                <a className='flex' href="">
+                  <img src="/images/x.svg" alt="Logo-x" />
+                </a>
+                <a className='flex' href="">
+                  <img src="/images/linkedin.svg" alt="Logo-linkedin" />
+                </a>
+                <a className='flex' href="">
+                  <img src="/images/fb.svg" alt="Logo-facebook" />
+                </a>
+                <a className='flex' href="">
+                  <img src="/images/youtube.svg" alt="Logo-youtube" />
+                </a>
+               </div>
+               <div className='flex items-center gap-2.5'>
+                <img src="/images/print.svg" alt="Print-logo" />
+                <span className='text-borders font-normal text-lg'>Print Event Details</span>
                </div>
               </div>
             </ContainerRegular>
