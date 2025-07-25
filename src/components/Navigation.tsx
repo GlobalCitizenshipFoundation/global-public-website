@@ -12,15 +12,9 @@ const Navigation: React.FC = () => {
             <div className="hidden lg:flex h-auto lg:ml-auto items-center gap-x-[46px]">
                 {navigation.map((item) =>
                     item.type === 'button' ? (
-                    <Link
-                        key={item.label}
-                        href={item.href}
-                        className=""
-                    >
-                        <ButtonPrimary href={'/'} width={187}>
+                        <ButtonPrimary href={item.href} width={187} key={item.label}>
                             Contact
                         </ButtonPrimary>
-                    </Link>
                     ) : (
                     <Link href={item.href} key={item.label} className="flex items-center flex-row h-[50%] justify-between">
                         <span className="text-lg font-medium font-inter text-gray mr-[6px] whitespace-nowrap">
