@@ -17,7 +17,7 @@ const Navigation: React.FC = () => {
                         href={item.href}
                         className=""
                     >
-                        <ButtonPrimary width={187}>
+                        <ButtonPrimary href={'/'} width={187}>
                             Contact
                         </ButtonPrimary>
                     </Link>

@@ -44,7 +44,7 @@ interface SimpleSpeaker {
   };
 }
 
-interface EventSingle {
+export interface EventSingle {
   _id: string;
   eventHeading?: string;
   slug?: {
