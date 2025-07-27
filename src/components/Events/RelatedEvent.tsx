@@ -1,14 +1,12 @@
-import Link from "next/link";
 import React from "react";
 import ButtonPrimary from "../ButtonPrimary";
-import EventData from "@/app/event-single/components/EventData/EventData";
-import { EventSingle } from "@/app/event-single/page";
+import { RelatedEventProps } from "../../../utils/event-singleTypes";
 
-export interface RelatedEventProps {
-    event: Pick<EventSingle, "_id" | "eventHeading" | "eventImage" | "startDateTime">;
+type Props = {
+    event: RelatedEventProps;
 }
 
-const RelatedEvent: React.FC<RelatedEventProps> = ( {event} ) => {
+const RelatedEvent: React.FC<Props> = ( {event} ) => {
     return (
         <div key={event._id} className='w-[351px]'>
             {event.eventImage && (
@@ -22,7 +20,7 @@ const RelatedEvent: React.FC<RelatedEventProps> = ( {event} ) => {
                 <p>20 March, 2025</p>
             </div>
             <h2 className="font-inter font-semibold text-2xl mb-7.5">{event.eventHeading}</h2>
-            <ButtonPrimary href="/event-single" width={217}>
+            <ButtonPrimary href={`/events/${event.slug?.current}`} width={217}>
                 Read More
             </ButtonPrimary>
         </div>
@@ -30,4 +28,3 @@ const RelatedEvent: React.FC<RelatedEventProps> = ( {event} ) => {
 };
 
 export default RelatedEvent;
-                
