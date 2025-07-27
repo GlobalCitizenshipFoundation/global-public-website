@@ -8,7 +8,9 @@ const Navigation: React.FC = () => {
   return (
     <ContainerNav>
         <nav className="flex justify-between items-center py-[23px] h-[52px] lg:h-[99px] lg:py-[36px] box-content">
-            <img src="/images/logo.png" alt="global-citizenship-fundation-logo" className="w-auto h-full object-cover mr-5"/>
+            <Link href={'/'} className="h-full">
+                <img src="/images/logo.png" alt="global-citizenship-fundation-logo" className="w-auto h-full object-cover mr-5"/>
+            </Link>
             <div className="hidden lg:flex h-auto lg:ml-auto items-center gap-x-[46px]">
                 {navigation.map((item) =>
                     item.type === 'button' ? (

@@ -24,7 +24,7 @@ const ContributorSingleComponent: React.FC<Props> = ({contributor}) => {
           <>
             <div className='flex justify-between mb-5'>
             <h2 className="text-6xl">Featured Profile</h2>
-            <ButtonPrimary href='/' width={253.5}>
+            <ButtonPrimary href='/contributors' width={253.5}>
               View all profiles
             </ButtonPrimary>
             </div>

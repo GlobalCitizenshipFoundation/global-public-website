@@ -14,7 +14,7 @@ const EventsPage = async () => {
     <>
         <div className="bg-background-darker py-36">
           <ContainerBig>
-            <h3 className="text-[42px] font-semibold mb-3.5">All Eents</h3>
+            <h3 className="text-[42px] font-semibold mb-3.5">All Events</h3>
             <div className="flex flex-wrap gap-[22px]">
               {events && events.length > 0 && (
                 <>
