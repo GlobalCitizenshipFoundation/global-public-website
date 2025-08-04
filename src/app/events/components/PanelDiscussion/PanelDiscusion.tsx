@@ -1,11 +1,10 @@
 import ButtonRegular from "@/components/ButtonRegular"
 import { PortableText, PortableTextBlock } from "@portabletext/react"
 import EventData from "../EventData/EventData"
-import { EventSinglePrice } from "../../page";
 
 interface Props {
     pricing: string;
-    price: EventSinglePrice;
+    price?: any;
     attedanceMode: string;
     startDateTime: string
     endDateTime: string;
