@@ -1,4 +1,4 @@
-import { FaXTwitter, FaInstagram, FaGlobe, FaFacebook, FaLinkedin } from "react-icons/fa6";
+import { FaXTwitter, FaInstagram, FaGlobe, FaFacebook, FaLinkedin, FaYoutube } from "react-icons/fa6";
 
 export const socialMediaConfig = [
   {
@@ -26,4 +26,9 @@ export const socialMediaConfig = [
     label: "Website",
     icon: FaGlobe,
   },
+  {
+    name: "youtube",
+    label: "Youtube",
+    icon: FaYoutube,
+  }
 ];
