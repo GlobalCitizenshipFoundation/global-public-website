@@ -5,6 +5,7 @@ export default defineCliConfig({
     projectId: 'swpg1w6y',
     dataset: 'production'
   },
+  studioHost: 'gctf',
   /**
    * Enable auto-updates for studios.
    * Learn more at https://www.sanity.io/docs/cli#auto-updates
