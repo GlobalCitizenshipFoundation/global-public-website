@@ -17,7 +17,7 @@ const PartnersPage = async () => {
           <ContainerBig>
             <div className="w-full flex flex-wrap gap-[85px]">
               {partners.map((partner) => (
-                <Link href={`/partners/${partner.slug.current}`} key={partner.slug.current}>
+                <Link href={`/partners/${partner.slug.current}`} key={partner.slug.current} className="hover:scale-120 duration-300 transition-all">
                     <PartnersLogo partner={partner}/>
                 </Link>
               ))}

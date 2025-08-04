@@ -8,6 +8,7 @@ import SocialLink from "@/components/Social/SocialLink";
 import { PortableText } from "@portabletext/react";
 import { FaRegEnvelope, FaPrint } from "react-icons/fa6";
 import { ContributorSingleType } from "../../../../utils/contributor-singleTypes";
+import Sharing from "@/components/Sharing";
 
 type Props = {
     contributor: ContributorSingleType;
@@ -110,28 +111,7 @@ const ContributorSingleComponent: React.FC<Props> = ({contributor}) => {
       <ContainerBig>
         <p className='text-[42px] text-titles font-semibold font-poppins mb-3.5'>Biography</p>
         {contributor.bio && <PortableText value={contributor.bio}/>}
-        <BreakLine className='mt-7.5'/>
-        <section className='flex justify-between py-4.5'>
-          <p>Sharing:</p>
-          <div className='flex gap-8'>
-            {socialLinks.map((link) => (
-              <SocialLink
-                key={link.href}
-                href={link.href}
-                icon={<link.icon />}
-                label={link.label}
-                variant="inline"
-              />
-            ))}
-              <SocialLink
-              href={`www.wikipedia.com`}
-              icon={<FaPrint />}
-              variant="inline"
-              label='Print'
-            />
-          </div>
-        </section>
-        <BreakLine className='mb-30'/>
+        <Sharing socialLinks={socialLinks} />
       </ContainerBig>
       {contributor.events && contributor.events.length > 0 && (
         <section className='py-[154px] bg-[#C6E3DF]'>

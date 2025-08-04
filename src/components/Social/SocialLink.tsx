@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React, { ReactNode } from "react";
 
-interface SocialLinkProps {
+export interface SocialLinkProps {
   label?: string;
   icon: ReactNode;
   href: string;

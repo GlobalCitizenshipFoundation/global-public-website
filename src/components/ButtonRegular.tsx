@@ -7,7 +7,7 @@ interface ButtonProps {
 
 const ButtonRegular: React.FC<ButtonProps> = ({ children, className = "" }) => {
   return (
-    <div className={`flex justify-center items-center w-ful h-11 rounded-lg bg-gray ${className}`}>
+    <div className={`flex justify-center items-center w-ful h-11 cursor-pointer rounded-lg bg-gray hover:bg-purple-400 duration-300 transition-all ${className}`}>
       {children}
     </div>
   );
