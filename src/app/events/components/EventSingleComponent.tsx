@@ -12,34 +12,20 @@ import { PanelDiscussion } from "./PanelDiscussion/PanelDiscusion";
 import { PeopleList } from "./PeopleList/PeopleList";
 import { PeoplePhotos } from "./PeoplePhotos/PeoplePhotos";
 import { Tags } from "@/components/Tags";
+import ContributorFrame from "@/components/Contributors/ContributorFrame";
+import PartnersLogo from "@/components/Partners/PartnersLogo";
+import { getSocialLinksFromCMS } from "@/components/Social/getSocialMediaFromCMS";
+import SocialLink from "@/components/Social/SocialLink";
 
 type Props = {
     event: EventSingleType;
 }
 
 const EventSingleComponent: React.FC<Props> = ({event}) => {
-  const audienceLabels = {
-    educators: 'Educators',
-    educationLeaders: 'Education Leaders',
-    youth: 'Youth',
-    institutions: 'Institutions',
-  };
-
-  const firstSpeaker = event.speakers[0];
-
-  const cloneSpeakers = Array(8).fill(firstSpeaker);
-
-  const speakers = cloneSpeakers.map(speaker => ({
-    imageURL: speaker.photo?.asset?.url ?? '',
-    name: speaker.name ?? '',
-    position: speaker.designation ?? '',
-    organization: speaker.organization ?? '',
-  }));
-
   const portableTextComponents = {
     block: {
       h2: ({ children }) => (
-        <h2 className="text-2xl lg:text-4xl font-bold text-titles">{children}</h2>
+        <h2 className="text-2xl lg:text-[42px] text-titles">{children}</h2>
       ),
       h3: ({ children }) => (
         <h3 className="text-xl lg:text-3xl font-semibold text-titles">{children}</h3>
@@ -53,6 +39,23 @@ const EventSingleComponent: React.FC<Props> = ({event}) => {
   if (!event) {
     return <p>No posts found.</p>;
   }
+
+  function getCombinedParticipants(event: EventSingleType): any[] {
+    const steering = event.steeringCommittee ?? [];
+    const speakers = event.speakers ?? [];
+    
+    return [...steering, ...speakers];
+  }
+
+  const staticSocials = {
+    twitter: "https://twitter.com/",
+    instagram: "https://www.instagram.com/",
+    facebook: "https://www.facebook.com/",
+    linkedin: "https://www.linkedin.com/",
+    youtube: "https://www.youtube.com/",
+  };
+
+  const socialLinks = getSocialLinksFromCMS(staticSocials);
 
   return (
     <div className='flex flex-col bg-background-primary'>
@@ -75,8 +78,8 @@ const EventSingleComponent: React.FC<Props> = ({event}) => {
                     />
                   </div>
                 )}
-                <ContainerRegular className='mb-4'>
-                  <PeoplePhotos people={speakers}/>
+                <ContainerRegular className='mb-4 lg:mb-9'>
+                  <PeoplePhotos people={getCombinedParticipants(event)}/>
                 </ContainerRegular>
                 <ContainerRegular className='lg:text-2xl text-sm mb-9'>
                     {event.introText && (
@@ -93,6 +96,7 @@ const EventSingleComponent: React.FC<Props> = ({event}) => {
                     marketingMention={event.marketingMention}
                     financialAid={event.financialAid}
                   />
+                  <div className="flex px-">
                   <div className='flex flex-col gap-1.5 w-full mb-9'>
                     <span className='text-subtitles font-semibold text-2xl lg:text-3xl'>Venue Location</span>
                     <span className='text-borders font-normal text-sm'>{event.venue}</span>
@@ -100,6 +104,7 @@ const EventSingleComponent: React.FC<Props> = ({event}) => {
                   <div className='flex flex-col gap-1.5 w-full mb-9'>
                     <span className='text-subtitles font-semibold text-2xl lg:text-3xl'>Rich Text Box</span>
                     <span className='text-borders font-normal text-sm'>{event.venue}</span>
+                  </div>
                   </div>
                   <ButtonRegular className='mb-4 bg-white border-borders border-1'>
                     <span className='text-gray text-base font-medium '>Concept Note</span>
@@ -119,22 +124,60 @@ const EventSingleComponent: React.FC<Props> = ({event}) => {
                 </ContainerRegular>
                 <ContainerRegular className='flex flex-col gap-6 mb-11 lg:flex-row lg:justify-between lg:items-center lg:py-7 lg:border-y-[1.5px] lg:border-lines'>
                   <h2 className='text-2xl text-titles mb-0'>Who is this event for :</h2>
-                  <Tags audience={event.audience} audienceLabels={audienceLabels} />
+                  {event.audience && (
+                    <Tags tags={event.audience} />
+                  )}
                 </ContainerRegular>
                 <ContainerRegular className='flex flex-col gap-1.5 mb-14'>
-                  <h2 className='text-2xl text-titles mb-0'>{event.agendaHeading}</h2>
-                  <PortableText value={event.agendaDescription}/>
+                  <h2 className='text-2xl text-titles mb-0 lg:mb-4.5 lg:text-[42px]'>{event.agendaHeading}</h2>
+                  {event.agendaDescription && (
+                    <PortableText value={event.agendaDescription} components={portableTextComponents}/>
+                  )}
                 </ContainerRegular>
-                <ContainerRegular className='flex flex-col mb-12 lg:mb-20'>
-                  <PeopleList description={event.agendaDescription} peopleList={speakers} type={'Speakers'}/>
+                <ContainerRegular className='flex flex-col mb-12 lg:mb-20 '>
+                  <div className="flex flex-col mb-11">
+                    {event.speakers && (
+                      <h2>Speakers</h2>
+                    )}
+                    {event.endText && (
+                      <PortableText value={event.endText} components={portableTextComponents}/>
+                    )}
+                  </div>
+                  <div className="flex gap-x-4.5 gap-y-18">
+                    {event.speakers && event.speakers.map(speaker => (
+                      <ContributorFrame contributor={speaker} key={speaker._id}/> 
+                    ))}
+                  </div>
                 </ContainerRegular>
-                <ContainerRegular className='flex flex-col mb-12 lg:mb-20'>
-                  <PeopleList description={event.agendaDescription} peopleList={speakers} type={'Steering Committee'}/>
+                <ContainerRegular className='flex flex-col mb-12 lg:mb-20 '>
+                  <div className="flex flex-col mb-11">
+                    {event.steeringCommittee && (
+                      <h2>Steering Committee</h2>
+                    )}
+                    {event.endText && (
+                      <PortableText value={event.endText} components={portableTextComponents}/>
+                    )}                   
+                  </div>
+                  <div className="flex gap-x-4.5 gap-y-18">
+                    {event.steeringCommittee && event.steeringCommittee.map(person => (
+                      <ContributorFrame contributor={person} key={person._id}/> 
+                    ))}
+                  </div>
                 </ContainerRegular>
-                <ContainerRegular className='flex flex-col gap-3.5 lg:gap-[60px]'>
-                    <ConferencePartners description={event.agendaDescription} portableTextComponents={portableTextComponents}/>
+                <ContainerRegular className='flex flex-col lg:gap-[60px] lg:mb-18'>
+                  <div className="flex flex-col">
+                    {event.partners && (
+                      <h2>Conference Partners</h2>
+                    )}
+                    {event.endText && (
+                      <PortableText value={event.endText} components={portableTextComponents}/>
+                    )}
+                  </div>
+                  <ConferencePartners partners={event.partners} type={"Host"} />
+                  <ConferencePartners partners={event.partners} type={"EventPartner"} />
+                  <ConferencePartners partners={event.partners} type={"KnowledgePartners"} />
                 </ContainerRegular>
-                <ContainerRegular className='flex flex-col gap-3.5 mb-14'>
+                <ContainerRegular className='flex flex-col gap-3.5 mb-14 lg:mb-22.5'>
                   <h2 className='text-2xl lg:text-[42px] text-titles mb-0'>Registration</h2>
                   <PortableText value={event.agendaDescription} components={portableTextComponents}/>
                 </ContainerRegular>
@@ -142,21 +185,14 @@ const EventSingleComponent: React.FC<Props> = ({event}) => {
                   <div className='flex flex-col gap-7 lg:hidden'>
                    <h3 className='lg:text-3xl font-semibold'>Share the Event</h3>
                    <div className='flex w-full justify-between'>
-                    <a className='flex' href="">
-                      <img src="/images/insta.svg" alt="Logo-instagram" />
-                    </a>
-                    <a className='flex' href="">
-                      <img src="/images/x.svg" alt="Logo-x" />
-                    </a>
-                    <a className='flex' href="">
-                      <img src="/images/linkedin.svg" alt="Logo-linkedin" />
-                    </a>
-                    <a className='flex' href="">
-                      <img src="/images/fb.svg" alt="Logo-facebook" />
-                    </a>
-                    <a className='flex' href="">
-                      <img src="/images/youtube.svg" alt="Logo-youtube" />
-                    </a>
+                    {socialLinks && socialLinks.map((link) => (
+                      <SocialLink
+                        key={link.href}
+                        href={link.href}
+                        icon={<link.icon />}
+                        variant="button"
+                      />
+                    ))}
                    </div>
                    <div className='flex items-center gap-2.5'>
                     <img src="/images/print.svg" alt="Print-logo" />
@@ -176,13 +212,15 @@ const EventSingleComponent: React.FC<Props> = ({event}) => {
                     marketingMention={event.marketingMention}
                     financialAid={event.financialAid}
                   />
-                  <div className='flex flex-col gap-1.5 w-full mb-9'>
-                    <span className='text-subtitles font-semibold text-2xl lg:text-3xl'>Venue Location</span>
-                    <span className='text-borders font-normal text-sm'>{event.venue}</span>
-                  </div>
-                  <div className='flex flex-col gap-1.5 w-full mb-9'>
-                    <span className='text-subtitles font-semibold text-2xl lg:text-3xl'>Rich Text Box</span>
-                    <span className='text-borders font-normal text-sm'>{event.venue}</span>
+                  <div className="flex flex-col gap-10 px-9">
+                    <div className='flex flex-col gap-1.5 w-full mb-9'>
+                      <span className='text-subtitles font-semibold text-2xl lg:text-3xl'>Venue Location</span>
+                      <span className='text-borders font-normal text-sm lg:text-lg'>{event.venue}</span>
+                    </div>
+                    <div className='flex flex-col gap-1.5 w-full mb-9'>
+                      <span className='text-subtitles font-semibold text-2xl lg:text-3xl'>Rich Text Box</span>
+                      <span className='text-borders font-normal text-sm lg:text-lg'>{event.venue}</span>
+                    </div>
                   </div>
                   <ButtonRegular className='mb-4 bg-white border-borders border-1'>
                     <span className='text-gray text-base font-medium '>Concept Note</span>
@@ -190,24 +228,18 @@ const EventSingleComponent: React.FC<Props> = ({event}) => {
                   <ButtonRegular className='mb-14'>
                     <span className='text-white text-base font-medium '>Resources</span>
                   </ButtonRegular>
-                  <div className='flex flex-col gap-7'>
+                  <div className='flex flex-col gap-7 px-9'>
                    <h3 className='lg:text-3xl font-semibold'>Share the Event</h3>
                    <div className='flex w-full justify-between'>
-                    <a className='flex' href="">
-                      <img src="/images/insta.svg" alt="Logo-instagram" />
-                    </a>
-                    <a className='flex' href="">
-                      <img src="/images/x.svg" alt="Logo-x" />
-                    </a>
-                    <a className='flex' href="">
-                      <img src="/images/linkedin.svg" alt="Logo-linkedin" />
-                    </a>
-                    <a className='flex' href="">
-                      <img src="/images/fb.svg" alt="Logo-facebook" />
-                    </a>
-                    <a className='flex' href="">
-                      <img src="/images/youtube.svg" alt="Logo-youtube" />
-                    </a>
+                    {socialLinks && socialLinks.map((link) => (
+                      <SocialLink
+                        key={link.href}
+                        href={link.href}
+                        icon={<link.icon />}
+                        variant="button"
+                        className="w-15 h-15 border-1 border-gray-500 rounded-2xl bg-transparent"
+                      />
+                    ))}
                    </div>
                    <div className='flex items-center gap-2.5'>
                     <img src="/images/print.svg" alt="Print-logo" />
@@ -221,7 +253,9 @@ const EventSingleComponent: React.FC<Props> = ({event}) => {
           <section className='bg-background-darker lg:py-[78px] px-0 mx-0'>
             <ContainerBig>
               <h2 className='text-2xl lg:text-[42px] text-titles mb-2.5 lg:mb-5'>Topics</h2>
-              <Tags audience={event.audience} audienceLabels={audienceLabels} />
+              {event.audience && (
+                <Tags tags={event.audience} />
+              )}
             </ContainerBig>
           </section>
           <section className='py-10'>

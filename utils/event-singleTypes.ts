@@ -1,4 +1,6 @@
 import { PortableTextBlock } from "@portabletext/react";
+import { RelatedContributorsType } from "./contributor-singleTypes";
+import { RelatedPartnersType } from "./partners-singleTypes";
 
 interface ImageDimensions {
   _type: 'sanity.imageDimensions';
@@ -17,25 +19,6 @@ interface SanityImageAsset {
 
 interface SanityImage {
   asset: SanityImageAsset;
-}
-
-interface SimpleSpeaker {
-  name: string;
-  title?: string;
-  organization?: string;
-  photo?: {
-    asset: {
-      url: string;
-      metadata: {
-        dimensions: {
-          width: number;
-          height: number;
-          aspectRatio: number;
-        };
-        lqip?: string;
-      };
-    };
-  };
 }
 
 export interface EventSingleType {
@@ -70,7 +53,9 @@ export interface EventSingleType {
   agendaDescription?: PortableTextBlock[];
   endText?: PortableTextBlock[];
   addToCalendarUrl?: string;
-  speakers: SimpleSpeaker[];
+  speakers: RelatedContributorsType[];
+  steeringCommittee: RelatedContributorsType[];
+  partners: RelatedPartnersType[];
   speakersText: PortableTextBlock[];
 }
 
