@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -9,6 +9,7 @@ import 'swiper/css/pagination';
 // import required modules
 import { Pagination, Navigation } from 'swiper/modules';
 import { SwiperSlideCard } from './SwiperSlideCard';
+import { NavigationOptions, PaginationOptions } from 'swiper/types';
 
 interface ExampleSwiperCard {
   src: string;
@@ -58,12 +59,9 @@ export default function SwiperList() {
             nextEl: nextRef.current!,
           }}
           onBeforeInit={(swiper) => {
-            // @ts-ignore
-            swiper.params.navigation.prevEl = prevRef.current;
-            // @ts-ignore
-            swiper.params.navigation.nextEl = nextRef.current;
-            // @ts-ignore
-            swiper.params.pagination.el = paginationRef.current;
+            (swiper.params.navigation as NavigationOptions).prevEl = prevRef.current;
+            (swiper.params.navigation as NavigationOptions).nextEl = nextRef.current;
+            (swiper.params.pagination as PaginationOptions).el = paginationRef.current;
           }}
           className="w-full"
         >

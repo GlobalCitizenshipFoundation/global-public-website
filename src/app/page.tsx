@@ -38,11 +38,13 @@ export default function Home() {
             </h2>
             <div className="flex flex-col gap-8">
               <p className="text-background-primary text-2xl font-normal">
-                With our global mandate to realize United Nations' Sustainable Development Goal 4.7,
-                we work towards transforming education for global citizenship and sustainable
+                With our global mandate to realize United Nations&apos; Sustainable Development Goal
+                4.7, we work towards transforming education for global citizenship and sustainable
                 development.
               </p>
-              <ButtonPrimary width={310} href="" children={'Know more about us'} />
+              <ButtonPrimary width={310} href="">
+                Know more about us
+              </ButtonPrimary>
             </div>
           </div>
         </section>
@@ -81,7 +83,9 @@ export default function Home() {
             </p>
             <div className="flex flex-col gap-3.5">
               {educationButtons.map((button) => (
-                <ButtonPrimary width={310} href="" children={button} />
+                <ButtonPrimary width={310} href="" key={button}>
+                  {button}
+                </ButtonPrimary>
               ))}
             </div>
           </div>
@@ -114,7 +118,9 @@ export default function Home() {
               A well informed community is an empowered one as well, so take a look at some of the
               important stories we’ve curated for you.
             </p>
-            <ButtonPrimary width={310} href="" children={'Visit the Newsroom'} />
+            <ButtonPrimary width={310} href="">
+              Visit the Newsroom
+            </ButtonPrimary>
           </div>
         </section>
         <section className="bg-background-primary flex w-full flex-col py-[186px]">
@@ -130,7 +136,7 @@ export default function Home() {
             <div className="flex w-full flex-col items-center justify-center gap-4">
               <h2 className="text-gray text-[75px] font-semibold">Our 2021 Data</h2>
               <p className="text-gray text-center text-2xl font-normal">
-                Here is a look back at the Global Citizenship Foundation's achievements and
+                Here is a look back at the Global Citizenship Foundation&apos;s achievements and
                 milestones in 2021.
               </p>
             </div>
