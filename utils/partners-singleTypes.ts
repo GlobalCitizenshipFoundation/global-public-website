@@ -1,4 +1,4 @@
-import { PortableTextBlock } from "@portabletext/react";
+import { PortableTextBlock } from '@portabletext/react';
 
 export interface PartnerSingleType {
   _id: string;
@@ -30,5 +30,4 @@ export interface PartnerSingleType {
   partnerProfile?: string;
 }
 
-export type RelatedPartnersType = Pick<PartnerSingleType, "_id" | "slug" | "logo" | "title" >;
-
+export type RelatedPartnersType = Pick<PartnerSingleType, '_id' | 'slug' | 'logo' | 'title'>;

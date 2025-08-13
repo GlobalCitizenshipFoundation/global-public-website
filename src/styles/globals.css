@@ -1,39 +1,39 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
   /* custom colors */
-  --color-primary: #CA1F43;
-  --color-primary-darker: #C71C41;
-  --color-background-primary: #FFFFFF;
+  --color-primary: #ca1f43;
+  --color-primary-darker: #c71c41;
+  --color-background-primary: #ffffff;
   --color-gray: #222222;
-  --color-light-gray: #6B7273;
+  --color-light-gray: #6b7273;
   --color-dark-blue: #060644;
-  --color-white: #FFF;
+  --color-white: #fff;
   --color-black: #000;
-  --color-frames: #DFDFDF;
+  --color-frames: #dfdfdf;
   --color-borders: #454545;
-  --color-secondary-borders: #D8D8D8;
+  --color-secondary-borders: #d8d8d8;
   --color-titles: #181818;
-  --color-subtitles: #1A1A1A;
-  --color-background-panel: #F2F2F2;
-  --color-warning: #FFF4E4;
-  --color-error: #F9EBE9;
-  --color-success: #EEF6F5;
+  --color-subtitles: #1a1a1a;
+  --color-background-panel: #f2f2f2;
+  --color-warning: #fff4e4;
+  --color-error: #f9ebe9;
+  --color-success: #eef6f5;
   --color-text-warning: #937038;
-  --color-text-error: #DD664F;
+  --color-text-error: #dd664f;
   --color-text-success: #148370;
-  --color-lines: #E4E4E4;
-  --color-background-darker: #F6F6F6;
-  --color-line: #D9D9D9;
+  --color-lines: #e4e4e4;
+  --color-background-darker: #f6f6f6;
+  --color-line: #d9d9d9;
   --color-destignation: #191919;
-  --color-home-beige: #F6F4F0;
-  --color-home-liner: #BABABA;
-  --color-background-beige: #E8E8E8;
-  --color-pagination: #C0C4CD;
+  --color-home-beige: #f6f4f0;
+  --color-home-liner: #bababa;
+  --color-background-beige: #e8e8e8;
+  --color-pagination: #c0c4cd;
 
   /* custom fonts */
-  --font-inter: "Inter", sans-serif;
-  --font-poppins: "Poppins", sans-serif;
+  --font-inter: 'Inter', sans-serif;
+  --font-poppins: 'Poppins', sans-serif;
 
   /* custom breakpoints */
   --breakpoint-lg: 480px;
@@ -82,14 +82,14 @@
 }
 
 .custom-pagination .swiper-pagination-bullet {
-    width: 16px;
-    height: 16px;
-    background-color: var(--color-background-primary);
-    opacity: 1;
-    border-radius: 50%;
-    border: 1px solid var(--color-pagination);
-    transition: background-color 0.3s;
+  width: 16px;
+  height: 16px;
+  background-color: var(--color-background-primary);
+  opacity: 1;
+  border-radius: 50%;
+  border: 1px solid var(--color-pagination);
+  transition: background-color 0.3s;
 }
 .custom-pagination .swiper-pagination-bullet-active {
-    background-color: var(--color-gray);
+  background-color: var(--color-gray);
 }

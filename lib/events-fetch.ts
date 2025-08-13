@@ -1,5 +1,5 @@
-import { sanityClient } from "@/client";
-import { EventSingleType, RelatedEventProps } from "../utils/event-singleTypes";
+import { sanityClient } from '@/client';
+import { EventSingleType, RelatedEventProps } from '../utils/event-singleTypes';
 
 export const getEvents = async (): Promise<RelatedEventProps[]> => {
   return await sanityClient.fetch(`

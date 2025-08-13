@@ -1,10 +1,8 @@
 module.exports = {
-  extends: [
-    'stylelint-config-standard',
-  ],
+  extends: ['stylelint-config-standard'],
   rules: {
     'color-hex-length': 'short',
     'block-no-empty': true,
     'declaration-no-important': true,
-  }
+  },
 };

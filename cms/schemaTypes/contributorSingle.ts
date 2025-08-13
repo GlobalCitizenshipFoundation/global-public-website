@@ -1,52 +1,52 @@
-import { defineType, defineField, defineArrayMember } from 'sanity'
-import countryOptions from '../../utils/countryOptions';
+import {defineType, defineField, defineArrayMember} from 'sanity'
+import countryOptions from '../../utils/countryOptions'
 
 export const contributorSingle = defineType({
-  type: "document",
-  name: "contributorSingle",
+  type: 'document',
+  name: 'contributorSingle',
   fields: [
     defineField({
-      type: "string",
-      title: "Title",
-      name: "title",
+      type: 'string',
+      title: 'Title',
+      name: 'title',
     }),
     defineField({
-      type: "string",
-      title: "Name",
-      name: "name",
+      type: 'string',
+      title: 'Name',
+      name: 'name',
     }),
     defineField({
-      type: "image",
-      title: "Person photo",
-      name: "photo",
-      options: { hotspot: true },
+      type: 'image',
+      title: 'Person photo',
+      name: 'photo',
+      options: {hotspot: true},
     }),
     defineField({
-      type: "slug",
-      name: "slug",
-      options: { source: "name" },
-    }),
-       defineField({
-        type: 'string',
-        name: 'gender',
-        title: 'Gender',
-        options: {
-            list: [
-            { title: 'Male', value: 'male' },
-            { title: 'Female', value: 'female' },
-            ],
-            layout: 'dropdown',
-        },
+      type: 'slug',
+      name: 'slug',
+      options: {source: 'name'},
     }),
     defineField({
-      type: "string",
-      title: "Designation",
-      name: "designation",
+      type: 'string',
+      name: 'gender',
+      title: 'Gender',
+      options: {
+        list: [
+          {title: 'Male', value: 'male'},
+          {title: 'Female', value: 'female'},
+        ],
+        layout: 'dropdown',
+      },
     }),
     defineField({
-      type: "string",
-      title: "Division/Organization",
-      name: "organization",
+      type: 'string',
+      title: 'Designation',
+      name: 'designation',
+    }),
+    defineField({
+      type: 'string',
+      title: 'Division/Organization',
+      name: 'organization',
     }),
     defineField({
       type: 'string',
@@ -70,34 +70,34 @@ export const contributorSingle = defineType({
       initialValue: false,
     }),
     defineField({
-      name: "orcidId",
-      title: "ORCiD ID",
-      type: "url",
+      name: 'orcidId',
+      title: 'ORCiD ID',
+      type: 'url',
     }),
     defineField({
-      type: "string",
-      title: "Twitter",
-      name: "twitter",
+      type: 'string',
+      title: 'Twitter',
+      name: 'twitter',
     }),
     defineField({
-      type: "string",
-      title: "LinkedIn",
-      name: "linkedin",
+      type: 'string',
+      title: 'LinkedIn',
+      name: 'linkedin',
     }),
     defineField({
-      type: "string",
-      title: "Instagram",
-      name: "instagram",
+      type: 'string',
+      title: 'Instagram',
+      name: 'instagram',
     }),
     defineField({
-      type: "string",
-      title: "Facebook",
-      name: "facebook",
+      type: 'string',
+      title: 'Facebook',
+      name: 'facebook',
     }),
     defineField({
-      type: "string",
-      title: "Website",
-      name: "website",
+      type: 'string',
+      title: 'Website',
+      name: 'website',
     }),
     defineField({
       type: 'boolean',
@@ -106,15 +106,15 @@ export const contributorSingle = defineType({
       initialValue: false,
     }),
     defineField({
-      type: "string",
-      title: "Short Bio",
-      name: "shortBio",
+      type: 'string',
+      title: 'Short Bio',
+      name: 'shortBio',
     }),
     defineField({
       type: 'array',
       name: 'bio',
       title: 'Bio',
-      of: [{ type: "block" }]
+      of: [{type: 'block'}],
     }),
     defineField({
       name: 'relatedProfiles',
@@ -123,7 +123,7 @@ export const contributorSingle = defineType({
       of: [
         {
           type: 'reference',
-          to: [{ type: 'contributorSingle' }],
+          to: [{type: 'contributorSingle'}],
         },
       ],
     }),
@@ -152,7 +152,7 @@ export const contributorSingle = defineType({
       of: [
         {
           type: 'reference',
-          to: [{ type: 'eventSingle' }],
+          to: [{type: 'eventSingle'}],
         },
       ],
     }),
@@ -163,20 +163,19 @@ export const contributorSingle = defineType({
     //   to: [{ type: 'topicSingle' }],
     // }),
     defineField({
-      type: "string",
-      title: "Header",
-      name: "header",
+      type: 'string',
+      title: 'Header',
+      name: 'header',
     }),
     defineField({
-      type: "string",
-      title: "Profile Colour",
-      name: "profileColour",
+      type: 'string',
+      title: 'Profile Colour',
+      name: 'profileColour',
     }),
     defineField({
-      type: "string",
-      title: "Text colour",
-      name: "textColour",
+      type: 'string',
+      title: 'Text colour',
+      name: 'textColour',
     }),
   ],
-});
-
+})

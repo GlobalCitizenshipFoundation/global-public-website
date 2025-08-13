@@ -1,17 +1,25 @@
-import React from "react";
-import ButtonPrimary from "./ButtonPrimary";
+import React from 'react';
+import ButtonPrimary from './ButtonPrimary';
 
 const Newsettler: React.FC = () => {
   return (
-    <div className='bg-dark-blue w-full h-[566px] flex justify-center items-center flex-col'>
-      <h2 className="font-poppins font-semibold text-[42px] text-white mb-4">Transform.Ed Briefing</h2>
-      <p className="text-white w-[599px] text-center text-[16px] font-normal mb-7">
-        Unlock the power of education with Transform.Ed, a curated premium newsletter by the Global Citizenship Foundation. Join us on a transformative journey, sharing insights, ideas, & opportunities to empower educators shaping the many futures of education!
+    <div className="bg-dark-blue flex h-[566px] w-full flex-col items-center justify-center">
+      <h2 className="font-poppins mb-4 text-[42px] font-semibold text-white">
+        Transform.Ed Briefing
+      </h2>
+      <p className="mb-7 w-[599px] text-center text-[16px] font-normal text-white">
+        Unlock the power of education with Transform.Ed, a curated premium newsletter by the Global
+        Citizenship Foundation. Join us on a transformative journey, sharing insights, ideas, &
+        opportunities to empower educators shaping the many futures of education!
       </p>
-      <div className="h-[60px] w-[620px] flex gap-1.5">
-        <input className="bg-white h-full rounded-xl pl-[19px] placeholder-gray grow" placeholder="Type your email" type="text" />
+      <div className="flex h-[60px] w-[620px] gap-1.5">
+        <input
+          className="placeholder-gray h-full grow rounded-xl bg-white pl-[19px]"
+          placeholder="Type your email"
+          type="text"
+        />
         <ButtonPrimary width={253} href="/">
-            Subscribe Now
+          Subscribe Now
         </ButtonPrimary>
       </div>
     </div>

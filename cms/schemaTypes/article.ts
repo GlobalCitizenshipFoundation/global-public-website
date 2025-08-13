@@ -1,39 +1,39 @@
-import { defineType, defineField, defineArrayMember } from 'sanity'
+import {defineType, defineField, defineArrayMember} from 'sanity'
 
 export const article = defineType({
-  type: "document",
-  name: "article",
+  type: 'document',
+  name: 'article',
   fields: [
     defineField({
-      type: "string",
-      name: "title",
+      type: 'string',
+      name: 'title',
     }),
     defineField({
-      type: "slug",
-      name: "slug",
-      options: { source: "title" },
+      type: 'slug',
+      name: 'slug',
+      options: {source: 'title'},
     }),
     defineField({
-      type: "text",
-      name: "description",
+      type: 'text',
+      name: 'description',
     }),
     defineField({
-      type: "array",
-      name: "body",
-      title: "Main content",
+      type: 'array',
+      name: 'body',
+      title: 'Main content',
       of: [
         defineArrayMember({
-          type: "block",
+          type: 'block',
         }),
         defineArrayMember({
-          type: "image",
+          type: 'image',
           fields: [
             {
-              type: "string",
-              name: "caption",
+              type: 'string',
+              name: 'caption',
             },
           ],
-          options: { hotspot: true },
+          options: {hotspot: true},
         }),
       ],
     }),
@@ -48,13 +48,13 @@ export const article = defineType({
     //   ],
     // }),
     defineField({
-      type: "datetime",
-      name: "publishedAt",
+      type: 'datetime',
+      name: 'publishedAt',
     }),
     defineField({
-      type: "image",
-      name: "coverImage",
-      options: { hotspot: true },
+      type: 'image',
+      name: 'coverImage',
+      options: {hotspot: true},
     }),
     // defineField({
     //   type: "array",
@@ -86,5 +86,4 @@ export const article = defineType({
     //   ],
     // }),
   ],
-});
-
+})

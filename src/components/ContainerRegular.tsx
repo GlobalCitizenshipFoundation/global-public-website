@@ -1,15 +1,13 @@
-import React from "react";
+import React from 'react';
 
 interface ContainerProps {
   children: React.ReactNode;
   className?: string;
 }
 
-const ContainerRegular: React.FC<ContainerProps> = ({ children, className = "" }) => {
+const ContainerRegular: React.FC<ContainerProps> = ({ children, className = '' }) => {
   return (
-    <div className={`lg:max-w-[1612.62px] lg:px-0 mx-auto px-[50px] ${className}`}>
-      {children}
-    </div>
+    <div className={`mx-auto px-[50px] lg:max-w-[1612.62px] lg:px-0 ${className}`}>{children}</div>
   );
 };
 

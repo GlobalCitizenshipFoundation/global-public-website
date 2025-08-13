@@ -1,6 +1,6 @@
-import { PortableTextBlock } from "@portabletext/react";
-import { RelatedContributorsType } from "./contributor-singleTypes";
-import { RelatedPartnersType } from "./partners-singleTypes";
+import { PortableTextBlock } from '@portabletext/react';
+import { RelatedContributorsType } from './contributor-singleTypes';
+import { RelatedPartnersType } from './partners-singleTypes';
 
 interface ImageDimensions {
   _type: 'sanity.imageDimensions';
@@ -59,4 +59,7 @@ export interface EventSingleType {
   speakersText: PortableTextBlock[];
 }
 
-export type RelatedEventProps = Pick<EventSingleType, "_id" | "slug" | "eventHeading" | "eventImage" | "startDateTime">;
+export type RelatedEventProps = Pick<
+  EventSingleType,
+  '_id' | 'slug' | 'eventHeading' | 'eventImage' | 'startDateTime'
+>;

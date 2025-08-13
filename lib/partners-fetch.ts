@@ -1,5 +1,5 @@
-import { sanityClient } from "@/client";
-import { PartnerSingleType, RelatedPartnersType } from "../utils/partners-singleTypes";
+import { sanityClient } from '@/client';
+import { PartnerSingleType, RelatedPartnersType } from '../utils/partners-singleTypes';
 
 export const getPartners = async (): Promise<RelatedPartnersType[]> => {
   return await sanityClient.fetch(`
