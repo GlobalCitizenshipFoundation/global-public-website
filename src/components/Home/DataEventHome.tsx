@@ -12,7 +12,9 @@ export const DataEventHome: React.FC<Props> = ({ title, buttonTitle, textDescrip
     <div className={`flex max-w-[1229px] items-center`} style={{ gap: `${gap}px` }}>
       <h2 className="text-gray mb-0 w-full text-[80px]/[110%] font-semibold">{title}</h2>
       <div className="flex w-full flex-col gap-4">
-        <ButtonPrimary width={310} href="" children={buttonTitle} />
+        <ButtonPrimary width={310} href="">
+          {buttonTitle}
+        </ButtonPrimary>
         <p className="text-gray text-2xl/[128%] font-normal">{textDescription}</p>
       </div>
     </div>

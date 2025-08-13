@@ -32,7 +32,9 @@ export const SwiperSlideCard: React.FC<Props> = ({ src, kind, data, title, butto
         </span>
       </div>
       <h3 className="text-gray mb-[68px] text-3xl/[125%] font-semibold">{title}</h3>
-      <ButtonPrimary width={310} href="" children={buttonTitle} />
+      <ButtonPrimary width={310} href="">
+        {buttonTitle}
+      </ButtonPrimary>
     </div>
   );
 };
