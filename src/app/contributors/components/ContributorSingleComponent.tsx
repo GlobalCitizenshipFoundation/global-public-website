@@ -119,7 +119,7 @@ const ContributorSingleComponent: React.FC<Props> = ({contributor}) => {
               <>
                 <h2 className='text-[42px] mb-3.5'>Events By {contributor.name}</h2>
                 <p className='mb-15'>Transforming education for global citizenship and sustainable The Global Citizen ship Foundation continues commitment Preparing young people for a smart future.</p>
-                <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+                <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
                 {contributor.events.map((event) => (
                   <RelatedEvent event={event} key={event._id}/>
                 ))}

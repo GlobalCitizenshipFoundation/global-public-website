@@ -143,7 +143,7 @@ const EventSingleComponent: React.FC<Props> = ({event}) => {
                       <PortableText value={event.endText} components={portableTextComponents}/>
                     )}
                   </div>
-                  <div className="flex gap-x-4.5 gap-y-18">
+                  <div className="flex gap-x-4.5 gap-y-18 flex-wrap">
                     {event.speakers && event.speakers.map(speaker => (
                       <ContributorFrame contributor={speaker} key={speaker._id}/> 
                     ))}

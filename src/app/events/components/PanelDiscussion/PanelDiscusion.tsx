@@ -16,7 +16,7 @@ export const PanelDiscussion: React.FC<Props> = ({
     pricing,
     price,
     attedanceMode,
-    startDateTime,
+    startDateTime,  
     endDateTime,
     marketingMention,
     financialAid, 
