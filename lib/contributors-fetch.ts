@@ -1,5 +1,5 @@
-import { sanityClient } from "@/client";
-import { ContributorSingleType, RelatedContributorsType } from "../utils/contributor-singleTypes";
+import { sanityClient } from '@/client';
+import { ContributorSingleType, RelatedContributorsType } from '../utils/contributor-singleTypes';
 
 export const getContributors = async (): Promise<RelatedContributorsType[]> => {
   return await sanityClient.fetch(`

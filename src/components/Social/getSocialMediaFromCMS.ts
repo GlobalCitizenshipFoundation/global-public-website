@@ -1,4 +1,4 @@
-import { socialMediaConfig } from "./socialMediaConfig";
+import { socialMediaConfig } from './socialMediaConfig';
 
 export type ContributorSocials = {
   [key: string]: string | undefined;

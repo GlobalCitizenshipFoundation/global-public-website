@@ -1,34 +1,41 @@
-import { FaXTwitter, FaInstagram, FaGlobe, FaFacebook, FaLinkedin, FaYoutube } from "react-icons/fa6";
+import {
+  FaXTwitter,
+  FaInstagram,
+  FaGlobe,
+  FaFacebook,
+  FaLinkedin,
+  FaYoutube,
+} from 'react-icons/fa6';
 
 export const socialMediaConfig = [
   {
-    name: "twitter",
-    label: "Twitter",
+    name: 'twitter',
+    label: 'Twitter',
     icon: FaXTwitter,
   },
   {
-    name: "instagram",
-    label: "Instagram",
+    name: 'instagram',
+    label: 'Instagram',
     icon: FaInstagram,
   },
   {
-    name: "facebook",
-    label: "Facebook",
+    name: 'facebook',
+    label: 'Facebook',
     icon: FaFacebook,
   },
   {
-    name: "linkedin",
-    label: "LinkedIn",
+    name: 'linkedin',
+    label: 'LinkedIn',
     icon: FaLinkedin,
   },
   {
-    name: "website",
-    label: "Website",
+    name: 'website',
+    label: 'Website',
     icon: FaGlobe,
   },
   {
-    name: "youtube",
-    label: "Youtube",
+    name: 'youtube',
+    label: 'Youtube',
     icon: FaYoutube,
-  }
+  },
 ];
