@@ -2,47 +2,41 @@ import { sanityClient } from "@/client";
 import { PartnerSingleType, RelatedPartnersType } from "../utils/partners-singleTypes";
 
 export const getPartners = async (): Promise<RelatedPartnersType[]> => {
-  const partners = await sanityClient.fetch(
-    `*[_type == "partnersSingle"]{
+  return await sanityClient.fetch(`
+    *[_type == "partnersSingle"]{
       _id,
       slug,
       title,
       logo {
         asset->{
-          url,
+          url
         }
       }
-    }`
-  );
-
-  return partners;
+    }
+  `);
 };
 
-export const getPartnersBySlug = async (slug: string): Promise<PartnerSingleType | null>  => {
+export const getPartnerBySlug = async (slug: string): Promise<PartnerSingleType | null> => {
   return await sanityClient.fetch(
     `*[_type == "partnersSingle" && slug.current == $slug][0]{
-    _id,
-    title,
-    slug,
-    country,
-    headerImage{
-      asset->{url}
-    },
-    logo{
-      asset->{url}
-    },
-    shotrDescription,
-    body,
-    twitter,
-    instagram,
-    facebook,
-    youtube,
-    linkedin,
-    websiteText,
-    websiteUrl,
-    quote,
-    partnerProfile
-  }`,
+      _id,
+      title,
+      slug,
+      country,
+      headerImage{ asset->{url} },
+      logo{ asset->{url} },
+      shotrDescription,
+      body,
+      twitter,
+      instagram,
+      facebook,
+      youtube,
+      linkedin,
+      websiteText,
+      websiteUrl,
+      quote,
+      partnerProfile
+    }`,
     { slug }
-    ) as PartnerSingleType;
-}
+  );
+};

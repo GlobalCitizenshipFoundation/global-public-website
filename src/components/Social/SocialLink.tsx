@@ -1,9 +1,9 @@
 import Link from "next/link";
-import React, { ReactNode } from "react";
+import React, { ComponentType, ReactNode } from "react";
 
 export interface SocialLinkProps {
   label?: string;
-  icon: ReactNode;
+  icon: ReactNode | ComponentType<any>;
   href: string;
   variant?: "button" | "inline" | "vertical";
   hoverColor?: string;
@@ -52,7 +52,7 @@ const SocialLink: React.FC<SocialLinkProps> = ({
             : ""
         }`}
       >
-        {icon}
+        {typeof icon === "function" ? React.createElement(icon) : icon}
       </span>
       {(variant === "inline" || variant === "vertical") && label && (
         <span className={labelClasses[variant]}>{label}</span>

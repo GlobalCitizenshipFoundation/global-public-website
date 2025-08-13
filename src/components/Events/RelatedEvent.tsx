@@ -8,7 +8,9 @@ type Props = {
 }
 
 const RelatedEvent: React.FC<Props> = ( {event} ) => {
-    const formattedStartDate = eventData(event.startDateTime);
+    const formattedStartDate = event.startDateTime
+        ? eventData(event.startDateTime)
+        : "No date available";
 
     return (
         <div key={event._id} className='w-[351px]'>

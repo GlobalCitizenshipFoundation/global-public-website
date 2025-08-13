@@ -1,19 +1,13 @@
 import ButtonRegular from "@/components/ButtonRegular";
 import ContainerRegular from "@/components/ContainerRegular";
-import { PortableText } from "@portabletext/react";
+import { PortableText, PortableTextComponentProps } from "@portabletext/react";
 import { EventSingleType } from "../../../../utils/event-singleTypes";
-import EventData from "./EventData/EventData";
 import ContainerBig from "@/components/ContainerBig";
-import { contributorSingle } from "../../../../cms/schemaTypes/contributorSingle";
-import { eventSingle as event } from "../../../../cms/schemaTypes/eventSingle";
-import { EventSingle } from "../../../../public/images/page";
 import { ConferencePartners } from "./ConferencePartners/ConferencePartners";
 import { PanelDiscussion } from "./PanelDiscussion/PanelDiscusion";
-import { PeopleList } from "./PeopleList/PeopleList";
 import { PeoplePhotos } from "./PeoplePhotos/PeoplePhotos";
 import { Tags } from "@/components/Tags";
 import ContributorFrame from "@/components/Contributors/ContributorFrame";
-import PartnersLogo from "@/components/Partners/PartnersLogo";
 import { getSocialLinksFromCMS } from "@/components/Social/getSocialMediaFromCMS";
 import SocialLink from "@/components/Social/SocialLink";
 
@@ -24,13 +18,13 @@ type Props = {
 const EventSingleComponent: React.FC<Props> = ({event}) => {
   const portableTextComponents = {
     block: {
-      h2: ({ children }) => (
+      h2: ({ children }: PortableTextComponentProps<any> ) => (
         <h2 className="text-2xl lg:text-[42px] text-titles">{children}</h2>
       ),
-      h3: ({ children }) => (
+      h3: ({ children }: PortableTextComponentProps<any> ) => (
         <h3 className="text-xl lg:text-3xl font-semibold text-titles">{children}</h3>
       ),
-      normal: ({ children }) => (
+      normal: ({ children }: PortableTextComponentProps<any> ) => (
         <p className="text-sm lg:text-2xl text-body">{children}</p>
       )
     }
@@ -179,7 +173,9 @@ const EventSingleComponent: React.FC<Props> = ({event}) => {
                 </ContainerRegular>
                 <ContainerRegular className='flex flex-col gap-3.5 mb-14 lg:mb-22.5'>
                   <h2 className='text-2xl lg:text-[42px] text-titles mb-0'>Registration</h2>
-                  <PortableText value={event.agendaDescription} components={portableTextComponents}/>
+                    {event.agendaDescription &&
+                      <PortableText value={event.agendaDescription} components={portableTextComponents}/>
+                    }
                 </ContainerRegular>
                 <ContainerRegular>
                   <div className='flex flex-col gap-7 lg:hidden'>
@@ -258,7 +254,7 @@ const EventSingleComponent: React.FC<Props> = ({event}) => {
               )}
             </ContainerBig>
           </section>
-          <section className='py-10'>
+          {/* <section className='py-10'>
             <ContainerBig>
               {event.events && event.events.length > 0 && (
                 <>
@@ -272,7 +268,7 @@ const EventSingleComponent: React.FC<Props> = ({event}) => {
                 </>
               )}
             </ContainerBig>
-          </section>
+          </section> */}
         </div>
   );
 };
