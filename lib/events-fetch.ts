@@ -2,8 +2,8 @@ import { sanityClient } from "@/client";
 import { EventSingleType, RelatedEventProps } from "../utils/event-singleTypes";
 
 export const getEvents = async (): Promise<RelatedEventProps[]> => {
-  const events = await sanityClient.fetch(
-    `*[_type == "eventSingle"]{
+  return await sanityClient.fetch(`
+    *[_type == "eventSingle"]{
       _id,
       slug,
       eventHeading,
@@ -14,13 +14,11 @@ export const getEvents = async (): Promise<RelatedEventProps[]> => {
         }
       },
       startDateTime,
-    }`
-  );
-
-  return events;
+    }
+  `);
 };
 
-export const getEventBySlug = async (slug: string): Promise<EventSingleType | null>  => {
+export const getEventBySlug = async (slug: string): Promise<EventSingleType | null> => {
   return await sanityClient.fetch(
     `*[_type == "eventSingle" && slug.current == $slug][0]{
       _id,
@@ -93,5 +91,5 @@ export const getEventBySlug = async (slug: string): Promise<EventSingleType | nu
       speakersText
     }`,
     { slug }
-    ) as EventSingleType;
-}
+  );
+};

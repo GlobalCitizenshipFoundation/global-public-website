@@ -18,7 +18,7 @@ const Sharing: React.FC<types> = ({socialLinks}) => {
                   <SocialLink
                       key={link.href}
                       href={link.href}
-                      icon={<link.icon />}
+                      icon={typeof link.icon === "function" ? React.createElement(link.icon) : link.icon}
                       label={link.label}
                       variant="inline" />
               ))}
