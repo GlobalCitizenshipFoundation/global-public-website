@@ -16,7 +16,7 @@ export const PanelDiscussion: React.FC<Props> = ({
     pricing,
     price,
     attedanceMode,
-    startDateTime,
+    startDateTime,  
     endDateTime,
     marketingMention,
     financialAid, 
@@ -51,7 +51,7 @@ export const PanelDiscussion: React.FC<Props> = ({
               </div>
              )}
              <ButtonRegular className='mb-4'>
-                <span className='text-white text-base font-medium '>Watch replay</span>
+                <button className='text-white text-base font-medium '>Watch replay</button>
              </ButtonRegular>
              {financialAid && (
               <PortableText 

@@ -297,19 +297,19 @@ export const eventSingle = defineType({
     //     }),
     //   ],
     // }),
-    // defineField({
-    //   type: "array",
-    //   title: "Partners",
-    //   name: "partners",
-    //   of: [
-    //     defineArrayMember({
-    //       type: "reference",
-    //       to: [
-    //         { type: "null" },
-    //       ],
-    //     }),
-    //   ],
-    // }),
+    defineField({
+      type: "array",
+      title: "Partners",
+      name: "partners",
+      of: [
+        defineArrayMember({
+          type: "reference",
+          to: [
+            { type: "partnersSingle" },
+          ],
+        }),
+      ],
+    }),
     // defineField({
     //   type: "array",
     //   title: "Topics",

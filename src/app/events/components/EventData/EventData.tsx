@@ -1,5 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
+import { eventData } from "../../../../../lib/event-date";
+import { eventTime } from "../../../../../lib/event-time";
 
 interface Props {
     start: string;
@@ -16,28 +18,15 @@ interface CountDown {
 const EventData: React.FC<Props> = ({ start, end }) => {
     const startDate = new Date(start);
     const endDate = new Date(end);
+
     const [countdown, setCountdown] = useState<CountDown | null>(null);
     const [status, setStatus] = useState<'countdown' | 'started' | 'ended'>('countdown');
 
-    const dateFormatter = new Intl.DateTimeFormat('en-GB', {
-        day: '2-digit',
-        month: 'long',
-        year: 'numeric',
-        timeZone: 'CET',
-    });
+    const formattedStartDate = eventData(start);
+    const formattedStartTime = eventTime(start);
 
-    const timeFormatter = new Intl.DateTimeFormat('en-GB', {
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false,
-      timeZone: 'CET',
-    });
-
-    const formattedStartDate = dateFormatter.format(startDate);
-    const formattedStartTime = timeFormatter.format(startDate);
-
-    const formattedEndDate = dateFormatter.format(endDate);
-    const formattedEndTime = timeFormatter.format(endDate);
+    const formattedEndDate = eventData(end);
+    const formattedEndTime = eventTime(start);
 
     useEffect(() => {
         const interval = setInterval(() => {

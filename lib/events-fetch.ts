@@ -57,6 +57,7 @@ export const getEventBySlug = async (slug: string): Promise<EventSingleType | nu
       endText,
       addToCalendarUrl,
       speakers[]->{
+        _id,
         name,
         designation,
         organization,
@@ -64,6 +65,28 @@ export const getEventBySlug = async (slug: string): Promise<EventSingleType | nu
           asset->{
             url,
             metadata { dimensions, lqip }
+          }
+        }
+      },
+      steeringCommittee[]->{
+        _id,
+        name,
+        designation,
+        organization,
+        photo{
+          asset->{
+            url,
+            metadata { dimensions, lqip }
+          }
+        }
+      },
+      partners[]->{
+        _id,
+        slug,
+        title,
+        logo {
+          asset->{
+            url,
           }
         }
       },

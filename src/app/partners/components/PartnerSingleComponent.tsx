@@ -33,7 +33,7 @@ const PartnerSingleComponent: React.FC<Props> = ({partner}) => {
                     </div>
                     <div className='flex flex-col gap-4'>
                         {partner.websiteUrl && <ButtonRegular className='bg-primary-darker text-white text-base font-normal h-[38px]'>{partner.websiteText ? partner.websiteText : 'Visit Website'}</ButtonRegular>}
-                        {socialLinks && 
+                        {socialLinks.length > 0 && 
                             <div className='flex gap-[19px] h-[44px]'>
                                 {socialLinks.map((link) => (
                                     <SocialLink

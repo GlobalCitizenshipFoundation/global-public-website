@@ -1,12 +1,15 @@
 import React from "react";
 import ButtonPrimary from "../ButtonPrimary";
 import { RelatedEventProps } from "../../../utils/event-singleTypes";
+import { eventData } from "../../../lib/event-date";
 
 type Props = {
     event: RelatedEventProps;
 }
 
 const RelatedEvent: React.FC<Props> = ( {event} ) => {
+    const formattedStartDate = eventData(event.startDateTime);
+
     return (
         <div key={event._id} className='w-[351px]'>
             {event.eventImage && (
@@ -17,10 +20,10 @@ const RelatedEvent: React.FC<Props> = ( {event} ) => {
                     Cover Story
                 </button>
 
-                <p>20 March, 2025</p>
+                <p>{formattedStartDate}</p>
             </div>
             <h2 className="font-inter font-semibold text-2xl mb-7.5">{event.eventHeading}</h2>
-            <ButtonPrimary href={`/events/${event.slug?.current}`} width={217}>
+            <ButtonPrimary href={`/events/${event.slug?.current}`} width={217} className="grow">
                 Read More
             </ButtonPrimary>
         </div>
