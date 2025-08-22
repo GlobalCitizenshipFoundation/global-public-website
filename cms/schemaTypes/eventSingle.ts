@@ -16,46 +16,13 @@ export const eventSingle = defineType({
       options: { source: "eventHeading" },
     }),
     defineField({
-      type: "image",
-      title: "Event Image",
-      name: "eventImage",
-      options: { hotspot: true },
-    }),
-    // defineField({
-    //   type: "array",
-    //   title: "Event Type/Category",
-    //   name: "eventType",
-    //   of: [
-    //     defineArrayMember({
-    //       type: "reference",
-    //       to: [
-    //         { type: "type" },
-    //         { type: "category" },
-    //       ],
-    //     }),
-    //   ],
-    // }),
-    defineField({
         type: 'string',
-        name: 'pricing',
-        title: 'Pricing',
+        name: 'eventStatus',
+        title: 'Event Status',
         options: {
             list: [
             { title: 'Free', value: 'free' },
             { title: 'Paid', value: 'paid' },
-            ],
-            layout: 'dropdown',
-        },
-    }),
-    defineField({
-        type: 'string',
-        name: 'status',
-        title: 'Status',
-        options: {
-            list: [
-            { title: 'Upcoming', value: 'upcoming' },
-            { title: 'Started', value: 'started' },
-            { title: 'Ended', value: 'ended' },
             ],
             layout: 'dropdown',
         },
@@ -84,21 +51,6 @@ export const eventSingle = defineType({
         title: 'End Date and Time',
     }),
     defineField({
-        type: 'array',
-        name: 'marketingMention',
-        title: 'Marketing Mention',
-        of: [{ type: "block" }]
-    }),
-    defineField({
-        name: "price",
-        title: "Price",
-        type: "object",
-        fields: [
-            { name: "amount", title: "Amount", type: "number" },
-            { name: "currency", title: "Currency", type: "string" },
-        ],
-    }),
-    defineField({
       type: "datetime",
       title: "Registration Deadline",
       name: "registrationDeadline",
@@ -114,52 +66,99 @@ export const eventSingle = defineType({
       name: "currentRegistrations",
     }),
     defineField({
-        type: 'string',
-        name: 'registrationStatus',
-        title: 'Registration Status',
-        options: {
-            list: [
-            { title: 'In Stock', value: 'inStock' },
-            { title: 'Sold Out', value: 'soldOut' },
-            { title: 'Limited Availability', value: 'limitedAvailability' },
-            ],
-            layout: 'dropdown',
-        },
+      type: 'string',
+      name: 'registrationStatus',
+      title: 'Registration Status',
+      options: {
+          list: [
+          { title: 'In Stock', value: 'inStock' },
+          { title: 'Sold Out', value: 'soldOut' },
+          { title: 'Limited Availability', value: 'limitedAvailability' },
+          ],
+          layout: 'dropdown',
+      },
     }),
     defineField({
-        type: 'array',
-        name: 'financialAid',
-        title: 'Financial Aid',
-        of: [{ type: "block" }]
+      type: 'array',
+      name: 'marketingMention',
+      title: 'Marketing Mention',
+      of: [{ type: "block" }]
     }),
     defineField({
-        name: "buttonPrimary",
-        title: "Primary Button",
-        type: "object",
-        fields: [
-            {
-            name: "label",
-            title: "Label",
-            type: "string",
-            },
-            {
-            name: "url",
-            title: "URL",
-            type: "url",
-            },
-        ],
+      type: "object",
+      name: "price",
+      title: "Price",
+      fields: [
+          { name: "amount", title: "Amount", type: "number" },
+          { name: "currency", title: "Currency", type: "string" },
+      ],
+    }),
+    defineField({
+      type: 'array',
+      name: 'panelDiscussionfinancialAid',
+      title: 'Panel Discussion Financial Aid',
+      of: [{ type: "block" }]
+    }),
+    defineField({
+      type: "string",
+      title: "Venue",
+      name: "venue",
     }),
     defineField({
       type: "array",
-      title: "Speakers",
-      name: "speakers",
-      of: [
-        defineArrayMember({
-          type: "reference",
-          to: [
-            { type: "contributorSingle" },
-          ],
-        }),
+      title: "Rich Text Box",
+      name: "richTextBox",
+      of: [{ type: "block" }]
+    }),
+    defineField({
+      name: "buttonPrimary",
+      title: "Primary Button",
+      type: "object",
+      fields: [
+          {
+          name: "label",
+          title: "Label",
+          type: "string",
+          },
+          {
+          name: "url",
+          title: "URL",
+          type: "url",
+          },
+      ],
+    }),
+    defineField({
+      name: "buttonSecondary",
+      title: "Secondary Button",
+      type: "object",
+      fields: [
+          {
+          name: "label",
+          title: "Label",
+          type: "string",
+          },
+          {
+          name: "url",
+          title: "URL",
+          type: "url",
+          },
+      ],
+    }),
+    defineField({
+      name: "buttonTertiary",
+      title: "Tertiary Button",
+      type: "object",
+      fields: [
+          {
+          name: "label",
+          title: "Label",
+          type: "string",
+          },
+          {
+          name: "url",
+          title: "URL",
+          type: "url",
+          },
       ],
     }),
     // defineField({
@@ -176,21 +175,27 @@ export const eventSingle = defineType({
     //   ],
     // }),
     defineField({
+      type: "image",
+      title: "Event Image",
+      name: "eventImage",
+      options: { hotspot: true },
+    }),
+    defineField({
       type: "array",
       title: "Intro Text",
       name: "introText",
       of: [{ type: "block" }]
     }),
     defineField({
-        type: 'array',
-        name: 'body',
-        title: 'Body',
-        of: [{ type: "block" }]
+      type: "string",
+      title: "Video Link",
+      name: "videoLink",
     }),
     defineField({
-      type: "string",
-      title: "Venue",
-      name: "venue",
+        type: 'array',
+        name: 'bodyText',
+        title: 'Body Text',
+        of: [{ type: "block" }]
     }),
     defineField({
         type: 'array',
@@ -199,53 +204,19 @@ export const eventSingle = defineType({
         of: [{ type: "block" }]
     }),
     defineField({
-        name: "buttonSecondary",
-        title: "Secondary Button",
-        type: "object",
-        fields: [
-            {
-            name: "label",
-            title: "Label",
-            type: "string",
-            },
-            {
-            name: "url",
-            title: "URL",
-            type: "url",
-            },
-        ],
-    }),
-    defineField({
-        name: "buttonTertiary",
-        title: "Tertiary Button",
-        type: "object",
-        fields: [
-            {
-            name: "label",
-            title: "Label",
-            type: "string",
-            },
-            {
-            name: "url",
-            title: "URL",
-            type: "url",
-            },
-        ],
-    }),
-    defineField({
-        type: 'array',
-        name: 'audience',
-        title: 'Who is this Event for',
-        of: [{ type: 'string' }],
-        options: {
-            list: [
-            { title: 'Educators', value: 'educators' },
-            { title: 'Education Leaders', value: 'educationLeaders' },
-            { title: 'Youth', value: 'youth' },
-            { title: 'Institutions', value: 'institutions' },
-            ],
-            layout: 'grid',
-        },
+      type: 'array',
+      name: 'audience',
+      title: 'Who is this Event for',
+      of: [{ type: 'string' }],
+      options: {
+          list: [
+          { title: 'Educators', value: 'educators' },
+          { title: 'Education Leaders', value: 'educationLeaders' },
+          { title: 'Youth', value: 'youth' },
+          { title: 'Institutions', value: 'institutions' },
+          ],
+        layout: 'grid',
+      },
     }),
     defineField({
       type: "string",
@@ -272,6 +243,31 @@ export const eventSingle = defineType({
       ],
     }),
     defineField({
+      type: 'array',
+      name: 'speakersDescription',
+      title: 'Speakers Description',
+      of: [{ type: "block" }]
+    }),
+    defineField({
+      type: "array",
+      title: "Speakers",
+      name: "speakers",
+      of: [
+        defineArrayMember({
+          type: "reference",
+          to: [
+            { type: "contributorSingle" },
+          ],
+        }),
+      ],
+    }),
+    defineField({
+      type: 'array',
+      name: 'steeringCommitteeDescription',
+      title: 'Steering Committee Description',
+      of: [{ type: "block" }]
+    }),
+    defineField({
       type: "array",
       title: "Steering Committee",
       name: "steeringCommittee",
@@ -284,19 +280,12 @@ export const eventSingle = defineType({
         }),
       ],
     }),
-    // defineField({
-    //   type: "array",
-    //   title: "Organizer",
-    //   name: "organizer",
-    //   of: [
-    //     defineArrayMember({
-    //       type: "reference",
-    //       to: [
-    //         { type: "null" },
-    //       ],
-    //     }),
-    //   ],
-    // }),
+    defineField({
+      type: 'array',
+      name: 'partnersDescription',
+      title: 'Partners Description',
+      of: [{ type: "block" }]
+    }),
     defineField({
       type: "array",
       title: "Partners",
@@ -310,56 +299,28 @@ export const eventSingle = defineType({
         }),
       ],
     }),
-    // defineField({
-    //   type: "array",
-    //   title: "Topics",
-    //   name: "topics",
-    //   of: [
-    //     defineArrayMember({
-    //       type: "reference",
-    //       to: [
-    //         { type: "null" },
-    //       ],
-    //     }),
-    //   ],
-    // }),
-    // defineField({
-    //   type: "array",
-    //   title: "Related Events",
-    //   name: "relatedEvents",
-    //   of: [
-    //     defineArrayMember({
-    //       type: "reference",
-    //       to: [
-    //         { type: "null" },
-    //       ],
-    //     }),
-    //   ],
-    // }),
     defineField({
         type: 'array',
-        name: 'endText',
-        title: 'End Text',
+        name: 'registration',
+        title: 'Registration',
         of: [{ type: "block" }]
     }),
     defineField({
-        name: "addToCalendarUrl",
-        title: "Add to Calendar Link",
-        type: "url",
+      type: 'array',
+      name: 'topics',
+      title: 'Topics',
+      of: [{ type: 'string' }],
+      options: {
+          list: [
+          { title: 'Global Citizenship', value: 'globalCitizenship' },
+          { title: 'Ed Tech', value: 'edTech' },
+          { title: 'Online Learning', value: 'onlineLearning' },
+          { title: 'Pedagogy', value: 'pedagogy' },
+          { title: 'Educational Leadership', value: 'educationalLeadership' },
+          ],
+          layout: 'grid',
+      },
     }),
-    // defineField({
-    //   type: "array",
-    //   title: "Offer",
-    //   name: "offer",
-    //   of: [
-    //     defineArrayMember({
-    //       type: "reference",
-    //       to: [
-    //         { type: "null" },
-    //       ],
-    //     }),
-    //   ],
-    // }),
   ],
 });
 

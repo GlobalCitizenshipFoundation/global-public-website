@@ -41,7 +41,6 @@ export default function SwiperList() {
         slidesPerView="auto"
         spaceBetween={70}
         modules={[Pagination, Navigation]}
-        style={{ paddingLeft: "350px" }}
         pagination={{
           clickable: true,
           el: '.custom-pagination',
@@ -64,10 +63,17 @@ export default function SwiperList() {
           // @ts-ignore
           swiper.params.pagination.el = paginationRef.current;
         }}
-        className="w-full"
+        className="w-full mb-21"
       >
         {exampleArray.map((example, index) => (
-          <SwiperSlide key={`${index}-${example.title}`} style={{ width: "auto" }}>
+          <SwiperSlide 
+            key={`${index}-${example.title}`} 
+            style={{
+              width: 'auto',
+              paddingLeft: index === 0 ? 'calc((100% - 1229px) / 2)' : undefined,
+              paddingRight: index === exampleArray.length - 1 ? 'calc((100% - 1229px) / 2)' : undefined,
+            }}
+          >
             <SwiperSlideCard
               src={example.src}
               kind={example.kind}

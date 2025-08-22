@@ -12,17 +12,6 @@ export default function Home() {
 
   return (
     <>
-      <div className='h-screen flex justify-center items-center gap-4'>
-        <Link href="/events" className='bg-primary p-10 rounded-lg'>
-          <div className='cursor-pointer text-white'>Go to event static page</div>
-        </Link>
-        <Link href="/contributors" className='bg-emerald-600 p-10 rounded-lg'>
-          <div className='cursor-pointer text-white'>Go to contributor static page</div>
-        </Link>
-        <Link href="/partners" className='bg-blue-900 p-10 rounded-lg'>
-          <div className='cursor-pointer text-white'>Go to partner static page</div>
-        </Link>
-      </div>
       <main>
         <section className='flex flex-col relative w-full h-[750px] '>
           <Image
@@ -62,7 +51,7 @@ export default function Home() {
               className="absolute bottom-0 left-0 "
             />
           </div>
-          <div className='flex flex-col justify-start w-[552px]'>
+          <div className='flex flex-col justify-start items-start w-[552px]'>
             <h2 className='text-[80px]/[110%] text-gray font-semibold tracking-normal mb-4'>We work on education</h2>
             <p className='text-2xl/[142%] text-borders mb-9'>We work towards transforming education for global citizenship and sustainable development.</p>
             <p className='text-2xl/[128%] text-gray font-bold mb-10'>Since 2016, the Global Citizenship Foundation has been supporting educational</p>
@@ -81,7 +70,7 @@ export default function Home() {
             textDescription={'Take advantage of the excellent upcoming and featured learning and networking opportunities offered by some of researchers.'}
             gap={177}
           />
-          <SwiperList />        
+            <SwiperList />        
         </section>
         
         <section className='flex w-full h-[750px] bg-dark-blue relative'>

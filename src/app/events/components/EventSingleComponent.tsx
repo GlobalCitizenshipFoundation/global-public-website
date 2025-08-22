@@ -1,19 +1,13 @@
 import ButtonRegular from "@/components/ButtonRegular";
 import ContainerRegular from "@/components/ContainerRegular";
-import { PortableText } from "@portabletext/react";
+import { PortableText, PortableTextBlock, PortableTextComponentProps } from "@portabletext/react";
 import { EventSingleType } from "../../../../utils/event-singleTypes";
-import EventData from "./EventData/EventData";
 import ContainerBig from "@/components/ContainerBig";
-import { contributorSingle } from "../../../../cms/schemaTypes/contributorSingle";
-import { eventSingle as event } from "../../../../cms/schemaTypes/eventSingle";
-import { EventSingle } from "../../../../public/images/page";
 import { ConferencePartners } from "./ConferencePartners/ConferencePartners";
 import { PanelDiscussion } from "./PanelDiscussion/PanelDiscusion";
-import { PeopleList } from "./PeopleList/PeopleList";
 import { PeoplePhotos } from "./PeoplePhotos/PeoplePhotos";
 import { Tags } from "@/components/Tags";
 import ContributorFrame from "@/components/Contributors/ContributorFrame";
-import PartnersLogo from "@/components/Partners/PartnersLogo";
 import { getSocialLinksFromCMS } from "@/components/Social/getSocialMediaFromCMS";
 import SocialLink from "@/components/Social/SocialLink";
 
@@ -24,13 +18,13 @@ type Props = {
 const EventSingleComponent: React.FC<Props> = ({event}) => {
   const portableTextComponents = {
     block: {
-      h2: ({ children }) => (
+      h2: ({ children }: PortableTextComponentProps<PortableTextBlock>) => (
         <h2 className="text-2xl lg:text-[42px] text-titles">{children}</h2>
       ),
-      h3: ({ children }) => (
+      h3: ({ children }: PortableTextComponentProps<PortableTextBlock>) => (
         <h3 className="text-xl lg:text-3xl font-semibold text-titles">{children}</h3>
       ),
-      normal: ({ children }) => (
+      normal: ({ children }: PortableTextComponentProps<PortableTextBlock>) => (
         <p className="text-sm lg:text-2xl text-body">{children}</p>
       )
     }
@@ -56,6 +50,8 @@ const EventSingleComponent: React.FC<Props> = ({event}) => {
   };
 
   const socialLinks = getSocialLinksFromCMS(staticSocials);
+
+  console.log(event.partners);
 
   return (
     <div className='flex flex-col bg-background-primary'>
@@ -87,16 +83,19 @@ const EventSingleComponent: React.FC<Props> = ({event}) => {
                     )}
                 </ContainerRegular>
                 <ContainerRegular className='mb-14 lg:hidden'>
-                  <PanelDiscussion 
-                    pricing={event.pricing} 
-                    price={event.price} 
-                    attedanceMode={event.attedanceMode}
-                    startDateTime={event.startDateTime}
-                    endDateTime={event.endDateTime}
-                    marketingMention={event.marketingMention}
-                    financialAid={event.financialAid}
-                  />
-                  <div className="flex px-">
+                  {event.endDateTime && event.startDateTime && event.pricing && event.attedanceMode && event.marketingMention && event.financialAid && (
+                    <PanelDiscussion 
+                      pricing={event.pricing} 
+                      price={event.price} 
+                      attedanceMode={event.attedanceMode}
+                      startDateTime={event.startDateTime}
+                      endDateTime={event.endDateTime}
+                      marketingMention={event.marketingMention}
+                      financialAid={event.financialAid}
+                    />
+                  )}
+
+                  <div className="flex">
                   <div className='flex flex-col gap-1.5 w-full mb-9'>
                     <span className='text-subtitles font-semibold text-2xl lg:text-3xl'>Venue Location</span>
                     <span className='text-borders font-normal text-sm'>{event.venue}</span>
@@ -173,13 +172,17 @@ const EventSingleComponent: React.FC<Props> = ({event}) => {
                       <PortableText value={event.endText} components={portableTextComponents}/>
                     )}
                   </div>
-                  <ConferencePartners partners={event.partners} type={"Host"} />
-                  <ConferencePartners partners={event.partners} type={"EventPartner"} />
-                  <ConferencePartners partners={event.partners} type={"KnowledgePartners"} />
-                </ContainerRegular>
-                <ContainerRegular className='flex flex-col gap-3.5 mb-14 lg:mb-22.5'>
-                  <h2 className='text-2xl lg:text-[42px] text-titles mb-0'>Registration</h2>
-                  <PortableText value={event.agendaDescription} components={portableTextComponents}/>
+                  {event.partners && (
+                    <>
+                      {(["Host", "EventPartner", "KnowledgePartners"] as const).map((type) => (
+                        <ConferencePartners
+                          key={type}
+                          partners={event.partners}
+                          type={type}
+                        />
+                      ))}
+                    </>
+                  )}
                 </ContainerRegular>
                 <ContainerRegular>
                   <div className='flex flex-col gap-7 lg:hidden'>
@@ -203,15 +206,18 @@ const EventSingleComponent: React.FC<Props> = ({event}) => {
               </div>
               <div className='order-1 lg:col-start-2 hidden lg:flex'>
                 <ContainerRegular className='mb-11'>
-                  <PanelDiscussion 
-                    pricing={event.pricing} 
-                    price={event.price} 
-                    attedanceMode={event.attedanceMode}
-                    startDateTime={event.startDateTime}
-                    endDateTime={event.endDateTime}
-                    marketingMention={event.marketingMention}
-                    financialAid={event.financialAid}
-                  />
+                  {event.endDateTime && event.startDateTime && event.pricing && event.attedanceMode && event.marketingMention && event.financialAid && (
+                    <PanelDiscussion 
+                      pricing={event.pricing} 
+                      price={event.price} 
+                      attedanceMode={event.attedanceMode}
+                      startDateTime={event.startDateTime}
+                      endDateTime={event.endDateTime}
+                      marketingMention={event.marketingMention}
+                      financialAid={event.financialAid}
+                    />
+                  )}
+
                   <div className="flex flex-col gap-10 px-9">
                     <div className='flex flex-col gap-1.5 w-full mb-9'>
                       <span className='text-subtitles font-semibold text-2xl lg:text-3xl'>Venue Location</span>
@@ -258,7 +264,7 @@ const EventSingleComponent: React.FC<Props> = ({event}) => {
               )}
             </ContainerBig>
           </section>
-          <section className='py-10'>
+          {/* <section className='py-10'>
             <ContainerBig>
               {event.events && event.events.length > 0 && (
                 <>
@@ -272,7 +278,7 @@ const EventSingleComponent: React.FC<Props> = ({event}) => {
                 </>
               )}
             </ContainerBig>
-          </section>
+          </section> */}
         </div>
   );
 };

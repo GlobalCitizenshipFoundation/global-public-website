@@ -84,6 +84,7 @@ export const getEventBySlug = async (slug: string): Promise<EventSingleType | nu
         _id,
         slug,
         title,
+        partnerType,
         logo {
           asset->{
             url,
