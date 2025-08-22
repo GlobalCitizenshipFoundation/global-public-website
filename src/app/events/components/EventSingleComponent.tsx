@@ -51,8 +51,6 @@ const EventSingleComponent: React.FC<Props> = ({event}) => {
 
   const socialLinks = getSocialLinksFromCMS(staticSocials);
 
-  console.log(event.partners);
-
   return (
     <div className='flex flex-col bg-background-primary'>
           <section className='w-full lg:max-w-[1610px] mx-auto box-border'>
