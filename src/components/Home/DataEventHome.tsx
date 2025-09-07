@@ -7,16 +7,14 @@ interface Props {
   gap: number;
 }
 
-export const DataEventHome: React.FC<Props> = ({ title, buttonTitle, textDescription, gap }) => {
-  return (
-    <div className={`flex max-w-[1229px] items-center`} style={{ gap: `${gap}px` }}>
-      <h2 className="text-gray mb-0 w-full text-[80px]/[110%] font-semibold">{title}</h2>
-      <div className="flex w-full flex-col gap-4">
-        <ButtonPrimary width={310} href="">
-          {buttonTitle}
-        </ButtonPrimary>
-        <p className="text-gray text-2xl/[128%] font-normal">{textDescription}</p>
-      </div>
-    </div>
-  );
-};
+export const DataEventHome: React.FC<Props> = ({title, buttonTitle, textDescription, gap}) => {
+    return (
+        <div className={`flex items-center max-w-[1229px]`} style={{ gap: `${gap}px` }}>
+            <h2 className='text-[80px]/[110%] text-gray font-semibold mb-0 w-full'>{title}</h2>
+            <div className='flex flex-col gap-4 w-full'>
+              <ButtonPrimary width={310} href='/events' children={buttonTitle}/>
+              <p className='text-2xl/[128%] text-gray font-normal'>{textDescription}</p>
+            </div>
+        </div> 
+    )
+}
