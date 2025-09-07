@@ -62,7 +62,7 @@ const EventData: React.FC<Props> = ({ start, end }) => {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [start]);
+  }, [start, endDate, startDate]);
 
   return (
     <div className="flex flex-col gap-8">

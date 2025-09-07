@@ -1,6 +1,6 @@
 import ButtonRegular from '@/components/ButtonRegular';
 import ContainerRegular from '@/components/ContainerRegular';
-import { PortableText, PortableTextComponentProps } from '@portabletext/react';
+import { PortableText, PortableTextBlock, PortableTextComponentProps } from '@portabletext/react';
 import { EventSingleType } from '../../../../utils/event-singleTypes';
 import ContainerBig from '@/components/ContainerBig';
 import { ConferencePartners } from './ConferencePartners/ConferencePartners';
@@ -18,13 +18,13 @@ type Props = {
 const EventSingleComponent: React.FC<Props> = ({ event }) => {
   const portableTextComponents = {
     block: {
-      h2: ({ children }: PortableTextComponentProps<any>) => (
+      h2: ({ children }: PortableTextComponentProps<PortableTextBlock>) => (
         <h2 className="text-titles text-2xl lg:text-[42px]">{children}</h2>
       ),
-      h3: ({ children }: PortableTextComponentProps<any>) => (
+      h3: ({ children }: PortableTextComponentProps<PortableTextBlock>) => (
         <h3 className="text-titles text-xl font-semibold lg:text-3xl">{children}</h3>
       ),
-      normal: ({ children }: PortableTextComponentProps<any>) => (
+      normal: ({ children }: PortableTextComponentProps<PortableTextBlock>) => (
         <p className="text-body text-sm lg:text-2xl">{children}</p>
       ),
     },
@@ -34,7 +34,7 @@ const EventSingleComponent: React.FC<Props> = ({ event }) => {
     return <p>No posts found.</p>;
   }
 
-  function getCombinedParticipants(event: EventSingleType): any[] {
+  function getCombinedParticipants(event: EventSingleType) {
     const steering = event.steeringCommittee ?? [];
     const speakers = event.speakers ?? [];
 
@@ -74,16 +74,24 @@ const EventSingleComponent: React.FC<Props> = ({ event }) => {
               )}
             </ContainerRegular>
             <ContainerRegular className="mb-14 lg:hidden">
-              <PanelDiscussion
-                pricing={event.pricing}
-                price={event.price}
-                attedanceMode={event.attedanceMode}
-                startDateTime={event.startDateTime}
-                endDateTime={event.endDateTime}
-                marketingMention={event.marketingMention}
-                financialAid={event.financialAid}
-              />
-              <div className="px- flex">
+              {event.endDateTime &&
+                event.startDateTime &&
+                event.pricing &&
+                event.attedanceMode &&
+                event.marketingMention &&
+                event.financialAid && (
+                  <PanelDiscussion
+                    pricing={event.pricing}
+                    price={event.price}
+                    attedanceMode={event.attedanceMode}
+                    startDateTime={event.startDateTime}
+                    endDateTime={event.endDateTime}
+                    marketingMention={event.marketingMention}
+                    financialAid={event.financialAid}
+                  />
+                )}
+
+              <div className="flex">
                 <div className="mb-9 flex w-full flex-col gap-1.5">
                   <span className="text-subtitles text-2xl font-semibold lg:text-3xl">
                     Venue Location
@@ -162,14 +170,12 @@ const EventSingleComponent: React.FC<Props> = ({ event }) => {
                   <PortableText value={event.endText} components={portableTextComponents} />
                 )}
               </div>
-              <ConferencePartners partners={event.partners} type={'Host'} />
-              <ConferencePartners partners={event.partners} type={'EventPartner'} />
-              <ConferencePartners partners={event.partners} type={'KnowledgePartners'} />
-            </ContainerRegular>
-            <ContainerRegular className="mb-14 flex flex-col gap-3.5 lg:mb-22.5">
-              <h2 className="text-titles mb-0 text-2xl lg:text-[42px]">Registration</h2>
-              {event.agendaDescription && (
-                <PortableText value={event.agendaDescription} components={portableTextComponents} />
+              {event.partners && (
+                <>
+                  {(['Host', 'EventPartner', 'KnowledgePartners'] as const).map((type) => (
+                    <ConferencePartners key={type} partners={event.partners} type={type} />
+                  ))}
+                </>
               )}
             </ContainerRegular>
             <ContainerRegular>
@@ -195,15 +201,23 @@ const EventSingleComponent: React.FC<Props> = ({ event }) => {
           </div>
           <div className="order-1 hidden lg:col-start-2 lg:flex">
             <ContainerRegular className="mb-11">
-              <PanelDiscussion
-                pricing={event.pricing}
-                price={event.price}
-                attedanceMode={event.attedanceMode}
-                startDateTime={event.startDateTime}
-                endDateTime={event.endDateTime}
-                marketingMention={event.marketingMention}
-                financialAid={event.financialAid}
-              />
+              {event.endDateTime &&
+                event.startDateTime &&
+                event.pricing &&
+                event.attedanceMode &&
+                event.marketingMention &&
+                event.financialAid && (
+                  <PanelDiscussion
+                    pricing={event.pricing}
+                    price={event.price}
+                    attedanceMode={event.attedanceMode}
+                    startDateTime={event.startDateTime}
+                    endDateTime={event.endDateTime}
+                    marketingMention={event.marketingMention}
+                    financialAid={event.financialAid}
+                  />
+                )}
+
               <div className="flex flex-col gap-10 px-9">
                 <div className="mb-9 flex w-full flex-col gap-1.5">
                   <span className="text-subtitles text-2xl font-semibold lg:text-3xl">

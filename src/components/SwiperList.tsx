@@ -43,7 +43,6 @@ export default function SwiperList() {
           slidesPerView="auto"
           spaceBetween={70}
           modules={[Pagination, Navigation]}
-          style={{ paddingLeft: '350px' }}
           pagination={{
             clickable: true,
             el: '.custom-pagination',
@@ -59,14 +58,29 @@ export default function SwiperList() {
             nextEl: nextRef.current!,
           }}
           onBeforeInit={(swiper) => {
-            (swiper.params.navigation as NavigationOptions).prevEl = prevRef.current;
-            (swiper.params.navigation as NavigationOptions).nextEl = nextRef.current;
-            (swiper.params.pagination as PaginationOptions).el = paginationRef.current;
+            if (swiper.params.navigation && swiper.params.navigation !== true) {
+              const nav = swiper.params.navigation as NavigationOptions;
+              nav.prevEl = prevRef.current;
+              nav.nextEl = nextRef.current;
+            }
+
+            if (swiper.params.pagination && swiper.params.pagination !== true) {
+              const pag = swiper.params.pagination as PaginationOptions;
+              pag.el = paginationRef.current;
+            }
           }}
-          className="w-full"
+          className="mb-21 w-full"
         >
           {exampleArray.map((example, index) => (
-            <SwiperSlide key={`${index}-${example.title}`} style={{ width: 'auto' }}>
+            <SwiperSlide
+              key={`${index}-${example.title}`}
+              style={{
+                width: 'auto',
+                paddingLeft: index === 0 ? 'calc((100% - 1229px) / 2)' : undefined,
+                paddingRight:
+                  index === exampleArray.length - 1 ? 'calc((100% - 1229px) / 2)' : undefined,
+              }}
+            >
               <SwiperSlideCard
                 src={example.src}
                 kind={example.kind}

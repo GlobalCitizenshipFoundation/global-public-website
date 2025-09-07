@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import Image from 'next/image';
 import ButtonPrimary from '@/components/ButtonPrimary';
 import { DataEventHome } from '@/components/Home/DataEventHome';
@@ -12,17 +11,6 @@ export default function Home() {
 
   return (
     <>
-      <div className="flex h-screen items-center justify-center gap-4">
-        <Link href="/events" className="bg-primary rounded-lg p-10">
-          <div className="cursor-pointer text-white">Go to event static page</div>
-        </Link>
-        <Link href="/contributors" className="rounded-lg bg-emerald-600 p-10">
-          <div className="cursor-pointer text-white">Go to contributor static page</div>
-        </Link>
-        <Link href="/partners" className="rounded-lg bg-blue-900 p-10">
-          <div className="cursor-pointer text-white">Go to partner static page</div>
-        </Link>
-      </div>
       <main>
         <section className="relative flex h-[750px] w-full flex-col">
           <Image
@@ -70,7 +58,7 @@ export default function Home() {
               className="absolute bottom-0 left-0"
             />
           </div>
-          <div className="flex w-[552px] flex-col justify-start">
+          <div className="flex w-[552px] flex-col items-start justify-start">
             <h2 className="text-gray mb-4 text-[80px]/[110%] font-semibold tracking-normal">
               We work on education
             </h2>

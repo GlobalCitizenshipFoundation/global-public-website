@@ -1,5 +1,4 @@
 import { notFound } from 'next/navigation';
-import { getContributorBySlug } from '../../../../lib/contributors-fetch';
 import PartnerSingleComponent from '../components/PartnerSingleComponent';
 import { getPartnerBySlug } from '../../../../lib/partners-fetch';
 

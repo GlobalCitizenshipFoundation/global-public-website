@@ -28,6 +28,10 @@ export interface PartnerSingleType {
   websiteUrl?: string;
   quote?: string;
   partnerProfile?: string;
+  partnerType: string;
 }
 
-export type RelatedPartnersType = Pick<PartnerSingleType, '_id' | 'slug' | 'logo' | 'title'>;
+export type RelatedPartnersType = Pick<
+  PartnerSingleType,
+  '_id' | 'slug' | 'logo' | 'title' | 'partnerType'
+>;

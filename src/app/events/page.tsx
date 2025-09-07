@@ -1,7 +1,4 @@
 import ContainerBig from '@/components/ContainerBig';
-import Link from 'next/link';
-import { getContributors } from '../../../lib/contributors-fetch';
-import ContributorFrame from '@/components/Contributors/ContributorFrame';
 import { getEvents } from '../../../lib/events-fetch';
 import RelatedEvent from '@/components/Events/RelatedEvent';
 
