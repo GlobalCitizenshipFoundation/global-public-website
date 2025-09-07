@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import { RelatedContributorsType } from '../../../utils/contributor-singleTypes';
@@ -7,8 +9,12 @@ type FrameProps = {
 };
 
 const ContributorFrame: React.FC<FrameProps> = ({ contributor }) => {
+  console.log('contributors', contributor);
+  console.log('contributors slug', contributor.slug);
+  console.log(contributor.slug?.current);
+
   return (
-    <Link key={contributor._id} href={`/contributors/${contributor.slug?.current}`} className="">
+    <Link href={`/contributors/${contributor.slug?.current}`} className="">
       {contributor.photo && (
         <img
           src={contributor.photo.asset.url}

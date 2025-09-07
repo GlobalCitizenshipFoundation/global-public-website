@@ -7,7 +7,6 @@ export const getPartners = async (): Promise<RelatedPartnersType[]> => {
       _id,
       slug,
       title,
-      partnerType,
       logo {
         asset->{
           url
@@ -41,7 +40,6 @@ export const getPartnerBySlug = async (slug: string): Promise<PartnerSingleType 
     websiteUrl,
     quote,
     partnerProfile,
-    partnerType
   }`,
     { slug }
   );

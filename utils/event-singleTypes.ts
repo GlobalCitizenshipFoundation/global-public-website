@@ -55,7 +55,9 @@ export interface EventSingleType {
   addToCalendarUrl?: string;
   speakers: RelatedContributorsType[];
   steeringCommittee: RelatedContributorsType[];
-  partners: RelatedPartnersType[];
+  hostedBy: RelatedPartnersType[];
+  eventPartners: RelatedPartnersType[];
+  knowledgePartners: RelatedPartnersType[];
   speakersText: PortableTextBlock[];
 }
 
