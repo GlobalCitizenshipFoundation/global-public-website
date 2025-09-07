@@ -15,12 +15,6 @@ export const eventSingle = defineType({
       name: 'slug',
       options: {source: 'eventHeading'},
     }),
-    defineField({
-      type: 'image',
-      title: 'Event Image',
-      name: 'eventImage',
-      options: {hotspot: true},
-    }),
     // defineField({
     //   type: "array",
     //   title: "Event Type/Category",
@@ -128,21 +122,6 @@ export const eventSingle = defineType({
     }),
     defineField({
       type: 'array',
-      name: 'marketingMention',
-      title: 'Marketing Mention',
-      of: [{type: 'block'}],
-    }),
-    defineField({
-      type: 'object',
-      name: 'price',
-      title: 'Price',
-      fields: [
-        {name: 'amount', title: 'Amount', type: 'number'},
-        {name: 'currency', title: 'Currency', type: 'string'},
-      ],
-    }),
-    defineField({
-      type: 'array',
       name: 'panelDiscussionfinancialAid',
       title: 'Panel Discussion Financial Aid',
       of: [{type: 'block'}],
@@ -175,17 +154,6 @@ export const eventSingle = defineType({
         },
       ],
     }),
-    defineField({
-      type: 'array',
-      title: 'Speakers',
-      name: 'speakers',
-      of: [
-        defineArrayMember({
-          type: 'reference',
-          to: [{type: 'contributorSingle'}],
-        }),
-      ],
-    }),
     // defineField({
     //   type: "array",
     //   title: "Moderators",
@@ -201,25 +169,8 @@ export const eventSingle = defineType({
     // }),
     defineField({
       type: 'array',
-      title: 'Intro Text',
-      name: 'introText',
-      of: [{type: 'block'}],
-    }),
-    defineField({
-      type: 'array',
       name: 'body',
       title: 'Body',
-      of: [{type: 'block'}],
-    }),
-    defineField({
-      type: 'string',
-      title: 'Venue',
-      name: 'venue',
-    }),
-    defineField({
-      type: 'array',
-      name: 'promoMessage',
-      title: 'Promo Message',
       of: [{type: 'block'}],
     }),
     defineField({
@@ -377,8 +328,30 @@ export const eventSingle = defineType({
     }),
     defineField({
       type: 'array',
-      title: 'Partners',
-      name: 'partners',
+      title: 'Hosted by',
+      name: 'hostedBy',
+      of: [
+        defineArrayMember({
+          type: 'reference',
+          to: [{type: 'partnersSingle'}],
+        }),
+      ],
+    }),
+        defineField({
+      type: 'array',
+      title: 'Event Partners',
+      name: 'eventPartners',
+      of: [
+        defineArrayMember({
+          type: 'reference',
+          to: [{type: 'partnersSingle'}],
+        }),
+      ],
+    }),
+        defineField({
+      type: 'array',
+      title: 'Knowledge Partners',
+      name: 'knowledgePartners',
       of: [
         defineArrayMember({
           type: 'reference',

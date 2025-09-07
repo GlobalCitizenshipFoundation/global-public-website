@@ -56,6 +56,7 @@ export const getEventBySlug = async (slug: string): Promise<EventSingleType | nu
       addToCalendarUrl,
       speakers[]->{
         _id,
+        slug,
         name,
         designation,
         organization,
@@ -68,6 +69,7 @@ export const getEventBySlug = async (slug: string): Promise<EventSingleType | nu
       },
       steeringCommittee[]->{
         _id,
+        slug,
         name,
         designation,
         organization,
@@ -78,7 +80,27 @@ export const getEventBySlug = async (slug: string): Promise<EventSingleType | nu
           }
         }
       },
-      partners[]->{
+      hostedBy[]->{
+        _id,
+        slug,
+        title,
+        logo {
+          asset->{
+            url,
+          }
+        }
+      },
+      eventPartners[]->{
+        _id,
+        slug,
+        title,
+        logo {
+          asset->{
+            url,
+          }
+        }
+      },
+      knowledgePartners[]->{
         _id,
         slug,
         title,

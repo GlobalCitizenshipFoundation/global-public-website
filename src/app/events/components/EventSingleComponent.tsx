@@ -10,6 +10,7 @@ import { Tags } from '@/components/Tags';
 import ContributorFrame from '@/components/Contributors/ContributorFrame';
 import { getSocialLinksFromCMS } from '@/components/Social/getSocialMediaFromCMS';
 import SocialLink from '@/components/Social/SocialLink';
+import Image from 'next/image';
 
 type Props = {
   event: EventSingleType;
@@ -58,10 +59,12 @@ const EventSingleComponent: React.FC<Props> = ({ event }) => {
           <div className="order-1 lg:order-1">
             {event.eventImage?.asset && (
               <div className="mb-10 w-full items-center overflow-hidden">
-                <img
-                  className="h-auto w-full max-w-full object-contain"
+                <Image
                   src={event.eventImage.asset.url}
                   alt="Event-image"
+                  className="h-auto w-full max-w-full object-contain"
+                  width={1920}
+                  height={1080}
                 />
               </div>
             )}
@@ -165,17 +168,22 @@ const EventSingleComponent: React.FC<Props> = ({ event }) => {
             </ContainerRegular>
             <ContainerRegular className="flex flex-col lg:mb-18 lg:gap-[60px]">
               <div className="flex flex-col">
-                {event.partners && <h2>Conference Partners</h2>}
+                {event.endText && <h2>Conference Partners</h2>}
                 {event.endText && (
                   <PortableText value={event.endText} components={portableTextComponents} />
                 )}
               </div>
-              {event.partners && (
-                <>
-                  {(['Host', 'EventPartner', 'KnowledgePartners'] as const).map((type) => (
-                    <ConferencePartners key={type} partners={event.partners} type={type} />
-                  ))}
-                </>
+              {event.hostedBy && (
+                <ConferencePartners type={'Hosted by'} partners={event.hostedBy} />
+              )}
+              {event.eventPartners && (
+                <ConferencePartners type={'Event Partners'} partners={event.eventPartners} />
+              )}
+              {event.knowledgePartners && (
+                <ConferencePartners
+                  type={'Knowledge Partners'}
+                  partners={event.knowledgePartners}
+                />
               )}
             </ContainerRegular>
             <ContainerRegular>
