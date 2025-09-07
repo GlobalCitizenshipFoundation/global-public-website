@@ -1,4 +1,4 @@
-import {defineType, defineField, defineArrayMember} from 'sanity'
+import {defineType, defineField} from 'sanity'
 import countryOptions from '../../utils/countryOptions'
 
 export const contributorSingle = defineType({

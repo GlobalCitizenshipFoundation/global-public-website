@@ -1,4 +1,4 @@
-import {defineType, defineField, defineArrayMember} from 'sanity'
+import {defineType, defineField} from 'sanity'
 import countryOptions from '../../utils/countryOptions'
 
 export const partnerSingle = defineType({
@@ -104,17 +104,17 @@ export const partnerSingle = defineType({
       name: 'partnerProfile',
     }),
     defineField({
-      type: "string",
-      title: "Partner Type",
-      name: "partnerType",
+      type: 'string',
+      title: 'Partner Type',
+      name: 'partnerType',
       options: {
         list: [
-          { title: "Hosted by", value: "hostedBy" },
-          { title: "Event Partners", value: "eventPartners" },
-          { title: "Knowledge Partners", value: "knowledgePartners" },
+          {title: 'Hosted by', value: 'hostedBy'},
+          {title: 'Event Partners', value: 'eventPartners'},
+          {title: 'Knowledge Partners', value: 'knowledgePartners'},
         ],
-        layout: "dropdown",
+        layout: 'dropdown',
       },
-    }),    
+    }),
   ],
 })

@@ -1,5 +1,4 @@
 import ContainerBig from '@/components/ContainerBig';
-import ContributorFrame from '@/components/Contributors/ContributorFrame';
 import { getPartners } from '../../../lib/partners-fetch';
 import Link from 'next/link';
 import PartnersLogo from '@/components/Partners/PartnersLogo';

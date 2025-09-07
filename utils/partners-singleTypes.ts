@@ -31,5 +31,7 @@ export interface PartnerSingleType {
   partnerType: string;
 }
 
-export type RelatedPartnersType = Pick<PartnerSingleType, "_id" | "slug" | "logo" | "title" | "partnerType" >;
-
+export type RelatedPartnersType = Pick<
+  PartnerSingleType,
+  '_id' | 'slug' | 'logo' | 'title' | 'partnerType'
+>;

@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import Image from 'next/image';
 import ButtonPrimary from '@/components/ButtonPrimary';
 import { DataEventHome } from '@/components/Home/DataEventHome';
@@ -59,13 +58,22 @@ export default function Home() {
               className="absolute bottom-0 left-0"
             />
           </div>
-          <div className='flex flex-col justify-start items-start w-[552px]'>
-            <h2 className='text-[80px]/[110%] text-gray font-semibold tracking-normal mb-4'>We work on education</h2>
-            <p className='text-2xl/[142%] text-borders mb-9'>We work towards transforming education for global citizenship and sustainable development.</p>
-            <p className='text-2xl/[128%] text-gray font-bold mb-10'>Since 2016, the Global Citizenship Foundation has been supporting educational</p>
-            <div className='flex flex-col gap-3.5'>
-              {educationButtons.map(button => (
-                <ButtonPrimary width={310} href='' children={button}/>
+          <div className="flex w-[552px] flex-col items-start justify-start">
+            <h2 className="text-gray mb-4 text-[80px]/[110%] font-semibold tracking-normal">
+              We work on education
+            </h2>
+            <p className="text-borders mb-9 text-2xl/[142%]">
+              We work towards transforming education for global citizenship and sustainable
+              development.
+            </p>
+            <p className="text-gray mb-10 text-2xl/[128%] font-bold">
+              Since 2016, the Global Citizenship Foundation has been supporting educational
+            </p>
+            <div className="flex flex-col gap-3.5">
+              {educationButtons.map((button) => (
+                <ButtonPrimary width={310} href="" key={button}>
+                  {button}
+                </ButtonPrimary>
               ))}
             </div>
           </div>
@@ -80,7 +88,7 @@ export default function Home() {
             }
             gap={177}
           />
-            <SwiperList />        
+          <SwiperList />
         </section>
 
         <section className="bg-dark-blue relative flex h-[750px] w-full">
