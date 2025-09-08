@@ -10,7 +10,7 @@ export const navigation: NavItem[] = [
   { label: 'Networks', href: '/networks' },
   { label: 'Initiatives', href: '/initiatives' },
   { label: 'Events', href: '/events' },
-  { label: 'Publications', href: '/publications' },
-  { label: 'Get Involved', href: '/get-involved' },
+  { label: 'Publications', href: '/magazine' },
+  { label: 'Get Involved', href: '/partners' },
   { label: 'Contact', href: '/contact', type: 'button' },
 ];

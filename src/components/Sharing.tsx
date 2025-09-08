@@ -5,14 +5,15 @@ import SocialLink, { SocialLinkProps } from './Social/SocialLink';
 
 interface types {
   socialLinks: SocialLinkProps[];
+  title?: string;
 }
 
-const Sharing: React.FC<types> = ({ socialLinks }) => {
+const Sharing: React.FC<types> = ({ socialLinks, title = 'Sharing:' }) => {
   return (
     <>
       <BreakLine className="mt-7.5" />
       <section className="flex justify-between py-4.5">
-        <p>Sharing:</p>
+        <p>{title}</p>
         <div className="flex gap-8">
           {socialLinks.map((link) => (
             <SocialLink

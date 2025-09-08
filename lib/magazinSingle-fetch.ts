@@ -1,16 +1,33 @@
 import { sanityClient } from '@/client';
 import { MagazinSingleType } from '../utils/magazin-singleTypes';
 
+export const getMagazin = async (): Promise<MagazinSingleType[]> => {
+  return await sanityClient.fetch(`
+    *[_type == "magazinSingle"]{
+      _id,
+      slug,
+      date,
+      title,
+      magazinImage{
+        asset->{url}
+      },
+    }
+  `);
+};
+
 export const getMagazinBySlug = async (slug: string): Promise<MagazinSingleType | null> => {
   return await sanityClient.fetch(
-    `*[_type == "eventSingle" && slug.current == $slug][0]{
+    `*[_type == "magazinSingle" && slug.current == $slug][0]{
             _id,
+            title,
             slug,
             issue,
-            magazinImage,
+            magazinImage{
+              asset->{url}
+            },
             introText,
             shortIntro,
-            data,
+            date,
             downloadPdf,
             downloadEpub,
             mastheadHeading
