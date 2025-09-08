@@ -9,10 +9,6 @@ type FrameProps = {
 };
 
 const ContributorFrame: React.FC<FrameProps> = ({ contributor }) => {
-  console.log('contributors', contributor);
-  console.log('contributors slug', contributor.slug);
-  console.log(contributor.slug?.current);
-
   return (
     <Link href={`/contributors/${contributor.slug?.current}`} className="">
       {contributor.photo && (

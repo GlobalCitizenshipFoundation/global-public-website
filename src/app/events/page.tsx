@@ -5,8 +5,6 @@ import RelatedEvent from '@/components/Events/RelatedEvent';
 const EventsPage = async () => {
   const events = await getEvents();
 
-  console.log(events);
-
   return (
     <>
       <div className="bg-background-darker py-36">

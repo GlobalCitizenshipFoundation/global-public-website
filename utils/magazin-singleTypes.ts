@@ -23,6 +23,7 @@ interface SanityImage {
 
 export interface MagazinSingleType {
   _id: string;
+  title: string;
   slug?: {
     _type: 'slug';
     current: string;
@@ -31,8 +32,10 @@ export interface MagazinSingleType {
   magazinImage?: SanityImage;
   introText?: PortableTextBlock[];
   shortIntro?: string;
-  data: string;
+  date: string;
   downloadPdf: string;
   downloadEpub: string;
   mastheadHeading: string;
 }
+
+export type RelatedMagazinType = Pick<MagazinSingleType, '_id' | 'slug' | 'magazinImage' | 'date'>;
