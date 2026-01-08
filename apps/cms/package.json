@@ -1,0 +1,40 @@
+{
+  "name": "@gcf/cms",
+  "private": true,
+  "version": "1.0.0",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=20.11.0"
+  },
+  "scripts": {
+    "dev": "sanity dev",
+    "start": "sanity start",
+    "build": "sanity build",
+    "deploy": "sanity deploy",
+    "deploy:graphql": "sanity graphql deploy",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix --no-error-on-unmatched-pattern",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check",
+    "check": "npm run lint && npm run typecheck && npm run build",
+    "test": "echo \"no tests yet\""
+  },
+  "dependencies": {
+    "@sanity/vision": "^4.6.1",
+    "countries-list": "^3.2.2",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "sanity": "^4.6.1",
+    "styled-components": "^6.1.18"
+  },
+  "devDependencies": {
+    "@sanity/eslint-config-studio": "^5.0.2",
+    "@types/node": "^20",
+    "@types/react": "^19.1.0",
+    "eslint": "^9.28.0",
+    "globals": "^14.0.0",
+    "prettier": "^3.5.0",
+    "typescript": "^5.8.0"
+  }
+}

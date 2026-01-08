@@ -1,53 +1,76 @@
-import js from '@eslint/js';
-import tsPlugin from '@typescript-eslint/eslint-plugin';
-import tsParser from '@typescript-eslint/parser';
-import react from 'eslint-plugin-react';
-import reactHooks from 'eslint-plugin-react-hooks';
-import prettier from 'eslint-plugin-prettier';
-import globals from 'globals';
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+import js from "@eslint/js";
+import importPlugin from "eslint-plugin-import";
+import reactPlugin from "eslint-plugin-react";
+import reactHooksPlugin from "eslint-plugin-react-hooks";
+import a11yPlugin from "eslint-plugin-jsx-a11y";
+import eslintConfigPrettier from "eslint-config-prettier";
+
+import { FlatCompat } from "@eslint/eslintrc";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const compat = new FlatCompat({
+  baseDirectory: __dirname
+});
 
 export default [
-  // Ignorowane katalogi/pliki
   {
-    ignores: ['.next/**', 'node_modules/**', 'dist/**'],
+    ignores: [
+      "**/.next/**",
+      "**/dist/**",
+      "**/build/**",
+      "**/coverage/**",
+      "**/node_modules/**",
+      "**/.turbo/**",
+      "**/.vercel/**"
+    ]
   },
+
+  js.configs.recommended,
+
   {
-    files: ['**/*.{js,ts,jsx,tsx}'],
-    languageOptions: {
-      parser: tsParser,
-      parserOptions: {
-        ecmaVersion: 'latest',
-        sourceType: 'module',
-        ecmaFeatures: { jsx: true },
-      },
-      globals: {
-        ...globals.browser,
-        ...globals.node,
-      },
-    },
+    files: ["**/*.{js,jsx,ts,tsx}"],
     plugins: {
-      react,
-      'react-hooks': reactHooks,
-      prettier,
-      '@typescript-eslint': tsPlugin,
+      import: importPlugin,
+      react: reactPlugin,
+      "react-hooks": reactHooksPlugin,
+      "jsx-a11y": a11yPlugin
     },
-    rules: {
-      ...js.configs.recommended.rules,
-      ...tsPlugin.configs.recommended.rules,
-      ...react.configs.recommended.rules,
-      ...reactHooks.configs.recommended.rules,
-
-      'react/react-in-jsx-scope': 'off',
-      'react/prop-types': 'off',
-      'no-undef': 'off',
-
-      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
-      '@typescript-eslint/no-explicit-any': 'warn',
-
-      'prettier/prettier': 'error',
+    languageOptions: {
+      ecmaVersion: "latest",
+      sourceType: "module"
     },
     settings: {
-      react: { version: 'detect' },
+      react: { version: "detect" },
+      "import/resolver": {
+        typescript: true,
+        node: true
+      }
     },
+    rules: {
+      ...reactHooksPlugin.configs.recommended.rules,
+
+      "import/order": [
+        "error",
+        {
+          "newlines-between": "always",
+          alphabetize: { order: "asc", caseInsensitive: true }
+        }
+      ],
+      "react/react-in-jsx-scope": "off"
+    }
   },
+
+  ...compat
+    .extends("next/core-web-vitals")
+    .map((cfg) => ({
+      ...cfg,
+      files: ["apps/web/**/*.{js,jsx,ts,tsx}"]
+    })),
+
+  eslintConfigPrettier
 ];
