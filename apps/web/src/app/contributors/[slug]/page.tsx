@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { getContributorBySlug } from '../../../../lib/contributors-fetch';
+import { getContributorBySlug } from '../../../lib/contributors-fetch';
 import ContributorSingleComponent from '../components/ContributorSingleComponent';
 
 export const dynamic = 'force-dynamic';

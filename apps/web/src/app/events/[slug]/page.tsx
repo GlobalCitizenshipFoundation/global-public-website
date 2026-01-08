@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { getEventBySlug } from '../../../../lib/events-fetch';
+import { getEventBySlug } from '../../../lib/events-fetch';
 import EventSingleComponent from '../components/EventSingleComponent';
 
 export const dynamic = 'force-dynamic';

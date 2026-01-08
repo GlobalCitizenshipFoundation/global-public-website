@@ -1,5 +1,5 @@
 import React from 'react';
-import { RelatedPartnersType } from '../../../../../utils/partners-singleTypes';
+import { RelatedPartnersType } from '../../../../utils/partners-singleTypes';
 import PartnersLogo from '@/components/Partners/PartnersLogo';
 
 interface Props {

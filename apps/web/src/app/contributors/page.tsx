@@ -1,5 +1,5 @@
 import ContainerBig from '@/components/ContainerBig';
-import { getContributors } from '../../../lib/contributors-fetch';
+import { getContributors } from '../../lib/contributors-fetch';
 import ContributorFrame from '@/components/Contributors/ContributorFrame';
 
 const ContributorsPage = async () => {
@@ -21,7 +21,7 @@ const ContributorsPage = async () => {
             Transforming education for global citizenship and sustainable The Global Citizen ship
             Foundation continues commitment Preparing young people for a smart future.
           </p>
-          <div className="flex flex-wrap gap-[42px]">
+          <div className="flex flex-wrap gap-10.5">
             {contributors.map((contributor) => (
               <ContributorFrame contributor={contributor} key={contributor._id} />
             ))}

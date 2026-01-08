@@ -1,5 +1,5 @@
 import React from 'react';
-import { formatLabels } from '../../lib/format-tags';
+import { formatLabels } from '../lib/format-tags';
 
 interface Props {
   tags: string[];

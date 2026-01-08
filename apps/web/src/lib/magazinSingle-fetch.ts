@@ -1,5 +1,5 @@
 import { sanityClient } from '@/client';
-import { MagazinSingleType } from '../../../cms/utils/magazin-singleTypes';
+import { MagazinSingleType } from '../utils/magazin-singleTypes';
 
 export const getMagazin = async (): Promise<MagazinSingleType[]> => {
   return await sanityClient.fetch(`

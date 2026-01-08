@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import PartnerSingleComponent from '../components/PartnerSingleComponent';
-import { getPartnerBySlug } from '../../../../lib/partners-fetch';
+import { getPartnerBySlug } from '../../../lib/partners-fetch';
 
 export const dynamic = 'force-dynamic';
 
