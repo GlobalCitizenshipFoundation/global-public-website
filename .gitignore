@@ -28,3 +28,8 @@ Thumbs.db
 # tooling
 .vercel/
 .turbo/
+
+.cache/
+tsconfig.tsbuildinfo
+apps/web/tsconfig.tsbuildinfo
+nul

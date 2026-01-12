@@ -1,0 +1,25 @@
+{
+  "name": "@gcf/types",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "scripts": {
+    "lint": "eslint --cache --cache-location ../../.cache/eslint/types .",
+    "lint:fix": "npm run lint -- --fix",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "build": "tsc -p tsconfig.build.json"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "dependencies": {
+    "@portabletext/react": "^3.2.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3"
+  }
+}

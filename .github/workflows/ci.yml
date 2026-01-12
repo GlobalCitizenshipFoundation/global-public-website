@@ -31,8 +31,6 @@ jobs:
               - "tsconfig.base.json"
               - "package.json"
               - "package-lock.json"
-              - "apps/web/package.json"
-              - "apps/web/package-lock.json"
             cms:
               - "apps/cms/**"
               - "packages/**"
@@ -41,8 +39,6 @@ jobs:
               - "tsconfig.base.json"
               - "package.json"
               - "package-lock.json"
-              - "apps/cms/package.json"
-              - "apps/cms/package-lock.json"
 
   web:
     needs: detect-changes
@@ -57,10 +53,10 @@ jobs:
           cache: npm
 
       - name: Install (workspaces)
-        run: npm install
+        run: npm ci
 
-      - name: Lint
-        run: npm run lint:web
+      - name: Lint (no warnings)
+        run: npm -w @gcf/web run lint:ci
 
       - name: Typecheck
         run: npm run typecheck:web
@@ -81,10 +77,10 @@ jobs:
           cache: npm
 
       - name: Install (workspaces)
-        run: npm install
+        run: npm ci
 
-      - name: Lint
-        run: npm run lint:cms
+      - name: Lint (no warnings)
+        run: npm -w @gcf/cms run lint:ci
 
       - name: Typecheck
         run: npm run typecheck:cms

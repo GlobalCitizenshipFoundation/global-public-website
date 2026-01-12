@@ -17,7 +17,8 @@
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
 
-    "incremental": true
+    "incremental": true,
+    "tsBuildInfoFile": "../../.cache/tsbuildinfo/cms.tsbuildinfo"
   },
   "include": [
     "**/*.ts",

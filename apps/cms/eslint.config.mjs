@@ -9,7 +9,6 @@ export default [
       'dist/**',
       '.sanity/**',
       '.next/**',
-      '**/*.config.*',
       'postcss.config.js',
     ],
   },
