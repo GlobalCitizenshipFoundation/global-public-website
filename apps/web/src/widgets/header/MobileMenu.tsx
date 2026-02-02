@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -36,7 +36,6 @@ function isActivePath(currentPath: string, itemHref: string) {
 }
 
 const TRANSITION_MS = 250;
-
 const DESKTOP_MQ = '(min-width: 1200px)';
 
 const MobileMenu: React.FC = () => {
@@ -59,32 +58,32 @@ const MobileMenu: React.FC = () => {
   const isVisible = phase === 'enter' || phase === 'open' || phase === 'exit';
   const isSlidIn = phase === 'open';
 
-  const clearRafs = () => {
+  const clearRafs = useCallback(() => {
     if (raf1.current) window.cancelAnimationFrame(raf1.current);
     if (raf2.current) window.cancelAnimationFrame(raf2.current);
     raf1.current = null;
     raf2.current = null;
-  };
+  }, []);
 
-  const clearFallback = () => {
+  const clearFallback = useCallback(() => {
     if (fallbackTimer.current) window.clearTimeout(fallbackTimer.current);
     fallbackTimer.current = null;
-  };
+  }, []);
 
-  const scheduleFallbackClose = () => {
+  const scheduleFallbackClose = useCallback(() => {
     clearFallback();
     fallbackTimer.current = window.setTimeout(() => {
       setPhase((p) => (p === 'exit' ? 'closed' : p));
     }, TRANSITION_MS + 120);
-  };
+  }, [clearFallback]);
 
-  const hardClose = () => {
+  const hardClose = useCallback(() => {
     clearRafs();
     clearFallback();
     setPhase('closed');
-  };
+  }, [clearRafs, clearFallback]);
 
-  const openMenu = () => {
+  const openMenu = useCallback(() => {
     clearRafs();
     clearFallback();
 
@@ -98,9 +97,9 @@ const MobileMenu: React.FC = () => {
         setPhase((p) => (p === 'enter' ? 'open' : p));
       });
     });
-  };
+  }, [clearRafs, clearFallback]);
 
-  const closeMenu = () => {
+  const closeMenu = useCallback(() => {
     clearRafs();
     clearFallback();
 
@@ -110,12 +109,14 @@ const MobileMenu: React.FC = () => {
     });
 
     scheduleFallbackClose();
-  };
+  }, [clearRafs, clearFallback, scheduleFallbackClose]);
 
+  // close on route change (but only if currently not fully closed)
   useEffect(() => {
     if (phase !== 'closed') closeMenu();
-  }, [pathname]);
+  }, [pathname, phase, closeMenu]);
 
+  // close when switching to desktop breakpoint
   useEffect(() => {
     const mq = window.matchMedia(DESKTOP_MQ);
 
@@ -133,8 +134,9 @@ const MobileMenu: React.FC = () => {
 
     mq.addListener(onChange);
     return () => mq.removeListener(onChange);
-  }, []);
+  }, [hardClose]);
 
+  // lock scroll + focus trap while OPEN
   useEffect(() => {
     if (!isOpen) return;
 
@@ -180,18 +182,20 @@ const MobileMenu: React.FC = () => {
       document.body.style.overflow = prevOverflow;
       window.removeEventListener('keydown', onKeyDown);
     };
-  }, [isOpen]);
+  }, [isOpen, closeMenu]);
 
+  // when fully closed, return focus to burger
   useEffect(() => {
     if (phase === 'closed') burgerRef.current?.focus();
   }, [phase]);
 
+  // cleanup on unmount
   useEffect(() => {
     return () => {
       clearRafs();
       clearFallback();
     };
-  }, []);
+  }, [clearRafs, clearFallback]);
 
   const onPanelTransitionEnd: React.TransitionEventHandler<HTMLDivElement> = (e) => {
     if (e.propertyName !== 'transform') return;
