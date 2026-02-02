@@ -11,12 +11,13 @@ export interface EventSingleType {
 
   pricing?: string;
   status?: string;
-  attedanceMode?: string;
+  attendanceMode?: string;
   startDateTime?: string;
   endDateTime?: string;
+  eventType?: 'conference' | 'consultation' | 'panel_discussion' | 'forum';
 
   marketingMention?: PortableTextBlock[];
-  price?: number;
+  price?: { amount?: number; currency?: string } | null;
   registrationDeadline?: string;
   seatingCapacity?: number;
   currentRegistrations?: number;
@@ -25,6 +26,7 @@ export interface EventSingleType {
   financialAid?: PortableTextBlock[];
   buttonPrimary?: string;
   introText?: PortableTextBlock[];
+  videoLink?: string | null;
   body?: PortableTextBlock[];
   venue?: string;
   promoMessage?: PortableTextBlock[];
@@ -50,4 +52,6 @@ export interface EventSingleType {
 export type RelatedEventProps = Pick<
   EventSingleType,
   '_id' | 'slug' | 'eventHeading' | 'eventImage' | 'startDateTime'
->;
+> & {
+  eventType?: 'conference' | 'consultation' | 'panel_discussion' | 'forum';
+};

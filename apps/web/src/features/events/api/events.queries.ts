@@ -1,8 +1,37 @@
 export const EVENTS_LIST_QUERY = `
-  *[_type == "eventSingle"] | order(startDateTime desc) {
+{
+  "total": count(*[
+    _type == "eventSingle"
+    && defined(slug.current)
+    && ($q == "" || eventHeading match $q)
+    && ($type == "all" || eventType == $type)
+    && (
+      $tab == "all"
+      || ($tab == "upcoming" && startDateTime > now())
+      || ($tab == "past" && coalesce(endDateTime, startDateTime) < now())
+    )
+  ]),
+  "items": *[
+    _type == "eventSingle"
+    && defined(slug.current)
+    && ($q == "" || eventHeading match $q)
+    && ($type == "all" || eventType == $type)
+    && (
+      $tab == "all"
+      || ($tab == "upcoming" && startDateTime > now())
+      || ($tab == "past" && coalesce(endDateTime, startDateTime) < now())
+    )
+  ]
+  | order(
+      select($sort == "title_asc" => eventHeading asc),
+      select($sort == "date_asc" => startDateTime asc),
+      startDateTime desc
+    )
+  [$start...$end]{
     _id,
     slug,
     eventHeading,
+    eventType,
     eventImage {
       asset->{
         url,
@@ -11,6 +40,43 @@ export const EVENTS_LIST_QUERY = `
     },
     startDateTime
   }
+}
+`;
+
+export const EVENTS_LIST_BASE = `
+{
+  "total": count(*[
+    _type == "eventSingle"
+    && defined(slug.current)
+    && ($q == "" || eventHeading match $q)
+    && ($type == "all" || eventType == $type)
+    && (
+      $tab == "all"
+      || ($tab == "upcoming" && startDateTime > now())
+      || ($tab == "past" && coalesce(endDateTime, startDateTime) < now())
+    )
+  ]),
+  "items": *[
+    _type == "eventSingle"
+    && defined(slug.current)
+    && ($q == "" || eventHeading match $q)
+    && ($type == "all" || eventType == $type)
+    && (
+      $tab == "all"
+      || ($tab == "upcoming" && startDateTime > now())
+      || ($tab == "past" && coalesce(endDateTime, startDateTime) < now())
+    )
+  ]
+  | ORDER_CLAUSE
+  [$start...$end]{
+    _id,
+    slug,
+    eventHeading,
+    eventType,
+    eventImage { asset->{ url, metadata { dimensions } } },
+    startDateTime
+  }
+}
 `;
 
 export const EVENT_BY_SLUG_QUERY = `
@@ -18,6 +84,7 @@ export const EVENT_BY_SLUG_QUERY = `
     _id,
     eventHeading,
     slug,
+    videoLink,
     eventImage{
       asset->{
         url,

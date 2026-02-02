@@ -9,13 +9,14 @@ interface Props {
 
 export const ConferencePartners: React.FC<Props> = ({ partners, type }) => {
   return (
-    <div className="flex flex-col">
-      <h2 className="text-primary-darker text-2xl lg:mb-9 lg:text-[42px]">{type}</h2>
-      <div className="flex gap-x-20 gap-y-15">
+    <section className="space-y-6">
+      <h2 className="text-primary-darker text-[clamp(22px,3vw,42px)] font-semibold">{type}</h2>
+
+      <div className="flex flex-wrap items-center gap-x-[clamp(18px,4vw,80px)] gap-y-[clamp(14px,3vw,60px)]">
         {partners.map((partner) => (
           <PartnersLogo partner={partner} key={partner._id} />
         ))}
       </div>
-    </div>
+    </section>
   );
 };

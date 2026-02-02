@@ -26,7 +26,7 @@ const DesktopNav = () => {
   const cta = header.find((i) => i.type === 'button');
 
   return (
-    <div className="hidden items-center gap-x-10 lg:ml-auto lg:flex">
+    <div className="hidden items-center gap-x-[clamp(16px,2vw,40px)] lg:flex">
       {links.map((item) => {
         const active = isActivePath(pathname, item.href);
 
@@ -36,7 +36,7 @@ const DesktopNav = () => {
             href={item.href}
             aria-current={active ? 'page' : undefined}
             className={[
-              'font-inter relative text-lg font-medium whitespace-nowrap transition-colors',
+              'font-inter relative text-[clamp(14px,1vw,18px)] font-medium whitespace-nowrap transition-colors',
               active ? 'text-gray' : 'text-gray/70 hover:text-gray',
               'after:absolute after:-bottom-2 after:left-0 after:h-[2px] after:w-full after:rounded-full after:bg-current after:transition-transform after:duration-200',
               active ? 'after:scale-x-100' : 'after:scale-x-0 hover:after:scale-x-100',
@@ -48,7 +48,11 @@ const DesktopNav = () => {
       })}
 
       {cta ? (
-        <ButtonPrimary href={cta.href} className="w-46.75">
+        <ButtonPrimary
+          href={cta.href}
+          className="h-[clamp(44px,4.5vw,60px)]"
+          labelClassName="text-[clamp(14px,1.2vw,18px)]"
+        >
           {cta.label}
         </ButtonPrimary>
       ) : null}

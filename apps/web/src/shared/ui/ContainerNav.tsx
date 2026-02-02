@@ -7,8 +7,8 @@ interface ContainerProps {
 
 const ContainerNav: React.FC<ContainerProps> = ({ children, className = '' }) => {
   return (
-    <div className={`mx-auto px-12.5 lg:max-w-442.5 lg:px-5 ${className}`}>
-      {children}
+    <div className={['w-full px-[clamp(20px,6vw,100px)]', className].join(' ')}>
+      <div className="mx-auto w-full max-w-432.5">{children}</div>
     </div>
   );
 };

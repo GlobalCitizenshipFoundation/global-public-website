@@ -6,26 +6,33 @@ interface Props {
 }
 
 export const PeoplePhotos: React.FC<Props> = ({ people }) => {
-  const lgRowCount = Math.ceil(people.length / 10);
-  const mbRowCount = Math.ceil(people.length / 5);
+  const visiblePeople = people.slice(0, 30);
 
   return (
-    <div
-      className={`grid grid-cols-5 grid-rows-${mbRowCount} gap-2.5 lg:grid-cols-10 lg:grid-rows-${lgRowCount}`}
-    >
-      {people.map((person, index) => {
+    <div className={['w-full', 'grid grid-cols-5 gap-2.5', 'lg:grid-cols-10'].join(' ')}>
+      {visiblePeople.map((person, index) => {
         const photoUrl = person.photo?.asset?.url;
         if (!photoUrl) return null;
 
+        // mobile pokazujemy tylko 10
+        const hiddenOnMobile = index >= 10 ? 'hidden lg:block' : '';
+
         return (
-          <Image
+          <div
             key={person._id ?? `${index}`}
-            className="flex h-15 w-17 rounded-md object-cover lg:h-23.25 lg:w-23.25"
-            src={photoUrl}
-            alt={person.name ? `Photo of ${person.name}` : 'Person photo'}
-            width={93}
-            height={93}
-          />
+            className={[
+              'relative aspect-square w-full overflow-hidden rounded-md',
+              hiddenOnMobile,
+            ].join(' ')}
+          >
+            <Image
+              src={photoUrl}
+              alt={person.name ? `Photo of ${person.name}` : 'Person photo'}
+              fill
+              sizes="(max-width: 1023px) 20vw, 10vw"
+              className="object-cover"
+            />
+          </div>
         );
       })}
     </div>

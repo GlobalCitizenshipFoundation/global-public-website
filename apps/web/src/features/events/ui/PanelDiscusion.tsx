@@ -27,63 +27,72 @@ export const PanelDiscussion: React.FC<Props> = ({
   const startDate = startDateTime ? new Date(startDateTime) : null;
   const diff = startDate ? startDate.getTime() - now.getTime() : null;
 
+  const priceLabel =
+    pricing === 'free'
+      ? 'free'
+      : typeof price === 'number'
+        ? String(price)
+        : price
+          ? `${price.amount ?? ''}${price.currency ?? ''}`
+          : '';
+
   return (
-    <>
-      <div className="bg-background-panel border-5.5 relative flex w-full flex-col rounded-xl border-b-5 border-dashed border-white px-7 pt-7 pb-6">
-        <h4 className="text-primary-darker mb-3.5">Panel Discussion</h4>
-        <h2 className="mb-8 text-3xl">
+    <div className="space-y-6">
+      <div className="bg-background-panel border-5.5 relative w-full rounded-xl border-b-5 border-dashed border-white px-[clamp(18px,3vw,28px)] py-[clamp(18px,3vw,28px)]">
+        <h4 className="text-primary-darker mb-3 text-[clamp(12px,1.2vw,14px)] font-semibold tracking-wide">
+          Panel Discussion
+        </h4>
+
+        <h2 className="mb-6 text-[clamp(20px,2.4vw,32px)] leading-tight font-semibold">
           Celebrating Gender Inclusive Learning Spaces: Unpacking the Secrets to Gender-Inclusive
           Learning Spaces
         </h2>
 
-        {(pricing || attedanceMode) && (
+        {pricing || attedanceMode ? (
           <div
-            className={`flex gap-1.5 text-base font-semibold text-gray-600 uppercase ${diff && diff > 0 ? 'mb-3.5' : 'mb-6'}`}
+            className={[
+              'flex flex-wrap items-center gap-x-3 gap-y-1',
+              'text-[clamp(12px,1.2vw,14px)] font-semibold text-gray-600 uppercase',
+              diff && diff > 0 ? 'mb-3' : 'mb-6',
+            ].join(' ')}
           >
-            {pricing && (
-              <span>
-                {pricing === 'free'
-                  ? pricing
-                  : typeof price === 'number'
-                    ? price
-                    : price
-                      ? `${price.amount ?? ''}${price.currency ?? ''}`
-                      : ''}
-              </span>
-            )}
-
-            {attedanceMode && <span>{attedanceMode}</span>}
+            {pricing ? <span>{priceLabel}</span> : null}
+            {attedanceMode ? <span>{attedanceMode}</span> : null}
             <span>Event</span>
           </div>
-        )}
+        ) : null}
 
-        {diff && diff > 0 && (
-          <span className="text-dark-blue mb-6 text-xl font-semibold">Upcoming</span>
-        )}
+        {diff && diff > 0 ? (
+          <span className="text-dark-blue mb-6 inline-block text-[clamp(16px,1.8vw,20px)] font-semibold">
+            Upcoming
+          </span>
+        ) : null}
 
-        {startDateTime && endDateTime && <EventData start={startDateTime} end={endDateTime} />}
+        {startDateTime && endDateTime ? (
+          <EventData start={startDateTime} end={endDateTime} />
+        ) : null}
 
-        <div className="bg-background-primary absolute -bottom-7 -left-6 h-12 w-12 rounded-full"></div>
-        <div className="bg-background-primary absolute -right-6 -bottom-7 h-12 w-12 rounded-full"></div>
+        <div className="bg-background-primary absolute -bottom-7 -left-6 h-12 w-12 rounded-full" />
+        <div className="bg-background-primary absolute -right-6 -bottom-7 h-12 w-12 rounded-full" />
       </div>
 
-      <div className="bg-background-panel mb-10 flex flex-col rounded-xl px-7 pt-10 pb-6">
-        {marketingMention && marketingMention.length > 0 && (
-          <div className="mb-4 text-sm font-normal">
+      <div className="bg-background-panel rounded-xl px-[clamp(18px,3vw,28px)] py-[clamp(18px,3vw,28px)]">
+        {marketingMention?.length ? (
+          <div className="mb-4 text-[clamp(13px,1.3vw,16px)]">
             <PortableText value={marketingMention} />
           </div>
-        )}
+        ) : null}
 
-        <ButtonRegular className="mb-4">
-          <button className="text-base font-medium text-white">Watch replay</button>
+        <ButtonRegular className="mb-4 w-full">
+          <span className="text-[clamp(14px,1.4vw,16px)] font-medium text-white">Watch replay</span>
         </ButtonRegular>
 
-        {financialAid && financialAid.length > 0 && (
-          <div>
+        {financialAid?.length ? (
+          <div className="text-[clamp(13px,1.3vw,16px)]">
             <PortableText value={financialAid} />
           </div>
-        )}
+        ) : null}
       </div>
-    </>
+    </div>
   );
 };

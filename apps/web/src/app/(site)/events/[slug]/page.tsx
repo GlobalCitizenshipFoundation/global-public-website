@@ -1,28 +1,26 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { cache } from 'react';
 
 import type { EventSingleType } from '@gcf/types';
 import { getEventBySlug } from '@/features/events/api/getEventBySlug';
 import EventSingleComponent from '@/features/events/ui/EventSingleComponent';
 
-export const dynamic = 'force-dynamic';
-
 type PageProps = {
   params: Promise<{ slug: string }>;
 };
+
+const getEventBySlugCached = cache(async (slug: string) => getEventBySlug(slug));
 
 function pickTitle(event: EventSingleType, slug: string) {
   if (
     'eventHeading' in event &&
     typeof event.eventHeading === 'string' &&
     event.eventHeading.trim()
-  ) {
+  )
     return event.eventHeading;
-  }
 
-  if ('title' in event && typeof event.title === 'string' && event.title.trim()) {
-    return event.title;
-  }
+  if ('title' in event && typeof event.title === 'string' && event.title.trim()) return event.title;
 
   return slug.replace(/-/g, ' ');
 }
@@ -32,23 +30,20 @@ function pickDescription(event: EventSingleType) {
     'metaDescription' in event &&
     typeof event.metaDescription === 'string' &&
     event.metaDescription.trim()
-  ) {
+  )
     return event.metaDescription;
-  }
 
   if (
     'shortDescription' in event &&
     typeof event.shortDescription === 'string' &&
     event.shortDescription.trim()
-  ) {
+  )
     return event.shortDescription;
-  }
 
   return 'Event by Global Citizenship Foundation.';
 }
 
 type OgImageShape = { asset: { url: string } };
-
 function isOgImageShape(value: unknown): value is OgImageShape {
   if (!value || typeof value !== 'object') return false;
   if (!('asset' in value)) return false;
@@ -73,12 +68,9 @@ function pickOgImage(event: EventSingleType): string | undefined {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
 
-  const event = await getEventBySlug(slug);
+  const event = await getEventBySlugCached(slug);
   if (!event) {
-    return {
-      title: 'Event not found',
-      robots: { index: false, follow: false },
-    };
+    return { title: 'Event not found', robots: { index: false, follow: false } };
   }
 
   const title = pickTitle(event, slug);
@@ -106,7 +98,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function EventPage({ params }: PageProps) {
   const { slug } = await params;
 
-  const event = await getEventBySlug(slug);
+  const event = await getEventBySlugCached(slug);
   if (!event) return notFound();
 
   return <EventSingleComponent event={event} />;

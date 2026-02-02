@@ -1,7 +1,6 @@
 import type { NextConfig } from 'next';
 
 function buildCsp(isDev: boolean) {
-  // Dla Next w dev potrzebujesz 'unsafe-eval'. W prod wyłączamy.
   const scriptSrc = isDev
     ? "script-src 'self' 'unsafe-inline' 'unsafe-eval'"
     : "script-src 'self' 'unsafe-inline'";
@@ -10,13 +9,27 @@ function buildCsp(isDev: boolean) {
     "default-src 'self'",
     "base-uri 'self'",
     "form-action 'self'",
+
+    // To zostaw - chroni przed osadzaniem TWOJEJ strony w iframe
     "frame-ancestors 'none'",
+
     "object-src 'none'",
     "img-src 'self' data: blob: https://cdn.sanity.io",
     "font-src 'self' data:",
     "style-src 'self' 'unsafe-inline'",
     scriptSrc,
+
+    // API/asset Sanity
     "connect-src 'self' https://cdn.sanity.io https://*.api.sanity.io",
+
+    // KLUCZOWE: pozwól na iframe z konkretnych hostów
+    [
+      "frame-src 'self'",
+      'https://www.youtube.com',
+      'https://www.youtube-nocookie.com',
+      'https://player.vimeo.com',
+    ].join(' '),
+
     'upgrade-insecure-requests',
   ].join('; ');
 }
@@ -26,12 +39,7 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
 
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'cdn.sanity.io',
-      },
-    ],
+    remotePatterns: [{ protocol: 'https', hostname: 'cdn.sanity.io' }],
   },
 
   async headers() {
@@ -45,7 +53,10 @@ const nextConfig: NextConfig = {
           { key: 'Content-Security-Policy', value: csp },
           { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
           { key: 'X-Content-Type-Options', value: 'nosniff' },
+
+          // OK - chroni twoją stronę przed byciem osadzoną
           { key: 'X-Frame-Options', value: 'DENY' },
+
           { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
           ...(isDev
             ? []

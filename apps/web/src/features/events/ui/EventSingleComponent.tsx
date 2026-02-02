@@ -6,7 +6,6 @@ import {
   type PortableTextBlock,
 } from '@portabletext/react';
 
-
 import ContainerBig from '@/shared/ui/ContainerBig';
 import ContainerRegular from '@/shared/ui/ContainerRegular';
 import ButtonRegular from '@/shared/ui/ButtonRegular';
@@ -21,6 +20,7 @@ import type { EventSingleType } from '@gcf/types';
 import { ConferencePartners } from './ConferencePartners';
 import { PanelDiscussion } from './PanelDiscusion';
 import { PeoplePhotos } from './PeoplePhotos';
+import EventIntroVideo from './EventIntroVideo';
 
 type Props = {
   event: EventSingleType;
@@ -68,8 +68,8 @@ const EventSingleComponent: React.FC<Props> = ({ event }) => {
     return Boolean(
       typeof e.pricing === 'string' &&
       e.pricing.trim() &&
-      typeof e.attedanceMode === 'string' &&
-      e.attedanceMode.trim() &&
+      typeof e.attendanceMode === 'string' &&
+      e.attendanceMode.trim() &&
       typeof e.startDateTime === 'string' &&
       typeof e.endDateTime === 'string' &&
       Array.isArray(e.marketingMention) &&
@@ -80,39 +80,45 @@ const EventSingleComponent: React.FC<Props> = ({ event }) => {
   const imageUrl = event.eventImage?.asset?.url;
 
   return (
-    <div className="bg-background-primary flex flex-col">
-      <section className="mx-auto box-border w-full lg:max-w-402.5">
-        <div className="grid grid-cols-1 lg:grid-cols-[1050px_500px] lg:gap-15 lg:gap-y-14">
-          <div className="order-1">
-            <div className="mb-10 w-full overflow-hidden">
-              <div className="relative aspect-[16/9] w-full overflow-hidden rounded-[10px]">
-                {imageUrl ? (
-                  <Image
-                    src={imageUrl}
-                    alt="Event image"
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 70vw, 1050px"
-                    className="object-cover"
-                  />
-                ) : (
-                  <div className="flex h-full w-full items-center justify-center rounded-[10px] border border-white/10 bg-black/25">
-                    <span className="text-borders/80 text-sm font-medium">No image</span>
-                  </div>
-                )}
+    <section className="bg-background-primary overflow-x-hidden">
+      <ContainerRegular>
+        <div className="grid grid-cols-1 gap-[clamp(24px,4vw,56px)] lg:grid-cols-[minmax(0,1fr)_minmax(320px,420px)] lg:items-start">
+          <div className="min-w-0">
+            <div className="mb-10">
+              <div
+                className={[
+                  'relative right-1/2 left-1/2 -mr-[50vw] -ml-[50vw] w-[100dvw]',
+                  'lg:static lg:right-auto lg:left-auto lg:mr-0 lg:ml-0 lg:w-full',
+                ].join(' ')}
+              >
+                <div className="relative aspect-[16/9] w-full overflow-hidden rounded-none xl:rounded-[10px]">
+                  {imageUrl ? (
+                    <Image
+                      src={imageUrl}
+                      alt="Event image"
+                      fill
+                      sizes="(max-width: 1200px) 100vw, 1050px"
+                      className="object-cover"
+                      priority
+                    />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center border border-white/10 bg-black/25">
+                      <span className="text-borders/80 text-sm font-medium">No image</span>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
 
-            <ContainerRegular className="mb-4 lg:mb-9">
-              <PeoplePhotos people={combinedParticipants} />
-            </ContainerRegular>
+            <PeoplePhotos people={combinedParticipants} />
 
-            <ContainerRegular className="mb-9 text-sm lg:text-2xl">
+            <section className="py-9.25">
               {event.introText ? (
                 <PortableText value={event.introText} components={portableTextComponents} />
               ) : null}
-            </ContainerRegular>
+            </section>
 
-            <ContainerRegular className="mb-14 lg:hidden">
+            <section className="mb-14 lg:hidden">
               {hasPanelData(event) ? (
                 <PanelDiscussion
                   pricing={event.pricing}
@@ -144,27 +150,31 @@ const EventSingleComponent: React.FC<Props> = ({ event }) => {
               <ButtonRegular className="mb-14">
                 <span className="text-base font-medium text-white">Resources</span>
               </ButtonRegular>
-            </ContainerRegular>
+            </section>
 
-            <div className="mb-11 flex flex-col gap-[15px]">
+            <section className="mb-11 flex flex-col gap-[15px]">
               <h2 className="text-subtitles pl-[50px] text-2xl font-semibold lg:mb-6 lg:pl-0 lg:text-[42px]">
                 Intro Video
               </h2>
-              <div className="flex w-full" />
-            </div>
 
-            <ContainerRegular className="mb-11 text-sm lg:text-2xl">
+              <EventIntroVideo
+                url={event.videoLink ?? null}
+                title={event.eventHeading ?? 'Intro video'}
+              />
+            </section>
+
+            <section className="mb-11 text-sm lg:text-2xl">
               {event.body ? (
                 <PortableText value={event.body} components={portableTextComponents} />
               ) : null}
-            </ContainerRegular>
+            </section>
 
-            <ContainerRegular className="lg:border-lines mb-11 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between lg:border-y-[1.5px] lg:py-7">
+            <section className="lg:border-lines mb-11 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between lg:border-y-[1.5px] lg:py-4.5">
               <h2 className="text-titles mb-0 text-2xl">Who is this event for:</h2>
               {event.audience ? <Tags tags={event.audience} /> : null}
-            </ContainerRegular>
+            </section>
 
-            <ContainerRegular className="mb-14 flex flex-col gap-1.5">
+            <section className="mb-14 flex flex-col gap-1.5">
               {event.agendaHeading ? (
                 <h2 className="text-titles mb-0 text-2xl lg:mb-4.5 lg:text-[42px]">
                   {event.agendaHeading}
@@ -174,9 +184,9 @@ const EventSingleComponent: React.FC<Props> = ({ event }) => {
               {event.agendaDescription ? (
                 <PortableText value={event.agendaDescription} components={portableTextComponents} />
               ) : null}
-            </ContainerRegular>
+            </section>
 
-            <ContainerRegular className="mb-12 flex flex-col lg:mb-20">
+            <section className="mb-12 flex flex-col lg:mb-20">
               <div className="mb-11 flex flex-col">
                 {speakers.length ? <h2>Speakers</h2> : null}
                 {event.endText ? (
@@ -189,9 +199,9 @@ const EventSingleComponent: React.FC<Props> = ({ event }) => {
                   <ContributorFrame contributor={speaker} key={speaker._id} />
                 ))}
               </div>
-            </ContainerRegular>
+            </section>
 
-            <ContainerRegular className="mb-12 flex flex-col lg:mb-20">
+            <section className="mb-12 flex flex-col lg:mb-20">
               <div className="mb-11 flex flex-col">
                 {steeringCommittee.length ? <h2>Steering Committee</h2> : null}
                 {event.endText ? (
@@ -204,9 +214,9 @@ const EventSingleComponent: React.FC<Props> = ({ event }) => {
                   <ContributorFrame contributor={person} key={person._id} />
                 ))}
               </div>
-            </ContainerRegular>
+            </section>
 
-            <ContainerRegular className="flex flex-col lg:mb-18 lg:gap-[60px]">
+            <section className="flex flex-col lg:mb-18 lg:gap-[60px]">
               <div className="flex flex-col">
                 <h2>Conference Partners</h2>
                 {event.endText ? (
@@ -223,33 +233,31 @@ const EventSingleComponent: React.FC<Props> = ({ event }) => {
               {event.knowledgePartners ? (
                 <ConferencePartners type="Knowledge Partners" partners={event.knowledgePartners} />
               ) : null}
-            </ContainerRegular>
+            </section>
 
-            <ContainerRegular>
-              <div className="flex flex-col gap-7 lg:hidden">
-                <h3 className="font-semibold lg:text-3xl">Share the Event</h3>
+            <div className="flex flex-col gap-7 lg:hidden">
+              <h3 className="font-semibold lg:text-3xl">Share the Event</h3>
 
-                <div className="flex w-full justify-between">
-                  {socialLinks?.map((link) => (
-                    <SocialLink
-                      key={link.href}
-                      href={link.href}
-                      icon={<link.icon />}
-                      variant="button"
-                    />
-                  ))}
-                </div>
-
-                <div className="flex items-center gap-2.5">
-                  <Image src="/images/print.svg" alt="Print" width={24} height={24} />
-                  <span className="text-borders text-lg font-normal">Print Event Details</span>
-                </div>
+              <div className="flex w-full justify-between">
+                {socialLinks?.map((link) => (
+                  <SocialLink
+                    key={link.href}
+                    href={link.href}
+                    icon={<link.icon />}
+                    variant="button"
+                  />
+                ))}
               </div>
-            </ContainerRegular>
+
+              <div className="flex items-center gap-2.5">
+                <Image src="/images/print.svg" alt="Print" width={24} height={24} />
+                <span className="text-borders text-lg font-normal">Print Event Details</span>
+              </div>
+            </div>
           </div>
 
-          <div className="order-1 hidden lg:col-start-2 lg:flex">
-            <ContainerRegular className="mb-11">
+          <aside className="hidden lg:block">
+            <div className="sticky top-[clamp(16px,2vw,28px)]">
               {hasPanelData(event) ? (
                 <PanelDiscussion
                   pricing={event.pricing}
@@ -306,10 +314,10 @@ const EventSingleComponent: React.FC<Props> = ({ event }) => {
                   <span className="text-borders text-lg font-normal">Print Event Details</span>
                 </div>
               </div>
-            </ContainerRegular>
-          </div>
+            </div>
+          </aside>
         </div>
-      </section>
+      </ContainerRegular>
 
       <section className="bg-background-darker mx-0 px-0 lg:py-[78px]">
         <ContainerBig>
@@ -317,7 +325,7 @@ const EventSingleComponent: React.FC<Props> = ({ event }) => {
           {event.audience ? <Tags tags={event.audience} /> : null}
         </ContainerBig>
       </section>
-    </div>
+    </section>
   );
 };
 
