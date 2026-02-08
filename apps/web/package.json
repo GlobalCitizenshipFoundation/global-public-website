@@ -6,6 +6,7 @@
     "node": ">=20.11.0"
   },
   "scripts": {
+    "prebuild": "npm -w @gcf/types run build",
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
@@ -20,7 +21,7 @@
     "format:check": "prettier . --check"
   },
   "dependencies": {
-    "@gcf/types": "file:../../packages/types",
+    "@gcf/types": "workspace:*",
     "@portabletext/react": "^3.2.1",
     "@sanity/client": "^7.6.0",
     "countries-list": "^3.1.1",

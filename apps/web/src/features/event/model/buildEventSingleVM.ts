@@ -59,6 +59,7 @@ export function buildEventSingleVM(event: EventSingleType): EventSingleVM {
       ctaUpcoming: event.panelCtaUpcoming,
       ctaStarted: event.panelCtaStarted,
       ctaEnded: event.panelCtaEnded,
+      venue: event.venue,
     }),
   } as EventSingleVM['panelBase'];
 
