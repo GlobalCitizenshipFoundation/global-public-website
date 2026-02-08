@@ -2,11 +2,15 @@ import React from 'react';
 import Image from 'next/image';
 import type { MagazinSingleType } from '@gcf/types';
 import ButtonRegular from '@/shared/ui/ButtonRegular';
-import { PortableText, type PortableTextBlock, type PortableTextComponentProps } from '@portabletext/react';
+import {
+  PortableText,
+  type PortableTextBlock,
+  type PortableTextComponentProps,
+} from '@portabletext/react';
 import { getSocialLinksFromCMS } from '@/features/social/ui/getSocialMediaFromCMS';
 import Sharing from '@/shared/ui/Sharing';
-import ContainerRegular from '@/shared/ui/ContainerRegular';
 import { formatEventDate } from '@/features/events/lib/formatters';
+import Container from '@/shared/ui/Container';
 
 type Props = {
   magazine: MagazinSingleType;
@@ -44,7 +48,7 @@ const MagazineSingleComponent: React.FC<Props> = ({ magazine }) => {
   ].filter((x): x is { name: string; href: string } => Boolean(x.href));
 
   return (
-    <ContainerRegular className="mt-14">
+    <Container variant="big" className="mt-14">
       <div className="flex justify-between gap-13">
         <div className="flex flex-col gap-6">
           {magazine.magazinImage && (
@@ -94,7 +98,7 @@ const MagazineSingleComponent: React.FC<Props> = ({ magazine }) => {
           <Sharing title="Share this Issue:" socialLinks={socialLinks} />
         </section>
       </div>
-    </ContainerRegular>
+    </Container>
   );
 };
 

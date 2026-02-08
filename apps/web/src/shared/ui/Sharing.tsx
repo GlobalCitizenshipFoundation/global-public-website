@@ -1,10 +1,20 @@
+'use client';
+
 import React from 'react';
 import { FaPrint } from 'react-icons/fa6';
+
 import BreakLine from '@/shared/ui/BreakLine';
-import SocialLink, { type SocialLinkProps } from '@/features/social/ui/SocialLink';
+import SocialLink from '@/features/social/ui/SocialLink';
+import type { SocialName } from '@/shared/config/social';
+
+type SocialItem = {
+  kind: SocialName;
+  href: string;
+  label?: string;
+};
 
 type Props = {
-  socialLinks: SocialLinkProps[];
+  socialLinks: SocialItem[];
   title?: string;
 };
 
@@ -12,6 +22,7 @@ const Sharing: React.FC<Props> = ({ socialLinks, title = 'Sharing:' }) => {
   return (
     <>
       <BreakLine className="mt-7.5" />
+
       <section className="flex justify-between py-4.5">
         <p>{title}</p>
 
@@ -20,20 +31,26 @@ const Sharing: React.FC<Props> = ({ socialLinks, title = 'Sharing:' }) => {
             <SocialLink
               key={link.href}
               href={link.href}
-              icon={typeof link.icon === 'function' ? React.createElement(link.icon) : link.icon}
-              label={link.label ?? 'Share'} // <--- fallback, zero undefined
+              kind={link.kind}
+              label={link.label ?? 'Share'}
               variant="inline"
             />
           ))}
 
-          <SocialLink
-            href="https://www.wikipedia.com" // <--- uwaga: bez https będzie traktowane jak ścieżka /www.wikipedia.com
-            icon={<FaPrint />}
-            variant="inline"
-            label="Print"
-          />
+          <button
+            type="button"
+            onClick={() => window.print()}
+            className="group flex items-center gap-[7px] transition-all duration-300 ease-in-out"
+            aria-label="Print"
+          >
+            <span className="group-hover:text-primary text-xl text-current transition-all duration-300 ease-in-out">
+              <FaPrint aria-hidden={true} />
+            </span>
+            <span className="text-borders group-hover:text-primary text-[16px]">Print</span>
+          </button>
         </div>
       </section>
+
       <BreakLine className="mb-30" />
     </>
   );

@@ -1,20 +1,20 @@
 import { paths } from '@/shared/config/paths';
-import type { SocialLink } from '@/features/social/ui/getSocialMediaFromCMS';
+import type { SocialLinkData } from '@/features/social/ui/getSocialMediaFromCMS';
 import { getSocialLinksFromCMS } from '@/features/social/ui/getSocialMediaFromCMS';
 
 type FooterLink = { label: string; href: string };
 
 type FooterSection =
-  | { kind: 'social'; name: 'Follow'; content: SocialLink[] }
+  | { kind: 'social'; name: 'Follow'; content: SocialLinkData[] }
   | { kind: 'links'; name: string; content: FooterLink[] };
 
-// defaulty, CMS może nadpisać
 const staticSocials = {
   instagram: 'https://www.instagram.com/',
   twitter: 'https://twitter.com/',
   linkedin: 'https://www.linkedin.com/',
   facebook: 'https://www.facebook.com/',
   youtube: 'https://www.youtube.com/',
+  website: 'https://twojastrona.pl', // jeśli masz
 } as const;
 
 const socialLinks = getSocialLinksFromCMS(staticSocials);

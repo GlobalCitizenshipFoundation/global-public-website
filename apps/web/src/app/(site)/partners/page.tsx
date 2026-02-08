@@ -1,7 +1,7 @@
-import ContainerBig from '@/shared/ui/ContainerBig';
 import { getPartners } from '@/features/partners/api/getPartners';
 import PartnersLogo from '@/features/partners/ui/PartnersLogo';
 import type { Metadata } from 'next';
+import Container from '@/shared/ui/Container';
 
 export const metadata: Metadata = {
   title: 'Partners',
@@ -9,23 +9,39 @@ export const metadata: Metadata = {
 
 const PartnersPage = async () => {
   const partners = await getPartners();
+
   return (
     <>
-      <ContainerBig className="mt-25">
+      <Container variant="big" className="mt-25">
         <h2 className="text-titles mb-5 text-6xl font-semibold">Partners</h2>
         <p className="mb-23 text-2xl/normal font-normal">
           Transforming education for global citizenship and sustainable development. We work to
           wards transforming education for global citizenship and sustainable.
         </p>
-      </ContainerBig>
+      </Container>
+
       <div className="bg-background-darker py-36">
-        <ContainerBig>
-          <div className="flex w-full flex-wrap gap-21.25">
+        <Container variant="big">
+          <div
+            className={[
+              'grid w-full',
+              'gap-[clamp(24px,4vw,85px)]',
+              // 2/3/4/5 kolumn zależnie od szerokości
+              'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5',
+            ].join(' ')}
+          >
             {partners.map((partner) => (
-              <PartnersLogo key={partner.slug.current} partner={partner} />
+              <div
+                key={partner.slug.current}
+                className="[container-type:inline-size] aspect-square w-full"
+              >
+                <div className="h-full w-full rounded-md p-[clamp(10px,4cqw,16px)]">
+                  <PartnersLogo partner={partner} />
+                </div>
+              </div>
             ))}
           </div>
-        </ContainerBig>
+        </Container>
       </div>
     </>
   );

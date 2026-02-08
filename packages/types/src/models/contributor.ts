@@ -1,5 +1,5 @@
 import type { PortableTextBlock } from '../sanity/portableText';
-import type { RelatedEventProps } from './event';
+import type { EventCard } from './event';
 
 export interface ContributorSingleType {
   _id: string;
@@ -50,7 +50,7 @@ export interface ContributorSingleType {
   articleDisplay?: boolean;
   eventsDisplay?: boolean;
 
-  events?: Array<RelatedEventProps>;
+  events?: Array<EventCard>;
 
   header?: string;
   profileColour?: string;
@@ -59,5 +59,5 @@ export interface ContributorSingleType {
 
 export type RelatedContributorsType = Pick<
   ContributorSingleType,
-  '_id' | 'slug' | 'name' | 'photo' | 'designation'
+  '_id' | 'slug' | 'name' | 'photo' | 'designation' | 'organization' | 'country'
 >;

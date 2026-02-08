@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -27,12 +27,15 @@ function normalizePath(path: string) {
   return withoutQuery || '/';
 }
 
-function isActivePath(currentPath: string, itemHref: string) {
+function isActivePath(currentPath: string, hrefs: string | string[]) {
   const cur = normalizePath(currentPath);
-  const href = normalizePath(itemHref);
+  const list = Array.isArray(hrefs) ? hrefs : [hrefs];
 
-  if (href === '/') return cur === '/';
-  return cur === href || cur.startsWith(href + '/');
+  return list.some((h) => {
+    const href = normalizePath(h);
+    if (href === '/') return cur === '/';
+    return cur === href || cur.startsWith(href + '/');
+  });
 }
 
 const TRANSITION_MS = 250;
@@ -81,7 +84,7 @@ const MobileMenu: React.FC = () => {
     clearRafs();
     clearFallback();
     setPhase('closed');
-  }, [clearRafs, clearFallback]);
+  }, [clearFallback, clearRafs]);
 
   const openMenu = useCallback(() => {
     clearRafs();
@@ -97,7 +100,7 @@ const MobileMenu: React.FC = () => {
         setPhase((p) => (p === 'enter' ? 'open' : p));
       });
     });
-  }, [clearRafs, clearFallback]);
+  }, [clearFallback, clearRafs]);
 
   const closeMenu = useCallback(() => {
     clearRafs();
@@ -109,14 +112,12 @@ const MobileMenu: React.FC = () => {
     });
 
     scheduleFallbackClose();
-  }, [clearRafs, clearFallback, scheduleFallbackClose]);
+  }, [clearFallback, clearRafs, scheduleFallbackClose]);
 
-  // close on route change (but only if currently not fully closed)
   useEffect(() => {
     if (phase !== 'closed') closeMenu();
-  }, [pathname, phase, closeMenu]);
+  }, [pathname, closeMenu, phase]);
 
-  // close when switching to desktop breakpoint
   useEffect(() => {
     const mq = window.matchMedia(DESKTOP_MQ);
 
@@ -136,7 +137,6 @@ const MobileMenu: React.FC = () => {
     return () => mq.removeListener(onChange);
   }, [hardClose]);
 
-  // lock scroll + focus trap while OPEN
   useEffect(() => {
     if (!isOpen) return;
 
@@ -184,18 +184,16 @@ const MobileMenu: React.FC = () => {
     };
   }, [isOpen, closeMenu]);
 
-  // when fully closed, return focus to burger
   useEffect(() => {
     if (phase === 'closed') burgerRef.current?.focus();
   }, [phase]);
 
-  // cleanup on unmount
   useEffect(() => {
     return () => {
       clearRafs();
       clearFallback();
     };
-  }, [clearRafs, clearFallback]);
+  }, [clearFallback, clearRafs]);
 
   const onPanelTransitionEnd: React.TransitionEventHandler<HTMLDivElement> = (e) => {
     if (e.propertyName !== 'transform') return;
@@ -208,7 +206,6 @@ const MobileMenu: React.FC = () => {
 
   return (
     <>
-      {/* Mobile controls */}
       <div className="flex items-center gap-2.5 lg:hidden">
         <Link
           href={cta?.href ?? paths.contact}
@@ -219,7 +216,6 @@ const MobileMenu: React.FC = () => {
           </span>
         </Link>
 
-        {/* Burger / X */}
         <button
           ref={burgerRef}
           type="button"
@@ -236,7 +232,6 @@ const MobileMenu: React.FC = () => {
             else openMenu();
           }}
         >
-          {/* Burger -> X */}
           <span className="relative block h-[clamp(18px,2vw,24px)] w-[clamp(18px,2vw,24px)]">
             <span
               className={[
@@ -266,7 +261,6 @@ const MobileMenu: React.FC = () => {
         </button>
       </div>
 
-      {/* Drawer */}
       {isMounted ? (
         <Portal>
           <div className="fixed inset-0 z-[100] lg:hidden">
@@ -286,7 +280,6 @@ const MobileMenu: React.FC = () => {
               aria-hidden={!isOpen}
             />
 
-            {/* panel */}
             <div
               id="mobile-menu"
               ref={drawerRef}
@@ -312,7 +305,7 @@ const MobileMenu: React.FC = () => {
 
               <div className="flex flex-col gap-1">
                 {links.map((item, idx) => {
-                  const active = isActivePath(pathname, item.href);
+                  const active = isActivePath(pathname, [item.href, ...(item.activeAlsoFor ?? [])]);
 
                   return (
                     <Link

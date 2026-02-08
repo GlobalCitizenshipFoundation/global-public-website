@@ -11,12 +11,15 @@ function normalizePath(path: string) {
   return withoutQuery || '/';
 }
 
-function isActivePath(currentPath: string, itemHref: string) {
+function isActivePath(currentPath: string, hrefs: string | string[]) {
   const cur = normalizePath(currentPath);
-  const href = normalizePath(itemHref);
+  const list = Array.isArray(hrefs) ? hrefs : [hrefs];
 
-  if (href === '/') return cur === '/';
-  return cur === href || cur.startsWith(href + '/');
+  return list.some((h) => {
+    const href = normalizePath(h);
+    if (href === '/') return cur === '/';
+    return cur === href || cur.startsWith(href + '/');
+  });
 }
 
 const DesktopNav = () => {
@@ -28,7 +31,7 @@ const DesktopNav = () => {
   return (
     <div className="hidden items-center gap-x-[clamp(16px,2vw,40px)] lg:flex">
       {links.map((item) => {
-        const active = isActivePath(pathname, item.href);
+        const active = isActivePath(pathname, [item.href, ...(item.activeAlsoFor ?? [])]);
 
         return (
           <Link

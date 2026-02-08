@@ -1,35 +1,50 @@
 @import 'tailwindcss';
 
 @theme {
-  /* custom colors */
-  --color-primary: #ca1f43;
-  --color-primary-darker: #c71c41;
-  --color-background-primary: #fff;
-  --color-gray: #222;
-  --color-light-gray: #6b7273;
-  --color-dark-blue: #060644;
-  --color-white: #fff;
-  --color-black: #000;
-  --color-frames: #dfdfdf;
-  --color-borders: #454545;
-  --color-secondary-borders: #d8d8d8;
-  --color-titles: #181818;
-  --color-subtitles: #1a1a1a;
-  --color-background-panel: #f2f2f2;
-  --color-warning: #fff4e4;
-  --color-error: #f9ebe9;
-  --color-success: #eef6f5;
-  --color-text-warning: #937038;
-  --color-text-error: #dd664f;
-  --color-text-success: #148370;
-  --color-lines: #e4e4e4;
-  --color-background-darker: #f6f6f6;
-  --color-line: #d9d9d9;
-  --color-destignation: #191919;
-  --color-home-beige: #f6f4f0;
-  --color-home-liner: #bababa;
-  --color-background-beige: #e8e8e8;
-  --color-pagination: #c0c4cd;
+  /* custom colors (OKLCH) */
+  --color-primary: oklch(0.58 0.22 16);
+  --color-primary-darker: oklch(0.55 0.22 16);
+
+  --color-background-primary: oklch(1 0 0);
+  --color-background-darker: oklch(0.98 0 0);
+  --color-background-panel: oklch(0.96 0 0);
+
+  --color-white: oklch(1 0 0);
+  --color-black: oklch(0 0 0);
+
+  /* neutrals */
+  --color-gray: oklch(0.2 0 0);
+  --color-light-gray: oklch(0.55 0.01 200);
+  --color-borders: oklch(0.35 0 0);
+  --color-secondary-borders: oklch(0.88 0 0);
+  --color-frames: oklch(0.89 0 0);
+  --color-lines: oklch(0.9 0 0);
+  --color-line: oklch(0.86 0 0);
+
+  /* text */
+  --color-titles: oklch(0.18 0 0);
+  --color-subtitles: oklch(0.19 0 0);
+  --color-destignation: oklch(0.2 0 0);
+
+  /* blues */
+  --color-dark-blue: oklch(0.12 0.06 260);
+
+  /* home */
+  --color-home-beige: oklch(0.97 0.01 85);
+  --color-home-liner: oklch(0.78 0 0);
+  --color-background-beige: oklch(0.92 0 0);
+
+  /* states */
+  --color-warning: oklch(0.97 0.02 85);
+  --color-error: oklch(0.95 0.02 25);
+  --color-success: oklch(0.96 0.02 190);
+
+  --color-text-warning: oklch(0.57 0.07 70);
+  --color-text-error: oklch(0.62 0.18 30);
+  --color-text-success: oklch(0.56 0.12 175);
+
+  /* pagination */
+  --color-pagination: oklch(0.82 0.02 260);
 
   /* custom fonts */
   --font-inter: 'Inter', sans-serif;
@@ -39,6 +54,40 @@
   --breakpoint-lg: 1200px;
 }
 
+details.session-acc .chev-open {
+  display: none !important;
+}
+details.session-acc[open] .chev-open {
+  display: flex !important;
+}
+details.session-acc[open] .chev-closed {
+  display: none !important;
+}
+
+@media print {
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  html,
+  body {
+    background: white !important;
+  }
+
+  @page {
+    margin: 12mm;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .print-area {
+    display: block;
+  }
+}
+
 @layer base {
   html {
     scrollbar-gutter: stable;
@@ -46,6 +95,11 @@
 
   body {
     font-family: Inter, sans-serif;
+  }
+
+  ::selection {
+    background: color-mix(in oklch, var(--color-primary) 80%, transparent);
+    color: var(--color-white);
   }
 
   h2 {
@@ -72,11 +126,19 @@
     text-transform: uppercase;
   }
 
+  a {
+    color: var(--color-primary);
+  }
+
   p {
     font-family: var(--font-inter);
     font-weight: 400;
     line-height: 142%;
     color: var(--color-borders);
+  }
+
+  img {
+    user-select: none;
   }
 
   input::placeholder {

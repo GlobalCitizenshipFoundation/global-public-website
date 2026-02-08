@@ -1,7 +1,7 @@
-import ContainerBig from '@/shared/ui/ContainerBig';
 import { getContributors } from '@features/contributors/api/getContributors';
 import ContributorFrame from '@/features/contributors/ui/ContributorFrame';
 import type { Metadata } from 'next';
+import Container from '@/shared/ui/Container';
 
 export const metadata: Metadata = {
   title: 'Contributors',
@@ -12,15 +12,15 @@ const ContributorsPage = async () => {
 
   return (
     <>
-      <ContainerBig className="mt-25">
+      <Container variant="big" className="mt-25">
         <h2 className="text-titles mb-5 text-6xl font-semibold">Our Team Members</h2>
         <p className="mb-23 text-2xl/normal font-normal">
           Transforming education for global citizenship and sustainable development. We work to
           wards transforming education for global citizenship and sustainable.
         </p>
-      </ContainerBig>
+      </Container>
       <div className="bg-background-darker py-36">
-        <ContainerBig>
+        <Container variant="big">
           <h3 className="mb-3.5 text-[42px] font-semibold">Designer Team</h3>
           <p className="text-font-normal mb-23 text-2xl/normal">
             Transforming education for global citizenship and sustainable The Global Citizen ship
@@ -31,7 +31,7 @@ const ContributorsPage = async () => {
               <ContributorFrame contributor={contributor} key={contributor._id} />
             ))}
           </div>
-        </ContainerBig>
+        </Container>
       </div>
     </>
   );

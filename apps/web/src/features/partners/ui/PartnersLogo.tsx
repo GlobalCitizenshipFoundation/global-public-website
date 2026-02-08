@@ -6,25 +6,37 @@ import { path } from '@/shared/config/paths';
 
 type Props = {
   partner: RelatedPartnersType;
+  className?: string;
 };
 
-const PartnersLogo: React.FC<Props> = ({ partner }) => {
-  const slug = partner.slug?.current;
+function cx(...classes: Array<string | undefined | null | false>) {
+  return classes.filter(Boolean).join(' ');
+}
 
-  if (!partner.logo || !slug) return null;
+const PartnersLogo: React.FC<Props> = ({ partner, className }) => {
+  const slug = partner.slug?.current;
+  const logoUrl = partner.logo?.asset?.url;
+
+  if (!logoUrl || !slug) return null;
 
   return (
-    <div className="flex h-[223px] w-[223px] items-center justify-center">
-      <Link href={path.partner(slug)} className="transition-all duration-300 hover:scale-120">
+    <Link
+      href={path.partner(slug)}
+      className={cx(
+        'block h-full w-full transition-transform duration-200 hover:scale-[1.04]',
+        className
+      )}
+    >
+      <div className="relative h-full w-full">
         <Image
-          src={partner.logo.asset.url}
-          alt={partner.title}
-          className="h-auto w-full object-contain"
-          width={223}
-          height={223}
+          src={logoUrl}
+          alt={partner.title ?? 'Partner logo'}
+          fill
+          sizes="(max-width: 640px) 70vw, (max-width: 1024px) 45vw, (max-width: 1280px) 28vw, 250px"
+          className="object-contain"
         />
-      </Link>
-    </div>
+      </div>
+    </Link>
   );
 };
 

@@ -1,6 +1,6 @@
 import { sanityClient } from '@/shared/sanity/client';
-import type { RelatedEventProps } from '@gcf/types';
-import { EVENTS_LIST_BASE } from './events.queries';
+import type { EventCard } from '@gcf/types';
+import { EVENTS_LIST_BASE } from './queries/eventsList.groq';
 
 export type EventsQuery = {
   q?: string;
@@ -25,20 +25,16 @@ function getOrderClause(sort: EventsQuery['sort']) {
   }
 }
 
-export async function getEvents(
-  query: EventsQuery = {}
-): Promise<EventsListResult<RelatedEventProps>> {
+export async function getEvents(query: EventsQuery = {}): Promise<EventsListResult<EventCard>> {
   const { q = '', type = 'all', tab = 'all', sort = 'date_desc', page = 1, perPage = 9 } = query;
 
   const start = (page - 1) * perPage;
   const end = start + perPage;
 
-  const qParam = q.trim() ? `*${q.trim()}*` : '';
-
   const groq = EVENTS_LIST_BASE.replace('ORDER_CLAUSE', getOrderClause(sort));
 
   const res = await sanityClient.fetch(groq, {
-    q: qParam,
+    q: q.trim(),
     type,
     tab,
     start,

@@ -1,6 +1,5 @@
 import React from 'react';
 import type { PartnerSingleType } from '@gcf/types';
-import ContainerBig from '@/shared/ui/ContainerBig';
 import BreakLine from '@/shared/ui/BreakLine';
 import ButtonRegular from '@/shared/ui/ButtonRegular';
 import {
@@ -14,6 +13,7 @@ import Sharing from '@/shared/ui/Sharing';
 import Newsettler from '@/shared/ui/Newsletter';
 import { paths } from '@/shared/config/paths';
 import Image from 'next/image';
+import Container from '@/shared/ui/Container';
 
 type Props = {
   partner: PartnerSingleType;
@@ -36,7 +36,8 @@ const PartnerSingleComponent: React.FC<Props> = ({ partner }) => {
           />
         </div>
       ) : null}
-      <ContainerBig>
+
+      <Container>
         <div className="mb-16 flex flex-row justify-between gap-x-35">
           <div>
             {partner.country && (
@@ -51,6 +52,7 @@ const PartnerSingleComponent: React.FC<Props> = ({ partner }) => {
               <p className="text-2xl leading-[142%]">{partner.shotrDescription}</p>
             )}
           </div>
+
           <div className="-mt-35.5 w-75">
             <div className="mb-7.5 flex h-75 w-75 items-center justify-center rounded-full bg-white p-5 shadow">
               <div className="mb-7.5 flex h-75 w-75 items-center justify-center rounded-full bg-white p-5 shadow">
@@ -67,42 +69,56 @@ const PartnerSingleComponent: React.FC<Props> = ({ partner }) => {
                 ) : null}
               </div>
             </div>
+
             <div className="flex flex-col gap-4">
-              {partner.websiteUrl && (
-                <ButtonRegular className="bg-primary-darker h-9.5 text-base font-normal text-white">
-                  {partner.websiteText ? partner.websiteText : 'Visit Website'}
-                </ButtonRegular>
-              )}
-              {socialLinks.length > 0 && (
+              {partner.websiteUrl ? (
+                <a
+                  href={partner.websiteUrl}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="block"
+                >
+                  <ButtonRegular className="bg-primary-darker h-9.5 w-full text-base font-normal text-white">
+                    {partner.websiteText ? partner.websiteText : 'Visit Website'}
+                  </ButtonRegular>
+                </a>
+              ) : null}
+
+              {socialLinks.length > 0 ? (
                 <div className="flex h-11 gap-4.75">
                   {socialLinks.map((link) => (
                     <SocialLink
                       key={link.href}
                       href={link.href}
-                      icon={<link.icon />}
+                      kind={link.kind}
+                      label={link.label}
                       bgColor="bg-background-panel"
                       variant="button"
-                      className={`h-full w-full`}
+                      className="h-full w-full"
                     />
                   ))}
                 </div>
-              )}
+              ) : null}
+
               <Link href={paths.partners}>
-                <ButtonRegular className="border-dark-blue h-9.5 border bg-transparent">
+                <ButtonRegular className="border-dark-blue h-9.5 w-full border bg-transparent">
                   View All Partners
                 </ButtonRegular>
               </Link>
             </div>
           </div>
         </div>
-        <BreakLine className="mb-15" />
-        <div className="mb-[70px]">{partner.body && <PortableText value={partner.body} />}</div>
-        {partner.quote && <p className="mb-20">{partner.quote}</p>}
-        <Sharing socialLinks={socialLinks} />
 
-        <h2>OTHER PARTNERS SECTION</h2>
-        <h2>PARTNER TYPE IDK</h2>
-      </ContainerBig>
+        <BreakLine className="mb-15" />
+
+        <div className="mb-[70px]">{partner.body && <PortableText value={partner.body} />}</div>
+
+        {partner.quote && <p className="mb-20">{partner.quote}</p>}
+
+        {/* Sharing też musi dostać dane, nie ikony */}
+        <Sharing socialLinks={socialLinks} />
+      </Container>
+
       <Newsettler />
     </>
   );

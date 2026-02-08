@@ -1,10 +1,10 @@
 import Image from 'next/image';
-import ContainerBig from '@/shared/ui/ContainerBig';
 import ButtonPrimary from '@/shared/ui/ButtonPrimary';
 import { DataEventHome } from '@/features/home/ui/DataEventHome';
 import Newsettler from '@/shared/ui/Newsletter';
 import SwiperList from '@/shared/ui/SwiperList';
 import type { Metadata } from 'next';
+import Container from '@/shared/ui/Container';
 
 export const metadata: Metadata = {
   title: 'Home',
@@ -28,7 +28,10 @@ export default function Home() {
             className="object-cover"
           />{' '}
           <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/70 via-black/30 to-transparent" />{' '}
-          <ContainerBig className="relative z-10 flex min-h-130 items-end pb-12 md:min-h-175 md:pb-16">
+          <Container
+            variant="big"
+            className="relative z-10 flex min-h-130 items-end pb-12 md:min-h-175 md:pb-16"
+          >
             {' '}
             <div className="grid w-full grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16">
               {' '}
@@ -50,13 +53,13 @@ export default function Home() {
                 </ButtonPrimary>{' '}
               </div>{' '}
             </div>{' '}
-          </ContainerBig>{' '}
+          </Container>{' '}
         </div>{' '}
       </section>{' '}
       {/* EDUCATION */}{' '}
       <section className="bg-home-beige py-16 md:py-24">
         {' '}
-        <ContainerBig>
+        <Container variant="big">
           {' '}
           <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
             {' '}
@@ -116,7 +119,7 @@ export default function Home() {
               </div>{' '}
             </div>{' '}
           </div>{' '}
-        </ContainerBig>{' '}
+        </Container>{' '}
       </section>{' '}
       {/* FEATURED EVENTS */}{' '}
       <section className="flex w-full flex-col items-center justify-center gap-27 py-56.25">
@@ -142,7 +145,7 @@ export default function Home() {
           className="object-cover"
         />{' '}
         <div className="pointer-events-none absolute inset-0 bg-black/30" />{' '}
-        <ContainerBig className="relative z-10">
+        <Container variant="big" className="relative z-10">
           {' '}
           <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
             {' '}
@@ -160,12 +163,12 @@ export default function Home() {
               Visit the Newsroom{' '}
             </ButtonPrimary>{' '}
           </div>{' '}
-        </ContainerBig>{' '}
+        </Container>{' '}
       </section>{' '}
       {/* DATA */}{' '}
       <section className="bg-background-primary py-16 md:py-24">
         {' '}
-        <ContainerBig>
+        <Container variant="big">
           {' '}
           <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-[1fr_auto_1fr]">
             {' '}
@@ -223,12 +226,12 @@ export default function Home() {
               </div>
             ))}{' '}
           </div>{' '}
-        </ContainerBig>{' '}
+        </Container>{' '}
       </section>{' '}
       {/* INITIATIVES */}{' '}
       <section className="bg-background-darker py-16 md:py-24">
         {' '}
-        <ContainerBig>
+        <Container variant="big">
           {' '}
           <DataEventHome
             title="Our Initiatives"
@@ -236,12 +239,12 @@ export default function Home() {
             textDescription="Realizing United Nations' Sustainable Development Goals and the transformation."
             gap={300}
           />{' '}
-        </ContainerBig>{' '}
+        </Container>{' '}
       </section>{' '}
       {/* MAGAZINE CTA */}{' '}
       <section className="py-16 md:py-24">
         {' '}
-        <ContainerBig>
+        <Container variant="big">
           {' '}
           <DataEventHome
             title="Explore the .ed Magazine"
@@ -249,7 +252,7 @@ export default function Home() {
             textDescription="The .ed Magazine is a carefully curated issue-based flagship digital publication of the Global Citizenship Foundation."
             gap={107}
           />{' '}
-        </ContainerBig>{' '}
+        </Container>{' '}
       </section>{' '}
       <section>
         {' '}

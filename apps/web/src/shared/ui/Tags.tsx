@@ -10,12 +10,20 @@ export const Tags: React.FC<Props> = ({ tags }) => {
 
   return (
     <div className="flex flex-wrap gap-2.5">
-      {tags?.map((tag, index) => (
+      {tags.map((tag, index) => (
         <div
           key={index + tag}
-          className="border-secondary-borders flex items-center justify-center rounded-4xl border px-4 py-2.5"
+          className={[
+            'group',
+            'cursor-default select-none',
+            'hover:bg-white',
+            'border-secondary-borders flex items-center justify-center rounded-4xl border px-4 py-2.5',
+            'transition-colors',
+          ].join(' ')}
         >
-          <span>{tagsLabels[tag] ?? tag}</span>
+          <span className="transition-colors group-hover:text-[var(--color-primary)]">
+            {tagsLabels[tag] ?? tag}
+          </span>
         </div>
       ))}
     </div>

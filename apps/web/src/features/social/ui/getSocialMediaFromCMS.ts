@@ -1,22 +1,23 @@
-import type { ComponentType, SVGProps } from 'react';
+// getSocialMediaFromCMS.ts
 import { socialPlatforms } from '@/shared/config/social';
 
 export type ContributorSocials = Record<string, string | undefined>;
 
-type IconComponent = ComponentType<SVGProps<SVGSVGElement>>;
+// Zrób union jeśli możesz, inaczej zostaw string i potem zawęź w UI
+export type SocialKind = (typeof socialPlatforms)[number]['name'];
 
-export type SocialLink = {
+export type SocialLinkData = {
   href: string;
   label: string;
-  icon: IconComponent;
+  kind: SocialKind;
 };
 
-export function getSocialLinksFromCMS(contributor: ContributorSocials): SocialLink[] {
+export function getSocialLinksFromCMS(contributor: ContributorSocials): SocialLinkData[] {
   return socialPlatforms
     .filter((platform) => Boolean(contributor[platform.name]))
     .map((platform) => ({
       href: contributor[platform.name]!,
       label: platform.label,
-      icon: platform.icon as IconComponent,
+      kind: platform.name,
     }));
 }

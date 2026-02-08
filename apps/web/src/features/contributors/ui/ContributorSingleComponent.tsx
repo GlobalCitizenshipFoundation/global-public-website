@@ -1,30 +1,63 @@
+import React from 'react';
+import Image from 'next/image';
+import { PortableText } from '@portabletext/react';
+
 import ButtonPrimary from '@/shared/ui/ButtonPrimary';
-import ContainerBig from '@/shared/ui/ContainerBig';
-import RelatedEvent from '@/features/events/ui/RelatedEvent';
+import RelatedEvent from '@/features/events/ui/cards/EventCard';
 import Newsettler from '@/shared/ui/Newsletter';
+import SocialLink from '@/features/social/ui/SocialLink';
+import Sharing from '@/shared/ui/Sharing';
+import Container from '@/shared/ui/Container';
+import PrintButton from '@/shared/ui/PrintButton';
+
 import {
   type ContributorSocials,
   getSocialLinksFromCMS,
 } from '@/features/social/ui/getSocialMediaFromCMS';
-import SocialLink from '@/features/social/ui/SocialLink';
-import { PortableText } from '@portabletext/react';
-import { FaRegEnvelope, FaPrint } from 'react-icons/fa6';
+
 import type { ContributorSingleType } from '@gcf/types';
-import Sharing from '@/shared/ui/Sharing';
-import Image from 'next/image';
 
 type Props = {
   contributor: ContributorSingleType;
 };
 
+/**
+ * Mapuje typ CMS (ContributorSingleType) na “płaski” obiekt sociali, który rozumie getSocialLinksFromCMS.
+ * DOPASUJ pola do tego co realnie masz w ContributorSingleType.
+ */
+function pickContributorSocials(c: ContributorSingleType): ContributorSocials {
+  // Najczęściej w CMS te pola będą miały nazwy typu: twitter, instagram, facebook...
+  // Podmień na prawdziwe nazwy z @gcf/types (to jest jedyna rzecz do dostosowania).
+  return {
+    twitter:
+      // @ts-expect-error - dopasuj do realnych pól z CMS
+      (c.twitterUrl ?? c.twitter ?? c.x ?? c.xUrl) || undefined,
+    instagram:
+      // @ts-expect-error - dopasuj do realnych pól z CMS
+      (c.instagramUrl ?? c.instagram) || undefined,
+    facebook:
+      // @ts-expect-error - dopasuj do realnych pól z CMS
+      (c.facebookUrl ?? c.facebook) || undefined,
+    linkedin:
+      // @ts-expect-error - dopasuj do realnych pól z CMS
+      (c.linkedinUrl ?? c.linkedin) || undefined,
+    youtube:
+      // @ts-expect-error - dopasuj do realnych pól z CMS
+      (c.youtubeUrl ?? c.youtube) || undefined,
+    website:
+      // @ts-expect-error - dopasuj do realnych pól z CMS
+      (c.websiteUrl ?? c.website) || undefined,
+  };
+}
+
 const ContributorSingleComponent: React.FC<Props> = ({ contributor }) => {
-  const socialLinks = getSocialLinksFromCMS(contributor as unknown as ContributorSocials);
+  const socialLinks = getSocialLinksFromCMS(pickContributorSocials(contributor));
   const photoUrl = contributor.photo?.asset?.url;
 
   return (
     <>
-      <ContainerBig className="mt-25">
-        {contributor.featuredProfile && (
+      <Container variant="big" className="mt-25">
+        {contributor.featuredProfile ? (
           <>
             <div className="mb-5 flex justify-between">
               <h2 className="text-6xl">Featured Profile</h2>
@@ -32,16 +65,19 @@ const ContributorSingleComponent: React.FC<Props> = ({ contributor }) => {
                 View all profiles
               </ButtonPrimary>
             </div>
+
             <p className="mb-24">
-              Transforming education for global citizenship and sustainable development. We work to
-              wards transforming education for global citizenship and sustainable.
+              Transforming education for global citizenship and sustainable development. We work
+              towards transforming education for global citizenship and sustainable.
             </p>
           </>
-        )}
-      </ContainerBig>
+        ) : null}
+      </Container>
 
-      <section className={`bg-background-darker p-24 ${!contributor.featuredProfile && 'mb-30'}`}>
-        <ContainerBig>
+      <section
+        className={`bg-background-darker p-24 ${!contributor.featuredProfile ? 'mb-30' : ''}`}
+      >
+        <Container variant="big">
           <div className="flex items-center gap-x-16">
             {photoUrl ? (
               <div className="relative h-122.5 w-122.5">
@@ -54,8 +90,9 @@ const ContributorSingleComponent: React.FC<Props> = ({ contributor }) => {
                 />
               </div>
             ) : null}
+
             <div className="flex h-auto flex-col">
-              {contributor.gender && (
+              {contributor.gender ? (
                 <p className="text-titles mb-5 text-xl font-semibold">
                   {contributor.gender === 'male'
                     ? 'He/Him'
@@ -63,65 +100,70 @@ const ContributorSingleComponent: React.FC<Props> = ({ contributor }) => {
                       ? 'She/Her'
                       : ''}
                 </p>
-              )}
-              {contributor.name && (
+              ) : null}
+
+              {contributor.name ? (
                 <h2 className="text-titles mb-1 text-[40px] font-bold">{contributor.name}</h2>
-              )}
-              {contributor.designation && (
+              ) : null}
+
+              {contributor.designation ? (
                 <h3 className="text-titles mb-6.5 text-[26px] font-semibold">
                   {contributor.designation}
                 </h3>
-              )}
-              {contributor.organization && (
+              ) : null}
+
+              {contributor.organization ? (
                 <h3 className="text-primary mb-2 text-[26px] font-medium">
                   {contributor.organization}
                 </h3>
-              )}
-              {contributor.country && (
+              ) : null}
+
+              {contributor.country ? (
                 <h3 className="text-titles mb-7 text-xl font-medium">{contributor.country}</h3>
-              )}
-              {contributor.emailId && contributor.emailDisplay && (
+              ) : null}
+
+              {contributor.emailId && contributor.emailDisplay ? (
                 <div className="mb-4 flex flex-row items-center">
+                  {/* Email jest wyjątkiem - lokalna ikona jest OK */}
                   <SocialLink
                     href={`mailto:${contributor.emailId}`}
-                    icon={<FaRegEnvelope />}
+                    kind="email"
                     variant="button"
                     hoverColor="bg-primary"
                     className="mr-3.5"
+                    label="Email"
                   />
+
                   <p className="text-titles text-xl font-medium">{contributor.emailId}</p>
                 </div>
-              )}
+              ) : null}
+
               <div className="flex flex-row">
                 <div className="mr-31.5 flex gap-4">
-                  {socialLinks &&
-                    socialLinks.map((link) => (
-                      <SocialLink
-                        key={link.href}
-                        href={link.href}
-                        icon={<link.icon />}
-                        variant="button"
-                      />
-                    ))}
+                  {socialLinks.map((link) => (
+                    <SocialLink
+                      key={link.href}
+                      href={link.href}
+                      kind={link.kind}
+                      label={link.label}
+                      variant="button"
+                    />
+                  ))}
                 </div>
+
                 <div className="flex flex-row items-center">
-                  <SocialLink
-                    href={`www.wikipedia.com`}
-                    icon={<FaPrint />}
-                    variant="button"
-                    className="mr-3.5"
-                  />
+                  <PrintButton className="mr-3.5" />
                   <span className="font-inter text-borders text-[16px] font-normal">Print</span>
                 </div>
               </div>
             </div>
           </div>
-        </ContainerBig>
+        </Container>
       </section>
 
-      {contributor.featuredProfile && (
+      {contributor.featuredProfile ? (
         <section className="bg-primary mb-30 h-12">
-          <ContainerBig>
+          <Container variant="big">
             <div className="flex h-12 items-center">
               <Image
                 src="/images/check.svg"
@@ -132,33 +174,38 @@ const ContributorSingleComponent: React.FC<Props> = ({ contributor }) => {
               />
               <p className="text-lg font-medium text-white">Featured profile</p>
             </div>
-          </ContainerBig>
+          </Container>
         </section>
-      )}
+      ) : null}
 
-      <ContainerBig>
+      <Container variant="big">
         <p className="text-titles font-poppins mb-3.5 text-[42px] font-semibold">Biography</p>
-        {contributor.bio && <PortableText value={contributor.bio} />}
+
+        {contributor.bio ? <PortableText value={contributor.bio} /> : null}
+
+        {/* Sharing MUSI brać dane (kind/href/label), nie propsy z iconami */}
         <Sharing socialLinks={socialLinks} />
-      </ContainerBig>
-      {contributor.events && contributor.events.length > 0 && (
+      </Container>
+
+      {contributor.events && contributor.events.length > 0 ? (
         <section className="bg-[#C6E3DF] py-38.5">
-          <ContainerBig>
-            <>
-              <h2 className="mb-3.5 text-[42px]">Events By {contributor.name}</h2>
-              <p className="mb-15">
-                Transforming education for global citizenship and sustainable The Global Citizen
-                ship Foundation continues commitment Preparing young people for a smart future.
-              </p>
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-                {contributor.events.map((event) => (
-                  <RelatedEvent event={event} key={event._id} />
-                ))}
-              </div>
-            </>
-          </ContainerBig>
+          <Container variant="big">
+            <h2 className="mb-3.5 text-[42px]">Events By {contributor.name}</h2>
+
+            <p className="mb-15">
+              Transforming education for global citizenship and sustainable. The Global Citizenship
+              Foundation continues commitment preparing young people for a smart future.
+            </p>
+
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+              {contributor.events.map((event) => (
+                <RelatedEvent event={event} key={event._id} />
+              ))}
+            </div>
+          </Container>
         </section>
-      )}
+      ) : null}
+
       <Newsettler />
     </>
   );

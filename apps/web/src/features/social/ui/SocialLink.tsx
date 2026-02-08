@@ -1,28 +1,33 @@
-import Link from 'next/link';
-import React, { type ComponentType, type ReactNode, type SVGProps } from 'react';
+'use client';
 
-type IconComponent = ComponentType<SVGProps<SVGSVGElement>>;
+import React from 'react';
+import { socialIcons } from '@/shared/config/social-icons';
+import type { SocialName } from '@/shared/config/social';
 
 export interface SocialLinkProps {
   label?: string;
-  icon: ReactNode | IconComponent;
+  kind: SocialName; // <-- zamiast icon
   href: string;
   variant?: 'button' | 'inline' | 'vertical';
   hoverColor?: string;
   bgColor?: string;
   textColor?: string;
   className?: string;
+  target?: React.HTMLAttributeAnchorTarget;
+  rel?: string;
 }
 
 const SocialLink: React.FC<SocialLinkProps> = ({
   label,
-  icon,
+  kind,
   href,
   variant = 'button',
   hoverColor = 'hover:bg-primary',
   bgColor = 'bg-white',
   textColor = 'text-gray',
   className = '',
+  target = '_blank',
+  rel = 'noopener noreferrer',
 }) => {
   const baseClasses = 'transition-all duration-300 ease-in-out';
 
@@ -37,12 +42,16 @@ const SocialLink: React.FC<SocialLinkProps> = ({
     vertical: 'text-[14px] text-borders group-hover:text-primary',
   };
 
+  const Icon = socialIcons[kind];
+
   return (
-    <Link
+    <a
       href={href}
-      target="_blank"
-      rel="noopener noreferrer"
+      target={target}
+      rel={rel}
       className={`group ${variants[variant]} ${baseClasses} ${textColor} ${className}`}
+      aria-label={label ?? kind}
+      title={label ?? kind}
     >
       <span
         className={`text-xl text-current ${baseClasses} ${
@@ -53,13 +62,13 @@ const SocialLink: React.FC<SocialLinkProps> = ({
               : ''
         }`}
       >
-        {typeof icon === 'function' ? React.createElement(icon) : icon}
+        <Icon aria-hidden={true} />
       </span>
 
       {(variant === 'inline' || variant === 'vertical') && label && (
         <span className={labelClasses[variant]}>{label}</span>
       )}
-    </Link>
+    </a>
   );
 };
 
