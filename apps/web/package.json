@@ -21,7 +21,7 @@
     "format:check": "prettier . --check"
   },
   "dependencies": {
-    "@gcf/types": "workspace:*",
+    "@gcf/types": "file:../../packages/types",
     "@portabletext/react": "^3.2.1",
     "@sanity/client": "^7.6.0",
     "countries-list": "^3.1.1",
