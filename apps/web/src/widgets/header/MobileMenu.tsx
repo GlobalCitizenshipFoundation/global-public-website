@@ -43,6 +43,7 @@ const DESKTOP_MQ = '(min-width: 1200px)';
 
 const MobileMenu: React.FC = () => {
   const pathname = usePathname() ?? '/';
+  const prevPathRef = useRef(pathname);
 
   const [phase, setPhase] = useState<Phase>('closed');
 
@@ -114,8 +115,12 @@ const MobileMenu: React.FC = () => {
     scheduleFallbackClose();
   }, [clearFallback, clearRafs, scheduleFallbackClose]);
 
+  // ✅ zamykaj tylko kiedy pathname REALNIE się zmieni
   useEffect(() => {
-    if (phase !== 'closed') closeMenu();
+    if (prevPathRef.current !== pathname) {
+      prevPathRef.current = pathname;
+      if (phase !== 'closed') closeMenu();
+    }
   }, [pathname, closeMenu, phase]);
 
   useEffect(() => {
