@@ -1,0 +1,47 @@
+{
+  "$schema": "https://unpkg.com/knip@latest/schema.json",
+
+  "workspaces": {
+    "repo": {
+      "entry": ["lint-staged.config.mjs", "biome.json"],
+      "project": ["package.json"]
+    },
+    "apps/web": {
+      "entry": [
+        "next.config.*",
+        "eslint.config.mjs",
+        "postcss.config.mjs",
+        "stylelint.config.cjs",
+        "src/app/**/{page,layout,loading,error,not-found,route}.{ts,tsx}"
+      ],
+      "project": ["src/**/*.{ts,tsx,js,jsx}"]
+    },
+    "apps/cms": {
+      "entry": [
+        "sanity.config.*",
+        "sanity.cli.*",
+        "src/schema/schemaTypes.ts",
+        "src/**/*.{ts,tsx,js,jsx}"
+      ],
+      "project": ["src/**/*.{ts,tsx,js,jsx}"]
+    },
+    "packages/types": {
+      "entry": ["src/index.ts"],
+      "project": ["src/**/*.{ts,tsx}"]
+    }
+  },
+  "ignore": ["**/.next/**", "**/dist/**", "**/node_modules/**", "scripts/check-routes.ts"],
+  "ignoreDependencies": [
+    "tailwindcss",
+    "stylelint-config-standard",
+    "@netlify/plugin-nextjs",
+    "@eslint/eslintrc",
+    "@typescript-eslint/eslint-plugin",
+    "@typescript-eslint/parser",
+    "eslint-config-next",
+    "eslint-config-prettier",
+    "eslint-plugin-jsx-a11y",
+    "eslint-plugin-react"
+  ],
+  "ignoreBinaries": ["lint:ci", "stylelint"]
+}

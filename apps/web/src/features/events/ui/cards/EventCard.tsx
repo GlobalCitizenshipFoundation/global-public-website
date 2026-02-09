@@ -1,24 +1,24 @@
-import React from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import ButtonPrimary from '@/shared/ui/ButtonPrimary';
-import type { EventCard as EventCardType } from '@gcf/types';
-import { formatEventDate } from '@/features/events/lib/formatters';
-import { paths, path } from '@/shared/config/paths';
+import React from "react";
+import Image from "next/image";
+import Link from "next/link";
+import ButtonPrimary from "@/shared/ui/ButtonPrimary";
+import type { EventCard as EventCardType } from "@gcf/types";
+import { formatEventDate } from "@/features/events/lib/formatters";
+import { paths, path } from "@/shared/config/paths";
 
 type Props = { event: EventCardType };
 
 const EVENT_TYPE_LABEL: Record<string, string> = {
-  conference: 'Conference',
-  consultation: 'Consultation',
-  panel_discussion: 'Panel Discussion',
-  forum: 'Forum',
+  conference: "Conference",
+  consultation: "Consultation",
+  panel_discussion: "Panel Discussion",
+  forum: "Forum",
 };
 
 const EventCard: React.FC<Props> = ({ event }) => {
   const formattedStartDate = event.startDateTime
     ? formatEventDate(event.startDateTime)
-    : 'No date available';
+    : "No date available";
 
   const slug = event.slug?.current;
   const href = slug ? path.event(slug) : paths.events;
@@ -26,13 +26,13 @@ const EventCard: React.FC<Props> = ({ event }) => {
 
   const typeLabel = event.eventType
     ? (EVENT_TYPE_LABEL[event.eventType] ?? event.eventType)
-    : 'No Type available';
+    : "No Type available";
 
   return (
     <article className="group [container-type:inline-size] relative flex h-full flex-col rounded-[10px]">
       <Link
         href={href}
-        aria-label={event.eventHeading ? `Open event: ${event.eventHeading}` : 'Open event'}
+        aria-label={event.eventHeading ? `Open event: ${event.eventHeading}` : "Open event"}
         className="absolute inset-0 z-10 rounded-[10px]"
       />
 
@@ -40,7 +40,7 @@ const EventCard: React.FC<Props> = ({ event }) => {
         {imageUrl ? (
           <Image
             src={imageUrl}
-            alt={event.eventHeading || 'Event image'}
+            alt={event.eventHeading || "Event image"}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-cover transition-transform duration-200 group-hover:scale-[1.02]"

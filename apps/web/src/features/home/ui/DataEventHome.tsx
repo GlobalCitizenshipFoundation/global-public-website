@@ -1,5 +1,5 @@
-import { paths } from '@/shared/config/paths';
-import ButtonPrimary from '@/shared/ui/ButtonPrimary';
+import { paths } from "@/shared/config/paths";
+import ButtonPrimary from "@/shared/ui/ButtonPrimary";
 
 interface Props {
   title: string;

@@ -1,5 +1,5 @@
 export interface SanityImageDimensions {
-  _type: 'sanity.imageDimensions';
+  _type: "sanity.imageDimensions";
   aspectRatio: number;
   width: number;
   height: number;

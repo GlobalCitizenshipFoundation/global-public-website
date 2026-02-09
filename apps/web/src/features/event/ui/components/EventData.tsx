@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useEffect, useMemo, useState } from 'react';
-import { formatEventDate, formatEventTime } from '@/shared/lib/datetime';
+import { useEffect, useMemo, useState } from "react";
+import { formatEventDate, formatEventTime } from "@/shared/lib/datetime";
 
 interface Props {
   start: string;
@@ -15,7 +15,7 @@ interface CountDown {
   seconds: number;
 }
 
-type Status = 'countdown' | 'started' | 'ended';
+type Status = "countdown" | "started" | "ended";
 
 function getCountdown(target: Date, now: Date): CountDown {
   const diffMs = target.getTime() - now.getTime();
@@ -34,7 +34,7 @@ const EventData: React.FC<Props> = ({ start, end }) => {
   const endDate = useMemo(() => new Date(end), [end]);
 
   const [countdown, setCountdown] = useState<CountDown | null>(null);
-  const [status, setStatus] = useState<Status>('countdown');
+  const [status, setStatus] = useState<Status>("countdown");
 
   const formattedStartDate = formatEventDate(start);
   const formattedStartTime = formatEventTime(start);
@@ -45,7 +45,7 @@ const EventData: React.FC<Props> = ({ start, end }) => {
   useEffect(() => {
     if (Number.isNaN(startDate.getTime()) || Number.isNaN(endDate.getTime())) {
       setCountdown(null);
-      setStatus('ended');
+      setStatus("ended");
       return;
     }
 
@@ -54,17 +54,17 @@ const EventData: React.FC<Props> = ({ start, end }) => {
 
       if (now >= endDate) {
         setCountdown(null);
-        setStatus('ended');
+        setStatus("ended");
         return;
       }
 
       if (now >= startDate) {
         setCountdown(null);
-        setStatus('started');
+        setStatus("started");
         return;
       }
 
-      setStatus('countdown');
+      setStatus("countdown");
       setCountdown(getCountdown(startDate, now));
     };
 
@@ -102,7 +102,7 @@ const EventData: React.FC<Props> = ({ start, end }) => {
         </div>
       </div>
 
-      {status === 'countdown' && countdown ? (
+      {status === "countdown" && countdown ? (
         <div className="flex items-center gap-5">
           <span className="text-light-gray text-xs font-medium uppercase">EVENT STARTS IN</span>
 

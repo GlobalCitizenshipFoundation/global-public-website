@@ -1,17 +1,20 @@
-import {defineCliConfig} from 'sanity/cli'
+import { defineCliConfig } from "sanity/cli";
+
+function readCliEnv(key: string) {
+  const v = process.env[key];
+  return v && v.trim() !== "" ? v : undefined;
+}
+
+const projectId = readCliEnv("SANITY_STUDIO_PROJECT_ID") ?? readCliEnv("SANITY_PROJECT_ID");
+
+const dataset = readCliEnv("SANITY_STUDIO_DATASET") ?? readCliEnv("SANITY_DATASET");
+
+const appId = readCliEnv("SANITY_STUDIO_APP_ID") ?? readCliEnv("SANITY_APP_ID");
+
+const deployment = appId ? { autoUpdates: true, appId } : undefined;
 
 export default defineCliConfig({
-  api: {
-    projectId: 'swpg1w6y',
-    dataset: 'production',
-  },
-  studioHost: 'gctf',
-  /**
-   * Enable auto-updates for studios.
-   * Learn more at https://www.sanity.io/docs/cli#auto-updates
-   */
-  deployment: {
-    autoUpdates: true,
-    appId: 'vbkofe9i6oogfr0ch7jko4sf',
-  },
+  api: { projectId: projectId ?? "MISSING_PROJECT_ID", dataset: dataset ?? "MISSING_DATASET" },
+  studioHost: "gctf",
+  ...(deployment ? { deployment } : {}),
 });

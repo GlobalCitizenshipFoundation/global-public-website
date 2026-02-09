@@ -1,6 +1,6 @@
-import { paths } from '@/shared/config/paths';
-import Link from 'next/link';
-import Image from 'next/image';
+import { paths } from "@/shared/config/paths";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function Logo() {
   return (

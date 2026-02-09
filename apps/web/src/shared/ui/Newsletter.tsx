@@ -1,5 +1,5 @@
-import React from 'react';
-import ButtonPrimary from '@/shared/ui/ButtonPrimary';
+import React from "react";
+import ButtonPrimary from "@/shared/ui/ButtonPrimary";
 
 const Newsettler: React.FC = () => {
   return (

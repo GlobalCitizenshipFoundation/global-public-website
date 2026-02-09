@@ -1,43 +1,42 @@
-import fs from 'node:fs';
-import path from 'node:path';
-import process from 'node:process';
+import fs from "node:fs";
+import path from "node:path";
+import process from "node:process";
 
-import { paths as appPaths } from '../apps/web/src/shared/config/paths';
+import { paths as appPaths } from "../apps/web/src/shared/config/paths";
 
 type RouteMap = Map<string, string[]>;
 
-const exts = ['.tsx', '.ts', '.jsx', '.js'] as const;
+const exts = [".tsx", ".ts", ".jsx", ".js"] as const;
 
 const exists = (p: string) => fs.existsSync(p);
 
 const findAppDir = () => {
   const candidates = [
-    path.resolve('src/app'),
-    path.resolve('app'),
+    path.resolve("src/app"),
+    path.resolve("app"),
 
-    path.resolve('apps/web/src/app'),
-    path.resolve('apps/site/src/app'),
-    path.resolve('apps/frontend/src/app'),
-    path.resolve('apps/website/src/app'),
+    path.resolve("apps/web/src/app"),
+    path.resolve("apps/site/src/app"),
+    path.resolve("apps/frontend/src/app"),
+    path.resolve("apps/website/src/app"),
 
-    path.resolve('apps/web/app'),
-    path.resolve('apps/site/app'),
-    path.resolve('apps/frontend/app'),
-    path.resolve('apps/website/app'),
+    path.resolve("apps/web/app"),
+    path.resolve("apps/site/app"),
+    path.resolve("apps/frontend/app"),
+    path.resolve("apps/website/app"),
   ];
 
   const found = candidates.find(exists);
   if (!found) {
-    throw new Error(`Nie znaleziono katalogu app. Sprawdziłem:\n- ${candidates.join('\n- ')}`);
+    throw new Error(`Nie znaleziono katalogu app. Sprawdziłem:\n- ${candidates.join("\n- ")}`);
   }
   return found;
 };
 
-
 const isRouteGroup = (name: string) => /^\(.*\)$/.test(name);
-const isParallelRoute = (name: string) => name.startsWith('@');
+const isParallelRoute = (name: string) => name.startsWith("@");
 
-const stripIntercept = (name: string) => name.replace(/^\(\.{1,3}\)/, '');
+const stripIntercept = (name: string) => name.replace(/^\(\.{1,3}\)/, "");
 
 const toUrlSeg = (dirName: string) => {
   const clean = stripIntercept(dirName);
@@ -51,15 +50,15 @@ const toUrlSeg = (dirName: string) => {
 };
 
 const normalizeUrl = (u: string) => {
-  if (u === '/') return '/';
+  if (u === "/") return "/";
   const trimmed = u.trim();
-  const noTrailing = trimmed.endsWith('/') ? trimmed.slice(0, -1) : trimmed;
-  return noTrailing.startsWith('/') ? noTrailing : `/${noTrailing}`;
+  const noTrailing = trimmed.endsWith("/") ? trimmed.slice(0, -1) : trimmed;
+  return noTrailing.startsWith("/") ? noTrailing : `/${noTrailing}`;
 };
 
 const joinUrl = (base: string, seg: string | null) => {
   if (!seg) return base;
-  if (base === '/') return `/${seg}`;
+  if (base === "/") return `/${seg}`;
   return `${base}/${seg}`;
 };
 
@@ -88,14 +87,14 @@ const walkApp = (appDir: string) => {
     }
   };
 
-  walk(appDir, '/');
+  walk(appDir, "/");
   return map;
 };
 
 const requiredStaticRoutes = () => {
   const vals = Object.values(appPaths).map(normalizeUrl);
   const bad = vals.filter((v) => !v);
-  if (bad.length) throw new Error('Wykryto puste ścieżki w paths.');
+  if (bad.length) throw new Error("Wykryto puste ścieżki w paths.");
   return vals;
 };
 
@@ -130,7 +129,7 @@ const main = () => {
   }
 
   const trailingSlash = Object.entries(appPaths)
-    .filter(([_, v]) => v !== '/' && v.endsWith('/'))
+    .filter(([_, v]) => v !== "/" && v.endsWith("/"))
     .map(([k, v]) => `${k}: "${v}"`);
 
   const ok =
@@ -144,27 +143,27 @@ const main = () => {
   console.error(`❌ Route check FAILED. appDir=${appDir}\n`);
 
   if (trailingSlash.length) {
-    console.error('Trailing slash w paths (usuń, bo to robi bałagan):');
+    console.error("Trailing slash w paths (usuń, bo to robi bałagan):");
     for (const t of trailingSlash) console.error(`  - ${t}`);
-    console.error('');
+    console.error("");
   }
 
   if (missingStatic.length) {
-    console.error('Brakuje statycznych stron (paths.*):');
+    console.error("Brakuje statycznych stron (paths.*):");
     for (const r of missingStatic) console.error(`  - ${r}`);
-    console.error('');
+    console.error("");
   }
 
   if (missingDynamic.length) {
-    console.error('Brakuje dynamicznych stron ([slug]):');
+    console.error("Brakuje dynamicznych stron ([slug]):");
     for (const r of missingDynamic)
-      console.error(`  - ${r}  (np. folder: ${r.replace('/:slug', '/[slug]')})`);
-    console.error('');
+      console.error(`  - ${r}  (np. folder: ${r.replace("/:slug", "/[slug]")})`);
+    console.error("");
   }
 
-  console.error('Wykryte routy (dla debug):');
+  console.error("Wykryte routy (dla debug):");
   for (const [k, dirs] of [...discovered.entries()].sort((a, b) => a[0].localeCompare(b[0]))) {
-    console.error(`  ${k}  ->  ${dirs.map((d) => path.relative(process.cwd(), d)).join(', ')}`);
+    console.error(`  ${k}  ->  ${dirs.map((d) => path.relative(process.cwd(), d)).join(", ")}`);
   }
 
   process.exit(1);

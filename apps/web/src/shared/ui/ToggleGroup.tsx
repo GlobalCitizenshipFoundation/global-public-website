@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 type Item<T extends string> = {
   label: string;
@@ -23,9 +23,9 @@ export default function ToggleGroup<T extends string>({ items, value, onChange }
             type="button"
             onClick={() => onChange(t.value)}
             className={[
-              'h-9 shrink-0 rounded-md border px-3 text-sm',
-              active ? 'border-black bg-black text-white' : 'bg-white text-black',
-            ].join(' ')}
+              "h-9 shrink-0 rounded-md border px-3 text-sm",
+              active ? "border-black bg-black text-white" : "bg-white text-black",
+            ].join(" ")}
           >
             {t.label}
           </button>

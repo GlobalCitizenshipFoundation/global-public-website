@@ -1,5 +1,5 @@
-import type { EventPartnerGroup, EventSingleType } from '@gcf/types';
-import { uniqById } from './uniqById';
+import type { EventPartnerGroup, EventSingleType } from "@gcf/types";
+import { uniqById } from "./uniqById";
 
 export function getPartnerGroups(event: EventSingleType): EventPartnerGroup[] {
   const groups = event.partners ?? [];

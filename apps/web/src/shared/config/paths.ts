@@ -1,41 +1,41 @@
 const assertSlug = (slug: string) => {
   const s = slug.trim();
-  if (!s) throw new Error('Slug cannot be empty');
+  if (!s) throw new Error("Slug cannot be empty");
   return encodeURIComponent(s);
 };
 
 export const paths = {
-  home: '/',
+  home: "/",
 
-  about: '/about',
-  governance: '/governance',
-  networks: '/networks',
-  initiatives: '/initiatives',
+  about: "/about",
+  governance: "/governance",
+  networks: "/networks",
+  initiatives: "/initiatives",
 
-  event: '/event',
-  events: '/events',
-  magazine: '/magazine',
-  partners: '/partners',
-  contributors: '/contributors',
+  event: "/event",
+  events: "/events",
+  magazine: "/magazine",
+  partners: "/partners",
+  contributors: "/contributors",
 
-  contact: '/contact',
+  contact: "/contact",
 
-  secretariat: '/secretariat',
-  community: '/community',
-  education: '/education',
-  newsletter: '/newsletter',
+  secretariat: "/secretariat",
+  community: "/community",
+  education: "/education",
+  newsletter: "/newsletter",
 
-  help: '/help',
-  system: '/system',
-  career: '/career',
-  proposal: '/proposal',
-  support: '/support',
+  help: "/help",
+  system: "/system",
+  career: "/career",
+  proposal: "/proposal",
+  support: "/support",
 
-  impressum: '/impressum',
-  privacy: '/privacy',
-  cookie: '/cookie',
-  policies: '/policies',
-  terms: '/terms',
+  impressum: "/impressum",
+  privacy: "/privacy",
+  cookie: "/cookie",
+  policies: "/policies",
+  terms: "/terms",
 } as const;
 
 export const path = {

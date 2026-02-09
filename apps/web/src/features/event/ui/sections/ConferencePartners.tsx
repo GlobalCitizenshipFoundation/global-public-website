@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import React from 'react';
-import type { RelatedPartnersType } from '@gcf/types';
-import PartnersLogo from '@/features/partners/ui/PartnersLogo';
+import React from "react";
+import type { RelatedPartnersType } from "@gcf/types";
+import PartnersLogo from "@/features/partners/ui/PartnersLogo";
 
-import { Swiper, SwiperSlide } from 'swiper/react';
-import type { Swiper as SwiperInstance } from 'swiper/types';
-import { Navigation } from 'swiper/modules';
+import { Swiper, SwiperSlide } from "swiper/react";
+import type { Swiper as SwiperInstance } from "swiper/types";
+import { Navigation } from "swiper/modules";
 
-import 'swiper/css';
-import 'swiper/css/navigation';
+import "swiper/css";
+import "swiper/css/navigation";
 
 interface Props {
   title: string;
@@ -19,7 +19,7 @@ interface Props {
 
 function getIsLocked(s: SwiperInstance): boolean {
   const rec = s as unknown as Record<string, unknown>;
-  return rec['isLocked'] === true;
+  return rec["isLocked"] === true;
 }
 
 export const ConferencePartners: React.FC<Props> = ({ partners, title, className }) => {
@@ -56,7 +56,7 @@ export const ConferencePartners: React.FC<Props> = ({ partners, title, className
   const showArrows = slides.length > 1 && (canPrev || canNext);
 
   return (
-    <section className={['space-y-6', className].filter(Boolean).join(' ')}>
+    <section className={["space-y-6", className].filter(Boolean).join(" ")}>
       <div className="flex items-start justify-between gap-6">
         <h2 className="text-primary-darker text-[clamp(22px,3vw,42px)] font-semibold">{title}</h2>
 
@@ -68,10 +68,10 @@ export const ConferencePartners: React.FC<Props> = ({ partners, title, className
               disabled={!canPrev}
               onClick={() => swiper?.slidePrev()}
               className={[
-                'flex h-11 w-11 items-center justify-center rounded-md',
-                'bg-gray text-white',
-                'transition-opacity disabled:cursor-not-allowed disabled:opacity-40',
-              ].join(' ')}
+                "flex h-11 w-11 items-center justify-center rounded-md",
+                "bg-gray text-white",
+                "transition-opacity disabled:cursor-not-allowed disabled:opacity-40",
+              ].join(" ")}
             >
               ←
             </button>
@@ -82,10 +82,10 @@ export const ConferencePartners: React.FC<Props> = ({ partners, title, className
               disabled={!canNext}
               onClick={() => swiper?.slideNext()}
               className={[
-                'flex h-11 w-11 items-center justify-center rounded-md',
-                'bg-gray text-white',
-                'transition-opacity disabled:cursor-not-allowed disabled:opacity-40',
-              ].join(' ')}
+                "flex h-11 w-11 items-center justify-center rounded-md",
+                "bg-gray text-white",
+                "transition-opacity disabled:cursor-not-allowed disabled:opacity-40",
+              ].join(" ")}
             >
               →
             </button>
@@ -115,7 +115,7 @@ export const ConferencePartners: React.FC<Props> = ({ partners, title, className
         className="w-full"
       >
         {slides.map((partner) => (
-          <SwiperSlide key={partner._id} className="!h-auto">
+          <SwiperSlide key={partner._id} className="h-auto!">
             <div className="@container aspect-square w-full">
               <div className="h-full w-full rounded-md p-[clamp(10px,4cqw,16px)]">
                 <PartnersLogo partner={partner} />

@@ -1,7 +1,7 @@
-import { sanityClient } from '@/shared/sanity/client';
-import type { EventSingleType } from '@gcf/types';
+import { sanityClient } from "@/shared/sanity/client";
+import type { EventSingleType } from "@gcf/types";
 
-import { EVENT_BY_SLUG_QUERY } from './queries/eventBySlug.groq';
+import { EVENT_BY_SLUG_QUERY } from "./queries/eventBySlug.groq";
 
 export async function getEventBySlug(slug: string): Promise<EventSingleType | null> {
   if (!slug) return null;

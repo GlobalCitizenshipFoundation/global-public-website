@@ -1,5 +1,5 @@
-import { createClient } from '@sanity/client';
-import { publicEnv } from '../env/public';
+import { createClient } from "@sanity/client";
+import { publicEnv } from "../env/public";
 
 export const sanityClient = createClient({
   projectId: publicEnv.NEXT_PUBLIC_SANITY_PROJECT_ID,

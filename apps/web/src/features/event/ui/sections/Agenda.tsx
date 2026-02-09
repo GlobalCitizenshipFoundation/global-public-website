@@ -1,26 +1,26 @@
-import React from 'react';
-import { PortableText } from '@portabletext/react';
-import type { PortableTextBlock } from '@portabletext/types';
-import type { EventSingleType } from '@gcf/types';
-import { formatEventTime } from '@/shared/lib/datetime';
-import { createPortableTextComponents } from '../../lib/portableTextComponents';
-import { IoTime } from 'react-icons/io5';
+import React from "react";
+import { PortableText } from "@portabletext/react";
+import type { PortableTextBlock } from "@portabletext/types";
+import type { EventSingleType } from "@gcf/types";
+import { formatEventTime } from "@/shared/lib/datetime";
+import { createPortableTextComponents } from "../../lib/portableTextComponents";
+import { IoTime } from "react-icons/io5";
 
-import PeopleCollapse from './PeopleCollapse';
-import BreakLine from '@/shared/ui/BreakLine';
+import PeopleCollapse from "./PeopleCollapse";
+import BreakLine from "@/shared/ui/BreakLine";
 
 type Props = {
   heading: string;
-  description?: EventSingleType['agendaDescription'];
-  agenda?: EventSingleType['agenda'];
+  description?: EventSingleType["agendaDescription"];
+  agenda?: EventSingleType["agenda"];
 };
 
 function safeTime(value?: string | null) {
-  return value ? formatEventTime(value) : '';
+  return value ? formatEventTime(value) : "";
 }
 
 function formatAgendaDayDate(dateStr?: string | null) {
-  if (!dateStr) return '';
+  if (!dateStr) return "";
 
   const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(dateStr);
   if (m) {
@@ -29,29 +29,29 @@ function formatAgendaDayDate(dateStr?: string | null) {
     const d = Number(m[3]);
 
     const utc = new Date(Date.UTC(y, mo, d));
-    return new Intl.DateTimeFormat('en-US', {
-      month: 'long',
-      day: 'numeric',
-      year: 'numeric',
-      timeZone: 'UTC',
+    return new Intl.DateTimeFormat("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+      timeZone: "UTC",
     }).format(utc);
   }
 
   const dt = new Date(dateStr);
   if (Number.isNaN(dt.getTime())) return dateStr;
 
-  return new Intl.DateTimeFormat('en-US', {
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric',
-    timeZone: 'UTC',
+  return new Intl.DateTimeFormat("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
   }).format(dt);
 }
 
 function formatRangeUtc(start?: string | null, end?: string | null) {
   const s = safeTime(start);
   const e = safeTime(end);
-  if (!s && !e) return '';
+  if (!s && !e) return "";
   if (s && e) return `${s} - ${e} hrs UTC`;
   if (s) return `${s} hrs UTC`;
   return `${e} hrs UTC`;
@@ -70,9 +70,9 @@ function minutesBetween(start?: string | null, end?: string | null): number | nu
 type BadgeStyle = { bg: string; fg: string };
 
 const BADGE_STYLES = [
-  { bg: '#FFF4E4', fg: '#937038' }, // yellow
-  { bg: '#EEF6F5', fg: '#148370' }, // green
-  { bg: '#F9EBE9', fg: '#DD664F' }, // red
+  { bg: "#FFF4E4", fg: "#937038" }, // yellow
+  { bg: "#EEF6F5", fg: "#148370" }, // green
+  { bg: "#F9EBE9", fg: "#DD664F" }, // red
 ] as const satisfies readonly BadgeStyle[];
 
 const BADGE_FALLBACK: BadgeStyle = BADGE_STYLES[0];
@@ -111,26 +111,26 @@ function AccordionBox({
   metaRight,
   defaultOpen = false,
   children,
-  variant = 'day',
+  variant = "day",
 }: {
   title: React.ReactNode;
   metaRight?: React.ReactNode;
   defaultOpen?: boolean;
   children: React.ReactNode;
-  variant?: 'day' | 'session';
+  variant?: "day" | "session";
 }) {
-  const isDay = variant === 'day';
+  const isDay = variant === "day";
 
   if (isDay) {
     return (
       <details className="group" open={defaultOpen}>
         <summary className="cursor-pointer list-none">
-          <div className="bg-gray color-white flex min-h-[70px] items-center justify-between rounded-xl border border-0 px-7 py-3">
+          <div className="bg-gray color-white flex min-h-17.5 items-center justify-between rounded-xl border px-7 py-3">
             <div className="flex w-full items-center justify-between">
               <div className="min-w-0 flex-1">{title}</div>
-              {metaRight ? <div className="flex-shrink-0">{metaRight}</div> : null}
+              {metaRight ? <div className="shrink-0">{metaRight}</div> : null}
 
-              <span className="ring-none ml-6 grid h-7 w-7 flex-shrink-0 place-items-center rounded-full bg-white/80 text-black ring-0">
+              <span className="ring-none ml-6 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white/80 text-black ring-0">
                 <svg
                   className="h-4 w-4 transition-transform duration-200 group-open:rotate-180"
                   viewBox="0 0 20 20"
@@ -148,7 +148,7 @@ function AccordionBox({
           </div>
         </summary>
 
-        <div className="mt-[30px] rounded-xl bg-white">{children}</div>
+        <div className="mt-7.5 rounded-xl bg-white">{children}</div>
       </details>
     );
   }
@@ -160,7 +160,7 @@ function AccordionBox({
     >
       <summary className="cursor-pointer list-none">
         <div className="relative p-[clamp(22px,4cqw,40px)]">
-          <div className="grid grid-cols-1 gap-7 @min-[860px]:grid-cols-[1fr_340px] @min-[860px]:gap-[85px]">
+          <div className="grid grid-cols-1 gap-7 @min-[860px]:grid-cols-[1fr_340px] @min-[860px]:gap-21.25">
             {title}
             <div className="min-w-0 text-left @min-[860px]:text-right">{metaRight}</div>
           </div>
@@ -216,7 +216,7 @@ export default function Agenda({ heading, description, agenda }: Props) {
       ) : null}
 
       {days.length ? (
-        <div className="mt-6 flex flex-col gap-[40px]">
+        <div className="mt-6 flex flex-col gap-10">
           {days.map((day, dayIdx) => {
             const sessions = day.sessions ?? [];
             if (!sessions.length) return null;
@@ -239,17 +239,17 @@ export default function Agenda({ heading, description, agenda }: Props) {
                 }
                 defaultOpen={dayIdx === 0}
               >
-                <div className="flex flex-col gap-[40px]">
+                <div className="flex flex-col gap-10">
                   {sessions.map((s, sessionIdx) => {
                     const typeValue = s.type;
                     const typeLabel =
-                      typeValue === 'panel_discussion'
-                        ? 'Panel Discussion'
-                        : typeValue === 'learning_session'
-                          ? 'Learning Session'
-                          : typeof typeValue === 'string'
+                      typeValue === "panel_discussion"
+                        ? "Panel Discussion"
+                        : typeValue === "learning_session"
+                          ? "Learning Session"
+                          : typeof typeValue === "string"
                             ? typeValue
-                            : '';
+                            : "";
 
                     const desc = asPortableText(s.description);
                     const moderators = asPeople(s.moderators);
@@ -257,7 +257,7 @@ export default function Agenda({ heading, description, agenda }: Props) {
 
                     const timeRange = formatRangeUtc(s.startAt, s.endAt);
                     const mins = minutesBetween(s.startAt, s.endAt);
-                    const durationLabel = mins ? `${mins} minutes` : '';
+                    const durationLabel = mins ? `${mins} minutes` : "";
 
                     const stackModerator = moderators.length > 2;
                     const badge = badgeStyleFromBottom(sessionIdx, sessions.length);
@@ -271,7 +271,7 @@ export default function Agenda({ heading, description, agenda }: Props) {
                             {typeLabel ? (
                               <div
                                 className="text-primary text-[21px] font-semibold"
-                                style={{ lineHeight: '100%', marginBottom: '25px' }}
+                                style={{ lineHeight: "100%", marginBottom: "25px" }}
                               >
                                 {typeLabel}
                               </div>
@@ -287,19 +287,19 @@ export default function Agenda({ heading, description, agenda }: Props) {
                             <div
                               style={
                                 {
-                                  '--badge-bg': badge.bg,
-                                  '--badge-fg': badge.fg,
+                                  "--badge-bg": badge.bg,
+                                  "--badge-fg": badge.fg,
                                 } as React.CSSProperties
                               }
                               className={[
-                                'bg-primary w-full rounded-md px-3 py-2 text-center text-[14px] font-medium text-white',
-                                'md:bg-[var(--badge-bg)] md:text-[color:var(--badge-fg)]',
-                              ].join(' ')}
+                                "bg-primary w-full rounded-md px-3 py-2 text-center text-[14px] font-medium text-white",
+                                "md:bg-(--badge-bg) md:text-(--badge-fg)",
+                              ].join(" ")}
                             >
                               Artificial Intelligence in Education
                             </div>
 
-                            <div className="mt-[30px] flex gap-2.5">
+                            <div className="mt-7.5 flex gap-2.5">
                               <span className="inline-flex h-5 w-5 items-center justify-center overflow-hidden">
                                 <IoTime size={24} className="block shrink-0" />
                               </span>
@@ -324,8 +324,8 @@ export default function Agenda({ heading, description, agenda }: Props) {
                           <div
                             className={
                               stackModerator
-                                ? 'grid grid-cols-1 gap-8'
-                                : 'grid grid-cols-1 gap-8 @min-[860px]:grid-cols-[1fr_340px] @min-[860px]:gap-[85px]'
+                                ? "grid grid-cols-1 gap-8"
+                                : "grid grid-cols-1 gap-8 @min-[860px]:grid-cols-[1fr_340px] @min-[860px]:gap-21.25"
                             }
                           >
                             <div className="min-w-0">
@@ -335,7 +335,7 @@ export default function Agenda({ heading, description, agenda }: Props) {
                                     value={desc}
                                     components={createPortableTextComponents({
                                       pClassName:
-                                        'leading-relaxed @max-[750px]:text-[14px]! @max-[750px]:leading-[1.4] text-[clamp(16px,0.6vw+14px,18px)]!',
+                                        "leading-relaxed @max-[750px]:text-[14px]! @max-[750px]:leading-[1.4] text-[clamp(16px,0.6vw+14px,18px)]!",
                                     })}
                                   />
                                 </div>
@@ -349,8 +349,8 @@ export default function Agenda({ heading, description, agenda }: Props) {
                             <div
                               className={
                                 stackModerator
-                                  ? 'mt-0 min-w-0 @max-[750px]:mt-[30px]'
-                                  : 'w-full min-w-0 @min-[860px]:justify-self-end'
+                                  ? "mt-0 min-w-0 @max-[750px]:mt-7.5"
+                                  : "w-full min-w-0 @min-[860px]:justify-self-end"
                               }
                             >
                               <PeopleCollapse

@@ -1,10 +1,10 @@
-import { getMagazine } from '@/features/magazine/api/getMagazine';
-import RelatedMagazin from '@/features/magazine/ui/RelatedMagazin';
-import type { Metadata } from 'next';
-import Container from '@/shared/ui/Container';
+import { getMagazine } from "@/features/magazine/api/getMagazine";
+import RelatedMagazin from "@/features/magazine/ui/RelatedMagazin";
+import type { Metadata } from "next";
+import Container from "@/shared/ui/Container";
 
 export const metadata: Metadata = {
-  title: 'Magazine',
+  title: "Magazine",
 };
 
 const MagazinesPage = async () => {

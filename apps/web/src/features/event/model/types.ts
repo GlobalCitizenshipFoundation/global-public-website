@@ -1,16 +1,16 @@
-import type { PortableTextBlock } from '@portabletext/types';
+import type { PortableTextBlock } from "@portabletext/types";
 
 import type {
   AttendanceMode,
   EventLifecycleStatus,
   EventPartnerGroup,
   EventSingleType,
-} from '@gcf/types';
+} from "@gcf/types";
 
-import type { getSocialLinksFromCMS } from '@/features/social/ui/getSocialMediaFromCMS';
+import type { getSocialLinksFromCMS } from "@/features/social/ui/getSocialMediaFromCMS";
 
-export type EventSpeaker = NonNullable<EventSingleType['speakers']>[number];
-export type EventSteeringMember = NonNullable<EventSingleType['steeringCommittee']>[number];
+export type EventSpeaker = NonNullable<EventSingleType["speakers"]>[number];
+export type EventSteeringMember = NonNullable<EventSingleType["steeringCommittee"]>[number];
 export type EventParticipant = EventSpeaker | EventSteeringMember;
 
 export type PanelBaseVM = {
@@ -41,7 +41,7 @@ export type EventSingleVM = {
   socialLinks: ReturnType<typeof getSocialLinksFromCMS>;
   partnerGroups: EventPartnerGroup[];
 
-  audience: NonNullable<EventSingleType['audience']>;
+  audience: NonNullable<EventSingleType["audience"]>;
 
   headings: {
     intro: string;

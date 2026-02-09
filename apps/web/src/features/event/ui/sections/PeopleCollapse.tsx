@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import React from 'react';
-import Link from 'next/link';
-import { path } from '@/shared/config/paths';
-import Image from 'next/image';
+import React from "react";
+import Link from "next/link";
+import { path } from "@/shared/config/paths";
+import Image from "next/image";
 
 type Person = {
   _id?: string;
@@ -22,11 +22,11 @@ type PersonRef = {
 
 function personLine(p: PersonRef): string {
   const person = p.person;
-  const name = person?.name ?? '';
-  const designation = person?.designation ?? '';
-  const organization = person?.organization ?? '';
-  const country = person?.country ?? '';
-  return [name, designation, organization, country].filter(Boolean).join(', ');
+  const name = person?.name ?? "";
+  const designation = person?.designation ?? "";
+  const organization = person?.organization ?? "";
+  const country = person?.country ?? "";
+  return [name, designation, organization, country].filter(Boolean).join(", ");
 }
 
 function isPersonRefArray(value: unknown): value is PersonRef[] {
@@ -38,15 +38,15 @@ type Props = {
   people: unknown;
   previewCount?: number;
   className?: string;
-  layout?: 'list' | 'grid';
+  layout?: "list" | "grid";
 };
 
 export default function PeopleCollapse({
   title,
   people,
   previewCount = 6,
-  className = '',
-  layout = 'grid',
+  className = "",
+  layout = "grid",
 }: Props) {
   const list = isPersonRefArray(people) ? people : [];
   const [expanded, setExpanded] = React.useState(false);
@@ -60,7 +60,7 @@ export default function PeopleCollapse({
     const line = personLine(p);
     const person = p.person;
     const imgUrl = person?.photo?.asset?.url;
-    const name = person?.name ?? '';
+    const name = person?.name ?? "";
 
     const slug = person?.slug?.current;
     const href = slug ? path.contributor(slug) : null;
@@ -68,11 +68,11 @@ export default function PeopleCollapse({
     const Content = (
       <div className="@container flex min-w-0 items-start gap-4">
         <div
-          className="relative flex-shrink-0 overflow-hidden bg-gray-100"
+          className="relative shrink-0 overflow-hidden bg-gray-100"
           style={{
-            width: 'clamp(40px, calc(64px - 3cqw), 56px)',
-            height: 'clamp(40px, calc(64px - 3cqw), 56px)',
-            borderRadius: '7.33px',
+            width: "clamp(40px, calc(64px - 3cqw), 56px)",
+            height: "clamp(40px, calc(64px - 3cqw), 56px)",
+            borderRadius: "7.33px",
           }}
         >
           {imgUrl ? (
@@ -82,10 +82,10 @@ export default function PeopleCollapse({
 
         <div
           className={[
-            'text-borders min-w-0 flex-1 leading-snug break-words whitespace-normal',
-            'text-[clamp(14px,0.6cqw+12px,16px)]',
-            clamp ? 'line-clamp-2' : '',
-          ].join(' ')}
+            "text-borders min-w-0 flex-1 leading-snug wrap-break-word whitespace-normal",
+            "text-[clamp(14px,0.6cqw+12px,16px)]",
+            clamp ? "line-clamp-2" : "",
+          ].join(" ")}
           title={line}
         >
           {line}
@@ -99,14 +99,14 @@ export default function PeopleCollapse({
       <Link
         href={href}
         className="focus-visible:ring-primary block min-w-0 rounded-lg transition-opacity hover:opacity-90 focus:outline-none focus-visible:ring-2"
-        aria-label={name ? `Open contributor: ${name}` : 'Open contributor'}
+        aria-label={name ? `Open contributor: ${name}` : "Open contributor"}
       >
         {Content}
       </Link>
     );
   }
 
-  const isGrid = layout === 'grid';
+  const isGrid = layout === "grid";
 
   return (
     <div className={`min-w-0 ${className}`}>
@@ -120,7 +120,7 @@ export default function PeopleCollapse({
             className="text-primary cursor-pointer text-[16px] font-semibold select-none"
             aria-expanded={expanded}
           >
-            {expanded ? 'Show less' : 'Show more'}
+            {expanded ? "Show less" : "Show more"}
           </button>
         ) : (
           <span className="text-[16px] leading-none font-semibold opacity-0 select-none">

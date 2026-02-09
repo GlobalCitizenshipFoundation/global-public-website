@@ -1,7 +1,7 @@
-import DesktopNav from '@/widgets/header/DesktopNav';
-import MobileMenu from '@/widgets/header/MobileMenu';
-import Logo from './Logo';
-import Container from '@/shared/ui/Container';
+import DesktopNav from "@/widgets/header/DesktopNav";
+import MobileMenu from "@/widgets/header/MobileMenu";
+import Logo from "./Logo";
+import Container from "@/shared/ui/Container";
 
 const Header = () => {
   return (

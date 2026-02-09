@@ -1,0 +1,197 @@
+import { defineArrayMember, defineField, defineType } from "sanity";
+import { portableTextField } from "../fields/portableTextField";
+
+import { urlField } from "../fields/urlField";
+import countryOptions from "../utils/countryOptions";
+import { hexColorValidation } from "../validation/hexColorValidation";
+
+export const contributorSingle = defineType({
+  type: "document",
+  name: "contributorSingle",
+  title: "Contributors",
+
+  fieldsets: [
+    { name: "identity", title: "Identity", options: { collapsible: true, collapsed: false } },
+    { name: "links", title: "Links", options: { collapsible: true, collapsed: true } },
+    { name: "visibility", title: "Visibility", options: { collapsible: true, collapsed: true } },
+    { name: "content", title: "Content", options: { collapsible: true, collapsed: false } },
+    { name: "theme", title: "Theme", options: { collapsible: true, collapsed: true } },
+    { name: "relations", title: "Relations", options: { collapsible: true, collapsed: true } },
+  ],
+
+  fields: [
+    defineField({
+      type: "string",
+      title: "Title",
+      name: "title",
+      fieldset: "identity",
+      validation: (Rule) => Rule.max(80),
+    }),
+
+    defineField({
+      type: "string",
+      title: "Name",
+      name: "name",
+      fieldset: "identity",
+      validation: (Rule) => Rule.required().min(2).max(120),
+    }),
+
+    defineField({
+      type: "image",
+      title: "Person photo",
+      name: "photo",
+      fieldset: "identity",
+      options: { hotspot: true },
+    }),
+
+    defineField({
+      type: "slug",
+      name: "slug",
+      title: "Slug",
+      fieldset: "identity",
+      options: { source: "name", maxLength: 96 },
+      validation: (Rule) => Rule.required(),
+    }),
+
+    defineField({
+      type: "string",
+      name: "gender",
+      title: "Gender",
+      fieldset: "identity",
+      options: {
+        list: [
+          { title: "Male", value: "male" },
+          { title: "Female", value: "female" },
+        ],
+        layout: "dropdown",
+      },
+    }),
+
+    defineField({
+      type: "string",
+      title: "Designation",
+      name: "designation",
+      fieldset: "identity",
+      validation: (Rule) => Rule.max(120),
+    }),
+    defineField({
+      type: "string",
+      title: "Division/Organization",
+      name: "organization",
+      fieldset: "identity",
+      validation: (Rule) => Rule.max(160),
+    }),
+
+    defineField({
+      type: "string",
+      name: "country",
+      title: "Country",
+      fieldset: "identity",
+      options: { list: countryOptions, layout: "dropdown" },
+    }),
+
+    defineField({
+      name: "emailId",
+      type: "string",
+      title: "Email Address",
+      fieldset: "links",
+      validation: (Rule) => Rule.email().error("Please enter a valid email"),
+    }),
+
+    defineField({
+      name: "emailDisplay",
+      type: "boolean",
+      title: "Display email publicly?",
+      fieldset: "visibility",
+      initialValue: false,
+    }),
+
+    urlField("orcidId", "ORCiD ID"),
+    urlField("twitter", "Twitter / X URL"),
+    urlField("linkedin", "LinkedIn URL"),
+    urlField("instagram", "Instagram URL"),
+    urlField("facebook", "Facebook URL"),
+    urlField("website", "Website URL"),
+
+    defineField({
+      type: "boolean",
+      title: "Featured Profile",
+      name: "featuredProfile",
+      fieldset: "visibility",
+      initialValue: false,
+    }),
+
+    defineField({
+      type: "string",
+      title: "Short Bio",
+      name: "shortBio",
+      fieldset: "content",
+      validation: (Rule) => Rule.max(240),
+    }),
+    portableTextField("bio", "Bio"),
+
+    defineField({
+      name: "relatedProfiles",
+      title: "Related Profiles",
+      type: "array",
+      fieldset: "relations",
+      of: [defineArrayMember({ type: "reference", to: [{ type: "contributorSingle" }] })],
+    }),
+
+    defineField({
+      type: "boolean",
+      title: "Article display",
+      name: "articleDisplay",
+      fieldset: "visibility",
+      initialValue: false,
+    }),
+    defineField({
+      type: "boolean",
+      title: "Events display",
+      name: "eventsDisplay",
+      fieldset: "visibility",
+      initialValue: false,
+    }),
+
+    defineField({
+      name: "events",
+      title: "Events",
+      type: "array",
+      fieldset: "relations",
+      of: [defineArrayMember({ type: "reference", to: [{ type: "eventSingle" }] })],
+    }),
+
+    defineField({
+      type: "string",
+      title: "Header",
+      name: "header",
+      fieldset: "content",
+      validation: (Rule) => Rule.max(120),
+    }),
+
+    defineField({
+      type: "string",
+      title: "Profile Colour",
+      name: "profileColour",
+      fieldset: "theme",
+      validation: hexColorValidation,
+      description: "HEX, e.g. #111111",
+    }),
+
+    defineField({
+      type: "string",
+      title: "Text colour",
+      name: "textColour",
+      fieldset: "theme",
+      validation: hexColorValidation,
+      description: "HEX, e.g. #ffffff",
+    }),
+  ],
+
+  preview: {
+    select: { title: "name", subtitle: "organization", media: "photo" },
+    prepare({ title, subtitle, media }) {
+      return { title: title || "Contributor", subtitle: subtitle || "", media };
+    },
+  },
+});

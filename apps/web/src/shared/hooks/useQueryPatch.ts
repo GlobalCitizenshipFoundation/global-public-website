@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useCallback, startTransition } from 'react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { setSearchParams } from '@/shared/lib/url';
+import { useCallback, startTransition } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { setSearchParams } from "@/shared/lib/url";
 
-export type QueryPatch = Record<string, string | number | null | undefined>;
+type QueryPatch = Record<string, string | number | null | undefined>;
 
 export function useQueryPatch() {
   const router = useRouter();
@@ -19,7 +19,7 @@ export function useQueryPatch() {
         router.replace(`${pathname}?${query}`, { scroll: false });
       });
     },
-    [router, pathname, sp]
+    [router, pathname, sp],
   );
 
   return { sp, pushPatch };

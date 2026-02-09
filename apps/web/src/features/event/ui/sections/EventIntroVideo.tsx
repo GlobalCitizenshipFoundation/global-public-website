@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from "react";
 
 type Props = {
   url?: string | null;
@@ -11,7 +11,7 @@ type Props = {
 function safeUrl(input: string) {
   try {
     const u = new URL(input);
-    if (u.protocol !== 'http:' && u.protocol !== 'https:') return null;
+    if (u.protocol !== "http:" && u.protocol !== "https:") return null;
     return u;
   } catch {
     return null;
@@ -19,41 +19,41 @@ function safeUrl(input: string) {
 }
 
 function isYouTube(u: URL) {
-  const h = u.hostname.replace('www.', '');
-  return h === 'youtube.com' || h === 'youtu.be' || h === 'm.youtube.com';
+  const h = u.hostname.replace("www.", "");
+  return h === "youtube.com" || h === "youtu.be" || h === "m.youtube.com";
 }
 
 function isVimeo(u: URL) {
-  const h = u.hostname.replace('www.', '');
-  return h === 'vimeo.com' || h === 'player.vimeo.com';
+  const h = u.hostname.replace("www.", "");
+  return h === "vimeo.com" || h === "player.vimeo.com";
 }
 
 function toYouTubeEmbed(u: URL) {
-  if (u.hostname.includes('youtu.be')) {
-    const id = u.pathname.split('/').filter(Boolean)[0];
+  if (u.hostname.includes("youtu.be")) {
+    const id = u.pathname.split("/").filter(Boolean)[0];
     return id ? `https://www.youtube.com/embed/${id}` : null;
   }
-  const v = u.searchParams.get('v');
+  const v = u.searchParams.get("v");
   if (v) return `https://www.youtube.com/embed/${v}`;
-  if (u.pathname.startsWith('/embed/')) return `https://www.youtube.com${u.pathname}`;
+  if (u.pathname.startsWith("/embed/")) return `https://www.youtube.com${u.pathname}`;
   return null;
 }
 
 function toVimeoEmbed(u: URL) {
-  if (u.hostname.includes('vimeo.com') && !u.hostname.includes('player.vimeo.com')) {
-    const id = u.pathname.split('/').filter(Boolean)[0];
+  if (u.hostname.includes("vimeo.com") && !u.hostname.includes("player.vimeo.com")) {
+    const id = u.pathname.split("/").filter(Boolean)[0];
     return id ? `https://player.vimeo.com/video/${id}` : null;
   }
-  if (u.hostname.includes('player.vimeo.com')) return `https://player.vimeo.com${u.pathname}`;
+  if (u.hostname.includes("player.vimeo.com")) return `https://player.vimeo.com${u.pathname}`;
   return null;
 }
 
 function isDirectVideoFile(u: URL) {
   const path = u.pathname.toLowerCase();
-  return path.endsWith('.mp4') || path.endsWith('.webm') || path.endsWith('.ogg');
+  return path.endsWith(".mp4") || path.endsWith(".webm") || path.endsWith(".ogg");
 }
 
-export default function EventIntroVideo({ url, title = 'Intro video', className }: Props) {
+export default function EventIntroVideo({ url, title = "Intro video", className }: Props) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -74,7 +74,7 @@ export default function EventIntroVideo({ url, title = 'Intro video', className 
   if (!url || !u) return null;
 
   return (
-    <div className={['w-full', className].filter(Boolean).join(' ')}>
+    <div className={["w-full", className].filter(Boolean).join(" ")}>
       <div className="relative aspect-video w-full overflow-hidden rounded-[10px] bg-black/25">
         {/* SSR: placeholder tylko, iframe dopiero po mount */}
         {!mounted ? (

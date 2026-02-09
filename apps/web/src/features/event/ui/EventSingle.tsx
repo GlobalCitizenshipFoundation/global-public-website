@@ -1,30 +1,30 @@
-import React from 'react';
-import { PortableText } from '@portabletext/react';
+import React from "react";
+import { PortableText } from "@portabletext/react";
 
-import { Tags } from '@/shared/ui/Tags';
+import { Tags } from "@/shared/ui/Tags";
 
-import type { EventSingleType } from '@gcf/types';
+import type { EventSingleType } from "@gcf/types";
 
-import { PeoplePhotos } from './sections/PeoplePhotos';
-import { PanelDiscussion } from './sections/PanelDiscussion';
+import { PeoplePhotos } from "./sections/PeoplePhotos";
+import { PanelDiscussion } from "./sections/PanelDiscussion";
 
-import { buildEventSingleVM } from '../model/buildEventSingleVM';
+import { buildEventSingleVM } from "../model/buildEventSingleVM";
 
-import Hero from './sections/Hero';
-import Intro from './sections/Intro';
-import Video from './sections/Video';
-import Body from './sections/Body';
-import Agenda from './sections/Agenda';
-import PeopleSection from './sections/PeopleSection';
-import PartnersSection from './sections/PartnersSection';
-import ShareSection from './sections/ShareSection';
-import TopicsSection from './sections/TopicsSection';
+import Hero from "./sections/Hero";
+import Intro from "./sections/Intro";
+import Video from "./sections/Video";
+import Body from "./sections/Body";
+import Agenda from "./sections/Agenda";
+import PeopleSection from "./sections/PeopleSection";
+import PartnersSection from "./sections/PartnersSection";
+import ShareSection from "./sections/ShareSection";
+import TopicsSection from "./sections/TopicsSection";
 
-import SectionHeading from './components/SectionHeading';
-import CtaButtons from './components/CtaButtons';
+import SectionHeading from "./components/SectionHeading";
+import CtaButtons from "./components/CtaButtons";
 
-import { createPortableTextComponents } from '../lib/portableTextComponents';
-import Container from '@/shared/ui/Container';
+import { createPortableTextComponents } from "../lib/portableTextComponents";
+import Container from "@/shared/ui/Container";
 
 type Props = { event: EventSingleType };
 
@@ -34,7 +34,7 @@ const EventSingle: React.FC<Props> = ({ event }) => {
   const vm = buildEventSingleVM(event);
 
   const renderPanel = () => {
-    if (event.pricing === 'paid') {
+    if (event.pricing === "paid") {
       if (!event.price) {
         return (
           <div className="rounded-xl border border-white/10 bg-black/20 p-5 text-sm text-white/80">
@@ -65,7 +65,7 @@ const EventSingle: React.FC<Props> = ({ event }) => {
               <Video
                 heading={vm.headings.video}
                 url={event.videoLink!}
-                title={event.eventHeading ?? 'Intro'}
+                title={event.eventHeading ?? "Intro"}
               />
             ) : null}
 

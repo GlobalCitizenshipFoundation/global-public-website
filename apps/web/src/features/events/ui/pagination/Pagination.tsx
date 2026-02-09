@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useMemo, useState, useEffect, startTransition, useCallback } from 'react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { setSearchParams } from '@/shared/lib/url';
+import { useMemo, useState, useEffect, startTransition, useCallback } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { setSearchParams } from "@/shared/lib/url";
 
 type Props = { page: number; totalPages: number };
 
@@ -24,7 +24,7 @@ export default function Pagination({ page, totalPages }: Props) {
         router.replace(`${pathname}?${query}`, { scroll: false });
       });
     },
-    [pathname, router, sp, totalPages]
+    [pathname, router, sp, totalPages],
   );
 
   const pagesToShow = useMemo(() => getPages(page, totalPages), [page, totalPages]);
@@ -56,7 +56,7 @@ export default function Pagination({ page, totalPages }: Props) {
 
       <div className="flex items-center gap-2">
         {pagesToShow.map((p, idx) =>
-          p === '...' ? (
+          p === "..." ? (
             <span key={`dots-${idx}`} className="px-2 text-sm text-neutral-500">
               ...
             </span>
@@ -66,14 +66,14 @@ export default function Pagination({ page, totalPages }: Props) {
               type="button"
               onClick={() => go(p)}
               className={[
-                'h-9 w-9 rounded-md border text-sm',
-                p === page ? 'border-black bg-black text-white' : '',
-              ].join(' ')}
-              aria-current={p === page ? 'page' : undefined}
+                "h-9 w-9 rounded-md border text-sm",
+                p === page ? "border-black bg-black text-white" : "",
+              ].join(" ")}
+              aria-current={p === page ? "page" : undefined}
             >
               {p}
             </button>
-          )
+          ),
         )}
       </div>
 
@@ -93,11 +93,11 @@ export default function Pagination({ page, totalPages }: Props) {
             inputMode="numeric"
             pattern="[0-9]*"
             value={jump}
-            onChange={(e) => setJump(e.target.value.replace(/[^\d]/g, ''))}
+            onChange={(e) => setJump(e.target.value.replace(/[^\d]/g, ""))}
             onBlur={onJumpCommit}
             onKeyDown={(e) => {
-              if (e.key === 'Enter') onJumpCommit();
-              if (e.key === 'Escape') setJump(String(page));
+              if (e.key === "Enter") onJumpCommit();
+              if (e.key === "Escape") setJump(String(page));
             }}
             className="h-9 w-16 rounded-md border px-2 text-center text-sm"
             aria-label="Go to page"
@@ -113,18 +113,18 @@ function clamp(n: number, min: number, max: number) {
   return Math.min(Math.max(n, min), max);
 }
 
-function getPages(current: number, total: number): Array<number | '...'> {
+function getPages(current: number, total: number): Array<number | "..."> {
   const set = new Set<number>([1, total, current, current - 1, current + 1]);
 
   const arr: number[] = Array.from(set)
     .filter((n) => n >= 1 && n <= total)
     .sort((a, b) => a - b);
 
-  const out: Array<number | '...'> = [];
+  const out: Array<number | "..."> = [];
   let prev: number | null = null;
 
   for (const n of arr) {
-    if (prev !== null && n - prev > 1) out.push('...');
+    if (prev !== null && n - prev > 1) out.push("...");
     out.push(n);
     prev = n;
   }

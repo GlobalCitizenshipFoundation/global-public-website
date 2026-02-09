@@ -1,13 +1,13 @@
-import React from 'react';
-import { PortableText } from '@portabletext/react';
-import type { EventSingleType } from '@gcf/types';
+import React from "react";
+import { PortableText } from "@portabletext/react";
+import type { EventSingleType } from "@gcf/types";
 
-import SectionHeading from '../components/SectionHeading';
-import { createPortableTextComponents } from '../../lib/portableTextComponents';
+import SectionHeading from "../components/SectionHeading";
+import { createPortableTextComponents } from "../../lib/portableTextComponents";
 
 type Props = {
   heading: string;
-  value: NonNullable<EventSingleType['introText']>;
+  value: NonNullable<EventSingleType["introText"]>;
 };
 
 export default function Intro({ heading, value }: Props) {

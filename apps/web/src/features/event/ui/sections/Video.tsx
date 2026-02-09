@@ -1,5 +1,5 @@
-import React from 'react';
-import EventIntroVideo from './EventIntroVideo';
+import React from "react";
+import EventIntroVideo from "./EventIntroVideo";
 
 type Props = {
   heading: string;

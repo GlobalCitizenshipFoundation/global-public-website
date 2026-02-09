@@ -1,6 +1,6 @@
-import type { Metadata } from 'next';
+import type { Metadata } from "next";
 
-import { getEvents, parseEventsSearchParams, EventsListPage } from '@/features/events';
+import { getEvents, parseEventsSearchParams, EventsListPage } from "@/features/events";
 
 type PageProps = {
   searchParams: Promise<{
@@ -16,7 +16,7 @@ type PageProps = {
 export async function generateMetadata({ searchParams }: PageProps): Promise<Metadata> {
   const sp = await searchParams;
   const { page } = parseEventsSearchParams(sp);
-  return { title: page > 1 ? `Events - Page ${page}` : 'Events' };
+  return { title: page > 1 ? `Events - Page ${page}` : "Events" };
 }
 
 export default async function EventsPage({ searchParams }: PageProps) {

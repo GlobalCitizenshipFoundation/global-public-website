@@ -1,30 +1,30 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { PortableText } from '@portabletext/react';
-import type { EventSingleType } from '@gcf/types';
+import React from "react";
+import { PortableText } from "@portabletext/react";
+import type { EventSingleType } from "@gcf/types";
 
-import { Swiper, SwiperSlide } from 'swiper/react';
-import type { Swiper as SwiperInstance } from 'swiper/types';
-import { Navigation } from 'swiper/modules';
-import { FaChevronLeft, FaChevronRight } from 'react-icons/fa6';
+import { Swiper, SwiperSlide } from "swiper/react";
+import type { Swiper as SwiperInstance } from "swiper/types";
+import { Navigation } from "swiper/modules";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 
-import 'swiper/css';
-import 'swiper/css/navigation';
+import "swiper/css";
+import "swiper/css/navigation";
 
-import ContributorFrame from '@/features/contributors/ui/ContributorFrame';
-import SectionHeading from '../components/SectionHeading';
-import { createPortableTextComponents } from '../../lib/portableTextComponents';
+import ContributorFrame from "@/features/contributors/ui/ContributorFrame";
+import SectionHeading from "../components/SectionHeading";
+import { createPortableTextComponents } from "../../lib/portableTextComponents";
 
 type Props = {
   heading: string;
-  text?: EventSingleType['speakersText'] | EventSingleType['steeringCommitteeText'];
+  text?: EventSingleType["speakersText"] | EventSingleType["steeringCommitteeText"];
   people: Array<{ _id: string }>;
 };
 
 function getIsLocked(s: SwiperInstance): boolean {
   const rec = s as unknown as Record<string, unknown>;
-  return rec['isLocked'] === true;
+  return rec["isLocked"] === true;
 }
 
 export default function PeopleSection({ heading, text, people }: Props) {
@@ -76,10 +76,10 @@ export default function PeopleSection({ heading, text, people }: Props) {
                 disabled={!canPrev}
                 onClick={() => swiper?.slidePrev()}
                 className={[
-                  'flex h-11 w-11 cursor-pointer items-center justify-center rounded-md',
-                  'bg-gray text-white',
-                  'transition-opacity disabled:cursor-not-allowed disabled:opacity-40',
-                ].join(' ')}
+                  "flex h-11 w-11 cursor-pointer items-center justify-center rounded-md",
+                  "bg-gray text-white",
+                  "transition-opacity disabled:cursor-not-allowed disabled:opacity-40",
+                ].join(" ")}
               >
                 <FaChevronLeft />
               </button>
@@ -90,10 +90,10 @@ export default function PeopleSection({ heading, text, people }: Props) {
                 disabled={!canNext}
                 onClick={() => swiper?.slideNext()}
                 className={[
-                  'flex h-11 w-11 cursor-pointer items-center justify-center rounded-md',
-                  'bg-gray text-white',
-                  'transition-opacity disabled:cursor-not-allowed disabled:opacity-40',
-                ].join(' ')}
+                  "flex h-11 w-11 cursor-pointer items-center justify-center rounded-md",
+                  "bg-gray text-white",
+                  "transition-opacity disabled:cursor-not-allowed disabled:opacity-40",
+                ].join(" ")}
               >
                 <FaChevronRight />
               </button>

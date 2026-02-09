@@ -1,14 +1,14 @@
-import type { EventSingleType } from '@gcf/types';
-import type { EventSingleVM } from './types';
+import type { EventSingleType } from "@gcf/types";
+import type { EventSingleVM } from "./types";
 
-import { getSocialLinksFromCMS } from '@/features/social/ui/getSocialMediaFromCMS';
+import { getSocialLinksFromCMS } from "@/features/social/ui/getSocialMediaFromCMS";
 
-import { staticSocials } from '../lib/constants';
-import { uniqById } from '../lib/uniqById';
-import { computeLifecycleStatus } from '../lib/computeLifecycleStatus';
-import { getPartnerGroups } from '../lib/getPartnerGroups';
-import { getEventTypeLabel } from '../lib/getEventTypeLabel';
-import { pickDefined } from '../lib/pickDefined';
+import { staticSocials } from "../lib/constants";
+import { uniqById } from "../lib/uniqById";
+import { computeLifecycleStatus } from "../lib/computeLifecycleStatus";
+import { getPartnerGroups } from "../lib/getPartnerGroups";
+import { getEventTypeLabel } from "../lib/getEventTypeLabel";
+import { pickDefined } from "../lib/pickDefined";
 
 export function buildEventSingleVM(event: EventSingleType): EventSingleVM {
   const speakers = uniqById(event.speakers);
@@ -23,14 +23,14 @@ export function buildEventSingleVM(event: EventSingleType): EventSingleVM {
   const audience = event.audience ?? [];
 
   const headings = {
-    intro: event.introHeading?.trim() || 'Introduction',
-    video: event.videoHeading?.trim() || 'Intro Video',
-    body: event.bodyHeading?.trim() || 'Details',
-    agenda: event.agendaHeading?.trim() || 'Agenda',
-    partners: event.partnersHeading?.trim() || 'Conference Partners',
-    registration: event.registrationHeading?.trim() || 'Registration',
-    speakers: event.speakersHeading?.trim() || 'Speakers',
-    steering: event.steeringCommitteeHeading?.trim() || 'Steering Committee',
+    intro: event.introHeading?.trim() || "Introduction",
+    video: event.videoHeading?.trim() || "Intro Video",
+    body: event.bodyHeading?.trim() || "Details",
+    agenda: event.agendaHeading?.trim() || "Agenda",
+    partners: event.partnersHeading?.trim() || "Conference Partners",
+    registration: event.registrationHeading?.trim() || "Registration",
+    speakers: event.speakersHeading?.trim() || "Speakers",
+    steering: event.steeringCommitteeHeading?.trim() || "Steering Committee",
   };
 
   const show = {
@@ -38,15 +38,15 @@ export function buildEventSingleVM(event: EventSingleType): EventSingleVM {
     video: Boolean(event.videoLink),
     body: Boolean(event.body?.length),
     agenda: Boolean(
-      event.agendaHeading?.trim() || event.agendaDescription?.length || event.agenda?.length
+      event.agendaHeading?.trim() || event.agendaDescription?.length || event.agenda?.length,
     ),
     topics: Boolean(event.topics?.length),
     registration: Boolean(event.registrationText?.length),
     audience: audience.length > 0,
   };
 
-  const panelBase: EventSingleVM['panelBase'] = {
-    eventHeading: event.eventHeading ?? 'Event',
+  const panelBase: EventSingleVM["panelBase"] = {
+    eventHeading: event.eventHeading ?? "Event",
     eventTypeLabel: getEventTypeLabel(event.eventType),
     pricing: event.pricing,
     attendanceMode: event.attendanceMode,
@@ -61,11 +61,11 @@ export function buildEventSingleVM(event: EventSingleType): EventSingleVM {
       ctaEnded: event.panelCtaEnded,
       venue: event.venue,
     }),
-  } as EventSingleVM['panelBase'];
+  } as EventSingleVM["panelBase"];
 
   const hero = {
     imageUrl: event.eventImage?.asset?.url ?? null,
-    alt: event.eventHeading ? `${event.eventHeading} image` : 'Event image',
+    alt: event.eventHeading ? `${event.eventHeading} image` : "Event image",
   };
 
   return {

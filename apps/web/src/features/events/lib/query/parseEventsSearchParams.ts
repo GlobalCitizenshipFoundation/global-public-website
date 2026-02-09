@@ -1,12 +1,12 @@
-import type { EventsSearchParams, ParsedEventsQuery } from './types';
-import { DEFAULTS, EVENT_TYPES, SORTS, TABS } from './constants';
+import type { EventsSearchParams, ParsedEventsQuery } from "./types";
+import { DEFAULTS, EVENT_TYPES, SORTS, TABS } from "./constants";
 
 function isOneOf<T extends readonly string[]>(arr: T, v: string): v is T[number] {
   return (arr as readonly string[]).includes(v);
 }
 
 function asInt(v: string | undefined, fallback: number) {
-  const n = Number.parseInt(v ?? '', 10);
+  const n = Number.parseInt(v ?? "", 10);
   return Number.isFinite(n) && n > 0 ? n : fallback;
 }
 

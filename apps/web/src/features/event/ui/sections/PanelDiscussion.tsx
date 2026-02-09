@@ -1,12 +1,12 @@
-import React from 'react';
-import Link from 'next/link';
-import { PortableText } from '@portabletext/react';
-import type { PortableTextBlock } from '@portabletext/types';
+import React from "react";
+import Link from "next/link";
+import { PortableText } from "@portabletext/react";
+import type { PortableTextBlock } from "@portabletext/types";
 
-import ButtonRegular from '@/shared/ui/ButtonRegular';
-import EventData from '@/features/event/ui/components/EventData';
+import ButtonRegular from "@/shared/ui/ButtonRegular";
+import EventData from "@/features/event/ui/components/EventData";
 
-import type { Money, EventLifecycleStatus, PricingStatus, AttendanceMode } from '@gcf/types';
+import type { Money, EventLifecycleStatus, PricingStatus, AttendanceMode } from "@gcf/types";
 
 type Cta = {
   label?: string | null;
@@ -36,27 +36,27 @@ type CommonProps = {
 };
 
 // ✅ paid wymusza price
-type PaidProps = { pricing: 'paid'; price: Money };
-type FreeProps = { pricing: 'free'; price?: never };
+type PaidProps = { pricing: "paid"; price: Money };
+type FreeProps = { pricing: "free"; price?: never };
 
-export type Props = CommonProps & (PaidProps | FreeProps);
+type Props = CommonProps & (PaidProps | FreeProps);
 
 function isValidHttpUrl(url?: string | null) {
   if (!url) return false;
   try {
     const u = new URL(url);
-    return u.protocol === 'http:' || u.protocol === 'https:';
+    return u.protocol === "http:" || u.protocol === "https:";
   } catch {
     return false;
   }
 }
 
 function formatPriceLabel(pricing: PricingStatus, price?: Money) {
-  if (pricing === 'free') return 'Free';
+  if (pricing === "free") return "Free";
 
   // pricing === 'paid'
-  if (!price) return 'Paid';
-  const amount = typeof price.amount === 'number' ? price.amount : null;
+  if (!price) return "Paid";
+  const amount = typeof price.amount === "number" ? price.amount : null;
   return amount != null ? `${amount} ${price.currency}` : price.currency;
 }
 
@@ -69,20 +69,20 @@ function pickCtaByLifecycle(input: {
   const { lifecycleStatus, ctaUpcoming, ctaStarted, ctaEnded } = input;
 
   const cms =
-    lifecycleStatus === 'upcoming'
+    lifecycleStatus === "upcoming"
       ? ctaUpcoming
-      : lifecycleStatus === 'started'
+      : lifecycleStatus === "started"
         ? ctaStarted
         : ctaEnded;
 
-  const label = cms?.label?.trim() ?? '';
+  const label = cms?.label?.trim() ?? "";
   const url = cms?.url ?? null;
 
   if (label && isValidHttpUrl(url)) {
     return { show: true, label, url: url as string };
   }
 
-  return { show: false, label: '', url: '' };
+  return { show: false, label: "", url: "" };
 }
 
 export const PanelDiscussion: React.FC<Props> = (props) => {
@@ -104,7 +104,7 @@ export const PanelDiscussion: React.FC<Props> = (props) => {
 
   const endSafe = endDateTime ?? startDateTime;
 
-  const price = pricing === 'paid' ? props.price : undefined;
+  const price = pricing === "paid" ? props.price : undefined;
   const priceLabel = formatPriceLabel(pricing, price);
 
   const cta = pickCtaByLifecycle({
@@ -114,7 +114,7 @@ export const PanelDiscussion: React.FC<Props> = (props) => {
     ...(ctaEnded !== undefined ? { ctaEnded } : {}),
   });
 
-  const isUpcoming = lifecycleStatus === 'upcoming';
+  const isUpcoming = lifecycleStatus === "upcoming";
 
   // ✅ sensowny warunek: pokazuj meta, jeśli jest cokolwiek do pokazania
   const showMetaRow = Boolean(priceLabel || attendanceMode || venue);
@@ -124,26 +124,26 @@ export const PanelDiscussion: React.FC<Props> = (props) => {
       <div className="pb-[clamp(18px,10vw,44px)]">
         <div
           className={[
-            'bg-background-panel border-5.5 relative w-full rounded-xl border-b-5 border-dashed border-white',
-            'px-[clamp(18px,3vw,28px)] py-[clamp(18px,3vw,28px)]',
-            'lg:min-h-[590px]',
-          ].join(' ')}
+            "bg-background-panel border-5.5 relative w-full rounded-xl border-b-5 border-dashed border-white",
+            "px-[clamp(18px,3vw,28px)] py-[clamp(18px,3vw,28px)]",
+            "lg:min-h-147.5",
+          ].join(" ")}
         >
           <h4 className="text-primary-darker mb-3 text-[clamp(12px,1.2vw,14px)] font-semibold tracking-wide">
-            {eventTypeLabel ?? 'Event'}
+            {eventTypeLabel ?? "Event"}
           </h4>
 
           <h2 className="mb-6 text-[clamp(20px,2.4vw,32px)] leading-tight font-semibold">
-            {eventHeading ?? 'Event'}
+            {eventHeading ?? "Event"}
           </h2>
 
           {showMetaRow ? (
             <div
               className={[
-                'flex flex-wrap items-center gap-x-3 gap-y-1',
-                'text-[clamp(12px,1.2vw,14px)] font-semibold text-gray-600 uppercase',
-                isUpcoming ? 'mb-3' : 'mb-6',
-              ].join(' ')}
+                "flex flex-wrap items-center gap-x-3 gap-y-1",
+                "text-[clamp(12px,1.2vw,14px)] font-semibold text-gray-600 uppercase",
+                isUpcoming ? "mb-3" : "mb-6",
+              ].join(" ")}
             >
               <span>{priceLabel}</span>
               <span>{attendanceMode}</span>
@@ -164,10 +164,10 @@ export const PanelDiscussion: React.FC<Props> = (props) => {
 
         <div
           className={[
-            'bg-background-panel w-full rounded-xl',
-            'px-[clamp(18px,3vw,28px)] py-[clamp(18px,3vw,28px)]',
-            'lg:min-h-[260px]',
-          ].join(' ')}
+            "bg-background-panel w-full rounded-xl",
+            "px-[clamp(18px,3vw,28px)] py-[clamp(18px,3vw,28px)]",
+            "lg:min-h-[260px]",
+          ].join(" ")}
         >
           {marketingMention?.length ? (
             <div className="mb-4 text-[clamp(13px,1.3vw,16px)]">

@@ -1,30 +1,30 @@
-'use client';
+"use client";
 
-import React, { useEffect, useMemo, useRef, useState, useCallback } from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import React, { useEffect, useMemo, useRef, useState, useCallback } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-import ButtonPrimary from '@/shared/ui/ButtonPrimary';
-import Portal from '@/shared/ui/Portal';
-import { header } from '@/shared/config/header';
-import { paths } from '@/shared/config/paths';
+import ButtonPrimary from "@/shared/ui/ButtonPrimary";
+import Portal from "@/shared/ui/Portal";
+import { header } from "@/shared/config/header";
+import { paths } from "@/shared/config/paths";
 
-type Phase = 'closed' | 'enter' | 'open' | 'exit';
+type Phase = "closed" | "enter" | "open" | "exit";
 
 function getFocusable(container: HTMLElement) {
-  const selectors = ['a[href]', 'button:not([disabled])', '[tabindex]:not([tabindex="-1"])'].join(
-    ','
+  const selectors = ["a[href]", "button:not([disabled])", '[tabindex]:not([tabindex="-1"])'].join(
+    ",",
   );
 
   return Array.from(container.querySelectorAll<HTMLElement>(selectors)).filter(
-    (el) => !el.hasAttribute('disabled') && el.getAttribute('aria-hidden') !== 'true'
+    (el) => !el.hasAttribute("disabled") && el.getAttribute("aria-hidden") !== "true",
   );
 }
 
 function normalizePath(path: string) {
-  const withoutQuery = path.split('?')[0] ?? path;
-  if (withoutQuery !== '/' && withoutQuery.endsWith('/')) return withoutQuery.slice(0, -1);
-  return withoutQuery || '/';
+  const withoutQuery = path.split("?")[0] ?? path;
+  if (withoutQuery !== "/" && withoutQuery.endsWith("/")) return withoutQuery.slice(0, -1);
+  return withoutQuery || "/";
 }
 
 function isActivePath(currentPath: string, hrefs: string | string[]) {
@@ -33,19 +33,19 @@ function isActivePath(currentPath: string, hrefs: string | string[]) {
 
   return list.some((h) => {
     const href = normalizePath(h);
-    if (href === '/') return cur === '/';
-    return cur === href || cur.startsWith(href + '/');
+    if (href === "/") return cur === "/";
+    return cur === href || cur.startsWith(href + "/");
   });
 }
 
 const TRANSITION_MS = 250;
-const DESKTOP_MQ = '(min-width: 1200px)';
+const DESKTOP_MQ = "(min-width: 1200px)";
 
 const MobileMenu: React.FC = () => {
-  const pathname = usePathname() ?? '/';
+  const pathname = usePathname() ?? "/";
   const prevPathRef = useRef(pathname);
 
-  const [phase, setPhase] = useState<Phase>('closed');
+  const [phase, setPhase] = useState<Phase>("closed");
 
   const drawerRef = useRef<HTMLDivElement | null>(null);
   const burgerRef = useRef<HTMLButtonElement | null>(null);
@@ -54,13 +54,13 @@ const MobileMenu: React.FC = () => {
   const raf2 = useRef<number | null>(null);
   const fallbackTimer = useRef<number | null>(null);
 
-  const links = useMemo(() => header.filter((i) => i.type !== 'button'), []);
-  const cta = useMemo(() => header.find((i) => i.type === 'button'), []);
+  const links = useMemo(() => header.filter((i) => i.type !== "button"), []);
+  const cta = useMemo(() => header.find((i) => i.type === "button"), []);
 
-  const isMounted = phase !== 'closed';
-  const isOpen = phase === 'open';
-  const isVisible = phase === 'enter' || phase === 'open' || phase === 'exit';
-  const isSlidIn = phase === 'open';
+  const isMounted = phase !== "closed";
+  const isOpen = phase === "open";
+  const isVisible = phase === "enter" || phase === "open" || phase === "exit";
+  const isSlidIn = phase === "open";
 
   const clearRafs = useCallback(() => {
     if (raf1.current) window.cancelAnimationFrame(raf1.current);
@@ -77,14 +77,14 @@ const MobileMenu: React.FC = () => {
   const scheduleFallbackClose = useCallback(() => {
     clearFallback();
     fallbackTimer.current = window.setTimeout(() => {
-      setPhase((p) => (p === 'exit' ? 'closed' : p));
+      setPhase((p) => (p === "exit" ? "closed" : p));
     }, TRANSITION_MS + 120);
   }, [clearFallback]);
 
   const hardClose = useCallback(() => {
     clearRafs();
     clearFallback();
-    setPhase('closed');
+    setPhase("closed");
   }, [clearFallback, clearRafs]);
 
   const openMenu = useCallback(() => {
@@ -92,13 +92,13 @@ const MobileMenu: React.FC = () => {
     clearFallback();
 
     setPhase((p) => {
-      if (p === 'open' || p === 'enter') return p;
-      return 'enter';
+      if (p === "open" || p === "enter") return p;
+      return "enter";
     });
 
     raf1.current = window.requestAnimationFrame(() => {
       raf2.current = window.requestAnimationFrame(() => {
-        setPhase((p) => (p === 'enter' ? 'open' : p));
+        setPhase((p) => (p === "enter" ? "open" : p));
       });
     });
   }, [clearFallback, clearRafs]);
@@ -108,8 +108,8 @@ const MobileMenu: React.FC = () => {
     clearFallback();
 
     setPhase((p) => {
-      if (p === 'closed' || p === 'exit') return p;
-      return 'exit';
+      if (p === "closed" || p === "exit") return p;
+      return "exit";
     });
 
     scheduleFallbackClose();
@@ -119,7 +119,7 @@ const MobileMenu: React.FC = () => {
   useEffect(() => {
     if (prevPathRef.current !== pathname) {
       prevPathRef.current = pathname;
-      if (phase !== 'closed') closeMenu();
+      if (phase !== "closed") closeMenu();
     }
   }, [pathname, closeMenu, phase]);
 
@@ -133,9 +133,9 @@ const MobileMenu: React.FC = () => {
 
     onChange();
 
-    if (typeof mq.addEventListener === 'function') {
-      mq.addEventListener('change', onChange);
-      return () => mq.removeEventListener('change', onChange);
+    if (typeof mq.addEventListener === "function") {
+      mq.addEventListener("change", onChange);
+      return () => mq.removeEventListener("change", onChange);
     }
 
     mq.addListener(onChange);
@@ -146,7 +146,7 @@ const MobileMenu: React.FC = () => {
     if (!isOpen) return;
 
     const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = "hidden";
 
     const drawer = drawerRef.current;
     if (drawer) {
@@ -155,13 +155,13 @@ const MobileMenu: React.FC = () => {
     }
 
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
+      if (e.key === "Escape") {
         e.preventDefault();
         closeMenu();
         return;
       }
 
-      if (e.key !== 'Tab') return;
+      if (e.key !== "Tab") return;
       const drawerEl = drawerRef.current;
       if (!drawerEl) return;
 
@@ -181,16 +181,16 @@ const MobileMenu: React.FC = () => {
       }
     };
 
-    window.addEventListener('keydown', onKeyDown);
+    window.addEventListener("keydown", onKeyDown);
 
     return () => {
       document.body.style.overflow = prevOverflow;
-      window.removeEventListener('keydown', onKeyDown);
+      window.removeEventListener("keydown", onKeyDown);
     };
   }, [isOpen, closeMenu]);
 
   useEffect(() => {
-    if (phase === 'closed') burgerRef.current?.focus();
+    if (phase === "closed") burgerRef.current?.focus();
   }, [phase]);
 
   useEffect(() => {
@@ -201,11 +201,11 @@ const MobileMenu: React.FC = () => {
   }, [clearFallback, clearRafs]);
 
   const onPanelTransitionEnd: React.TransitionEventHandler<HTMLDivElement> = (e) => {
-    if (e.propertyName !== 'transform') return;
+    if (e.propertyName !== "transform") return;
 
-    if (phase === 'exit') {
+    if (phase === "exit") {
       clearFallback();
-      setPhase('closed');
+      setPhase("closed");
     }
   };
 
@@ -217,7 +217,7 @@ const MobileMenu: React.FC = () => {
           className="bg-primary flex h-[clamp(44px,4.5vw,60px)] w-[clamp(96px,10vw,120px)] items-center justify-center rounded-md"
         >
           <span className="text-[clamp(14px,1.3vw,20px)] font-medium text-white">
-            {cta?.label ?? 'Contact'}
+            {cta?.label ?? "Contact"}
           </span>
         </Link>
 
@@ -225,41 +225,41 @@ const MobileMenu: React.FC = () => {
           ref={burgerRef}
           type="button"
           className={[
-            'bg-gray relative flex h-[clamp(44px,4.5vw,60px)] w-[clamp(44px,4.5vw,60px)] items-center justify-center rounded-md',
-            'z-[9999]',
-            'transition-transform active:scale-[0.98]',
-          ].join(' ')}
-          aria-label={isVisible ? 'Close menu' : 'Open menu'}
+            "bg-gray relative flex h-[clamp(44px,4.5vw,60px)] w-[clamp(44px,4.5vw,60px)] items-center justify-center rounded-md",
+            "z-9999",
+            "transition-transform active:scale-[0.98]",
+          ].join(" ")}
+          aria-label={isVisible ? "Close menu" : "Open menu"}
           aria-expanded={isVisible}
           aria-controls="mobile-menu"
           onClick={() => {
-            if (phase === 'open' || phase === 'enter') closeMenu();
+            if (phase === "open" || phase === "enter") closeMenu();
             else openMenu();
           }}
         >
           <span className="relative block h-[clamp(18px,2vw,24px)] w-[clamp(18px,2vw,24px)]">
             <span
               className={[
-                'absolute top-1/2 left-0 h-[2px] w-full rounded-full bg-white',
-                'transition-transform duration-200 ease-out',
-                isVisible ? 'translate-y-0 rotate-45' : '-translate-y-[7px] rotate-0',
-              ].join(' ')}
+                "absolute top-1/2 left-0 h-0.5 w-full rounded-full bg-white",
+                "transition-transform duration-200 ease-out",
+                isVisible ? "translate-y-0 rotate-45" : "-translate-y-1.75` rotate-0",
+              ].join(" ")}
               aria-hidden="true"
             />
             <span
               className={[
-                'absolute top-1/2 left-0 h-[2px] w-full rounded-full bg-white',
-                'transition-opacity duration-150 ease-out',
-                isVisible ? 'opacity-0' : 'opacity-100',
-              ].join(' ')}
+                "absolute top-1/2 left-0 h-0.5 w-full rounded-full bg-white",
+                "transition-opacity duration-150 ease-out",
+                isVisible ? "opacity-0" : "opacity-100",
+              ].join(" ")}
               aria-hidden="true"
             />
             <span
               className={[
-                'absolute top-1/2 left-0 h-[2px] w-full rounded-full bg-white',
-                'transition-transform duration-200 ease-out',
-                isVisible ? 'translate-y-0 -rotate-45' : 'translate-y-[7px] rotate-0',
-              ].join(' ')}
+                "absolute top-1/2 left-0 h-0.5 w-full rounded-full bg-white",
+                "transition-transform duration-200 ease-out",
+                isVisible ? "translate-y-0 -rotate-45" : "translate-y-1.75 rotate-0",
+              ].join(" ")}
               aria-hidden="true"
             />
           </span>
@@ -268,17 +268,17 @@ const MobileMenu: React.FC = () => {
 
       {isMounted ? (
         <Portal>
-          <div className="fixed inset-0 z-[100] lg:hidden">
+          <div className="fixed inset-0 z-100 lg:hidden">
             <button
               type="button"
               className={[
-                'absolute inset-0 transition-opacity duration-200',
-                'pointer-events-none bg-transparent opacity-0',
-                'sm:bg-black/60',
+                "absolute inset-0 transition-opacity duration-200",
+                "pointer-events-none bg-transparent opacity-0",
+                "sm:bg-black/60",
                 isVisible
-                  ? 'sm:pointer-events-auto sm:opacity-100'
-                  : 'sm:pointer-events-none sm:opacity-0',
-              ].join(' ')}
+                  ? "sm:pointer-events-auto sm:opacity-100"
+                  : "sm:pointer-events-none sm:opacity-0",
+              ].join(" ")}
               aria-label="Close menu overlay"
               onClick={closeMenu}
               tabIndex={isOpen ? 0 : -1}
@@ -294,15 +294,15 @@ const MobileMenu: React.FC = () => {
               tabIndex={-1}
               onTransitionEnd={onPanelTransitionEnd}
               className={[
-                'absolute inset-0 flex h-full w-full flex-col bg-white',
-                'px-[clamp(20px,6vw,48px)] py-6 pt-25',
-                'sm:inset-auto sm:top-0 sm:right-0 sm:h-full sm:w-[75%]',
-                'sm:bg-background-primary sm:p-10 sm:shadow-2xl',
-                'transition-transform duration-250 ease-out will-change-transform',
+                "absolute inset-0 flex h-full w-full flex-col bg-white",
+                "px-[clamp(20px,6vw,48px)] py-6 pt-25",
+                "sm:inset-auto sm:top-0 sm:right-0 sm:h-full sm:w-[75%]",
+                "sm:bg-background-primary sm:p-10 sm:shadow-2xl",
+                "transition-transform duration-250 ease-out will-change-transform",
                 isSlidIn
-                  ? 'pointer-events-auto translate-x-0'
-                  : 'pointer-events-none translate-x-full',
-              ].join(' ')}
+                  ? "pointer-events-auto translate-x-0"
+                  : "pointer-events-none translate-x-full",
+              ].join(" ")}
             >
               <div className="mb-6 flex items-center justify-between">
                 <span className="text-gray text-lg font-semibold">Menu</span>
@@ -316,17 +316,17 @@ const MobileMenu: React.FC = () => {
                     <Link
                       key={item.href}
                       href={item.href}
-                      aria-current={active ? 'page' : undefined}
+                      aria-current={active ? "page" : undefined}
                       onClick={closeMenu}
-                      style={{ transitionDelay: isOpen ? `${80 + idx * 35}ms` : '0ms' }}
+                      style={{ transitionDelay: isOpen ? `${80 + idx * 35}ms` : "0ms" }}
                       className={[
-                        'rounded-lg px-3 py-2 text-base font-medium',
-                        'transition-all duration-200',
-                        isOpen ? 'translate-x-0 opacity-100' : 'translate-x-2 opacity-0',
+                        "rounded-lg px-3 py-2 text-base font-medium",
+                        "transition-all duration-200",
+                        isOpen ? "translate-x-0 opacity-100" : "translate-x-2 opacity-0",
                         active
-                          ? 'text-gray bg-black/5'
-                          : 'text-gray/85 hover:text-gray hover:bg-black/5',
-                      ].join(' ')}
+                          ? "text-gray bg-black/5"
+                          : "text-gray/85 hover:text-gray hover:bg-black/5",
+                      ].join(" ")}
                     >
                       <span className="relative inline-flex items-center gap-2">
                         {active ? (
@@ -341,11 +341,11 @@ const MobileMenu: React.FC = () => {
 
               <div className="mt-auto pt-6">
                 <ButtonPrimary
-                  href={cta?.href ?? '/contact'}
+                  href={cta?.href ?? "/contact"}
                   className="w-full"
                   onClick={closeMenu}
                 >
-                  {cta?.label ?? 'Contact'}
+                  {cta?.label ?? "Contact"}
                 </ButtonPrimary>
               </div>
             </div>

@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useEffect } from 'react';
-import Link from 'next/link';
-import { paths } from '@/shared/config/paths';
+import { useEffect } from "react";
+import Link from "next/link";
+import { paths } from "@/shared/config/paths";
 
 export default function Error({
   error,
@@ -15,7 +15,7 @@ export default function Error({
     console.error(error);
   }, [error]);
 
-  const isProd = process.env.NODE_ENV === 'production';
+  const isProd = process.env.NODE_ENV === "production";
 
   return (
     <main className="mx-auto flex min-h-[60vh] w-full max-w-4xl flex-col justify-center px-6 py-16">

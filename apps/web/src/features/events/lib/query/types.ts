@@ -1,6 +1,6 @@
-export type EventType = 'all' | 'conference' | 'consultation' | 'panel_discussion' | 'forum';
-export type Tab = 'all' | 'upcoming' | 'past';
-export type Sort = 'date_desc' | 'date_asc' | 'title_asc';
+export type EventType = "all" | "conference" | "consultation" | "panel_discussion" | "forum";
+export type Tab = "all" | "upcoming" | "past";
+export type Sort = "date_desc" | "date_asc" | "title_asc";
 
 export type EventsSearchParams = {
   q?: string;

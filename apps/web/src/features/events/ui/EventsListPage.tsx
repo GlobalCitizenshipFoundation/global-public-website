@@ -1,8 +1,8 @@
-import EventsToolbar from './components/EventsToolbar';
-import EventsGrid from './components/EventsGrid';
-import EventsPagination from './components/EventsPagination';
-import type { EventCard } from '@gcf/types';
-import Container from '@/shared/ui/Container';
+import EventsToolbar from "./components/EventsToolbar";
+import EventsGrid from "./components/EventsGrid";
+import EventsPagination from "./components/EventsPagination";
+import type { EventCard } from "@gcf/types";
+import Container from "@/shared/ui/Container";
 
 type Props = {
   title?: string;
@@ -13,7 +13,7 @@ type Props = {
 };
 
 export default function EventsListPage({
-  title = 'All Events',
+  title = "All Events",
   items,
   total,
   page,

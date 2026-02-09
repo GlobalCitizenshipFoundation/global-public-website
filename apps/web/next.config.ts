@@ -1,4 +1,4 @@
-import type { NextConfig } from 'next';
+import type { NextConfig } from "next";
 
 function buildCsp(isDev: boolean) {
   const scriptSrc = isDev
@@ -25,13 +25,13 @@ function buildCsp(isDev: boolean) {
     // KLUCZOWE: pozwól na iframe z konkretnych hostów
     [
       "frame-src 'self'",
-      'https://www.youtube.com',
-      'https://www.youtube-nocookie.com',
-      'https://player.vimeo.com',
-    ].join(' '),
+      "https://www.youtube.com",
+      "https://www.youtube-nocookie.com",
+      "https://player.vimeo.com",
+    ].join(" "),
 
-    'upgrade-insecure-requests',
-  ].join('; ');
+    "upgrade-insecure-requests",
+  ].join("; ");
 }
 
 const nextConfig: NextConfig = {
@@ -39,31 +39,31 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
 
   images: {
-    remotePatterns: [{ protocol: 'https', hostname: 'cdn.sanity.io' }],
+    remotePatterns: [{ protocol: "https", hostname: "cdn.sanity.io" }],
   },
 
   async headers() {
-    const isDev = process.env.NODE_ENV !== 'production';
+    const isDev = process.env.NODE_ENV !== "production";
     const csp = buildCsp(isDev);
 
     return [
       {
-        source: '/(.*)',
+        source: "/(.*)",
         headers: [
-          { key: 'Content-Security-Policy', value: csp },
-          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
-          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: "Content-Security-Policy", value: csp },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          { key: "X-Content-Type-Options", value: "nosniff" },
 
           // OK - chroni twoją stronę przed byciem osadzoną
-          { key: 'X-Frame-Options', value: 'DENY' },
+          { key: "X-Frame-Options", value: "DENY" },
 
-          { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+          { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
           ...(isDev
             ? []
             : [
                 {
-                  key: 'Strict-Transport-Security',
-                  value: 'max-age=31536000; includeSubDomains; preload',
+                  key: "Strict-Transport-Security",
+                  value: "max-age=31536000; includeSubDomains; preload",
                 },
               ]),
         ],

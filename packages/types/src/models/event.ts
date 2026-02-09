@@ -1,16 +1,16 @@
-import type { PortableTextBlock } from '../sanity/portableText';
-import type { SanityImage } from '../sanity/image';
-import type { RelatedContributorsType } from './contributor';
-import type { RelatedPartnersType } from './partner';
+import type { SanityImage } from "../sanity/image";
+import type { PortableTextBlock } from "../sanity/portableText";
+import type { RelatedContributorsType } from "./contributor";
+import type { RelatedPartnersType } from "./partner";
 
-export type EventType = 'conference' | 'consultation' | 'panel_discussion' | 'forum';
-export type PricingStatus = 'free' | 'paid';
-export type AttendanceMode = 'onSite' | 'online' | 'hybrid';
-export type AgendaSessionType = 'panel_discussion' | 'learning_session';
+export type EventType = "conference" | "consultation" | "panel_discussion" | "forum";
+export type PricingStatus = "free" | "paid";
+export type AttendanceMode = "onSite" | "online" | "hybrid";
+export type AgendaSessionType = "panel_discussion" | "learning_session";
 
 export type EventCard = Pick<
   EventSingleType,
-  '_id' | 'slug' | 'eventHeading' | 'eventType' | 'eventImage' | 'startDateTime' | 'endDateTime'
+  "_id" | "slug" | "eventHeading" | "eventType" | "eventImage" | "startDateTime" | "endDateTime"
 >;
 
 export type CtaButton = {
@@ -23,7 +23,7 @@ export type Money = {
   currency: string;
 };
 
-export type PartnerGroupTypeKey = 'hostedBy' | 'eventPartners' | 'knowledgePartners';
+export type PartnerGroupTypeKey = "hostedBy" | "eventPartners" | "knowledgePartners";
 
 export type EventPartnerGroup = {
   _key: string;
@@ -57,7 +57,7 @@ type EventSingleBase = {
   _id: string;
 
   eventHeading: string;
-  slug: { _type: 'slug'; current: string };
+  slug: { _type: "slug"; current: string };
 
   eventType: EventType;
   pricing: PricingStatus;
@@ -115,13 +115,13 @@ type EventSingleBase = {
   price?: Money;
 };
 
-export type EventSingleFree = EventSingleBase & { pricing: 'free' };
+export type EventSingleFree = EventSingleBase & { pricing: "free" };
 
-export type EventSinglePaid = EventSingleBase & { pricing: 'paid'; price: Money };
+export type EventSinglePaid = EventSingleBase & { pricing: "paid"; price: Money };
 
 export type EventSingleType = EventSingleFree | EventSinglePaid;
 
-export type EventLifecycleStatus = 'upcoming' | 'started' | 'ended';
+export type EventLifecycleStatus = "upcoming" | "started" | "ended";
 
 export type EventSingleViewModel = EventSingleType & {
   lifecycleStatus: EventLifecycleStatus;

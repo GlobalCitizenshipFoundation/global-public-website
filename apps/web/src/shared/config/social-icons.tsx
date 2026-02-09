@@ -1,5 +1,5 @@
 // shared/config/social-icons.tsx
-'use client';
+"use client";
 
 import {
   FaXTwitter,
@@ -9,9 +9,9 @@ import {
   FaLinkedin,
   FaYoutube,
   FaRegEnvelope,
-} from 'react-icons/fa6';
-import type { IconType } from 'react-icons';
-import type { SocialName } from './social';
+} from "react-icons/fa6";
+import type { IconType } from "react-icons";
+import type { SocialName } from "./social";
 
 export const socialIcons: Record<SocialName, IconType> = {
   twitter: FaXTwitter,

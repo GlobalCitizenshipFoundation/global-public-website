@@ -1,23 +1,23 @@
-import React from 'react';
-import Image from 'next/image';
-import type { MagazinSingleType } from '@gcf/types';
-import ButtonRegular from '@/shared/ui/ButtonRegular';
+import React from "react";
+import Image from "next/image";
+import type { MagazinSingleType } from "@gcf/types";
+import ButtonRegular from "@/shared/ui/ButtonRegular";
 import {
   PortableText,
   type PortableTextBlock,
   type PortableTextComponentProps,
-} from '@portabletext/react';
-import { getSocialLinksFromCMS } from '@/features/social/ui/getSocialMediaFromCMS';
-import Sharing from '@/shared/ui/Sharing';
-import { formatEventDate } from '@/features/events/lib/formatters';
-import Container from '@/shared/ui/Container';
+} from "@portabletext/react";
+import { getSocialLinksFromCMS } from "@/features/social/ui/getSocialMediaFromCMS";
+import Sharing from "@/shared/ui/Sharing";
+import { formatEventDate } from "@/features/events/lib/formatters";
+import Container from "@/shared/ui/Container";
 
 type Props = {
   magazine: MagazinSingleType;
 };
 
 const MagazineSingleComponent: React.FC<Props> = ({ magazine }) => {
-  const formattedDate = magazine.date ? formatEventDate(magazine.date) : 'No date available';
+  const formattedDate = magazine.date ? formatEventDate(magazine.date) : "No date available";
 
   const portableTextComponents = {
     block: {
@@ -34,17 +34,17 @@ const MagazineSingleComponent: React.FC<Props> = ({ magazine }) => {
   };
 
   const staticSocials = {
-    twitter: 'https://twitter.com/',
-    instagram: 'https://www.instagram.com/',
-    facebook: 'https://www.facebook.com/',
-    linkedin: 'https://www.linkedin.com/',
+    twitter: "https://twitter.com/",
+    instagram: "https://www.instagram.com/",
+    facebook: "https://www.facebook.com/",
+    linkedin: "https://www.linkedin.com/",
   };
 
   const socialLinks = getSocialLinksFromCMS(staticSocials);
 
   const links = [
-    { name: 'Download .PDF', href: magazine.downloadPdf },
-    { name: 'Download .ePUB', href: magazine.downloadEpub },
+    { name: "Download .PDF", href: magazine.downloadPdf },
+    { name: "Download .ePUB", href: magazine.downloadEpub },
   ].filter((x): x is { name: string; href: string } => Boolean(x.href));
 
   return (
@@ -83,9 +83,9 @@ const MagazineSingleComponent: React.FC<Props> = ({ magazine }) => {
         </div>
         <section className="flex flex-col">
           <div className="mb-2.5 flex gap-5">
-            <h3 className="font-inter text-primary-darker text-[28px] leading-[142%] font-medium">{`Issue ${magazine.issue ? magazine.issue : '1'}`}</h3>
+            <h3 className="font-inter text-primary-darker text-[28px] leading-[142%] font-medium">{`Issue ${magazine.issue ? magazine.issue : "1"}`}</h3>
             <h3 className="font-inter text-borders text-[28px] leading-[142%] font-medium">|</h3>
-            <h3 className="font-inter text-borders text-[28px] leading-[142%] font-medium">{`${magazine.date && formattedDate.split(' ').slice(1).join(' ')}`}</h3>
+            <h3 className="font-inter text-borders text-[28px] leading-[142%] font-medium">{`${magazine.date && formattedDate.split(" ").slice(1).join(" ")}`}</h3>
           </div>
           <h2 className="text-titles mb-6 text-6xl leading-[111%] font-semibold">
             {magazine.title}

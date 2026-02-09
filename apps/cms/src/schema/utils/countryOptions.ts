@@ -1,4 +1,4 @@
-import { countries } from 'countries-list';
+import { countries } from "countries-list";
 
 const countryList = Object.values(countries).map((country) => ({
   title: country.name,

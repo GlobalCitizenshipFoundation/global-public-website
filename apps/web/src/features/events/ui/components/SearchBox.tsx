@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from "react";
 
 type Props = {
   initialValue: string;
@@ -64,7 +64,7 @@ export default function SearchBox({
         type="button"
         onClick={() => {
           isEditingRef.current = false;
-          setQ('');
+          setQ("");
           onClear();
         }}
         className="h-10 rounded-md border px-3 text-sm"

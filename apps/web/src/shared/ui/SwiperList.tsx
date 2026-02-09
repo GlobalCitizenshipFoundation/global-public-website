@@ -1,17 +1,17 @@
-'use client'
+"use client";
 
-import React, { useRef } from 'react';
+import React, { useRef } from "react";
 // Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/pagination';
+import "swiper/css";
+import "swiper/css/pagination";
 
 // import required modules
-import { Pagination, Navigation } from 'swiper/modules';
-import { SwiperSlideCard } from '@/shared/ui/SwiperSlideCard';
-import type { NavigationOptions, PaginationOptions } from 'swiper/types';
+import { Pagination, Navigation } from "swiper/modules";
+import { SwiperSlideCard } from "@/shared/ui/SwiperSlideCard";
+import type { NavigationOptions, PaginationOptions } from "swiper/types";
 
 interface ExampleSwiperCard {
   src: string;
@@ -27,12 +27,12 @@ export default function SwiperList() {
   const nextRef = useRef<HTMLButtonElement>(null);
 
   const exampleSwiperCard: ExampleSwiperCard = {
-    src: '/images/swiper-image.png',
-    kind: 'Event',
-    data: '2023-09-15',
+    src: "/images/swiper-image.png",
+    kind: "Event",
+    data: "2023-09-15",
     title:
-      'International Conference on Transformative Education for Human and Planetary Flourishing 2023',
-    buttonTitle: 'Register to Participate',
+      "International Conference on Transformative Education for Human and Planetary Flourishing 2023",
+    buttonTitle: "Register to Participate",
   };
 
   const exampleArray: ExampleSwiperCard[] = Array(10).fill(exampleSwiperCard);
@@ -47,12 +47,12 @@ export default function SwiperList() {
           modules={[Pagination, Navigation]}
           pagination={{
             clickable: true,
-            el: '.custom-pagination',
+            el: ".custom-pagination",
             renderBullet: (index, className) => {
               if (index < 5) {
                 return `<span class="${className}"></span>`;
               }
-              return '';
+              return "";
             },
           }}
           navigation={{
@@ -77,10 +77,10 @@ export default function SwiperList() {
             <SwiperSlide
               key={`${index}-${example.title}`}
               style={{
-                width: 'auto',
-                paddingLeft: index === 0 ? 'calc((100% - 1229px) / 2)' : undefined,
+                width: "auto",
+                paddingLeft: index === 0 ? "calc((100% - 1229px) / 2)" : undefined,
                 paddingRight:
-                  index === exampleArray.length - 1 ? 'calc((100% - 1229px) / 2)' : undefined,
+                  index === exampleArray.length - 1 ? "calc((100% - 1229px) / 2)" : undefined,
               }}
             >
               <SwiperSlideCard
@@ -93,7 +93,7 @@ export default function SwiperList() {
             </SwiperSlide>
           ))}
         </Swiper>
-        <div className="custom-pagination mt-8 flex justify-center gap-[155px]"></div>
+        <div className="custom-pagination mt-8 flex justify-center gap-38.75"></div>
       </div>
     </>
   );

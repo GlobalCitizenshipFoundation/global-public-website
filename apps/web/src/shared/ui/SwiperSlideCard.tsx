@@ -1,6 +1,6 @@
-import Image from 'next/image';
-import { formatEventDate } from '@features/events/lib/formatters';
-import ButtonPrimary from '@/shared/ui/ButtonPrimary';
+import Image from "next/image";
+import { formatEventDate } from "@features/events/lib/formatters";
+import ButtonPrimary from "@/shared/ui/ButtonPrimary";
 
 interface Props {
   src: string;
@@ -20,7 +20,7 @@ export const SwiperSlideCard: React.FC<Props> = ({ src, kind, data, title, butto
         alt="Home-image"
         width={506}
         height={325}
-        style={{ objectFit: 'contain' }}
+        style={{ objectFit: "contain" }}
         className="mb-10 rounded-[10px]"
       />
       <div className="mb-6 flex justify-between">
@@ -38,4 +38,3 @@ export const SwiperSlideCard: React.FC<Props> = ({ src, kind, data, title, butto
     </div>
   );
 };
-

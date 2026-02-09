@@ -1,10 +1,10 @@
 // getSocialMediaFromCMS.ts
-import { socialPlatforms } from '@/shared/config/social';
+import { socialPlatforms } from "@/shared/config/social";
 
 export type ContributorSocials = Record<string, string | undefined>;
 
 // Zrób union jeśli możesz, inaczej zostaw string i potem zawęź w UI
-export type SocialKind = (typeof socialPlatforms)[number]['name'];
+export type SocialKind = (typeof socialPlatforms)[number]["name"];
 
 export type SocialLinkData = {
   href: string;

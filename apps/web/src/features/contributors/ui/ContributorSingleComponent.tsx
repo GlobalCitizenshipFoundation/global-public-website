@@ -1,21 +1,21 @@
-import React from 'react';
-import Image from 'next/image';
-import { PortableText } from '@portabletext/react';
+import React from "react";
+import Image from "next/image";
+import { PortableText } from "@portabletext/react";
 
-import ButtonPrimary from '@/shared/ui/ButtonPrimary';
-import RelatedEvent from '@/features/events/ui/cards/EventCard';
-import Newsettler from '@/shared/ui/Newsletter';
-import SocialLink from '@/features/social/ui/SocialLink';
-import Sharing from '@/shared/ui/Sharing';
-import Container from '@/shared/ui/Container';
-import PrintButton from '@/shared/ui/PrintButton';
+import ButtonPrimary from "@/shared/ui/ButtonPrimary";
+import RelatedEvent from "@/features/events/ui/cards/EventCard";
+import Newsettler from "@/shared/ui/Newsletter";
+import SocialLink from "@/features/social/ui/SocialLink";
+import Sharing from "@/shared/ui/Sharing";
+import Container from "@/shared/ui/Container";
+import PrintButton from "@/shared/ui/PrintButton";
 
 import {
   type ContributorSocials,
   getSocialLinksFromCMS,
-} from '@/features/social/ui/getSocialMediaFromCMS';
+} from "@/features/social/ui/getSocialMediaFromCMS";
 
-import type { ContributorSingleType } from '@gcf/types';
+import type { ContributorSingleType } from "@gcf/types";
 
 type Props = {
   contributor: ContributorSingleType;
@@ -75,7 +75,7 @@ const ContributorSingleComponent: React.FC<Props> = ({ contributor }) => {
       </Container>
 
       <section
-        className={`bg-background-darker p-24 ${!contributor.featuredProfile ? 'mb-30' : ''}`}
+        className={`bg-background-darker p-24 ${!contributor.featuredProfile ? "mb-30" : ""}`}
       >
         <Container variant="big">
           <div className="flex items-center gap-x-16">
@@ -83,7 +83,7 @@ const ContributorSingleComponent: React.FC<Props> = ({ contributor }) => {
               <div className="relative h-122.5 w-122.5">
                 <Image
                   src={photoUrl}
-                  alt={contributor.name ?? 'Contributor'}
+                  alt={contributor.name ?? "Contributor"}
                   fill
                   sizes="490px"
                   className="rounded-md object-cover"
@@ -94,11 +94,11 @@ const ContributorSingleComponent: React.FC<Props> = ({ contributor }) => {
             <div className="flex h-auto flex-col">
               {contributor.gender ? (
                 <p className="text-titles mb-5 text-xl font-semibold">
-                  {contributor.gender === 'male'
-                    ? 'He/Him'
-                    : contributor.gender === 'female'
-                      ? 'She/Her'
-                      : ''}
+                  {contributor.gender === "male"
+                    ? "He/Him"
+                    : contributor.gender === "female"
+                      ? "She/Her"
+                      : ""}
                 </p>
               ) : null}
 

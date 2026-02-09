@@ -1,17 +1,17 @@
-import React from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import ButtonPrimary from '@/shared/ui/ButtonPrimary';
-import type { MagazinSingleType } from '@gcf/types';
-import { formatEventDate } from '@/features/events/lib/formatters';
-import { paths, path } from '@/shared/config/paths';
+import React from "react";
+import Image from "next/image";
+import Link from "next/link";
+import ButtonPrimary from "@/shared/ui/ButtonPrimary";
+import type { MagazinSingleType } from "@gcf/types";
+import { formatEventDate } from "@/features/events/lib/formatters";
+import { paths, path } from "@/shared/config/paths";
 
 type Props = {
   magazin: MagazinSingleType;
 };
 
 const RelatedMagazin: React.FC<Props> = ({ magazin }) => {
-  const formattedStartDate = magazin.date ? formatEventDate(magazin.date) : 'No date available';
+  const formattedStartDate = magazin.date ? formatEventDate(magazin.date) : "No date available";
 
   const slug = magazin.slug?.current;
   const href = slug ? path.magazinePost(slug) : paths.magazine;
@@ -23,7 +23,7 @@ const RelatedMagazin: React.FC<Props> = ({ magazin }) => {
       {/* Overlay NA WIERZCHU - klika się wszystko */}
       <Link
         href={href}
-        aria-label={magazin.title ? `Open magazine: ${magazin.title}` : 'Open magazine'}
+        aria-label={magazin.title ? `Open magazine: ${magazin.title}` : "Open magazine"}
         className="absolute inset-0 z-10 rounded-[10px]"
       />
 
@@ -33,7 +33,7 @@ const RelatedMagazin: React.FC<Props> = ({ magazin }) => {
           {imageUrl ? (
             <Image
               src={imageUrl}
-              alt={magazin.title || 'Magazine cover'}
+              alt={magazin.title || "Magazine cover"}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               className="object-cover transition-transform duration-200 group-hover:scale-[1.02]"

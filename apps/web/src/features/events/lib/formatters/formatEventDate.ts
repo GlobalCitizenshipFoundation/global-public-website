@@ -1,1 +1,1 @@
-export { formatEventDate } from '@/shared/lib/datetime';
+export { formatEventDate } from "@/shared/lib/datetime";

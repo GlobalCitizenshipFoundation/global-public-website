@@ -1,19 +1,19 @@
-import React from 'react';
-import Image from 'next/image';
+import React from "react";
+import Image from "next/image";
 
-import SocialLink from '@/features/social/ui/SocialLink';
-import { getSocialLinksFromCMS } from '@/features/social/ui/getSocialMediaFromCMS';
+import SocialLink from "@/features/social/ui/SocialLink";
+import { getSocialLinksFromCMS } from "@/features/social/ui/getSocialMediaFromCMS";
 
 type Props = {
   socialLinks: ReturnType<typeof getSocialLinksFromCMS>;
-  variant: 'mobile' | 'desktop';
+  variant: "mobile" | "desktop";
 };
 
 export default function ShareSection({ socialLinks, variant }: Props) {
-  const isDesktop = variant === 'desktop';
+  const isDesktop = variant === "desktop";
 
   return (
-    <div className={isDesktop ? 'flex flex-col gap-7 px-9' : 'flex flex-col gap-7'}>
+    <div className={isDesktop ? "flex flex-col gap-7 px-9" : "flex flex-col gap-7"}>
       <h3 className="font-semibold lg:text-3xl">Share the Event</h3>
 
       <div className="flex w-full justify-between">

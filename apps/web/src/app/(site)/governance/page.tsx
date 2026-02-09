@@ -1,8 +1,8 @@
-import Container from '@/shared/ui/Container';
-import type { Metadata } from 'next';
+import Container from "@/shared/ui/Container";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'Governance',
+  title: "Governance",
 };
 
 const GovernancePage = async () => {

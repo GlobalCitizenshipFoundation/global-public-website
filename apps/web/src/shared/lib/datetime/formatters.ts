@@ -1,7 +1,7 @@
-const DEFAULT_LOCALE = 'en-GB' as const;
-const DEFAULT_TIMEZONE = 'Europe/Warsaw' as const;
+const DEFAULT_LOCALE = "en-GB" as const;
+const DEFAULT_TIMEZONE = "Europe/Warsaw" as const;
 
-export type DateInput = string | number | Date;
+type DateInput = string | number | Date;
 
 function toValidDate(input: DateInput): Date | null {
   const date = input instanceof Date ? input : new Date(input);
@@ -9,15 +9,15 @@ function toValidDate(input: DateInput): Date | null {
 }
 
 const dateFormatter = new Intl.DateTimeFormat(DEFAULT_LOCALE, {
-  day: '2-digit',
-  month: 'long',
-  year: 'numeric',
+  day: "2-digit",
+  month: "long",
+  year: "numeric",
   timeZone: DEFAULT_TIMEZONE,
 });
 
 const timeFormatter = new Intl.DateTimeFormat(DEFAULT_LOCALE, {
-  hour: '2-digit',
-  minute: '2-digit',
+  hour: "2-digit",
+  minute: "2-digit",
   hour12: false,
   timeZone: DEFAULT_TIMEZONE,
 });
@@ -27,7 +27,7 @@ const timeFormatter = new Intl.DateTimeFormat(DEFAULT_LOCALE, {
  */
 export function formatEventDate(input: DateInput): string {
   const date = toValidDate(input);
-  if (!date) return '';
+  if (!date) return "";
   return dateFormatter.format(date);
 }
 
@@ -36,6 +36,6 @@ export function formatEventDate(input: DateInput): string {
  */
 export function formatEventTime(input: DateInput): string {
   const date = toValidDate(input);
-  if (!date) return '';
+  if (!date) return "";
   return timeFormatter.format(date);
 }

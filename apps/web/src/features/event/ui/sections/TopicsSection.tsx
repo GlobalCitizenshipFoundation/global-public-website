@@ -1,11 +1,11 @@
-import React from 'react';
-import type { EventSingleType } from '@gcf/types';
+import React from "react";
+import type { EventSingleType } from "@gcf/types";
 
-import { Tags } from '@/shared/ui/Tags';
-import Container from '@/shared/ui/Container';
+import { Tags } from "@/shared/ui/Tags";
+import Container from "@/shared/ui/Container";
 
 type Props = {
-  topics: NonNullable<EventSingleType['topics']>;
+  topics: NonNullable<EventSingleType["topics"]>;
 };
 
 export default function TopicsSection({ topics }: Props) {

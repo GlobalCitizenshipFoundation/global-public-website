@@ -1,11 +1,11 @@
-import React from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
+import React from "react";
+import Image from "next/image";
+import Link from "next/link";
 
-import { footer, subfooter } from '@/shared/config/footer';
-import SocialLink from '@/features/social/ui/SocialLink';
-import BreakLine from '@/shared/ui/BreakLine';
-import Container from '@/shared/ui/Container';
+import { footer, subfooter } from "@/shared/config/footer";
+import SocialLink from "@/features/social/ui/SocialLink";
+import BreakLine from "@/shared/ui/BreakLine";
+import Container from "@/shared/ui/Container";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -24,10 +24,10 @@ const Footer = () => {
 
           <p
             className={[
-              'font-inter text-borders w-full text-sm leading-[142%] font-medium',
-              'lg:mb-10 lg:max-w-107.5 lg:min-w-62.5',
-              'min-w-0 break-words hyphens-auto',
-            ].join(' ')}
+              "font-inter text-borders w-full text-sm leading-[142%] font-medium",
+              "lg:mb-10 lg:max-w-107.5 lg:min-w-62.5",
+              "min-w-0 wrap-break-word hyphens-auto",
+            ].join(" ")}
           >
             The Global Citizenship Foundation is a registered not-for-profit specialist organization
             that fosters active global citizenship and global citizenship education (GCED). The seat
@@ -46,7 +46,7 @@ const Footer = () => {
               </h3>
 
               <div className="font-inter flex min-w-0 flex-col gap-3.5 text-base font-normal">
-                {item.kind === 'social'
+                {item.kind === "social"
                   ? item.content.map((link) => (
                       <SocialLink
                         key={link.href}
@@ -61,11 +61,11 @@ const Footer = () => {
                         href={link.href}
                         key={link.label}
                         className={[
-                          'min-w-0 break-words hyphens-auto',
-                          'text-borders transition-colors',
-                          'hover:text-gray',
-                          'underline decoration-transparent underline-offset-4 hover:decoration-current',
-                        ].join(' ')}
+                          "min-w-0 wrap-break-word hyphens-auto",
+                          "text-borders transition-colors",
+                          "hover:text-gray",
+                          "underline decoration-transparent underline-offset-4 hover:decoration-current",
+                        ].join(" ")}
                       >
                         {link.label}
                       </Link>
@@ -89,11 +89,11 @@ const Footer = () => {
               href={data.href}
               key={data.name}
               className={[
-                'font-inter min-w-0 text-sm font-normal break-words',
-                'text-borders transition-colors',
-                'hover:text-gray',
-                'underline decoration-transparent underline-offset-4 hover:decoration-current',
-              ].join(' ')}
+                "font-inter min-w-0 text-sm font-normal wrap-break-word",
+                "text-borders transition-colors",
+                "hover:text-gray",
+                "underline decoration-transparent underline-offset-4 hover:decoration-current",
+              ].join(" ")}
             >
               {data.name}
             </Link>

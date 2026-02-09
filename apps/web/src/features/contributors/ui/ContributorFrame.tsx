@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import React from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import type { RelatedContributorsType } from '@gcf/types';
+import React from "react";
+import Link from "next/link";
+import Image from "next/image";
+import type { RelatedContributorsType } from "@gcf/types";
 
-import { paths, path } from '@/shared/config/paths';
+import { paths, path } from "@/shared/config/paths";
 
 type FrameProps = {
   contributor: RelatedContributorsType;
@@ -13,7 +13,7 @@ type FrameProps = {
 };
 
 function cx(...classes: Array<string | undefined | null | false>) {
-  return classes.filter(Boolean).join(' ');
+  return classes.filter(Boolean).join(" ");
 }
 
 const ContributorFrame: React.FC<FrameProps> = ({ contributor, className }) => {
@@ -22,10 +22,10 @@ const ContributorFrame: React.FC<FrameProps> = ({ contributor, className }) => {
 
   const photoUrl = contributor.photo?.asset?.url;
 
-  const name = contributor.name ?? '';
-  const role = contributor.designation ?? '';
-  const organization = contributor.organization ?? '';
-  const country = contributor.country ?? '';
+  const name = contributor.name ?? "";
+  const role = contributor.designation ?? "";
+  const organization = contributor.organization ?? "";
+  const country = contributor.country ?? "";
 
   const hasName = Boolean(name);
   const hasRole = Boolean(role);
@@ -33,13 +33,13 @@ const ContributorFrame: React.FC<FrameProps> = ({ contributor, className }) => {
   const hasCountry = Boolean(country);
 
   return (
-    <Link href={href} className={cx('group flex h-full w-full flex-col', className)}>
+    <Link href={href} className={cx("group flex h-full w-full flex-col", className)}>
       {/* Photo 1:1 */}
       <div className="relative aspect-square w-full overflow-hidden rounded-[7.33px]">
         {photoUrl ? (
           <Image
             src={photoUrl}
-            alt={name || 'Contributor'}
+            alt={name || "Contributor"}
             fill
             sizes="(max-width: 640px) 80vw, (max-width: 1024px) 40vw, (max-width: 1280px) 28vw, 250px"
             className="object-cover transition-transform duration-200 group-hover:scale-[1.02]"
@@ -75,10 +75,10 @@ const ContributorFrame: React.FC<FrameProps> = ({ contributor, className }) => {
         {hasCountry ? (
           <p
             className={cx(
-              'font-inter text-destignation line-clamp-1 leading-tight font-normal',
+              "font-inter text-destignation line-clamp-1 leading-tight font-normal",
               // if org exists, keep it tighter; otherwise give a bit more air
-              hasOrg ? 'mt-[clamp(3px,1.6cqw,6px)]' : 'mt-[clamp(4px,2.2cqw,8px)]',
-              'text-[clamp(11px,5.2cqw,14px)]'
+              hasOrg ? "mt-[clamp(3px,1.6cqw,6px)]" : "mt-[clamp(4px,2.2cqw,8px)]",
+              "text-[clamp(11px,5.2cqw,14px)]",
             )}
           >
             {country}

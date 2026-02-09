@@ -1,2 +1,1 @@
-export { formatEventDate } from './formatEventDate';
-export { formatEventTime } from './formatEventTime';
+export { formatEventDate } from "./formatEventDate";

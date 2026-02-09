@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { FaPrint } from 'react-icons/fa6';
+import React from "react";
+import { FaPrint } from "react-icons/fa6";
 
-import BreakLine from '@/shared/ui/BreakLine';
-import SocialLink from '@/features/social/ui/SocialLink';
-import type { SocialName } from '@/shared/config/social';
+import BreakLine from "@/shared/ui/BreakLine";
+import SocialLink from "@/features/social/ui/SocialLink";
+import type { SocialName } from "@/shared/config/social";
 
 type SocialItem = {
   kind: SocialName;
@@ -18,7 +18,7 @@ type Props = {
   title?: string;
 };
 
-const Sharing: React.FC<Props> = ({ socialLinks, title = 'Sharing:' }) => {
+const Sharing: React.FC<Props> = ({ socialLinks, title = "Sharing:" }) => {
   return (
     <>
       <BreakLine className="mt-7.5" />
@@ -32,7 +32,7 @@ const Sharing: React.FC<Props> = ({ socialLinks, title = 'Sharing:' }) => {
               key={link.href}
               href={link.href}
               kind={link.kind}
-              label={link.label ?? 'Share'}
+              label={link.label ?? "Share"}
               variant="inline"
             />
           ))}
@@ -40,7 +40,7 @@ const Sharing: React.FC<Props> = ({ socialLinks, title = 'Sharing:' }) => {
           <button
             type="button"
             onClick={() => window.print()}
-            className="group flex items-center gap-[7px] transition-all duration-300 ease-in-out"
+            className="group flex items-center gap-1.75 transition-all duration-300 ease-in-out"
             aria-label="Print"
           >
             <span className="group-hover:text-primary text-xl text-current transition-all duration-300 ease-in-out">

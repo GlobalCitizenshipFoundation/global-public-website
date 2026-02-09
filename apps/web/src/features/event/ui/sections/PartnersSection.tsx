@@ -1,16 +1,16 @@
-import React from 'react';
-import { PortableText } from '@portabletext/react';
-import type { EventPartnerGroup, EventSingleType } from '@gcf/types';
+import React from "react";
+import { PortableText } from "@portabletext/react";
+import type { EventPartnerGroup, EventSingleType } from "@gcf/types";
 
-import { ConferencePartners } from './ConferencePartners';
+import { ConferencePartners } from "./ConferencePartners";
 
-import SectionHeading from '../components/SectionHeading';
-import { createPortableTextComponents } from '../../lib/portableTextComponents';
-import { PARTNER_LABEL } from '../../lib/constants';
+import SectionHeading from "../components/SectionHeading";
+import { createPortableTextComponents } from "../../lib/portableTextComponents";
+import { PARTNER_LABEL } from "../../lib/constants";
 
 type Props = {
   heading: string;
-  text?: EventSingleType['partnersText'];
+  text?: EventSingleType["partnersText"];
   groups: EventPartnerGroup[];
 };
 

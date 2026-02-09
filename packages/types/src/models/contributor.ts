@@ -1,5 +1,5 @@
-import type { PortableTextBlock } from '../sanity/portableText';
-import type { EventCard } from './event';
+import type { PortableTextBlock } from "../sanity/portableText";
+import type { EventCard } from "./event";
 
 export interface ContributorSingleType {
   _id: string;
@@ -21,7 +21,7 @@ export interface ContributorSingleType {
     };
   };
 
-  gender?: 'male' | 'female';
+  gender?: "male" | "female";
   designation?: string;
   organization?: string;
   country?: string;
@@ -59,5 +59,5 @@ export interface ContributorSingleType {
 
 export type RelatedContributorsType = Pick<
   ContributorSingleType,
-  '_id' | 'slug' | 'name' | 'photo' | 'designation' | 'organization' | 'country'
+  "_id" | "slug" | "name" | "photo" | "designation" | "organization" | "country"
 >;

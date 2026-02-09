@@ -1,19 +1,19 @@
-import React from 'react';
-import type { PartnerSingleType } from '@gcf/types';
-import BreakLine from '@/shared/ui/BreakLine';
-import ButtonRegular from '@/shared/ui/ButtonRegular';
+import React from "react";
+import type { PartnerSingleType } from "@gcf/types";
+import BreakLine from "@/shared/ui/BreakLine";
+import ButtonRegular from "@/shared/ui/ButtonRegular";
 import {
   type ContributorSocials,
   getSocialLinksFromCMS,
-} from '@/features/social/ui/getSocialMediaFromCMS';
-import SocialLink from '@/features/social/ui/SocialLink';
-import Link from 'next/link';
-import { PortableText } from '@portabletext/react';
-import Sharing from '@/shared/ui/Sharing';
-import Newsettler from '@/shared/ui/Newsletter';
-import { paths } from '@/shared/config/paths';
-import Image from 'next/image';
-import Container from '@/shared/ui/Container';
+} from "@/features/social/ui/getSocialMediaFromCMS";
+import SocialLink from "@/features/social/ui/SocialLink";
+import Link from "next/link";
+import { PortableText } from "@portabletext/react";
+import Sharing from "@/shared/ui/Sharing";
+import Newsettler from "@/shared/ui/Newsletter";
+import { paths } from "@/shared/config/paths";
+import Image from "next/image";
+import Container from "@/shared/ui/Container";
 
 type Props = {
   partner: PartnerSingleType;
@@ -28,7 +28,7 @@ const PartnerSingleComponent: React.FC<Props> = ({ partner }) => {
         <div className="relative mb-10.5 h-120 w-full overflow-hidden">
           <Image
             src={partner.headerImage.asset.url}
-            alt={partner.title ? `${partner.title} header image` : 'Partner header image'}
+            alt={partner.title ? `${partner.title} header image` : "Partner header image"}
             fill
             sizes="100vw"
             className="object-cover"
@@ -60,7 +60,7 @@ const PartnerSingleComponent: React.FC<Props> = ({ partner }) => {
                   <div className="relative h-full w-full">
                     <Image
                       src={partner.logo.asset.url}
-                      alt={partner.title ?? 'Partner logo'}
+                      alt={partner.title ?? "Partner logo"}
                       fill
                       sizes="300px"
                       className="object-contain"
@@ -79,7 +79,7 @@ const PartnerSingleComponent: React.FC<Props> = ({ partner }) => {
                   className="block"
                 >
                   <ButtonRegular className="bg-primary-darker h-9.5 w-full text-base font-normal text-white">
-                    {partner.websiteText ? partner.websiteText : 'Visit Website'}
+                    {partner.websiteText ? partner.websiteText : "Visit Website"}
                   </ButtonRegular>
                 </a>
               ) : null}

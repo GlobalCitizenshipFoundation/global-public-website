@@ -1,10 +1,10 @@
-import type { PortableTextBlock } from '../sanity/portableText';
-import type { SanityImage } from '../sanity/image';
+import type { SanityImage } from "../sanity/image";
+import type { PortableTextBlock } from "../sanity/portableText";
 
 export interface MagazinSingleType {
   _id: string;
   title: string;
-  slug?: { _type: 'slug'; current: string };
+  slug?: { _type: "slug"; current: string };
 
   issue: number;
   magazinImage?: SanityImage;
@@ -19,4 +19,4 @@ export interface MagazinSingleType {
   mastheadHeading: string;
 }
 
-export type RelatedMagazinType = Pick<MagazinSingleType, '_id' | 'slug' | 'magazinImage' | 'date'>;
+export type RelatedMagazinType = Pick<MagazinSingleType, "_id" | "slug" | "magazinImage" | "date">;

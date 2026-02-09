@@ -1,10 +1,10 @@
-import { getPartners } from '@/features/partners/api/getPartners';
-import PartnersLogo from '@/features/partners/ui/PartnersLogo';
-import type { Metadata } from 'next';
-import Container from '@/shared/ui/Container';
+import { getPartners } from "@/features/partners/api/getPartners";
+import PartnersLogo from "@/features/partners/ui/PartnersLogo";
+import type { Metadata } from "next";
+import Container from "@/shared/ui/Container";
 
 export const metadata: Metadata = {
-  title: 'Partners',
+  title: "Partners",
 };
 
 const PartnersPage = async () => {
@@ -24,11 +24,11 @@ const PartnersPage = async () => {
         <Container variant="big">
           <div
             className={[
-              'grid w-full',
-              'gap-[clamp(24px,4vw,85px)]',
+              "grid w-full",
+              "gap-[clamp(24px,4vw,85px)]",
               // 2/3/4/5 kolumn zależnie od szerokości
-              'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5',
-            ].join(' ')}
+              "grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5",
+            ].join(" ")}
           >
             {partners.map((partner) => (
               <div

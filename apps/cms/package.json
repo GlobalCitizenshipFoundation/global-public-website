@@ -11,26 +11,27 @@
     "build": "sanity build",
     "deploy": "sanity deploy",
     "deploy:graphql": "sanity graphql deploy",
-    "lint": "eslint --cache --cache-location ../../.cache/eslint/cms .",
-    "lint:fix": "eslint --fix --cache --cache-location ../../.cache/eslint/cms --no-error-on-unmatched-pattern",
-    "lint:ci": "eslint . --cache --cache-location ../../.cache/eslint/cms --max-warnings 0",
+    "lint": "biome check src",
+    "lint:fix": "biome check src --write",
+    "lint:ci": "biome check src",
+    "format": "biome format . --write",
+    "format:check": "biome format .",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "format": "prettier . --write",
-    "format:check": "prettier . --check",
-    "check": "npm run lint && npm run typecheck && npm run build"
+    "check:schema": "mkdirp ./.cache && sanity schema extract --path ./.cache/schema.json && rimraf ./.cache/schema.json",
+    "check": "pnpm run lint:ci && pnpm run typecheck && pnpm run check:schema && pnpm run build"
   },
   "dependencies": {
-    "@gcf/types": "file:../../packages/types",
-    "@sanity/vision": "^4.6.1",
+    "@sanity/vision": "^5.8.1",
     "countries-list": "^3.2.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "sanity": "^4.6.1",
+    "sanity": "^5.8.1",
     "styled-components": "^6.1.18"
   },
   "devDependencies": {
-    "@sanity/eslint-config-studio": "^5.0.2",
     "@types/node": "^20",
-    "@types/react": "^19.1.0"
+    "@types/react": "^19.1.0",
+    "mkdirp": "^3.0.1",
+    "rimraf": "^6.1.2"
   }
 }
