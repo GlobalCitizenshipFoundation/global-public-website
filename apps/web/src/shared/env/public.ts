@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 const publicSchema = z.object({
   NEXT_PUBLIC_SITE_URL: z.string().url(),
@@ -8,8 +8,8 @@ const publicSchema = z.object({
 });
 
 export const publicEnv = publicSchema.parse({
-  NEXT_PUBLIC_SITE_URL: process.env['NEXT_PUBLIC_SITE_URL'],
-  NEXT_PUBLIC_SANITY_PROJECT_ID: process.env['NEXT_PUBLIC_SANITY_PROJECT_ID'],
-  NEXT_PUBLIC_SANITY_DATASET: process.env['NEXT_PUBLIC_SANITY_DATASET'],
-  NEXT_PUBLIC_SANITY_API_VERSION: process.env['NEXT_PUBLIC_SANITY_API_VERSION'],
+  NEXT_PUBLIC_SITE_URL: process.env["NEXT_PUBLIC_SITE_URL"],
+  NEXT_PUBLIC_SANITY_PROJECT_ID: process.env["NEXT_PUBLIC_SANITY_PROJECT_ID"],
+  NEXT_PUBLIC_SANITY_DATASET: process.env["NEXT_PUBLIC_SANITY_DATASET"],
+  NEXT_PUBLIC_SANITY_API_VERSION: process.env["NEXT_PUBLIC_SANITY_API_VERSION"],
 });

@@ -51,17 +51,16 @@ export default [
       next: { rootDir: "." },
     },
     rules: {
-  ...nextPlugin.configs.recommended.rules,
-  ...nextPlugin.configs["core-web-vitals"].rules,
-  ...reactHooks.configs.recommended.rules,
+      ...nextPlugin.configs.recommended.rules,
+      ...nextPlugin.configs["core-web-vitals"].rules,
+      ...reactHooks.configs.recommended.rules,
 
-  "no-undef": "off",
+      "no-undef": "off",
 
-  // WYŁĄCZ te dwie, bo Ci blokują normalne patterny SSR/refs:
-  "react-hooks/set-state-in-effect": "off",
-  "react-hooks/refs": "off",
-},
-
+      // WYŁĄCZ te dwie, bo Ci blokują normalne patterny SSR/refs:
+      "react-hooks/set-state-in-effect": "off",
+      "react-hooks/refs": "off",
+    },
   },
 
   // 5) d.ts
