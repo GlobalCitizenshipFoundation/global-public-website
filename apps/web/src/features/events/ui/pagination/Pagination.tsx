@@ -1,20 +1,31 @@
 "use client";
 
-import { useMemo, useState, useEffect, startTransition, useCallback } from "react";
+import { useMemo, startTransition, useCallback, useEffect, useRef, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { setSearchParams } from "@/shared/lib/url";
 
-type Props = { page: number; totalPages: number };
+type Props = {
+  page: number;
+  totalPages: number;
+  siblingCount?: number;
+  boundaryCount?: number;
+};
 
-export default function Pagination({ page, totalPages }: Props) {
+type PageItem = number | "gap-left" | "gap-right";
+
+export default function Pagination({
+  page,
+  totalPages = 10,
+  siblingCount = 1,
+  boundaryCount = 1,
+}: Props) {
   const router = useRouter();
   const pathname = usePathname();
   const sp = useSearchParams();
 
-  const [jump, setJump] = useState<string>(String(page));
-  useEffect(() => setJump(String(page)), [page]);
+  const canPrev = page > 1;
+  const canNext = page < totalPages;
 
-  // ✅ hooki ZAWSZE przed ewentualnym return null
   const go = useCallback(
     (nextPage: number) => {
       const safe = clamp(nextPage, 1, totalPages);
@@ -27,107 +38,219 @@ export default function Pagination({ page, totalPages }: Props) {
     [pathname, router, sp, totalPages],
   );
 
-  const pagesToShow = useMemo(() => getPages(page, totalPages), [page, totalPages]);
-  const canPrev = page > 1;
-  const canNext = page < totalPages;
+  const items = useMemo(
+    () =>
+      getPaginationItems({
+        page,
+        totalPages,
+        siblingCount,
+        boundaryCount,
+      }),
+    [page, totalPages, siblingCount, boundaryCount],
+  );
 
-  const onJumpCommit = useCallback(() => {
-    const n = Number.parseInt(jump, 10);
-    if (!Number.isFinite(n)) {
-      setJump(String(page));
-      return;
-    }
-    go(n);
-  }, [go, jump, page]);
-
-  // ✅ dopiero tutaj warunkowy return
   if (totalPages <= 1) return null;
 
-  return (
-    <nav className="mt-10 flex flex-wrap items-center justify-center gap-3" aria-label="Pagination">
-      <button
-        type="button"
-        onClick={() => go(page - 1)}
-        disabled={!canPrev}
-        className="h-9 rounded-md border px-3 text-sm disabled:opacity-50"
-      >
-        Prev
-      </button>
+  const baseBtn =
+    "h-[55px] rounded-md border px-[20px] text-[16px] font-medium cursor-pointer transition-colors border-navy text-navy " +
+    "hover:bg-navy hover:border-navy hover:text-white " +
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy/30";
 
-      <div className="flex items-center gap-2">
-        {pagesToShow.map((p, idx) =>
-          p === "..." ? (
-            <span key={`dots-${idx}`} className="px-2 text-sm text-neutral-500">
-              ...
-            </span>
-          ) : (
+  const pageBtn =
+    "h-[55px] w-[55px] rounded-md border text-[16px] font-medium cursor-pointer transition-colors border-navy text-navy " +
+    "hover:bg-navy hover:border-navy hover:text-white " +
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy/30";
+
+  const activeBtn = "border-navy bg-navy text-white hover:bg-navy";
+
+  return (
+    <nav className="flex flex-wrap items-center justify-center gap-[11px]" aria-label="Pagination">
+      {canPrev ? (
+        <button type="button" onClick={() => go(page - 1)} className={baseBtn}>
+          Prev
+        </button>
+      ) : null}
+
+      <div className="flex items-center gap-[11px]">
+        {items.map((it, idx) => {
+          if (it === "gap-left" || it === "gap-right") {
+            return (
+              <EllipsisJump
+                key={`${it}-${idx}`}
+                currentPage={page}
+                totalPages={totalPages}
+                onCommit={go}
+                className={baseBtn}
+                side={it}
+              />
+            );
+          }
+
+          return (
             <button
-              key={p}
+              key={it}
               type="button"
-              onClick={() => go(p)}
-              className={[
-                "h-9 w-9 rounded-md border text-sm",
-                p === page ? "border-black bg-black text-white" : "",
-              ].join(" ")}
-              aria-current={p === page ? "page" : undefined}
+              onClick={() => go(it)}
+              className={[pageBtn, it === page ? activeBtn : ""].join(" ")}
+              aria-current={it === page ? "page" : undefined}
+              aria-label={`Go to page ${it}`}
             >
-              {p}
+              {it}
             </button>
-          ),
-        )}
+          );
+        })}
       </div>
 
-      <button
-        type="button"
-        onClick={() => go(page + 1)}
-        disabled={!canNext}
-        className="h-9 rounded-md border px-3 text-sm disabled:opacity-50"
-      >
-        Next
-      </button>
-
-      {totalPages >= 10 ? (
-        <div className="ml-2 flex items-center gap-2">
-          <span className="text-sm text-neutral-600">Go to</span>
-          <input
-            inputMode="numeric"
-            pattern="[0-9]*"
-            value={jump}
-            onChange={(e) => setJump(e.target.value.replace(/[^\d]/g, ""))}
-            onBlur={onJumpCommit}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") onJumpCommit();
-              if (e.key === "Escape") setJump(String(page));
-            }}
-            className="h-9 w-16 rounded-md border px-2 text-center text-sm"
-            aria-label="Go to page"
-          />
-          <span className="text-sm text-neutral-600">of {totalPages}</span>
-        </div>
+      {canNext ? (
+        <button type="button" onClick={() => go(page + 1)} className={baseBtn}>
+          Next
+        </button>
       ) : null}
     </nav>
   );
 }
 
-function clamp(n: number, min: number, max: number) {
-  return Math.min(Math.max(n, min), max);
-}
+function EllipsisJump(props: {
+  currentPage: number;
+  totalPages: number;
+  onCommit: (page: number) => void;
+  className: string;
+  side: "gap-left" | "gap-right";
+}) {
+  const { currentPage, totalPages, onCommit, className, side } = props;
 
-function getPages(current: number, total: number): Array<number | "..."> {
-  const set = new Set<number>([1, total, current, current - 1, current + 1]);
+  const chunk = Math.max(5, Math.ceil(totalPages / 10));
+  const suggested =
+    side === "gap-left"
+      ? clamp(currentPage - chunk, 1, totalPages)
+      : clamp(currentPage + chunk, 1, totalPages);
 
-  const arr: number[] = Array.from(set)
-    .filter((n) => n >= 1 && n <= total)
-    .sort((a, b) => a - b);
+  const digits = String(totalPages).length;
+  const inputWidthClass =
+    digits <= 2 ? "w-12" : digits === 3 ? "w-14" : digits === 4 ? "w-16" : "w-20";
 
-  const out: Array<number | "..."> = [];
-  let prev: number | null = null;
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(String(suggested));
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
-  for (const n of arr) {
-    if (prev !== null && n - prev > 1) out.push("...");
-    out.push(n);
-    prev = n;
+  useEffect(() => {
+    if (!open) setValue(String(suggested));
+  }, [open, suggested]);
+
+  useEffect(() => {
+    if (open) inputRef.current?.focus();
+  }, [open]);
+
+  const commit = useCallback(() => {
+    const n = Number.parseInt(value, 10);
+    if (!Number.isFinite(n)) {
+      setValue(String(suggested));
+      setOpen(false);
+      return;
+    }
+    onCommit(n);
+    setOpen(false);
+  }, [onCommit, suggested, value]);
+
+  if (!open) {
+    return (
+      <button
+        type="button"
+        className={className}
+        onClick={() => setOpen(true)}
+        aria-label="Jump to page"
+        title="Jump to page"
+      >
+        ...
+      </button>
+    );
   }
 
+  return (
+    <input
+      ref={inputRef}
+      inputMode="numeric"
+      pattern="[0-9]*"
+      value={value}
+      onChange={(e) => setValue(e.target.value.replace(/[^\d]/g, ""))}
+      onBlur={commit}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") commit();
+        if (e.key === "Escape") {
+          setValue(String(suggested));
+          setOpen(false);
+        }
+      }}
+      className={[
+        "h-9 rounded-md border border-navy bg-white px-2 text-center text-[16px] font-medium text-navy",
+        inputWidthClass,
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy/30",
+      ].join(" ")}
+      aria-label="Jump to page input"
+    />
+  );
+}
+
+function getPaginationItems(opts: {
+  page: number;
+  totalPages: number;
+  siblingCount: number;
+  boundaryCount: number;
+}): PageItem[] {
+  const { page, totalPages, siblingCount, boundaryCount } = opts;
+
+  const startPages = range(1, Math.min(boundaryCount, totalPages));
+
+  const endStart = Math.max(totalPages - boundaryCount + 1, boundaryCount + 1);
+  const endPages = range(endStart, totalPages);
+
+  const siblingsStart = Math.max(
+    Math.min(page - siblingCount, totalPages - boundaryCount - siblingCount * 2 - 1),
+    boundaryCount + 2,
+  );
+
+  const siblingsEnd = Math.min(
+    Math.max(page + siblingCount, boundaryCount + siblingCount * 2 + 2),
+    endStart - 2,
+  );
+
+  const items: PageItem[] = [];
+
+  items.push(...startPages);
+
+  if (siblingsStart > boundaryCount + 2) items.push("gap-left");
+  else if (boundaryCount + 1 < totalPages - boundaryCount) {
+    items.push(boundaryCount + 1);
+  }
+
+  items.push(...range(siblingsStart, siblingsEnd));
+
+  if (siblingsEnd < totalPages - boundaryCount - 1) items.push("gap-right");
+  else if (totalPages - boundaryCount > boundaryCount) {
+    items.push(totalPages - boundaryCount);
+  }
+
+  items.push(...endPages);
+
+  const out: PageItem[] = [];
+  const seen = new Set<string>();
+  for (const it of items) {
+    const key = String(it);
+    if (!seen.has(key)) {
+      seen.add(key);
+      out.push(it);
+    }
+  }
   return out;
+}
+
+function range(start: number, end: number): number[] {
+  if (end < start) return [];
+  const out: number[] = [];
+  for (let i = start; i <= end; i++) out.push(i);
+  return out;
+}
+
+function clamp(n: number, min: number, max: number) {
+  return Math.min(Math.max(n, min), max);
 }

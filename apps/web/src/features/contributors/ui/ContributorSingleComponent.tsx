@@ -1,21 +1,20 @@
-import React from "react";
-import Image from "next/image";
+import type { ContributorSingleType } from "@gcf/types";
 import { PortableText } from "@portabletext/react";
-
-import ButtonPrimary from "@/shared/ui/ButtonPrimary";
+import Image from "next/image";
+import Link from "next/link";
+import type React from "react";
 import RelatedEvent from "@/features/events/ui/cards/EventCard";
-import Newsettler from "@/shared/ui/Newsletter";
-import SocialLink from "@/features/social/ui/SocialLink";
-import Sharing from "@/shared/ui/Sharing";
-import Container from "@/shared/ui/Container";
-import PrintButton from "@/shared/ui/PrintButton";
-
 import {
   type ContributorSocials,
   getSocialLinksFromCMS,
 } from "@/features/social/ui/getSocialMediaFromCMS";
-
-import type { ContributorSingleType } from "@gcf/types";
+import SocialLink from "@/features/social/ui/SocialLink";
+import { paths } from "@/shared/config/paths";
+import { ButtonPrimary } from "@/shared/ui/ButtonPrimary";
+import Container from "@/shared/ui/Container";
+import Newsettler from "@/shared/ui/Newsletter";
+import PrintButton from "@/shared/ui/PrintButton";
+import Sharing from "@/shared/ui/Sharing";
 
 type Props = {
   contributor: ContributorSingleType;
@@ -61,8 +60,8 @@ const ContributorSingleComponent: React.FC<Props> = ({ contributor }) => {
           <>
             <div className="mb-5 flex justify-between">
               <h2 className="text-6xl">Featured Profile</h2>
-              <ButtonPrimary href="/contributors" className="w-[253.5px]">
-                View all profiles
+              <ButtonPrimary asChild className="w-[253.5px]">
+                <Link href={paths.contributors}>View all profiles</Link>
               </ButtonPrimary>
             </div>
 

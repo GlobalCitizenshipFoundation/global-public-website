@@ -13,7 +13,6 @@ const TYPES = [
   { label: "Conference", value: "conference" },
   { label: "Consultation", value: "consultation" },
   { label: "Panel Discussion", value: "panel_discussion" },
-  { label: "Forum", value: "forum" },
 ] as const satisfies readonly { label: string; value: EventType }[];
 
 const TABS = [
@@ -67,7 +66,7 @@ export default function EventsToolbar({ title }: Props) {
   );
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-8">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <h1 className="text-3xl font-semibold md:text-[42px]">{title}</h1>
 
@@ -82,15 +81,27 @@ export default function EventsToolbar({ title }: Props) {
 
       <div className="flex flex-row justify-between gap-3 lg:items-center lg:gap-6">
         <ToggleGroup
+          variant="tabs"
           items={TABS}
           value={currentTab}
-          onChange={(v) => patchIfChanged(sp, pushPatch, { tab: v === "all" ? null : v, page: 1 })}
+          onChange={(v) =>
+            patchIfChanged(sp, pushPatch, {
+              tab: v === "all" ? null : v,
+              page: 1,
+            })
+          }
         />
 
         <ToggleGroup
+          variant="types"
           items={TYPES}
           value={currentType}
-          onChange={(v) => patchIfChanged(sp, pushPatch, { type: v === "all" ? null : v, page: 1 })}
+          onChange={(v) =>
+            patchIfChanged(sp, pushPatch, {
+              type: v === "all" ? null : v,
+              page: 1,
+            })
+          }
         />
       </div>
     </div>

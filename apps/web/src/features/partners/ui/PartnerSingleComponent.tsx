@@ -111,7 +111,7 @@ const PartnerSingleComponent: React.FC<Props> = ({ partner }) => {
 
         <BreakLine className="mb-15" />
 
-        <div className="mb-[70px]">{partner.body && <PortableText value={partner.body} />}</div>
+        <div className="mb-17.5">{partner.body && <PortableText value={partner.body} />}</div>
 
         {partner.quote && <p className="mb-20">{partner.quote}</p>}
 

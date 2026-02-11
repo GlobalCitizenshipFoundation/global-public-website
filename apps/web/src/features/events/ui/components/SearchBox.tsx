@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
+import { FaDeleteLeft } from "react-icons/fa6";
 
 type Props = {
   initialValue: string;
@@ -31,13 +32,10 @@ export default function SearchBox({
   const didMountRef = useRef(false);
 
   useEffect(() => {
-    // ✅ nie strzelaj debounced change przy pierwszym renderze
     if (!didMountRef.current) {
       didMountRef.current = true;
       return;
     }
-
-    // ✅ wywołuj tylko gdy user edytuje (nie przy sync z URL)
     if (!isEditingRef.current) return;
 
     const t = setTimeout(() => {
@@ -48,29 +46,49 @@ export default function SearchBox({
     return () => clearTimeout(t);
   }, [q, debounceMs]);
 
-  return (
-    <div className="flex items-center gap-2">
-      <input
-        value={q}
-        onChange={(e) => {
-          isEditingRef.current = true;
-          setQ(e.target.value);
-        }}
-        placeholder="Search"
-        className="h-10 w-full rounded-md border px-3 text-sm sm:w-72"
-      />
+  const canClear = q.length > 0;
 
-      <button
-        type="button"
-        onClick={() => {
-          isEditingRef.current = false;
-          setQ("");
-          onClear();
-        }}
-        className="h-10 rounded-md border px-3 text-sm"
-      >
-        Clear
-      </button>
+  const inputId = useId();
+
+  return (
+    <div className="block w-full max-w-[400px]">
+      <div className="flex h-[60px] w-full overflow-hidden rounded-lg border border-secondary-borders bg-white">
+        <input
+          id={`search-${inputId}`}
+          name="search"
+          autoComplete="off"
+          value={q}
+          onChange={(e) => {
+            isEditingRef.current = true;
+            setQ(e.target.value);
+          }}
+          placeholder="Search"
+          className="h-full w-full bg-transparent px-4 text-[18px] outline-none"
+        />
+
+        <button
+          type="button"
+          onClick={() => {
+            isEditingRef.current = false;
+            setQ("");
+            onClear();
+          }}
+          disabled={!canClear}
+          aria-label="Clear search"
+          className={[
+            "h-full w-[60px] shrink-0",
+            "grid place-items-center",
+            "bg-primary text-white",
+            "transition-opacity",
+            canClear ? "cursor-pointer opacity-100" : "cursor-default opacity-50",
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30",
+          ].join(" ")}
+        >
+          <span className="text-2xl leading-none">
+            <FaDeleteLeft />
+          </span>
+        </button>
+      </div>
     </div>
   );
 }

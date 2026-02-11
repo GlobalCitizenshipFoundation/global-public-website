@@ -1,17 +1,16 @@
-import { visionTool } from "@sanity/vision";
 import { defineConfig } from "sanity";
+import { visionTool } from "@sanity/vision";
 import { structureTool } from "sanity/structure";
-import { env } from "./src/env";
 import { schemaTypes } from "./src/schema/schemaTypes";
+
+const projectId = import.meta.env.SANITY_STUDIO_PROJECT_ID ?? "swpg1w6y";
+const dataset = import.meta.env.SANITY_STUDIO_DATASET ?? "production";
 
 export default defineConfig({
   name: "default",
-  title: "CMS",
-
-  projectId: env.projectId,
-  dataset: env.dataset,
-
+  title: "Global Publisher",
+  projectId,
+  dataset,
   plugins: [structureTool(), visionTool()],
-
   schema: { types: schemaTypes },
 });

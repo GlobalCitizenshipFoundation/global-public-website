@@ -166,7 +166,7 @@ export const PanelDiscussion: React.FC<Props> = (props) => {
           className={[
             "bg-background-panel w-full rounded-xl",
             "px-[clamp(18px,3vw,28px)] py-[clamp(18px,3vw,28px)]",
-            "lg:min-h-[260px]",
+            "lg:min-h-65",
           ].join(" ")}
         >
           {marketingMention?.length ? (

@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
-import ButtonPrimary from "@/shared/ui/ButtonPrimary";
-import Portal from "@/shared/ui/Portal";
+import type React from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { header } from "@/shared/config/header";
 import { paths } from "@/shared/config/paths";
+import ButtonPrimary from "@/shared/ui/ButtonPrimary";
+import Portal from "@/shared/ui/Portal";
 
 type Phase = "closed" | "enter" | "open" | "exit";
 
@@ -242,7 +242,7 @@ const MobileMenu: React.FC = () => {
               className={[
                 "absolute top-1/2 left-0 h-0.5 w-full rounded-full bg-white",
                 "transition-transform duration-200 ease-out",
-                isVisible ? "translate-y-0 rotate-45" : "-translate-y-1.75` rotate-0",
+                isVisible ? "translate-y-0 rotate-45" : "-translate-y-1.75 rotate-0",
               ].join(" ")}
               aria-hidden="true"
             />
@@ -318,7 +318,9 @@ const MobileMenu: React.FC = () => {
                       href={item.href}
                       aria-current={active ? "page" : undefined}
                       onClick={closeMenu}
-                      style={{ transitionDelay: isOpen ? `${80 + idx * 35}ms` : "0ms" }}
+                      style={{
+                        transitionDelay: isOpen ? `${80 + idx * 35}ms` : "0ms",
+                      }}
                       className={[
                         "rounded-lg px-3 py-2 text-base font-medium",
                         "transition-all duration-200",

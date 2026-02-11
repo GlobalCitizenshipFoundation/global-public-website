@@ -1,5 +1,5 @@
 [build]
-command = "corepack enable && corepack prepare pnpm@10.29.1 --activate && pnpm -w install --frozen-lockfile && pnpm -C packages/types build && pnpm -C apps/web build"
+command = "corepack enable && corepack prepare pnpm@10.29.2 --activate && pnpm -w install --frozen-lockfile && pnpm -C packages/types build && pnpm -C apps/web build"
 publish = "apps/web/.next"
 
 [build.environment]

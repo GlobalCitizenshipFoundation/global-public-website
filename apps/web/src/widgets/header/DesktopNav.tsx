@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import ButtonPrimary from "@/shared/ui/ButtonPrimary";
 import { header } from "@/shared/config/header";
+import ButtonPrimary from "@/shared/ui/ButtonPrimary";
 
 function normalizePath(path: string) {
   const withoutQuery = path.split("?")[0] ?? path;
@@ -41,7 +41,7 @@ const DesktopNav = () => {
             className={[
               "font-inter relative text-[clamp(14px,1vw,18px)] font-medium whitespace-nowrap transition-colors",
               active ? "text-gray" : "text-gray/70 hover:text-gray",
-              "after:absolute after:-bottom-2 after:left-0 after:h-0.5 after:w-full after:rounded-full after:bg-current after:transition-transform after:duration-200",
+              "after:absolute after:-bottom-2 after:left-0 after:h-[2px] after:w-full after:rounded-full after:bg-current after:transition-transform after:duration-200",
               active ? "after:scale-x-100" : "after:scale-x-0 hover:after:scale-x-100",
             ].join(" ")}
           >

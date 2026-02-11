@@ -1,10 +1,10 @@
+import type { Metadata } from "next";
 import Image from "next/image";
-import ButtonPrimary from "@/shared/ui/ButtonPrimary";
 import { DataEventHome } from "@/features/home/ui/DataEventHome";
+import ButtonPrimary from "@/shared/ui/ButtonPrimary";
+import Container from "@/shared/ui/Container";
 import Newsettler from "@/shared/ui/Newsletter";
 import SwiperList from "@/shared/ui/SwiperList";
-import type { Metadata } from "next";
-import Container from "@/shared/ui/Container";
 
 export const metadata: Metadata = {
   title: "Home",

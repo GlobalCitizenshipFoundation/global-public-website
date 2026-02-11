@@ -20,11 +20,13 @@ export default function EventsListPage({
   perPage,
 }: Props) {
   return (
-    <div className="bg-background-darker py-16 md:py-24">
+    <div className="bg-background-darker pt-29 pb-33">
       <Container>
-        <EventsToolbar title={title} />
-        <EventsGrid items={items} />
-        <EventsPagination page={page} total={total} perPage={perPage} />
+        <div className="flex flex-col gap-[60px]">
+          <EventsToolbar title={title} />
+          <EventsGrid items={items} />
+          <EventsPagination page={page} total={total} perPage={perPage} />
+        </div>
       </Container>
     </div>
   );

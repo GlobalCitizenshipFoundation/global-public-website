@@ -1,7 +1,7 @@
 {
-  "name": "monorepo",
+  "name": "@gcf/monorepo",
   "private": true,
-  "packageManager": "pnpm@10.29.1+sha512.48dae233635a645768a3028d19545cacc1688639eeb1f3734e42d6d6b971afbf22aa1ac9af52a173d9c3a20c15857cfa400f19994d79a2f626fcc73fccda9bbc",
+  "packageManager": "pnpm@10.29.2+sha512.bef43fa759d91fd2da4b319a5a0d13ef7a45bb985a3d7342058470f9d2051a3ba8674e629672654686ef9443ad13a82da2beb9eeb3e0221c87b8154fff9d74b8",
   "pnpm": {
     "overrides": {
       "@types/node": "^24.2.1"
@@ -20,19 +20,16 @@
     "type": "git",
     "url": "git+https://github.com/GlobalCitizenshipFoundation/global-public-website.git"
   },
-  "contributors": [
-    "Michał Szwindowski <hello@nedi.me>",
-    "Dominik Dudek <example@email.to>"
-  ],
+  "author": "Michał Szwindowski <hello@nedi.me>",
   "scripts": {
-    "preinstall": "npx only-allow pnpm",
+    "preinstall": "node -e \"const ua=process.env.npm_config_user_agent||''; if(!/pnpm\\//.test(ua)){console.error('\\n❌ Use pnpm to install dependencies.\\n'); process.exit(1)}\"",
     "dev": "concurrently -n web,cms -c auto --kill-others-on-fail \"pnpm -C apps/web dev\" \"pnpm -C apps/cms dev\"",
     "dev:web": "pnpm -C apps/web dev",
     "dev:cms": "pnpm -C apps/cms dev",
-    "build": "pnpm -r --sort --filter \"./apps/**\" build",
+    "build": "pnpm -r --sort build",
     "typecheck": "pnpm -r --sort typecheck",
     "lint": "pnpm -r --sort lint",
-    "lint:fix": "pnpm -r --sort lint:fix || true",
+    "lint:fix": "pnpm -r --sort lint:fix",
     "lint:web:ci": "pnpm -C apps/web lint:ci",
     "lint:cms:ci": "pnpm -C apps/cms lint:ci",
     "format": "biome format . --write",
@@ -46,7 +43,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.3.14",
-    "@types/node": "20.19.33",
+    "@types/node": "^24.2.1",
     "concurrently": "^9.2.1",
     "husky": "^9.1.6",
     "knip": "^5.83.1",

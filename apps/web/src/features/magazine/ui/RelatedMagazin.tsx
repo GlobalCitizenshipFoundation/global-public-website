@@ -1,10 +1,10 @@
-import React from "react";
+import type { MagazinSingleType } from "@gcf/types";
 import Image from "next/image";
 import Link from "next/link";
-import ButtonPrimary from "@/shared/ui/ButtonPrimary";
-import type { MagazinSingleType } from "@gcf/types";
+import type React from "react";
 import { formatEventDate } from "@/features/events/lib/formatters";
-import { paths, path } from "@/shared/config/paths";
+import { path, paths } from "@/shared/config/paths";
+import ButtonPrimary from "@/shared/ui/ButtonPrimary";
 
 type Props = {
   magazin: MagazinSingleType;

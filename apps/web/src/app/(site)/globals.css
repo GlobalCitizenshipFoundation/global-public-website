@@ -1,54 +1,41 @@
 @import "tailwindcss";
 
 @theme {
-  /* custom colors (OKLCH) */
-  --color-primary: oklch(0.58 0.22 16);
-  --color-primary-darker: oklch(0.55 0.22 16);
-
-  --color-background-primary: oklch(1 0 0);
-  --color-background-darker: oklch(0.98 0 0);
-  --color-background-panel: oklch(0.96 0 0);
-
-  --color-white: oklch(1 0 0);
-  --color-black: oklch(0 0 0);
-
-  /* neutrals */
-  --color-gray: oklch(0.2 0 0);
-  --color-light-gray: oklch(0.55 0.01 200);
-  --color-borders: oklch(0.35 0 0);
-  --color-secondary-borders: oklch(0.88 0 0);
-  --color-frames: oklch(0.89 0 0);
-  --color-lines: oklch(0.9 0 0);
-  --color-line: oklch(0.86 0 0);
-
-  /* text */
-  --color-titles: oklch(0.18 0 0);
-  --color-subtitles: oklch(0.19 0 0);
-  --color-destignation: oklch(0.2 0 0);
-
-  /* blues */
-  --color-dark-blue: oklch(0.12 0.06 260);
-
-  /* home */
-  --color-home-beige: oklch(0.97 0.01 85);
-  --color-home-liner: oklch(0.78 0 0);
-  --color-background-beige: oklch(0.92 0 0);
-
-  /* states */
-  --color-warning: oklch(0.97 0.02 85);
-  --color-error: oklch(0.95 0.02 25);
-  --color-success: oklch(0.96 0.02 190);
-
-  --color-text-warning: oklch(0.57 0.07 70);
-  --color-text-error: oklch(0.62 0.18 30);
-  --color-text-success: oklch(0.56 0.12 175);
-
-  /* pagination */
-  --color-pagination: oklch(0.82 0.02 260);
+  --color-primary: oklch(0.58 0.22 16); /* #DE1C4C */
+  --color-primary-darker: oklch(0.55 0.22 16); /* #D30043 */
+  --color-background-primary: oklch(1 0 0); /* #FFFFFF */
+  --color-background-darker: oklch(0.98 0 0); /* #F8F8F8 */
+  --color-background-panel: oklch(0.96 0 0); /* #F2F2F2 */
+  --color-white: oklch(1 0 0); /* #FFFFFF */
+  --color-black: oklch(0 0 0); /* #000000 */
+  --color-navy: oklch(0.1886 0.143 211.23); /* #001C37 */
+  --color-ink: oklch(0.209 0 0); /* #181818 */
+  --color-gray: oklch(0.2 0 0); /* #161616 */
+  --color-light-gray: oklch(0.55 0.01 200); /* #6B7374 */
+  --color-borders: oklch(0.35 0 0); /* #3A3A3A */
+  --color-secondary-borders: oklch(0.88 0 0); /* #D7D7D7 */
+  --color-frames: oklch(0.89 0 0); /* #DBDBDB */
+  --color-lines: oklch(0.9 0 0); /* #DEDEDE */
+  --color-line: oklch(0.86 0 0); /* #D1D1D1 */
+  --color-titles: oklch(0.18 0 0); /* #121212 */
+  --color-subtitles: oklch(0.19 0 0); /* #141414 */
+  --color-destignation: oklch(0.2 0 0); /* #161616 */
+  --color-dark-blue: oklch(0.12 0.06 260); /* #00041C */
+  --color-home-beige: oklch(0.97 0.01 85); /* #F8F5EE */
+  --color-home-liner: oklch(0.78 0 0); /* #B7B7B7 */
+  --color-background-beige: oklch(0.92 0 0); /* #E4E4E4 */
+  --color-warning: oklch(0.97 0.02 85); /* #FBF4E6 */
+  --color-error: oklch(0.95 0.02 25); /* #FCEAE8 */
+  --color-success: oklch(0.96 0.02 190); /* #E4F6F5 */
+  --color-text-warning: oklch(0.57 0.07 70); /* #927049 */
+  --color-text-error: oklch(0.62 0.18 30); /* #DD503F */
+  --color-text-success: oklch(0.56 0.12 175); /* #008A70 */
+  --color-pagination: oklch(0.82 0.02 260); /* #BDC5D1 */
 
   /* custom fonts */
   --font-inter: "Inter", sans-serif;
   --font-poppins: "Poppins", sans-serif;
+  --font-dm_sans: "DM_Sans", sans-serif;
 
   /* custom breakpoints */
   --breakpoint-lg: 1200px;

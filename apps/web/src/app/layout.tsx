@@ -1,11 +1,18 @@
 import type { Metadata } from "next";
 import "@app/(site)/globals.css";
-import { Inter, Poppins } from "next/font/google";
+import { DM_Sans, Inter, Poppins } from "next/font/google";
 
 const inter = Inter({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
   variable: "--font-inter",
+  display: "swap",
+});
+
+const dm_sans = DM_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-dm_sans",
   display: "swap",
 });
 
@@ -44,7 +51,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
+    <html lang="en" className={`${inter.variable} ${poppins.variable} ${dm_sans.variable}`}>
       <body className="font-inter flex min-h-screen flex-col">
         <a
           href="#main-content"

@@ -3,7 +3,7 @@ name: CI
 on:
   pull_request:
   push:
-    branches: ['main', 'master']
+    branches: ["main", "master"]
 
 concurrency:
   group: ci-${{ github.ref }}
@@ -26,19 +26,25 @@ jobs:
             web:
               - "apps/web/**"
               - "packages/**"
-              - "eslint.config.mjs"
-              - "prettier.config.cjs"
+              - "biome.json"
+              - "knip.json"
+              - "lint-staged.config.mjs"
               - "tsconfig.base.json"
+              - "pnpm-workspace.yaml"
+              - "pnpm-lock.yaml"
               - "package.json"
-              - "package-lock.json"
+              - ".npmrc"
             cms:
               - "apps/cms/**"
               - "packages/**"
-              - "eslint.config.mjs"
-              - "prettier.config.cjs"
+              - "biome.json"
+              - "knip.json"
+              - "lint-staged.config.mjs"
               - "tsconfig.base.json"
+              - "pnpm-workspace.yaml"
+              - "pnpm-lock.yaml"
               - "package.json"
-              - "package-lock.json"
+              - ".npmrc"
 
   web:
     needs: detect-changes
@@ -49,20 +55,26 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: npm
+          node-version: 24.13.0
+          cache: pnpm
 
-      - name: Install (workspaces)
-        run: npm ci
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Install (pnpm workspaces)
+        run: pnpm -w install --frozen-lockfile
 
       - name: Lint (no warnings)
-        run: npm -w @gcf/web run lint:ci
+        run: pnpm -C apps/web lint:ci
 
       - name: Typecheck
-        run: npm run typecheck:web
+        run: pnpm -C apps/web typecheck
 
-      - name: Build
-        run: npm run build:web
+      - name: Build types
+        run: pnpm -C packages/types build
+
+      - name: Build web
+        run: pnpm -C apps/web build
 
   cms:
     needs: detect-changes
@@ -73,17 +85,20 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: npm
+          node-version: 24.13.0
+          cache: pnpm
 
-      - name: Install (workspaces)
-        run: npm ci
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Install (pnpm workspaces)
+        run: pnpm -w install --frozen-lockfile
 
       - name: Lint (no warnings)
-        run: npm -w @gcf/cms run lint:ci
+        run: pnpm -C apps/cms lint:ci
 
       - name: Typecheck
-        run: npm run typecheck:cms
+        run: pnpm -C apps/cms typecheck
 
-      - name: Build
-        run: npm run build:cms
+      - name: Build CMS
+        run: pnpm -C apps/cms build

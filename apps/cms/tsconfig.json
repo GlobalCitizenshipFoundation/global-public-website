@@ -16,6 +16,13 @@
     "incremental": true,
     "tsBuildInfoFile": "../../.cache/tsbuildinfo/cms.tsbuildinfo"
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "sanity.config.ts", "sanity.cli.ts", "schemaTypes.ts"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.d.ts",
+    "sanity.config.ts",
+    "sanity.cli.ts",
+    "schemaTypes.ts"
+  ],
   "exclude": ["node_modules", "dist", "build", ".sanity"]
 }

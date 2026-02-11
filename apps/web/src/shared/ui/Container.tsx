@@ -1,4 +1,5 @@
 import React from "react";
+import { cn } from "@/shared/lib/cn";
 
 type ContainerVariant = "regular" | "big" | "header" | "footer";
 
@@ -11,7 +12,7 @@ type CommonProps = {
 
 type HeaderProps = CommonProps & {
   variant: "header";
-  innerClassName?: string; // tylko tu ma sens (klasa na INNER)
+  innerClassName?: string; // klasa na INNER
 };
 
 type NonHeaderProps = CommonProps & {
@@ -20,10 +21,6 @@ type NonHeaderProps = CommonProps & {
 };
 
 type Props = HeaderProps | NonHeaderProps;
-
-function cx(...classes: Array<string | undefined | null | false>) {
-  return classes.filter(Boolean).join(" ");
-}
 
 const defaultTagByVariant: Partial<Record<ContainerVariant, React.ElementType>> = {
   header: "header",
@@ -36,31 +33,27 @@ const Container: React.FC<Props> = (props) => {
 
   const Tag: React.ElementType = as ?? defaultTagByVariant[variant] ?? "div";
 
-  // Header: już masz poprawnie (2 wrappery)
   if (variant === "header") {
     const { innerClassName } = props;
     return (
-      <Tag className={cx("w-full px-[clamp(20px,6vw,100px)]", className)}>
-        <div className={cx("mx-auto w-full max-w-432.5", innerClassName)}>{children}</div>
+      <Tag className={cn("w-full px-[clamp(20px,6vw,100px)]", className)}>
+        <div className={cn("mx-auto w-full max-w-432.5", innerClassName)}>{children}</div>
       </Tag>
     );
   }
 
-  // Footer + Regular: też robimy 2 wrappery (outer padding, inner max-width)
   if (variant === "footer" || variant === "regular") {
     return (
-      <Tag className={cx("w-full px-12.5", className)}>
-        <div className="mx-auto w-full lg:max-w-[1199.5px]">{children}</div>
+      <Tag className={cn("w-full px-12.5", className)}>
+        <div className="mx-auto w-full lg:max-w-[1110px]">{children}</div>
       </Tag>
     );
   }
 
-  // Big: 2 wrappery (outer = gutter, inner = max-width 1600)
   return (
     <Tag
-      className={cx(
+      className={cn(
         "w-full",
-        // gutter (na outer)
         "px-[clamp(16px,11vw,50px)]",
         "[@media(min-width:479px)]:px-12.5",
         className,

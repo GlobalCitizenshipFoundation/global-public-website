@@ -1,5 +1,5 @@
-import Image from "next/image";
 import { formatEventDate } from "@features/events/lib/formatters";
+import Image from "next/image";
 import ButtonPrimary from "@/shared/ui/ButtonPrimary";
 
 interface Props {

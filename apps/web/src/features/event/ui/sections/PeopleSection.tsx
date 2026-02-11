@@ -1,20 +1,19 @@
 "use client";
 
-import React from "react";
-import { PortableText } from "@portabletext/react";
 import type { EventSingleType } from "@gcf/types";
-
+import { PortableText } from "@portabletext/react";
+import React from "react";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
+import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperInstance } from "swiper/types";
-import { Navigation } from "swiper/modules";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 
 import "swiper/css";
 import "swiper/css/navigation";
 
 import ContributorFrame from "@/features/contributors/ui/ContributorFrame";
-import SectionHeading from "../components/SectionHeading";
 import { createPortableTextComponents } from "../../lib/portableTextComponents";
+import SectionHeading from "../components/SectionHeading";
 
 type Props = {
   heading: string;
@@ -56,7 +55,7 @@ export default function PeopleSection({ heading, text, people }: Props) {
 
   React.useEffect(() => {
     if (swiper) updateNavState(swiper);
-  }, [swiper, slides.length, updateNavState]);
+  }, [swiper, updateNavState]);
 
   if (!hasText && !hasPeople) return null;
 
@@ -129,8 +128,8 @@ export default function PeopleSection({ heading, text, people }: Props) {
           className="w-full"
         >
           {slides.map((p) => (
-            <SwiperSlide key={p._id} className="!h-auto">
-              <div className="[container-type:inline-size] aspect-[250/370] w-full">
+            <SwiperSlide key={p._id} className="h-auto!">
+              <div className="@container aspect-250/370 w-full">
                 <ContributorFrame contributor={p} className="h-full" />
               </div>
             </SwiperSlide>
