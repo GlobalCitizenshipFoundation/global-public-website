@@ -1,7 +1,6 @@
 import type { ContributorSingleType } from "@gcf/types";
 import { PortableText } from "@portabletext/react";
 import Image from "next/image";
-import Link from "next/link";
 import type React from "react";
 import RelatedEvent from "@/features/events/ui/cards/EventCard";
 import {
@@ -9,8 +8,7 @@ import {
   getSocialLinksFromCMS,
 } from "@/features/social/ui/getSocialMediaFromCMS";
 import SocialLink from "@/features/social/ui/SocialLink";
-import { paths } from "@/shared/config/paths";
-import { ButtonPrimary } from "@/shared/ui/ButtonPrimary";
+import ButtonPrimary from "@/shared/ui/ButtonPrimary";
 import Container from "@/shared/ui/Container";
 import Newsettler from "@/shared/ui/Newsletter";
 import PrintButton from "@/shared/ui/PrintButton";
@@ -60,8 +58,8 @@ const ContributorSingleComponent: React.FC<Props> = ({ contributor }) => {
           <>
             <div className="mb-5 flex justify-between">
               <h2 className="text-6xl">Featured Profile</h2>
-              <ButtonPrimary asChild className="w-[253.5px]">
-                <Link href={paths.contributors}>View all profiles</Link>
+              <ButtonPrimary href="/contributors" className="w-[253.5px]">
+                View all profiles
               </ButtonPrimary>
             </div>
 
