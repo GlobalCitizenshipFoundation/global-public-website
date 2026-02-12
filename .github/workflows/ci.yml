@@ -71,18 +71,28 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: pnpm
 
       - name: Enable Corepack + pin pnpm
         run: |
           corepack enable
           corepack prepare pnpm@${{ env.PNPM_VERSION }} --activate
+          pnpm --version
 
-      - name: Prefetch deps
-        run: pnpm fetch
+      - name: Get pnpm store path
+        id: pnpm-store
+        shell: bash
+        run: echo "STORE_PATH=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"
 
-      - name: Install (offline)
-        run: pnpm install --frozen-lockfile --offline
+      - name: Restore pnpm store cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-store.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: Install (workspace)
+        run: pnpm install --frozen-lockfile
 
       - name: Build types
         run: pnpm -C packages/types build
@@ -122,18 +132,28 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: pnpm
 
       - name: Enable Corepack + pin pnpm
         run: |
           corepack enable
           corepack prepare pnpm@${{ env.PNPM_VERSION }} --activate
+          pnpm --version
 
-      - name: Prefetch deps
-        run: pnpm fetch
+      - name: Get pnpm store path
+        id: pnpm-store
+        shell: bash
+        run: echo "STORE_PATH=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"
 
-      - name: Install (offline)
-        run: pnpm install --frozen-lockfile --offline
+      - name: Restore pnpm store cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-store.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: Install (workspace)
+        run: pnpm install --frozen-lockfile
 
       - name: Build types
         run: pnpm -C packages/types build
