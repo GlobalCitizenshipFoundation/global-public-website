@@ -87,16 +87,16 @@ jobs:
         run: pnpm -w install --frozen-lockfile
 
       - name: Build types
-        run: pnpm -C packages/types build
+        run: pnpm -w --filter @gcf/types build
 
       - name: Lint (no warnings)
-        run: pnpm -C apps/web lint:ci
+        run: pnpm -w --filter @gcf/web lint:ci
 
       - name: Typecheck
-        run: pnpm -C apps/web typecheck
+        run: pnpm -w --filter @gcf/web typecheck
 
       - name: Build web
-        run: pnpm -C apps/web build
+        run: pnpm -w --filter @gcf/web build
 
   cms:
     name: cms
@@ -133,13 +133,13 @@ jobs:
         run: pnpm -w install --frozen-lockfile
 
       - name: Build types
-        run: pnpm -C packages/types build
+        run: pnpm -w --filter @gcf/types build
 
       - name: Lint (no warnings)
-        run: pnpm -C apps/cms lint:ci
+        run: pnpm -w --filter @gcf/cms lint:ci
 
       - name: Typecheck
-        run: pnpm -C apps/cms typecheck
+        run: pnpm -w --filter @gcf/cms typecheck
 
       - name: Build CMS
-        run: pnpm -C apps/cms build
+        run: pnpm -w --filter @gcf/cms build
