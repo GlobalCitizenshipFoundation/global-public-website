@@ -58,6 +58,14 @@ jobs:
     if: needs.detect-changes.outputs.web == 'true' || needs.detect-changes.outputs.root == 'true'
     runs-on: ubuntu-latest
 
+    # Minimal envs needed for Next build to not crash on Zod parsing.
+    # Replace these with GitHub Actions Variables/Secrets when ready.
+    env:
+      NEXT_PUBLIC_SITE_URL: ${{ vars.NEXT_PUBLIC_SITE_URL || 'https://example.com' }}
+      NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ vars.NEXT_PUBLIC_SANITY_PROJECT_ID || 'dummy' }}
+      NEXT_PUBLIC_SANITY_DATASET: ${{ vars.NEXT_PUBLIC_SANITY_DATASET || 'dummy' }}
+      NEXT_PUBLIC_SANITY_API_VERSION: ${{ vars.NEXT_PUBLIC_SANITY_API_VERSION || '2025-01-01' }}
+
     steps:
       - uses: actions/checkout@v4
 
@@ -65,7 +73,6 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      # pnpm version is taken from package.json "packageManager"
       - uses: pnpm/action-setup@v4
         with:
           run_install: false
@@ -83,20 +90,20 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-
 
-      - name: Install (pnpm workspace)
+      - name: Install (workspace)
         run: pnpm install --frozen-lockfile
 
       - name: Build types
         run: pnpm -C packages/types build
 
       - name: Lint (no warnings)
-        run: pnpm -w --filter @gcf/web lint:ci
+        run: pnpm -C apps/web lint:ci
 
       - name: Typecheck
-        run: pnpm -w --filter @gcf/web typecheck
+        run: pnpm -C apps/web typecheck
 
       - name: Build web
-        run: pnpm -w --filter @gcf/web build
+        run: pnpm -C apps/web build
 
   cms:
     name: cms
@@ -111,7 +118,6 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      # pnpm version is taken from package.json "packageManager"
       - uses: pnpm/action-setup@v4
         with:
           run_install: false
@@ -129,17 +135,17 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-
 
-      - name: Install (pnpm workspace)
+      - name: Install (workspace)
         run: pnpm install --frozen-lockfile
 
       - name: Build types
         run: pnpm -C packages/types build
 
       - name: Lint (no warnings)
-        run: pnpm -w --filter @gcf/cms lint:ci
+        run: pnpm -C apps/cms lint:ci
 
       - name: Typecheck
-        run: pnpm -w --filter @gcf/cms typecheck
+        run: pnpm -C apps/cms typecheck
 
       - name: Build CMS
-        run: pnpm -w --filter @gcf/cms build
+        run: pnpm -C apps/cms build
