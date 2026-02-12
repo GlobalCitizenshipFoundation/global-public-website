@@ -52,5 +52,8 @@
     "lint-staged": "^16.2.7",
     "tsx": "^4.21.0",
     "typescript": "^5.8.0"
+  },
+  "dependencies": {
+    "@portabletext/react": "^6.0.2"
   }
 }
