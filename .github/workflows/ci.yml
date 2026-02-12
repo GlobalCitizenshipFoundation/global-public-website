@@ -2,9 +2,9 @@ name: CI
 
 on:
   pull_request:
-    branches: ["main", "develop"]
+    branches: [main, develop]
   push:
-    branches: ["main", "develop"]
+    branches: [main, develop]
 
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
@@ -15,6 +15,7 @@ permissions:
 
 env:
   NODE_VERSION: "24.13.0"
+  NEXT_TELEMETRY_DISABLED: "1"
 
 jobs:
   detect-changes:
@@ -58,22 +59,22 @@ jobs:
     if: needs.detect-changes.outputs.web == 'true' || needs.detect-changes.outputs.root == 'true'
     runs-on: ubuntu-latest
 
-    # Minimal envs needed for Next build to not crash on Zod parsing.
-    # Replace these with GitHub Actions Variables/Secrets when ready.
     env:
-      NEXT_PUBLIC_SITE_URL: ${{ vars.NEXT_PUBLIC_SITE_URL || 'https://example.com' }}
-      NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ vars.NEXT_PUBLIC_SANITY_PROJECT_ID || 'dummy' }}
-      NEXT_PUBLIC_SANITY_DATASET: ${{ vars.NEXT_PUBLIC_SANITY_DATASET || 'dummy' }}
-      NEXT_PUBLIC_SANITY_API_VERSION: ${{ vars.NEXT_PUBLIC_SANITY_API_VERSION || '2025-01-01' }}
+      NEXT_PUBLIC_SITE_URL: ${{ vars.NEXT_PUBLIC_SITE_URL }}
+      NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ vars.NEXT_PUBLIC_SANITY_PROJECT_ID }}
+      NEXT_PUBLIC_SANITY_DATASET: ${{ vars.NEXT_PUBLIC_SANITY_DATASET }}
+      NEXT_PUBLIC_SANITY_API_VERSION: ${{ vars.NEXT_PUBLIC_SANITY_API_VERSION }}
 
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      - uses: pnpm/action-setup@v4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
         with:
           run_install: false
 
@@ -82,8 +83,9 @@ jobs:
         shell: bash
         run: echo "STORE_PATH=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"
 
-      - name: Cache pnpm store
-        uses: actions/cache@v4
+      - name: Restore pnpm store cache
+        id: pnpm-cache
+        uses: actions/cache/restore@v4
         with:
           path: ${{ steps.pnpm-store.outputs.STORE_PATH }}
           key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
@@ -92,6 +94,13 @@ jobs:
 
       - name: Install (workspace)
         run: pnpm install --frozen-lockfile
+
+      - name: Save pnpm store cache
+        if: steps.pnpm-cache.outputs.cache-hit != 'true' && github.event_name == 'push'
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ steps.pnpm-store.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
 
       - name: Build types
         run: pnpm -C packages/types build
@@ -114,11 +123,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      - uses: pnpm/action-setup@v4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
         with:
           run_install: false
 
@@ -127,8 +138,9 @@ jobs:
         shell: bash
         run: echo "STORE_PATH=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"
 
-      - name: Cache pnpm store
-        uses: actions/cache@v4
+      - name: Restore pnpm store cache
+        id: pnpm-cache
+        uses: actions/cache/restore@v4
         with:
           path: ${{ steps.pnpm-store.outputs.STORE_PATH }}
           key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
@@ -137,6 +149,13 @@ jobs:
 
       - name: Install (workspace)
         run: pnpm install --frozen-lockfile
+
+      - name: Save pnpm store cache
+        if: steps.pnpm-cache.outputs.cache-hit != 'true' && github.event_name == 'push'
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ steps.pnpm-store.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
 
       - name: Build types
         run: pnpm -C packages/types build
