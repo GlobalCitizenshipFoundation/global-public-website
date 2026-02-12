@@ -15,6 +15,7 @@ permissions:
 
 env:
   NODE_VERSION: "24.13.0"
+  PNPM_VERSION: "10.29.1"
   NEXT_TELEMETRY_DISABLED: "1"
 
 jobs:
@@ -44,11 +45,9 @@ jobs:
               - "package.json"
               - ".npmrc"
               - ".github/workflows/**"
-
             web:
               - "apps/web/**"
               - "packages/**"
-
             cms:
               - "apps/cms/**"
               - "packages/**"
@@ -72,38 +71,29 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          run_install: false
+      - name: Enable Corepack + pin pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@${{ env.PNPM_VERSION }} --activate
 
-      - name: Get pnpm store path
-        id: pnpm-store
-        shell: bash
-        run: echo "STORE_PATH=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"
+      - name: Prefetch deps
+        run: pnpm fetch
 
-      - name: Restore pnpm store cache
-        id: pnpm-cache
-        uses: actions/cache/restore@v4
-        with:
-          path: ${{ steps.pnpm-store.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-
-
-      - name: Install (workspace)
-        run: pnpm install --frozen-lockfile
-
-      - name: Save pnpm store cache
-        if: steps.pnpm-cache.outputs.cache-hit != 'true' && github.event_name == 'push'
-        uses: actions/cache/save@v4
-        with:
-          path: ${{ steps.pnpm-store.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+      - name: Install (offline)
+        run: pnpm install --frozen-lockfile --offline
 
       - name: Build types
         run: pnpm -C packages/types build
+
+      - name: Restore Next.js build cache
+        uses: actions/cache@v4
+        with:
+          path: apps/web/.next/cache
+          key: nextcache-${{ runner.os }}-${{ env.NODE_VERSION }}-${{ hashFiles('pnpm-lock.yaml', 'apps/web/**', 'packages/**') }}
+          restore-keys: |
+            nextcache-${{ runner.os }}-${{ env.NODE_VERSION }}-
 
       - name: Lint (no warnings)
         run: pnpm -C apps/web lint:ci
@@ -120,6 +110,11 @@ jobs:
     if: needs.detect-changes.outputs.cms == 'true' || needs.detect-changes.outputs.root == 'true'
     runs-on: ubuntu-latest
 
+    env:
+      SANITY_STUDIO_PROJECT_ID: ${{ vars.SANITY_STUDIO_PROJECT_ID }}
+      SANITY_STUDIO_DATASET: ${{ vars.SANITY_STUDIO_DATASET }}
+      SANITY_STUDIO_APP_ID: ${{ vars.SANITY_STUDIO_APP_ID }}
+
     steps:
       - uses: actions/checkout@v4
 
@@ -127,35 +122,18 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          run_install: false
+      - name: Enable Corepack + pin pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@${{ env.PNPM_VERSION }} --activate
 
-      - name: Get pnpm store path
-        id: pnpm-store
-        shell: bash
-        run: echo "STORE_PATH=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"
+      - name: Prefetch deps
+        run: pnpm fetch
 
-      - name: Restore pnpm store cache
-        id: pnpm-cache
-        uses: actions/cache/restore@v4
-        with:
-          path: ${{ steps.pnpm-store.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-
-
-      - name: Install (workspace)
-        run: pnpm install --frozen-lockfile
-
-      - name: Save pnpm store cache
-        if: steps.pnpm-cache.outputs.cache-hit != 'true' && github.event_name == 'push'
-        uses: actions/cache/save@v4
-        with:
-          path: ${{ steps.pnpm-store.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+      - name: Install (offline)
+        run: pnpm install --frozen-lockfile --offline
 
       - name: Build types
         run: pnpm -C packages/types build
