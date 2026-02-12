@@ -15,12 +15,12 @@ permissions:
 
 env:
   NODE_VERSION: "24.13.0"
-  PNPM_VERSION: "10.29.1"
 
 jobs:
   detect-changes:
     runs-on: ubuntu-latest
     outputs:
+      root: ${{ steps.filter.outputs.root }}
       web: ${{ steps.filter.outputs.web }}
       cms: ${{ steps.filter.outputs.cms }}
     steps:
@@ -33,33 +33,29 @@ jobs:
         uses: dorny/paths-filter@v3
         with:
           filters: |
+            root:
+              - "biome.json"
+              - "knip.json"
+              - "lint-staged.config.mjs"
+              - "tsconfig.base.json"
+              - "pnpm-workspace.yaml"
+              - "pnpm-lock.yaml"
+              - "package.json"
+              - ".npmrc"
+              - ".github/workflows/**"
+
             web:
               - "apps/web/**"
               - "packages/**"
-              - "biome.json"
-              - "knip.json"
-              - "lint-staged.config.mjs"
-              - "tsconfig.base.json"
-              - "pnpm-workspace.yaml"
-              - "pnpm-lock.yaml"
-              - "package.json"
-              - ".npmrc"
+
             cms:
               - "apps/cms/**"
               - "packages/**"
-              - "biome.json"
-              - "knip.json"
-              - "lint-staged.config.mjs"
-              - "tsconfig.base.json"
-              - "pnpm-workspace.yaml"
-              - "pnpm-lock.yaml"
-              - "package.json"
-              - ".npmrc"
 
   web:
     name: web
     needs: detect-changes
-    if: needs.detect-changes.outputs.web == 'true'
+    if: needs.detect-changes.outputs.web == 'true' || needs.detect-changes.outputs.root == 'true'
     runs-on: ubuntu-latest
 
     steps:
@@ -69,9 +65,9 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
+      # pnpm version is taken from package.json "packageManager"
       - uses: pnpm/action-setup@v4
         with:
-          version: ${{ env.PNPM_VERSION }}
           run_install: false
 
       - name: Get pnpm store path
@@ -105,7 +101,7 @@ jobs:
   cms:
     name: cms
     needs: detect-changes
-    if: needs.detect-changes.outputs.cms == 'true'
+    if: needs.detect-changes.outputs.cms == 'true' || needs.detect-changes.outputs.root == 'true'
     runs-on: ubuntu-latest
 
     steps:
@@ -115,9 +111,9 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
+      # pnpm version is taken from package.json "packageManager"
       - uses: pnpm/action-setup@v4
         with:
-          version: ${{ env.PNPM_VERSION }}
           run_install: false
 
       - name: Get pnpm store path
