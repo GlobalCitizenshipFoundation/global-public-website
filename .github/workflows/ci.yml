@@ -83,10 +83,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-
 
-      - name: Install (pnpm workspaces)
-        run: pnpm -w install --frozen-lockfile
+      - name: Install (pnpm workspace)
+        run: pnpm install --frozen-lockfile
 
-      # IMPORTANT: avoid pnpm --filter @gcf/types build here (it can pull root build via scripts)
       - name: Build types
         run: pnpm -C packages/types build
 
@@ -130,10 +129,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-
 
-      - name: Install (pnpm workspaces)
-        run: pnpm -w install --frozen-lockfile
+      - name: Install (pnpm workspace)
+        run: pnpm install --frozen-lockfile
 
-      # IMPORTANT: avoid pnpm --filter @gcf/types build here (it can pull root build via scripts)
       - name: Build types
         run: pnpm -C packages/types build
 
