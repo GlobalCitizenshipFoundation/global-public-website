@@ -1,5 +1,5 @@
 import { paths } from "@/shared/config/paths";
-import ButtonPrimary from "@/shared/ui/ButtonPrimary";
+import { ButtonPrimary } from "@/shared/ui/ButtonPrimary";
 
 interface Props {
   title: string;
@@ -8,7 +8,7 @@ interface Props {
   gap: number;
 }
 
-export const DataEventHome: React.FC<Props> = ({ title, buttonTitle, textDescription, gap }) => {
+export function DataEventHome({ title, buttonTitle, textDescription, gap }: Props) {
   return (
     <div className={`flex max-w-307.25 items-center`} style={{ gap: `${gap}px` }}>
       <h2 className="text-gray mb-0 w-full text-[80px]/[110%] font-semibold">{title}</h2>
@@ -20,4 +20,4 @@ export const DataEventHome: React.FC<Props> = ({ title, buttonTitle, textDescrip
       </div>
     </div>
   );
-};
+}

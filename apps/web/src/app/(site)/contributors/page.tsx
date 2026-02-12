@@ -1,7 +1,7 @@
 import { getContributors } from "@features/contributors/api/getContributors";
-import ContributorFrame from "@/features/contributors/ui/ContributorFrame";
 import type { Metadata } from "next";
-import Container from "@/shared/ui/Container";
+import ContributorFrame from "@/features/contributors/ui/ContributorFrame";
+import { Container } from "@/shared/ui/Container";
 
 export const metadata: Metadata = {
   title: "Contributors",

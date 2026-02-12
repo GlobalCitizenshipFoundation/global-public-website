@@ -1,7 +1,7 @@
-import { getMagazine } from "@/features/magazine/api/getMagazine";
-import RelatedMagazin from "@/features/magazine/ui/RelatedMagazin";
 import type { Metadata } from "next";
-import Container from "@/shared/ui/Container";
+import { getMagazine } from "@/features/magazine/api/getMagazine";
+import { MagazinCard } from "@/features/magazine/ui/MagazinCard";
+import { Container } from "@/shared/ui/Container";
 
 export const metadata: Metadata = {
   title: "Magazine",
@@ -25,7 +25,7 @@ const MagazinesPage = async () => {
           {magazins?.length ? (
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
               {magazins.map((magazin) => (
-                <RelatedMagazin key={magazin._id} magazin={magazin} />
+                <MagazinCard key={magazin._id} magazin={magazin} />
               ))}
             </div>
           ) : (

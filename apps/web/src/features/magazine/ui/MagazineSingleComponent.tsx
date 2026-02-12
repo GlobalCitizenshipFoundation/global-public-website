@@ -1,22 +1,21 @@
-import React from "react";
-import Image from "next/image";
 import type { MagazinSingleType } from "@gcf/types";
-import ButtonRegular from "@/shared/ui/ButtonRegular";
 import {
   PortableText,
   type PortableTextBlock,
   type PortableTextComponentProps,
 } from "@portabletext/react";
-import { getSocialLinksFromCMS } from "@/features/social/ui/getSocialMediaFromCMS";
-import Sharing from "@/shared/ui/Sharing";
+import Image from "next/image";
 import { formatEventDate } from "@/features/events/lib/formatters";
-import Container from "@/shared/ui/Container";
+import { getSocialLinksFromCMS } from "@/features/social/ui/getSocialMediaFromCMS";
+import { ButtonRegular } from "@/shared/ui/ButtonRegular";
+import { Container } from "@/shared/ui/Container";
+import Sharing from "@/shared/ui/Sharing";
 
 type Props = {
   magazine: MagazinSingleType;
 };
 
-const MagazineSingleComponent: React.FC<Props> = ({ magazine }) => {
+export function MagazineSingleComponent({ magazine }: Props) {
   const formattedDate = magazine.date ? formatEventDate(magazine.date) : "No date available";
 
   const portableTextComponents = {
@@ -100,6 +99,6 @@ const MagazineSingleComponent: React.FC<Props> = ({ magazine }) => {
       </div>
     </Container>
   );
-};
+}
 
 export default MagazineSingleComponent;

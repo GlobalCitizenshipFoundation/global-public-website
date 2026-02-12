@@ -1,16 +1,15 @@
 import type { MagazinSingleType } from "@gcf/types";
 import Image from "next/image";
 import Link from "next/link";
-import type React from "react";
 import { formatEventDate } from "@/features/events/lib/formatters";
 import { path, paths } from "@/shared/config/paths";
-import ButtonPrimary from "@/shared/ui/ButtonPrimary";
+import { ButtonPrimary } from "@/shared/ui/ButtonPrimary";
 
 type Props = {
   magazin: MagazinSingleType;
 };
 
-const RelatedMagazin: React.FC<Props> = ({ magazin }) => {
+export function MagazinCard({ magazin }: Props) {
   const formattedStartDate = magazin.date ? formatEventDate(magazin.date) : "No date available";
 
   const slug = magazin.slug?.current;
@@ -60,6 +59,4 @@ const RelatedMagazin: React.FC<Props> = ({ magazin }) => {
       </div>
     </article>
   );
-};
-
-export default RelatedMagazin;
+}

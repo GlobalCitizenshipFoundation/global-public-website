@@ -8,7 +8,7 @@ type Props = {
   containerId?: string; // domyślnie "portal-root"
 };
 
-export default function Portal({ children, containerId = "portal-root" }: Props) {
+export function Portal({ children, containerId = "portal-root" }: Props) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => setMounted(true), []);

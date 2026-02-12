@@ -1,19 +1,21 @@
-# Global Citizenship Foundation - Public Website Monorepo
+# Global Citizenship Foundation
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/2533c2e3-a8eb-474a-abf9-136fc621f4ff/deploy-status?branch=develop)](https://app.netlify.com/projects/global-citizenship-foundation/deploys)
 
 Monorepo z publiczną stroną GCF opartą o Next.js (web) + Sanity Studio (cms) + współdzielone typy TypeScript (types).
 
 Repo jest skonfigurowane jako npm workspaces:
 
-- apps/web - Next.js App Router
-- apps/cms - Sanity Studio
+- apps/web - Next.js App Router (@gcf/web)
+- apps/cms - Sanity Studio (@gcf/cms)
 - packages/types - typy współdzielone (@gcf/types)
 
 ---
 
 ## Wymagania
 
-- Node.js >= 20.11.0 (wymuszone w package.json -> engines)
-- npm
+- Node.js >= 24.13.0
+- pnpm >= 10.29.2
 - Git
 
 ---
@@ -45,7 +47,7 @@ Jeśli nie masz locka albo jesteś w trybie dev, możesz użyć npm i, ale do po
 
 ## Uruchomienie DEV (web + cms)
 
-npm run dev
+pnpm -w dev
 
 To uruchamia równolegle:
 

@@ -1,13 +1,12 @@
-import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-
-import { footer, subfooter } from "@/shared/config/footer";
 import SocialLink from "@/features/social/ui/SocialLink";
-import BreakLine from "@/shared/ui/BreakLine";
-import Container from "@/shared/ui/Container";
+import { footer, subfooter } from "@/shared/config/footer";
+import { BreakLine } from "@/shared/ui/BreakLine";
+import { Container } from "@/shared/ui/Container";
+import { Logo } from "../header/Logo";
 
-const Footer = () => {
+export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
@@ -15,12 +14,7 @@ const Footer = () => {
       <div className="flex flex-col lg:mb-12 lg:flex-row lg:flex-wrap lg:gap-x-30 lg:gap-y-10">
         {/* left column */}
         <div className="mb-7.5 flex min-w-0 flex-col gap-6 lg:mb-0 lg:gap-5">
-          <Image
-            width={180}
-            height={100}
-            src="/images/logo.png"
-            alt="Global Citizenship Foundation logo"
-          />
+          <Logo />
 
           <p
             className={[
@@ -102,6 +96,4 @@ const Footer = () => {
       </div>
     </Container>
   );
-};
-
-export default Footer;
+}

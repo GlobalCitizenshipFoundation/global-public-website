@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { header } from "@/shared/config/header";
-import ButtonPrimary from "@/shared/ui/ButtonPrimary";
+import { ButtonPrimary } from "@/shared/ui/ButtonPrimary";
 
 function normalizePath(path: string) {
   const withoutQuery = path.split("?")[0] ?? path;
@@ -22,7 +22,7 @@ function isActivePath(currentPath: string, hrefs: string | string[]) {
   });
 }
 
-const DesktopNav = () => {
+export function DesktopNav() {
   const pathname = usePathname() ?? "/";
 
   const links = header.filter((i) => i.type !== "button");
@@ -61,6 +61,4 @@ const DesktopNav = () => {
       ) : null}
     </div>
   );
-};
-
-export default DesktopNav;
+}

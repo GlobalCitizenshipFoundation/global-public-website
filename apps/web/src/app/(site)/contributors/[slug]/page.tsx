@@ -1,9 +1,8 @@
+import type { ContributorSingleType } from "@gcf/types";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-
-import type { ContributorSingleType } from "@gcf/types";
 import { getContributorBySlug } from "@/features/contributors/api/getContributorBySlug";
-import ContributorSingleComponent from "@/features/contributors/ui/ContributorSingleComponent";
+import { ContributorSingleComponent } from "@/features/contributors/ui/ContributorSingleComponent";
 
 export const dynamic = "force-dynamic";
 

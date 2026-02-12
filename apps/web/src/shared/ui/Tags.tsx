@@ -1,11 +1,10 @@
-import React from "react";
 import { formatLabels } from "@/shared/lib/strings";
 
 interface Props {
   tags: string[];
 }
 
-export const Tags: React.FC<Props> = ({ tags }) => {
+export function Tags({ tags }: Props) {
   const tagsLabels = formatLabels(tags);
 
   return (
@@ -28,4 +27,4 @@ export const Tags: React.FC<Props> = ({ tags }) => {
       ))}
     </div>
   );
-};
+}

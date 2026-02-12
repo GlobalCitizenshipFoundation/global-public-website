@@ -1,7 +1,15 @@
 "use client";
 
-import { useMemo, startTransition, useCallback, useEffect, useRef, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import {
+  startTransition,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { setSearchParams } from "@/shared/lib/url";
 
 type Props = {
@@ -23,20 +31,14 @@ export default function Pagination({
   const pathname = usePathname();
   const sp = useSearchParams();
 
+  const navRef = useRef<HTMLElement | null>(null);
+
+  // Anchor-preserving scroll state
+  const pendingRef = useRef(false);
+  const beforeTopRef = useRef<number | null>(null);
+
   const canPrev = page > 1;
   const canNext = page < totalPages;
-
-  const go = useCallback(
-    (nextPage: number) => {
-      const safe = clamp(nextPage, 1, totalPages);
-      const query = setSearchParams(sp, { page: safe });
-
-      startTransition(() => {
-        router.replace(`${pathname}?${query}`, { scroll: false });
-      });
-    },
-    [pathname, router, sp, totalPages],
-  );
 
   const items = useMemo(
     () =>
@@ -47,6 +49,41 @@ export default function Pagination({
         boundaryCount,
       }),
     [page, totalPages, siblingCount, boundaryCount],
+  );
+
+  // Run after EVERY render, but do work only when pendingRef says so.
+  // This keeps the UX stable and avoids fake deps that linters whine about.
+  useLayoutEffect(() => {
+    if (!pendingRef.current) return;
+    if (!navRef.current) return;
+    if (beforeTopRef.current == null) return;
+
+    const afterTop = navRef.current.getBoundingClientRect().top;
+    const delta = afterTop - beforeTopRef.current;
+
+    if (delta !== 0) window.scrollBy(0, delta);
+
+    pendingRef.current = false;
+    beforeTopRef.current = null;
+  });
+
+  const go = useCallback(
+    (nextPage: number) => {
+      const safe = clamp(nextPage, 1, totalPages);
+      if (safe === page) return;
+
+      if (navRef.current) {
+        beforeTopRef.current = navRef.current.getBoundingClientRect().top;
+        pendingRef.current = true;
+      }
+
+      const query = setSearchParams(sp, { page: safe });
+
+      startTransition(() => {
+        router.replace(`${pathname}?${query}`, { scroll: false });
+      });
+    },
+    [page, pathname, router, sp, totalPages],
   );
 
   if (totalPages <= 1) return null;
@@ -63,20 +100,35 @@ export default function Pagination({
 
   const activeBtn = "border-navy bg-navy text-white hover:bg-navy";
 
+  const slotWidth = "w-[110px] shrink-0";
+  const hidden = "invisible pointer-events-none";
+
   return (
-    <nav className="flex flex-wrap items-center justify-center gap-[11px]" aria-label="Pagination">
-      {canPrev ? (
-        <button type="button" onClick={() => go(page - 1)} className={baseBtn}>
+    <nav
+      ref={(el) => {
+        navRef.current = el;
+      }}
+      className="flex items-center justify-center gap-[11px]"
+      aria-label="Pagination"
+    >
+      <div className={slotWidth}>
+        <button
+          type="button"
+          onClick={() => go(page - 1)}
+          className={[baseBtn, !canPrev ? hidden : ""].join(" ")}
+          disabled={!canPrev}
+          aria-disabled={!canPrev}
+        >
           Prev
         </button>
-      ) : null}
+      </div>
 
       <div className="flex items-center gap-[11px]">
-        {items.map((it, idx) => {
+        {items.map((it) => {
           if (it === "gap-left" || it === "gap-right") {
             return (
               <EllipsisJump
-                key={`${it}-${idx}`}
+                key={it}
                 currentPage={page}
                 totalPages={totalPages}
                 onCommit={go}
@@ -101,11 +153,17 @@ export default function Pagination({
         })}
       </div>
 
-      {canNext ? (
-        <button type="button" onClick={() => go(page + 1)} className={baseBtn}>
+      <div className={[slotWidth, "flex justify-end"].join(" ")}>
+        <button
+          type="button"
+          onClick={() => go(page + 1)}
+          className={[baseBtn, !canNext ? hidden : ""].join(" ")}
+          disabled={!canNext}
+          aria-disabled={!canNext}
+        >
           Next
         </button>
-      ) : null}
+      </div>
     </nav>
   );
 }
@@ -219,16 +277,12 @@ function getPaginationItems(opts: {
   items.push(...startPages);
 
   if (siblingsStart > boundaryCount + 2) items.push("gap-left");
-  else if (boundaryCount + 1 < totalPages - boundaryCount) {
-    items.push(boundaryCount + 1);
-  }
+  else if (boundaryCount + 1 < totalPages - boundaryCount) items.push(boundaryCount + 1);
 
   items.push(...range(siblingsStart, siblingsEnd));
 
   if (siblingsEnd < totalPages - boundaryCount - 1) items.push("gap-right");
-  else if (totalPages - boundaryCount > boundaryCount) {
-    items.push(totalPages - boundaryCount);
-  }
+  else if (totalPages - boundaryCount > boundaryCount) items.push(totalPages - boundaryCount);
 
   items.push(...endPages);
 

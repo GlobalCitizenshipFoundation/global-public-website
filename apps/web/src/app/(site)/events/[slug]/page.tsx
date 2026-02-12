@@ -1,10 +1,9 @@
+import type { EventSingleType } from "@gcf/types";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { cache } from "react";
-
-import type { EventSingleType } from "@gcf/types";
-import { getEventBySlug } from "@/features/event/api/getEventBySlug";
 import { EventSingle } from "@/features/event";
+import { getEventBySlug } from "@/features/event/api/getEventBySlug";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -70,7 +69,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const event = await getEventBySlugCached(slug);
   if (!event) {
-    return { title: "Event not found", robots: { index: false, follow: false } };
+    return {
+      title: "Event not found",
+      robots: { index: false, follow: false },
+    };
   }
 
   const title = pickTitle(event, slug);

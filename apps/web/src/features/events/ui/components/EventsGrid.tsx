@@ -1,5 +1,5 @@
-import EventCard from "../cards/EventCard";
 import type { EventCard as EventCardType } from "@gcf/types";
+import { EventCard } from "../cards/EventCard";
 
 type Props = {
   items: EventCardType[];

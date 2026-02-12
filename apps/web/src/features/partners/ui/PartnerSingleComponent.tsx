@@ -1,19 +1,19 @@
-import React from "react";
 import type { PartnerSingleType } from "@gcf/types";
-import BreakLine from "@/shared/ui/BreakLine";
-import ButtonRegular from "@/shared/ui/ButtonRegular";
+import { PortableText } from "@portabletext/react";
+import Image from "next/image";
+import Link from "next/link";
+import type React from "react";
 import {
   type ContributorSocials,
   getSocialLinksFromCMS,
 } from "@/features/social/ui/getSocialMediaFromCMS";
 import SocialLink from "@/features/social/ui/SocialLink";
-import Link from "next/link";
-import { PortableText } from "@portabletext/react";
-import Sharing from "@/shared/ui/Sharing";
-import Newsettler from "@/shared/ui/Newsletter";
 import { paths } from "@/shared/config/paths";
-import Image from "next/image";
-import Container from "@/shared/ui/Container";
+import { BreakLine } from "@/shared/ui/BreakLine";
+import { ButtonRegular } from "@/shared/ui/ButtonRegular";
+import { Container } from "@/shared/ui/Container";
+import { Newsletter } from "@/shared/ui/Newsletter";
+import Sharing from "@/shared/ui/Sharing";
 
 type Props = {
   partner: PartnerSingleType;
@@ -119,7 +119,7 @@ const PartnerSingleComponent: React.FC<Props> = ({ partner }) => {
         <Sharing socialLinks={socialLinks} />
       </Container>
 
-      <Newsettler />
+      <Newsletter />
     </>
   );
 };

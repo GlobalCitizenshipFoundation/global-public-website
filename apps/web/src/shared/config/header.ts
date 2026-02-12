@@ -16,7 +16,7 @@ export const header: NavItem[] = [
   { label: "Initiatives", href: paths.initiatives },
 
   // tu jest fix:
-  { label: "Events", href: paths.events, activeAlsoFor: [paths.event] },
+  { label: "Events", href: paths.events, activeAlsoFor: [paths.events] },
 
   { label: "Publications", href: paths.magazine },
   { label: "Get Involved", href: paths.partners },

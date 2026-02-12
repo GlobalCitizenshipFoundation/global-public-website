@@ -14,6 +14,7 @@ type Props<T extends string> = {
   value: T;
   onChange: (value: T) => void;
   variant?: Variant;
+  ariaLabel?: string;
 };
 
 export default function ToggleGroup<T extends string>({
@@ -21,6 +22,7 @@ export default function ToggleGroup<T extends string>({
   value,
   onChange,
   variant = "tabs",
+  ariaLabel,
 }: Props<T>) {
   const wrapBase =
     "flex flex-nowrap items-center overflow-x-auto whitespace-nowrap " +
@@ -29,11 +31,11 @@ export default function ToggleGroup<T extends string>({
   const btnBase =
     "shrink-0 cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-2";
 
-  // TABS = biały blok bez bordera (60px), teksty (active=primary)
+  // TABS
   if (variant === "tabs") {
     const wrap = cn(wrapBase, "h-[60px] gap-[18px] rounded-lg bg-white px-[18px]");
 
-    const textBtn = cn(
+    const tabBtn = cn(
       btnBase,
       "h-[44px] rounded-md px-[12px] text-[20px] font-medium leading-none",
       "text-ink",
@@ -42,7 +44,7 @@ export default function ToggleGroup<T extends string>({
     );
 
     return (
-      <div className={wrap} aria-label="Tabs">
+      <div className={wrap} role="tablist" aria-label={ariaLabel ?? "Tabs"}>
         {items.map((t) => {
           const isActive = value === t.value;
 
@@ -50,9 +52,12 @@ export default function ToggleGroup<T extends string>({
             <button
               key={t.value}
               type="button"
+              role="tab"
+              aria-selected={isActive}
+              aria-current={isActive ? "page" : undefined}
+              tabIndex={isActive ? 0 : -1}
               onClick={() => onChange(t.value)}
-              className={cn(textBtn, isActive && "text-primary")}
-              aria-pressed={isActive}
+              className={cn(tabBtn, isActive && "text-primary")}
             >
               {t.label}
             </button>
@@ -62,7 +67,7 @@ export default function ToggleGroup<T extends string>({
     );
   }
 
-  // TYPES = “ink button” style
+  // TYPES
   const wrap = cn(wrapBase, "gap-[20px]");
 
   const btn = cn(
@@ -72,7 +77,9 @@ export default function ToggleGroup<T extends string>({
   );
 
   return (
-    <div className={wrap} aria-label="Types">
+    <fieldset className={wrap}>
+      <legend className="sr-only">{ariaLabel ?? "Types"}</legend>
+
       {items.map((t) => {
         const isActive = value === t.value;
 
@@ -91,6 +98,6 @@ export default function ToggleGroup<T extends string>({
           </button>
         );
       })}
-    </div>
+    </fieldset>
   );
 }

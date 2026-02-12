@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
 
-import { paths as appPaths } from "../apps/web/src/shared/config/paths";
+import { paths as appPaths } from "../src/shared/config/paths";
 
 type RouteMap = Map<string, string[]>;
 
@@ -129,7 +129,7 @@ const main = () => {
   }
 
   const trailingSlash = Object.entries(appPaths)
-    .filter(([_, v]) => v !== "/" && v.endsWith("/"))
+    .filter(([, v]) => v !== "/" && v.endsWith("/"))
     .map(([k, v]) => `${k}: "${v}"`);
 
   const ok =

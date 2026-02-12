@@ -12,7 +12,6 @@ export const paths = {
   networks: "/networks",
   initiatives: "/initiatives",
 
-  event: "/event",
   events: "/events",
   magazine: "/magazine",
   partners: "/partners",
@@ -40,7 +39,7 @@ export const paths = {
 
 export const path = {
   contributor: (slug: string) => `${paths.contributors}/${assertSlug(slug)}`,
-  event: (slug: string) => `${paths.event}/${assertSlug(slug)}`,
+  event: (slug: string) => `${paths.events}/${assertSlug(slug)}`,
   magazinePost: (slug: string) => `${paths.magazine}/${assertSlug(slug)}`,
   partner: (slug: string) => `${paths.partners}/${assertSlug(slug)}`,
 } as const;

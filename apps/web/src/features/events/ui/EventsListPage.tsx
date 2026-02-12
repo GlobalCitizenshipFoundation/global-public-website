@@ -1,8 +1,8 @@
-import EventsToolbar from "./components/EventsToolbar";
+import type { EventCard } from "@gcf/types";
+import { Container } from "@/shared/ui/Container";
 import EventsGrid from "./components/EventsGrid";
 import EventsPagination from "./components/EventsPagination";
-import type { EventCard } from "@gcf/types";
-import Container from "@/shared/ui/Container";
+import EventsToolbar from "./components/EventsToolbar";
 
 type Props = {
   title?: string;

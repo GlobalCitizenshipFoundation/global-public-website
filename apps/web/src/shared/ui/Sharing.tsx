@@ -1,11 +1,9 @@
 "use client";
 
-import React from "react";
 import { FaPrint } from "react-icons/fa6";
-
-import BreakLine from "@/shared/ui/BreakLine";
 import SocialLink from "@/features/social/ui/SocialLink";
 import type { SocialName } from "@/shared/config/social";
+import { BreakLine } from "@/shared/ui/BreakLine";
 
 type SocialItem = {
   kind: SocialName;
@@ -18,7 +16,7 @@ type Props = {
   title?: string;
 };
 
-const Sharing: React.FC<Props> = ({ socialLinks, title = "Sharing:" }) => {
+export function Sharing({ socialLinks, title = "Sharing:" }: Props) {
   return (
     <>
       <BreakLine className="mt-7.5" />
@@ -36,7 +34,6 @@ const Sharing: React.FC<Props> = ({ socialLinks, title = "Sharing:" }) => {
               variant="inline"
             />
           ))}
-
           <button
             type="button"
             onClick={() => window.print()}
@@ -48,12 +45,13 @@ const Sharing: React.FC<Props> = ({ socialLinks, title = "Sharing:" }) => {
             </span>
             <span className="text-borders group-hover:text-primary text-[16px]">Print</span>
           </button>
+          Print
         </div>
       </section>
 
       <BreakLine className="mb-30" />
     </>
   );
-};
+}
 
 export default Sharing;

@@ -1,12 +1,12 @@
-import { paths } from "@/shared/config/paths";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
+import { paths } from "@/shared/config/paths";
 
-export default function Logo() {
+export function Logo() {
   return (
-    <Link href={paths.home} aria-label="Home" className="relative z-[9999] shrink-0 sm:z-auto">
+    <Link href={paths.home} aria-label="Home" className="relative z-9999 shrink-0 sm:z-auto">
       <Image
-        src="/images/logo.png"
+        src="/images/logo.svg"
         alt="Global Citizenship Foundation"
         width={400}
         height={200}

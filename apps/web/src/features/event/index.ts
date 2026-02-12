@@ -1,1 +1,1 @@
-export { default as EventSingle } from "./ui/EventSingle";
+export { EventSingle } from "./ui/EventSingle";

@@ -1,17 +1,16 @@
 import type { ContributorSingleType } from "@gcf/types";
 import { PortableText } from "@portabletext/react";
 import Image from "next/image";
-import type React from "react";
-import RelatedEvent from "@/features/events/ui/cards/EventCard";
+import { EventCard } from "@/features/events/ui/cards/EventCard";
 import {
   type ContributorSocials,
   getSocialLinksFromCMS,
 } from "@/features/social/ui/getSocialMediaFromCMS";
 import SocialLink from "@/features/social/ui/SocialLink";
-import ButtonPrimary from "@/shared/ui/ButtonPrimary";
-import Container from "@/shared/ui/Container";
-import Newsettler from "@/shared/ui/Newsletter";
-import PrintButton from "@/shared/ui/PrintButton";
+import { ButtonPrimary } from "@/shared/ui/ButtonPrimary";
+import { Container } from "@/shared/ui/Container";
+import { Newsletter } from "@/shared/ui/Newsletter";
+import { PrintButton } from "@/shared/ui/PrintButton";
 import Sharing from "@/shared/ui/Sharing";
 
 type Props = {
@@ -47,7 +46,7 @@ function pickContributorSocials(c: ContributorSingleType): ContributorSocials {
   };
 }
 
-const ContributorSingleComponent: React.FC<Props> = ({ contributor }) => {
+export function ContributorSingleComponent({ contributor }: Props) {
   const socialLinks = getSocialLinksFromCMS(pickContributorSocials(contributor));
   const photoUrl = contributor.photo?.asset?.url;
 
@@ -196,16 +195,14 @@ const ContributorSingleComponent: React.FC<Props> = ({ contributor }) => {
 
             <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
               {contributor.events.map((event) => (
-                <RelatedEvent event={event} key={event._id} />
+                <EventCard event={event} key={event._id} />
               ))}
             </div>
           </Container>
         </section>
       ) : null}
 
-      <Newsettler />
+      <Newsletter />
     </>
   );
-};
-
-export default ContributorSingleComponent;
+}

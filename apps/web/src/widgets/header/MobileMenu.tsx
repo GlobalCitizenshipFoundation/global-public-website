@@ -6,8 +6,8 @@ import type React from "react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { header } from "@/shared/config/header";
 import { paths } from "@/shared/config/paths";
-import ButtonPrimary from "@/shared/ui/ButtonPrimary";
-import Portal from "@/shared/ui/Portal";
+import { ButtonPrimary } from "@/shared/ui/ButtonPrimary";
+import { Portal } from "@/shared/ui/Portal";
 
 type Phase = "closed" | "enter" | "open" | "exit";
 
@@ -41,7 +41,7 @@ function isActivePath(currentPath: string, hrefs: string | string[]) {
 const TRANSITION_MS = 250;
 const DESKTOP_MQ = "(min-width: 1200px)";
 
-const MobileMenu: React.FC = () => {
+export function MobileMenu() {
   const pathname = usePathname() ?? "/";
   const prevPathRef = useRef(pathname);
 
@@ -356,6 +356,4 @@ const MobileMenu: React.FC = () => {
       ) : null}
     </>
   );
-};
-
-export default MobileMenu;
+}

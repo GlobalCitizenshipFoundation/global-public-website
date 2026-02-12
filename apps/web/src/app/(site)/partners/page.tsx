@@ -1,7 +1,7 @@
+import type { Metadata } from "next";
 import { getPartners } from "@/features/partners/api/getPartners";
 import PartnersLogo from "@/features/partners/ui/PartnersLogo";
-import type { Metadata } from "next";
-import Container from "@/shared/ui/Container";
+import { Container } from "@/shared/ui/Container";
 
 export const metadata: Metadata = {
   title: "Partners",
@@ -31,10 +31,7 @@ const PartnersPage = async () => {
             ].join(" ")}
           >
             {partners.map((partner) => (
-              <div
-                key={partner.slug.current}
-                className="[container-type:inline-size] aspect-square w-full"
-              >
+              <div key={partner.slug.current} className="@container aspect-square w-full">
                 <div className="h-full w-full rounded-md p-[clamp(10px,4cqw,16px)]">
                   <PartnersLogo partner={partner} />
                 </div>

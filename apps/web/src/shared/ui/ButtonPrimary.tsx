@@ -13,7 +13,7 @@ type Props = {
   ariaDisabled?: boolean;
 };
 
-const ButtonPrimary: React.FC<Props> = ({
+export function ButtonPrimary({
   href,
   children,
   className = "",
@@ -22,7 +22,7 @@ const ButtonPrimary: React.FC<Props> = ({
   ariaLabel,
   onClick,
   ariaDisabled = false,
-}) => {
+}: Props) {
   const linkClassName = [
     // shrink-safe
     "group inline-grid w-full max-w-full min-w-0 overflow-hidden rounded-[10px]",
@@ -85,6 +85,4 @@ const ButtonPrimary: React.FC<Props> = ({
       </span>
     </Link>
   );
-};
-
-export default ButtonPrimary;
+}

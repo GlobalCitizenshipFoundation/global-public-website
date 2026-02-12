@@ -1,6 +1,6 @@
 import { formatEventDate } from "@features/events/lib/formatters";
 import Image from "next/image";
-import ButtonPrimary from "@/shared/ui/ButtonPrimary";
+import { ButtonPrimary } from "@/shared/ui/ButtonPrimary";
 
 interface Props {
   src: string;
@@ -10,7 +10,7 @@ interface Props {
   buttonTitle: string;
 }
 
-export const SwiperSlideCard: React.FC<Props> = ({ src, kind, data, title, buttonTitle }) => {
+export function SwiperSlideCard({ src, kind, data, title, buttonTitle }: Props) {
   const formattedStartDate = formatEventDate(data);
 
   return (
@@ -37,4 +37,4 @@ export const SwiperSlideCard: React.FC<Props> = ({ src, kind, data, title, butto
       </ButtonPrimary>
     </div>
   );
-};
+}

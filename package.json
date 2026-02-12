@@ -33,10 +33,12 @@
     "lint:web:ci": "pnpm -C apps/web lint:ci",
     "lint:cms:ci": "pnpm -C apps/cms lint:ci",
     "format": "biome format . --write",
+    "lint:staged": "lint-staged -c lint-staged.config.mjs --concurrent false",
     "format:check": "biome format .",
     "lint:biome": "biome check .",
     "lint:biome:fix": "biome check . --write",
-    "check": "pnpm run format:check && pnpm run typecheck && pnpm run lint && pnpm run build",
+    "check:routes": "node --import tsx scripts/check-routes.ts",
+    "check": "pnpm run format:check && pnpm run typecheck && pnpm run lint && pnpm -C apps/web check:routes && pnpm run build",
     "ci": "pnpm run check",
     "prepare": "husky",
     "precommit": "lint-staged -c lint-staged.config.mjs --concurrent false"
@@ -48,6 +50,7 @@
     "husky": "^9.1.6",
     "knip": "^5.83.1",
     "lint-staged": "^16.2.7",
+    "tsx": "^4.21.0",
     "typescript": "^5.8.0"
   }
 }

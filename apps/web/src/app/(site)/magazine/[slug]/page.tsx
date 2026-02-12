@@ -1,7 +1,6 @@
+import type { MagazinSingleType } from "@gcf/types";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-
-import type { MagazinSingleType } from "@gcf/types";
 import { getMagazineBySlug } from "@/features/magazine/api/getMagazineBySlug";
 import MagazineSingleComponent from "@/features/magazine/ui/MagazineSingleComponent";
 

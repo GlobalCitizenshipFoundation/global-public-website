@@ -12,6 +12,7 @@
     "deploy": "sanity deploy",
     "deploy:graphql": "sanity graphql deploy",
     "lint": "biome check src",
+    "lint:staged": "biome check --write src",
     "lint:fix": "biome check src --write",
     "lint:ci": "biome check src",
     "format": "biome format . --write",

@@ -1,34 +1,27 @@
-import React from "react";
-import { PortableText } from "@portabletext/react";
-
-import { Tags } from "@/shared/ui/Tags";
-
 import type { EventSingleType } from "@gcf/types";
-
-import { PeoplePhotos } from "./sections/PeoplePhotos";
-import { PanelDiscussion } from "./sections/PanelDiscussion";
+import { PortableText } from "@portabletext/react";
+import { Container } from "@/shared/ui/Container";
+import { Tags } from "@/shared/ui/Tags";
+import { createPortableTextComponents } from "../lib/portableTextComponents";
 
 import { buildEventSingleVM } from "../model/buildEventSingleVM";
-
+import CtaButtons from "./components/CtaButtons";
+import SectionHeading from "./components/SectionHeading";
+import { Agenda } from "./sections/Agenda";
+import Body from "./sections/Body";
 import Hero from "./sections/Hero";
 import Intro from "./sections/Intro";
-import Video from "./sections/Video";
-import Body from "./sections/Body";
-import Agenda from "./sections/Agenda";
-import PeopleSection from "./sections/PeopleSection";
+import { PanelDiscussion } from "./sections/PanelDiscussion";
 import PartnersSection from "./sections/PartnersSection";
+import { PeoplePhotos } from "./sections/PeoplePhotos";
+import PeopleSection from "./sections/PeopleSection";
 import ShareSection from "./sections/ShareSection";
 import TopicsSection from "./sections/TopicsSection";
-
-import SectionHeading from "./components/SectionHeading";
-import CtaButtons from "./components/CtaButtons";
-
-import { createPortableTextComponents } from "../lib/portableTextComponents";
-import Container from "@/shared/ui/Container";
+import Video from "./sections/Video";
 
 type Props = { event: EventSingleType };
 
-const EventSingle: React.FC<Props> = ({ event }) => {
+export function EventSingle({ event }: Props) {
   if (!event) return <p>Event not found.</p>;
 
   const vm = buildEventSingleVM(event);
@@ -135,6 +128,4 @@ const EventSingle: React.FC<Props> = ({ event }) => {
       {vm.show.topics ? <TopicsSection topics={event.topics!} /> : null}
     </section>
   );
-};
-
-export default EventSingle;
+}

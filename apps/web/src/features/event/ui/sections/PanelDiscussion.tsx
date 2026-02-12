@@ -1,12 +1,10 @@
-import React from "react";
-import Link from "next/link";
+import type { AttendanceMode, EventLifecycleStatus, Money, PricingStatus } from "@gcf/types";
 import { PortableText } from "@portabletext/react";
 import type { PortableTextBlock } from "@portabletext/types";
-
-import ButtonRegular from "@/shared/ui/ButtonRegular";
+import Link from "next/link";
+import type React from "react";
 import EventData from "@/features/event/ui/components/EventData";
-
-import type { Money, EventLifecycleStatus, PricingStatus, AttendanceMode } from "@gcf/types";
+import { ButtonRegular } from "@/shared/ui/ButtonRegular";
 
 type Cta = {
   label?: string | null;
@@ -126,7 +124,6 @@ export const PanelDiscussion: React.FC<Props> = (props) => {
           className={[
             "bg-background-panel border-5.5 relative w-full rounded-xl border-b-5 border-dashed border-white",
             "px-[clamp(18px,3vw,28px)] py-[clamp(18px,3vw,28px)]",
-            "lg:min-h-147.5",
           ].join(" ")}
         >
           <h4 className="text-primary-darker mb-3 text-[clamp(12px,1.2vw,14px)] font-semibold tracking-wide">
@@ -166,7 +163,6 @@ export const PanelDiscussion: React.FC<Props> = (props) => {
           className={[
             "bg-background-panel w-full rounded-xl",
             "px-[clamp(18px,3vw,28px)] py-[clamp(18px,3vw,28px)]",
-            "lg:min-h-65",
           ].join(" ")}
         >
           {marketingMention?.length ? (

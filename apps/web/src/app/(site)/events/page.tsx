@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { getEvents, parseEventsSearchParams, EventsListPage } from "@/features/events";
+import { EventsListPage, getEvents, parseEventsSearchParams } from "@/features/events";
 
 type PageProps = {
   searchParams: Promise<{

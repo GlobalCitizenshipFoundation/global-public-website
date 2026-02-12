@@ -1,4 +1,3 @@
-import React from "react";
 import { cn } from "@/shared/lib/cn";
 
 type ContainerVariant = "regular" | "big" | "header" | "footer";
@@ -27,7 +26,7 @@ const defaultTagByVariant: Partial<Record<ContainerVariant, React.ElementType>> 
   footer: "footer",
 };
 
-const Container: React.FC<Props> = (props) => {
+export function Container(props: Props) {
   const { children, className, as } = props;
   const variant: ContainerVariant = props.variant ?? "regular";
 
@@ -62,6 +61,4 @@ const Container: React.FC<Props> = (props) => {
       <div className="mx-auto w-full max-w-400">{children}</div>
     </Tag>
   );
-};
-
-export default Container;
+}

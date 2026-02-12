@@ -1,13 +1,11 @@
-import React from "react";
+import type { EventSingleType } from "@gcf/types";
 import { PortableText } from "@portabletext/react";
 import type { PortableTextBlock } from "@portabletext/types";
-import type { EventSingleType } from "@gcf/types";
-import { formatEventTime } from "@/shared/lib/datetime";
-import { createPortableTextComponents } from "../../lib/portableTextComponents";
 import { IoTime } from "react-icons/io5";
-
+import { formatEventTime } from "@/shared/lib/datetime";
+import { BreakLine } from "@/shared/ui/BreakLine";
+import { createPortableTextComponents } from "../../lib/portableTextComponents";
 import PeopleCollapse from "./PeopleCollapse";
-import BreakLine from "@/shared/ui/BreakLine";
 
 type Props = {
   heading: string;
@@ -203,7 +201,7 @@ function AccordionBox({
   );
 }
 
-export default function Agenda({ heading, description, agenda }: Props) {
+export function Agenda({ heading, description, agenda }: Props) {
   const days = agenda ?? [];
   const showDescription = Boolean(description?.length);
 
@@ -271,7 +269,10 @@ export default function Agenda({ heading, description, agenda }: Props) {
                             {typeLabel ? (
                               <div
                                 className="text-primary text-[21px] font-semibold"
-                                style={{ lineHeight: "100%", marginBottom: "25px" }}
+                                style={{
+                                  lineHeight: "100%",
+                                  marginBottom: "25px",
+                                }}
                               >
                                 {typeLabel}
                               </div>

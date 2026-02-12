@@ -1,7 +1,6 @@
-import type React from "react";
-import ButtonPrimary from "@/shared/ui/ButtonPrimary";
+import { ButtonPrimary } from "@/shared/ui/ButtonPrimary";
 
-const Newsettler: React.FC = () => {
+export function Newsletter() {
   return (
     <div className="bg-dark-blue flex h-141.5 w-full flex-col items-center justify-center">
       <h2 className="font-poppins mb-4 text-[42px] font-semibold text-white">
@@ -24,6 +23,4 @@ const Newsettler: React.FC = () => {
       </div>
     </div>
   );
-};
-
-export default Newsettler;
+}

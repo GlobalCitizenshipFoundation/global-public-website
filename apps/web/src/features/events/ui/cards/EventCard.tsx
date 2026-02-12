@@ -4,7 +4,7 @@ import Link from "next/link";
 import type React from "react";
 import { formatEventDate } from "@/features/events/lib/formatters";
 import { path, paths } from "@/shared/config/paths";
-import ButtonPrimary from "@/shared/ui/ButtonPrimary";
+import { ButtonPrimary } from "@/shared/ui/ButtonPrimary";
 
 type Props = { event: EventCardType };
 
@@ -15,7 +15,7 @@ const EVENT_TYPE_LABEL: Record<string, string> = {
   forum: "Forum",
 };
 
-const EventCard: React.FC<Props> = ({ event }) => {
+export function EventCard({ event }: Props) {
   const formattedStartDate = event.startDateTime
     ? formatEventDate(event.startDateTime)
     : "No date available";
@@ -90,6 +90,4 @@ const EventCard: React.FC<Props> = ({ event }) => {
       </div>
     </article>
   );
-};
-
-export default EventCard;
+}
