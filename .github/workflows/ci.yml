@@ -7,8 +7,15 @@ on:
     branches: ["main", "develop"]
 
 concurrency:
-  group: ci-${{ github.ref }}
+  group: ci-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  NODE_VERSION: "24.13.0"
+  PNPM_VERSION: "10.29.1"
 
 jobs:
   detect-changes:
@@ -18,6 +25,8 @@ jobs:
       cms: ${{ steps.filter.outputs.cms }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Paths filter
         id: filter
@@ -48,22 +57,41 @@ jobs:
               - ".npmrc"
 
   web:
+    name: web
     needs: detect-changes
     if: needs.detect-changes.outputs.web == 'true'
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 24.13.0
-          cache: pnpm
+          node-version: ${{ env.NODE_VERSION }}
 
-      - name: Enable corepack
-        run: corepack enable
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+          run_install: false
+
+      - name: Get pnpm store path
+        id: pnpm-store
+        shell: bash
+        run: echo "STORE_PATH=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache pnpm store
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-store.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
 
       - name: Install (pnpm workspaces)
         run: pnpm -w install --frozen-lockfile
+
+      - name: Build types
+        run: pnpm -C packages/types build
 
       - name: Lint (no warnings)
         run: pnpm -C apps/web lint:ci
@@ -71,29 +99,45 @@ jobs:
       - name: Typecheck
         run: pnpm -C apps/web typecheck
 
-      - name: Build types
-        run: pnpm -C packages/types build
-
       - name: Build web
         run: pnpm -C apps/web build
 
   cms:
+    name: cms
     needs: detect-changes
     if: needs.detect-changes.outputs.cms == 'true'
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 24.13.0
-          cache: pnpm
+          node-version: ${{ env.NODE_VERSION }}
 
-      - name: Enable corepack
-        run: corepack enable
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+          run_install: false
+
+      - name: Get pnpm store path
+        id: pnpm-store
+        shell: bash
+        run: echo "STORE_PATH=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache pnpm store
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-store.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
 
       - name: Install (pnpm workspaces)
         run: pnpm -w install --frozen-lockfile
+
+      - name: Build types
+        run: pnpm -C packages/types build
 
       - name: Lint (no warnings)
         run: pnpm -C apps/cms lint:ci
