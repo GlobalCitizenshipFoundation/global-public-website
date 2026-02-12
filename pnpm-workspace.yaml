@@ -1,11 +1,3 @@
 packages:
   - apps/*
   - packages/*
-
-ignoredBuiltDependencies:
-  - '@swc/core'
-  - esbuild
-  - unrs-resolver
-
-onlyBuiltDependencies:
-  - sharp

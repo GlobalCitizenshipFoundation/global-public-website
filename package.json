@@ -5,7 +5,12 @@
   "pnpm": {
     "overrides": {
       "@types/node": "^24.2.1"
-    }
+    },
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp",
+      "unrs-resolver"
+    ]
   },
   "engines": {
     "node": ">=24.13.0",
