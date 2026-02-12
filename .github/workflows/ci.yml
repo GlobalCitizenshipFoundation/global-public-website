@@ -86,8 +86,9 @@ jobs:
       - name: Install (pnpm workspaces)
         run: pnpm -w install --frozen-lockfile
 
+      # IMPORTANT: avoid pnpm --filter @gcf/types build here (it can pull root build via scripts)
       - name: Build types
-        run: pnpm -w --filter @gcf/types build
+        run: pnpm -C packages/types build
 
       - name: Lint (no warnings)
         run: pnpm -w --filter @gcf/web lint:ci
@@ -132,8 +133,9 @@ jobs:
       - name: Install (pnpm workspaces)
         run: pnpm -w install --frozen-lockfile
 
+      # IMPORTANT: avoid pnpm --filter @gcf/types build here (it can pull root build via scripts)
       - name: Build types
-        run: pnpm -w --filter @gcf/types build
+        run: pnpm -C packages/types build
 
       - name: Lint (no warnings)
         run: pnpm -w --filter @gcf/cms lint:ci
