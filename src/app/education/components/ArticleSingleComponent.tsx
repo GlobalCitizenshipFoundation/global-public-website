@@ -143,7 +143,7 @@ const ArticleSingleComponent: React.FC<Props> = ({ article }) => {
               </section>
               <section className="min-w-0 text-sm lg:text-base">
                 <div className="space-y-4">
-                  {article.authors.length > 0 && <h3 className="mb-4">Authors</h3>}
+                  {article.authors?.length > 0 && <h3 className="mb-4">Authors</h3>}
                   {article.authors &&
                     authorsTemp.map((author) => (
                       <div key={author.imgUrl} className="flex flex-row items-center gap-x-4">

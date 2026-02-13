@@ -7,6 +7,11 @@ export const getArticles = async (): Promise<RelatedArticleProps[]> => {
       _id,
       slug,
       articleHeading,
+      category->{
+        _id,
+        name,
+        description
+      },
       articleImage {
         asset->{
           url,
@@ -23,7 +28,7 @@ export const getArticleBySlug = async (slug: string): Promise<ArticleSingleType 
     `*[_type == "article" && slug.current == $slug][0]{
       _id,
       articleHeading,
-      slug,
+      "slug": slug.current,
       articleImage {
         asset->{
           url,
@@ -43,6 +48,11 @@ export const getArticleBySlug = async (slug: string): Promise<ArticleSingleType 
             url
           }
         }
+      },
+      category->{
+        _id,
+        name,
+        description
       },
       body,
       endText,

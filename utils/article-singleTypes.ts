@@ -21,6 +21,11 @@ interface SanityImage {
   asset: SanityImageAsset;
 }
 
+interface articleCategory {
+  name: string,
+  description: string,
+}
+
 export interface ArticleSingleType {
   _id: string;
   articleHeading: PortableTextBlock[];
@@ -31,6 +36,7 @@ export interface ArticleSingleType {
   articleImage?: SanityImage;
   introText?: PortableTextBlock[];
   readingLength?: number;
+  category: articleCategory;
   authors: string[] //do podmiany na tablice autorow
   disclosureStatement: PortableTextBlock[];
   partners: RelatedPartnersType[];
@@ -41,5 +47,5 @@ export interface ArticleSingleType {
 
 export type RelatedArticleProps = Pick<
   ArticleSingleType,
-  '_id' | 'slug' | 'articleHeading' | 'articleImage' | 'readingLength'
+  '_id' | 'slug' | 'articleHeading' | 'articleImage' | 'readingLength' | 'category'
 >;
