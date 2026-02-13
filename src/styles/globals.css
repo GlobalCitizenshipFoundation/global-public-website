@@ -93,3 +93,9 @@
 .custom-pagination .swiper-pagination-bullet-active {
   background-color: var(--color-gray);
 }
+
+p {
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+}
