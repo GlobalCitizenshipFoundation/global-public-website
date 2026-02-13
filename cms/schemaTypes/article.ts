@@ -63,6 +63,12 @@ export const article = defineType({
       ],
     },
     {
+      name: 'category',
+      title: 'Category',
+      type: 'reference',
+      to: [{type: 'articleCategory'}],
+    },
+    {
       name: 'body',
       title: 'Body',
       type: 'array',

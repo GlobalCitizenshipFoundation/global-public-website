@@ -4,6 +4,7 @@ import SocialLink from '@/components/Social/SocialLink';
 import { socialMediaConfig } from '@/components/Social/socialMediaConfig';
 import { getArticles } from '../../../lib/article-fetch';
 import { PortableText } from '@portabletext/react';
+import Link from 'next/link';
 
 const EducationPage = async () => {
   const socials = socialMediaConfig;
@@ -56,9 +57,10 @@ const EducationPage = async () => {
 
               <div className="grid grid-cols-1 gap-5 lg:grid-cols-4">
                 {articles.map((article, index) => (
-                  <article
+                  <Link
                     key={article._id}
-                    className={`relative h-64 overflow-hidden rounded-xl bg-gray-900 text-white sm:h-72 md:h-80 ${index > 0 ? 'hidden sm:block' : ''}`} // tylko pierwszy na mobile
+                    href={`/education/${article.slug?.current}`}
+                    className={`relative block h-64 overflow-hidden rounded-xl bg-gray-900 text-white sm:h-72 md:h-80 ${index > 0 ? 'hidden sm:block' : ''} cursor-pointer transition-transform hover:scale-105`}
                   >
                     <img
                       src={article.articleImage?.asset?.url}
@@ -85,11 +87,11 @@ const EducationPage = async () => {
                           />
                         </h3>
                       </div>
-                      <button className="absolute bottom-4 left-4 text-xs font-normal sm:text-sm">
+                      <span className="absolute bottom-4 left-4 text-xs font-normal sm:text-sm">
                         Read More →
-                      </button>
+                      </span>
                     </div>
-                  </article>
+                  </Link>
                 ))}
               </div>
             </section>
