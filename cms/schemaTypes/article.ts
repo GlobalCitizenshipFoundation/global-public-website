@@ -74,5 +74,11 @@ export const article = defineType({
       type: 'array',
       of: [{ type: 'block' }],
     },
+    {
+      name: 'sources',
+      title: 'Sources',
+      type: 'array',
+      of: [{ type: 'block' }],
+    },
   ],
 })

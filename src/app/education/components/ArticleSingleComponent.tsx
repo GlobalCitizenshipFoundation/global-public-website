@@ -3,6 +3,8 @@ import ContainerRegular from '@/components/ContainerRegular';
 import { ArticleSingleType } from '../../../../utils/article-singleTypes';
 import Image from 'next/image';
 import { PortableText, PortableTextBlock, PortableTextComponentProps } from '@portabletext/react';
+import { footer } from '../../../../data/footer';
+import SocialLink from '@/components/Social/SocialLink';
 
 type Props = {
   article: ArticleSingleType;
@@ -17,15 +19,19 @@ const ArticleSingleComponent: React.FC<Props> = ({ article }) => {
         </h2>
       ),
       h3: ({ children }: PortableTextComponentProps<PortableTextBlock>) => (
-        <h3 className="text-titles text-xl font-semibold [overflow-wrap:anywhere] break-words lg:text-3xl">
+        <h3 className="text-titles text-lg font-semibold [overflow-wrap:anywhere] break-words lg:text-2xl">
           {children}
         </h3>
       ),
       normal: ({ children }: PortableTextComponentProps<PortableTextBlock>) => (
-        <p className="text-body text-sm [overflow-wrap:anywhere] break-words whitespace-normal lg:text-2xl">
+        <p className="text-body text-sm [overflow-wrap:anywhere] break-words whitespace-normal lg:text-xl">
           {children}
         </p>
       ),
+    },
+    list: {
+      bullet: ({ children }: any) => <ul className="ml-6 list-disc space-y-4">{children}</ul>,
+      number: ({ children }: any) => <ol className="ml-6 list-decimal space-y-6">{children}</ol>,
     },
   };
 
@@ -57,6 +63,8 @@ const ArticleSingleComponent: React.FC<Props> = ({ article }) => {
     },
   ];
 
+  const socials = footer.filter((item) => item.kind === 'social');
+
   return (
     <article className="bg-background-primary w-full overflow-x-hidden">
       <ContainerBig>
@@ -83,18 +91,14 @@ const ArticleSingleComponent: React.FC<Props> = ({ article }) => {
           <div className="grid grid-cols-1 gap-y-10 lg:grid-cols-[1fr_300px] lg:gap-x-8">
             <div className="min-w-0 space-y-12">
               {/* INTRO */}
-              <ContainerRegular className="min-w-0 text-sm lg:text-base">
-                {article.introText && (
-                  <PortableText value={article.introText} components={portableTextComponents} />
-                )}
-              </ContainerRegular>
+              {article.introText && (
+                <PortableText value={article.introText} components={portableTextComponents} />
+              )}
 
               {/* BODY */}
-              <ContainerRegular className="min-w-0 text-sm lg:text-base">
-                {article.body && (
-                  <PortableText value={article.body} components={portableTextComponents} />
-                )}
-              </ContainerRegular>
+              {article.body && (
+                <PortableText value={article.body} components={portableTextComponents} />
+              )}
 
               {article.articleImage?.asset && (
                 <div className="relative w-full sm:h-100 lg:h-160">
@@ -109,10 +113,16 @@ const ArticleSingleComponent: React.FC<Props> = ({ article }) => {
               )}
 
               {/* END TEXT */}
+              {article.endText && (
+                <>
+                  <PortableText value={article.endText} components={portableTextComponents} />
+                </>
+              )}
+
               <ContainerRegular className="min-w-0 text-sm lg:text-base">
-                {article.endText && (
+                {article.sources && (
                   <>
-                    <PortableText value={article.endText} components={portableTextComponents} />
+                    <PortableText value={article.sources} components={portableTextComponents} />
                   </>
                 )}
               </ContainerRegular>

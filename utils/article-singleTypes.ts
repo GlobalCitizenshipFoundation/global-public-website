@@ -36,9 +36,10 @@ export interface ArticleSingleType {
   partners: RelatedPartnersType[];
   body?: PortableTextBlock[];
   endText?: PortableTextBlock[];
+  sources?: PortableTextBlock[];
 }
 
 export type RelatedArticleProps = Pick<
   ArticleSingleType,
-  '_id' | 'slug' | 'articleHeading' | 'articleImage'
+  '_id' | 'slug' | 'articleHeading' | 'articleImage' | 'readingLength'
 >;
