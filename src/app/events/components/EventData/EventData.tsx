@@ -16,9 +16,6 @@ interface CountDown {
 }
 
 const EventData: React.FC<Props> = ({ start, end }) => {
-  const startDate = new Date(start);
-  const endDate = new Date(end);
-
   const [countdown, setCountdown] = useState<CountDown | null>(null);
   const [status, setStatus] = useState<'countdown' | 'started' | 'ended'>('countdown');
 
@@ -26,9 +23,12 @@ const EventData: React.FC<Props> = ({ start, end }) => {
   const formattedStartTime = eventTime(start);
 
   const formattedEndDate = eventData(end);
-  const formattedEndTime = eventTime(start);
+  const formattedEndTime = eventTime(end);
 
   useEffect(() => {
+    const startDate = new Date(start);
+    const endDate = new Date(end);
+
     const interval = setInterval(() => {
       const now = new Date();
 
@@ -62,7 +62,7 @@ const EventData: React.FC<Props> = ({ start, end }) => {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [start, endDate, startDate]);
+  }, [start, end]);
 
   return (
     <div className="flex flex-col gap-8">
