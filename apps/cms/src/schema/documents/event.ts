@@ -1,6 +1,7 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { headingField, portableTextField, urlField } from "../fields";
 import { isRecord } from "../helpers";
+import { asVenueLocationLike } from "../helpers/asVenueLocationLike";
 import { asDate } from "../helpers/dates";
 import { type AttendanceMode, type EventDoc, getDoc, type PricingStatus } from "../helpers/getDoc";
 import { listOf } from "../helpers/listOf";
@@ -120,9 +121,21 @@ export const eventSingle = defineType({
 
     portableTextField("marketingMention", "Marketing Mention"),
 
-    defineField({ name: "panelCtaUpcoming", title: "Panel CTA - Upcoming", type: "ctaButton" }),
-    defineField({ name: "panelCtaStarted", title: "Panel CTA - Started", type: "ctaButton" }),
-    defineField({ name: "panelCtaEnded", title: "Panel CTA - Ended", type: "ctaButton" }),
+    defineField({
+      name: "panelCtaUpcoming",
+      title: "Panel CTA - Upcoming",
+      type: "ctaButton",
+    }),
+    defineField({
+      name: "panelCtaStarted",
+      title: "Panel CTA - Started",
+      type: "ctaButton",
+    }),
+    defineField({
+      name: "panelCtaEnded",
+      title: "Panel CTA - Ended",
+      type: "ctaButton",
+    }),
 
     portableTextField("promoMessage", "Promo Message"),
 
@@ -136,22 +149,28 @@ export const eventSingle = defineType({
           const doc = getDoc(ctx);
           if (doc.attendanceMode === "online") return true;
 
-          if (!isRecord(v)) return "Venue location is required";
+          const venue = asVenueLocationLike(v);
+          if (!venue) return "Venue location is required";
 
-          const address = v["address"];
+          const address = venue.address;
           if (typeof address !== "string" || address.trim().length < 5) {
             return "Address is required";
           }
-
-          if (typeof address !== "string" || address.trim().length < 5)
-            return "Address is required";
 
           return true;
         }),
     }),
 
-    defineField({ name: "buttonSecondary", title: "Secondary Button", type: "ctaButton" }),
-    defineField({ name: "buttonTertiary", title: "Tertiary Button", type: "ctaButton" }),
+    defineField({
+      name: "buttonSecondary",
+      title: "Secondary Button",
+      type: "ctaButton",
+    }),
+    defineField({
+      name: "buttonTertiary",
+      title: "Tertiary Button",
+      type: "ctaButton",
+    }),
 
     defineField({
       name: "eventImage",
@@ -194,7 +213,12 @@ export const eventSingle = defineType({
       name: "speakers",
       title: "Speakers",
       type: "array",
-      of: [defineArrayMember({ type: "reference", to: [{ type: "contributorSingle" }] })],
+      of: [
+        defineArrayMember({
+          type: "reference",
+          to: [{ type: "contributorSingle" }],
+        }),
+      ],
     }),
 
     headingField("steeringCommitteeHeading", "Steering Committee Heading"),
@@ -204,7 +228,12 @@ export const eventSingle = defineType({
       name: "steeringCommittee",
       title: "Steering Committee",
       type: "array",
-      of: [defineArrayMember({ type: "reference", to: [{ type: "contributorSingle" }] })],
+      of: [
+        defineArrayMember({
+          type: "reference",
+          to: [{ type: "contributorSingle" }],
+        }),
+      ],
     }),
 
     headingField("partnersHeading", "Partners Heading"),
@@ -237,7 +266,12 @@ export const eventSingle = defineType({
               name: "items",
               title: "Partners",
               type: "array",
-              of: [defineArrayMember({ type: "reference", to: [{ type: "partnersSingle" }] })],
+              of: [
+                defineArrayMember({
+                  type: "reference",
+                  to: [{ type: "partnersSingle" }],
+                }),
+              ],
             }),
           ],
           preview: {
