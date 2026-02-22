@@ -1,7 +1,7 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { portableTextField } from "../fields";
-import { isRecord } from "../helpers";
 import { asDate } from "../helpers/dates";
+import { getProp } from "../helpers/getProp";
 import { listOf } from "../helpers/listOf";
 import { AGENDA_SESSION_TYPE_LIST } from "../lists";
 
@@ -35,8 +35,7 @@ export const agendaSession = defineType({
       type: "datetime",
       validation: (Rule) =>
         Rule.required().custom((end, ctx) => {
-          const parent = ctx.parent;
-          const start = isRecord(parent) ? parent["startAt"] : undefined;
+          const start = getProp(ctx.parent, "startAt");
 
           const startD = asDate(start);
           const endD = asDate(end);
