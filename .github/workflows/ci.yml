@@ -15,8 +15,11 @@ permissions:
 
 env:
   NODE_VERSION: "24.13.0"
-  PNPM_VERSION: "10.29.1"
   NEXT_TELEMETRY_DISABLED: "1"
+
+defaults:
+  run:
+    shell: bash
 
 jobs:
   detect-changes:
@@ -52,9 +55,38 @@ jobs:
               - "apps/cms/**"
               - "packages/**"
 
+  deps:
+    name: deps (pnpm store cache)
+    needs: detect-changes
+    if: needs.detect-changes.outputs.root == 'true' || needs.detect-changes.outputs.web == 'true' || needs.detect-changes.outputs.cms == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node (with pnpm cache)
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Update Corepack (signature fixes)
+        run: npm i -g corepack@latest
+
+      - name: Enable Corepack + activate pnpm from packageManager
+        run: |
+          corepack enable
+          PNPM_SPEC="$(node -p "require('./package.json').packageManager")"
+          echo "Using pnpm spec: $PNPM_SPEC"
+          corepack prepare "$PNPM_SPEC" --activate
+          pnpm --version
+
+      - name: Prefetch deps to pnpm store
+        run: pnpm fetch --frozen-lockfile
+
   web:
     name: web
-    needs: detect-changes
+    needs: [detect-changes, deps]
     if: needs.detect-changes.outputs.web == 'true' || needs.detect-changes.outputs.root == 'true'
     runs-on: ubuntu-latest
 
@@ -67,32 +99,25 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Setup Node (restore pnpm cache)
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
 
-      - name: Enable Corepack + pin pnpm
+      - name: Update Corepack (signature fixes)
+        run: npm i -g corepack@latest
+
+      - name: Enable Corepack + activate pnpm from packageManager
         run: |
           corepack enable
-          corepack prepare pnpm@${{ env.PNPM_VERSION }} --activate
+          PNPM_SPEC="$(node -p "require('./package.json').packageManager")"
+          corepack prepare "$PNPM_SPEC" --activate
           pnpm --version
 
-      - name: Get pnpm store path
-        id: pnpm-store
-        shell: bash
-        run: echo "STORE_PATH=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"
-
-      - name: Restore pnpm store cache
-        uses: actions/cache@v4
-        with:
-          path: ${{ steps.pnpm-store.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-
-
-      - name: Install (workspace)
-        run: pnpm install --frozen-lockfile
+      - name: Install (offline)
+        run: pnpm install --frozen-lockfile --offline
 
       - name: Build types
         run: pnpm -C packages/types build
@@ -116,7 +141,7 @@ jobs:
 
   cms:
     name: cms
-    needs: detect-changes
+    needs: [detect-changes, deps]
     if: needs.detect-changes.outputs.cms == 'true' || needs.detect-changes.outputs.root == 'true'
     runs-on: ubuntu-latest
 
@@ -128,32 +153,25 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Setup Node (restore pnpm cache)
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
 
-      - name: Enable Corepack + pin pnpm
+      - name: Update Corepack (signature fixes)
+        run: npm i -g corepack@latest
+
+      - name: Enable Corepack + activate pnpm from packageManager
         run: |
           corepack enable
-          corepack prepare pnpm@${{ env.PNPM_VERSION }} --activate
+          PNPM_SPEC="$(node -p "require('./package.json').packageManager")"
+          corepack prepare "$PNPM_SPEC" --activate
           pnpm --version
 
-      - name: Get pnpm store path
-        id: pnpm-store
-        shell: bash
-        run: echo "STORE_PATH=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"
-
-      - name: Restore pnpm store cache
-        uses: actions/cache@v4
-        with:
-          path: ${{ steps.pnpm-store.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-
-
-      - name: Install (workspace)
-        run: pnpm install --frozen-lockfile
+      - name: Install (offline)
+        run: pnpm install --frozen-lockfile --offline
 
       - name: Build types
         run: pnpm -C packages/types build

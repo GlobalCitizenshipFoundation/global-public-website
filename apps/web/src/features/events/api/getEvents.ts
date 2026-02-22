@@ -1,5 +1,5 @@
-import { sanityClient } from "@/shared/sanity/client";
 import type { EventCard } from "@gcf/types";
+import { sanityClient } from "@/shared/sanity/client";
 import { EVENTS_LIST_BASE } from "./queries/eventsList.groq";
 
 type EventsQuery = {

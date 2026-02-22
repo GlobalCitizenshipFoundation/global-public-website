@@ -1,5 +1,6 @@
 import {
   article,
+  articleCategory,
   contributorSingle,
   eventSingle,
   magazinSingle,
@@ -9,6 +10,7 @@ import {
   agendaDay,
   agendaPerson,
   agendaSession,
+  audioCard,
   ctaButton,
   richImage,
   venueLocation,
@@ -22,6 +24,7 @@ export const schemaTypes = [
   agendaSession,
   agendaDay,
   richImage,
+  audioCard,
 
   // documents
   eventSingle,
@@ -29,4 +32,5 @@ export const schemaTypes = [
   partnersSingle,
   magazinSingle,
   article,
+  articleCategory,
 ];

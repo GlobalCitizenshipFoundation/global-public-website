@@ -1,11 +1,10 @@
-import type { PortableTextBlock } from "@portabletext/types";
-
 import type {
   AttendanceMode,
   EventLifecycleStatus,
   EventPartnerGroup,
   EventSingleType,
 } from "@gcf/types";
+import type { PortableTextBlock } from "@portabletext/types";
 
 import type { getSocialLinksFromCMS } from "@/features/social/ui/getSocialMediaFromCMS";
 
@@ -30,6 +29,9 @@ export type PanelBaseVM = {
   ctaUpcoming?: { label?: string | null; url?: string | null } | null;
   ctaStarted?: { label?: string | null; url?: string | null } | null;
   ctaEnded?: { label?: string | null; url?: string | null } | null;
+
+  // jeśli masz venue w panelBase, dodaj:
+  // venue?: EventSingleType["venue"];
 };
 
 export type EventSingleVM = {
@@ -70,4 +72,15 @@ export type EventSingleVM = {
     imageUrl: string | null;
     alt: string;
   };
+
+  introText: EventSingleType["introText"] | null;
+  videoLink: string | null;
+  body: EventSingleType["body"] | null;
+
+  agendaDescription: EventSingleType["agendaDescription"] | null;
+  agenda: EventSingleType["agenda"] | null;
+
+  topics: EventSingleType["topics"] | null;
+
+  registrationText: EventSingleType["registrationText"] | null;
 };

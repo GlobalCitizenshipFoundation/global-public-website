@@ -22,7 +22,7 @@
     "check": "pnpm run lint:ci && pnpm run typecheck && pnpm run check:schema && pnpm run build"
   },
   "dependencies": {
-    "@sanity/vision": "^5.9.0",
+    "@sanity/vision": "^5.11.0",
     "countries-list": "^3.2.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
@@ -34,6 +34,6 @@
     "dotenv": "^17.2.4",
     "mkdirp": "^3.0.1",
     "rimraf": "^6.1.2",
-    "sanity": "^5.9.0"
+    "sanity": "^5.11.0"
   }
 }

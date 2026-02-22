@@ -1,12 +1,9 @@
-import React from "react";
-import { PortableText } from "@portabletext/react";
 import type { EventPartnerGroup, EventSingleType } from "@gcf/types";
-
-import { ConferencePartners } from "./ConferencePartners";
-
-import SectionHeading from "../components/SectionHeading";
-import { createPortableTextComponents } from "../../lib/portableTextComponents";
+import { PortableText } from "@portabletext/react";
 import { PARTNER_LABEL } from "../../lib/constants";
+import { createPortableTextComponents } from "../../lib/portableTextComponents";
+import SectionHeading from "../components/SectionHeading";
+import { ConferencePartners } from "./ConferencePartners";
 
 type Props = {
   heading: string;
@@ -19,7 +16,7 @@ export default function PartnersSection({ heading, text, groups }: Props) {
   if (!show) return null;
 
   return (
-    <section className="flex flex-col lg:mb-18 lg:gap-[60px]">
+    <section className="flex flex-col lg:mb-18 lg:gap-15">
       <div className="flex flex-col">
         <SectionHeading>{heading}</SectionHeading>
         {text?.length ? (

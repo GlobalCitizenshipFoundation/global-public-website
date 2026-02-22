@@ -1,10 +1,12 @@
 import type { EventSingleType } from "@gcf/types";
 import { PortableText } from "@portabletext/react";
+
 import { Container } from "@/shared/ui/Container";
 import { Tags } from "@/shared/ui/Tags";
-import { createPortableTextComponents } from "../lib/portableTextComponents";
 
+import { createPortableTextComponents } from "../lib/portableTextComponents";
 import { buildEventSingleVM } from "../model/buildEventSingleVM";
+
 import CtaButtons from "./components/CtaButtons";
 import SectionHeading from "./components/SectionHeading";
 import { Agenda } from "./sections/Agenda";
@@ -35,6 +37,7 @@ export function EventSingle({ event }: Props) {
           </div>
         );
       }
+
       return <PanelDiscussion {...vm.panelBase} pricing="paid" price={event.price} />;
     }
 
@@ -42,40 +45,42 @@ export function EventSingle({ event }: Props) {
   };
 
   return (
-    <section className="bg-background-primary overflow-x-hidden">
+    <>
       <Container variant="big">
+        <h1 className="sr-only">{vm.panelBase.eventHeading ?? "Event"}</h1>
+
         <div className="grid grid-cols-1 gap-[clamp(24px,4vw,56px)] lg:grid-cols-[minmax(0,1fr)_minmax(460px,500px)] lg:items-start">
           <div className="min-w-0">
             <Hero imageUrl={vm.hero.imageUrl} alt={vm.hero.alt} />
 
             <PeoplePhotos people={vm.combinedParticipants} />
 
-            {vm.show.intro ? <Intro heading={vm.headings.intro} value={event.introText!} /> : null}
+            {vm.introText ? <Intro heading={vm.headings.intro} value={vm.introText} /> : null}
 
             <section className="lg:hidden">{renderPanel()}</section>
 
-            {vm.show.video ? (
+            {vm.videoLink ? (
               <Video
                 heading={vm.headings.video}
-                url={event.videoLink!}
-                title={event.eventHeading ?? "Intro"}
+                url={vm.videoLink}
+                title={vm.panelBase.eventHeading ?? "Intro"}
               />
             ) : null}
 
-            {vm.show.body ? <Body heading={vm.headings.body} value={event.body!} /> : null}
+            {vm.body ? <Body heading={vm.headings.body} value={vm.body} /> : null}
 
-            {vm.show.audience ? (
+            {vm.audience.length ? (
               <section className="lg:border-lines mb-11 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between lg:border-y-[1.5px] lg:py-4.5">
                 <h2 className="text-titles mb-0 text-2xl">Who is this event for:</h2>
                 <Tags tags={vm.audience} />
               </section>
             ) : null}
 
-            {vm.show.agenda ? (
+            {vm.agendaDescription || vm.agenda ? (
               <Agenda
                 heading={vm.headings.agenda}
-                description={event.agendaDescription}
-                agenda={event.agenda}
+                description={vm.agendaDescription ?? undefined}
+                agenda={vm.agenda ?? undefined}
               />
             ) : null}
 
@@ -84,6 +89,7 @@ export function EventSingle({ event }: Props) {
               text={event.speakersText}
               people={vm.speakers}
             />
+
             <PeopleSection
               heading={vm.headings.steering}
               text={event.steeringCommitteeText}
@@ -96,11 +102,11 @@ export function EventSingle({ event }: Props) {
               groups={vm.partnerGroups}
             />
 
-            {vm.show.registration ? (
+            {vm.registrationText ? (
               <section className="mb-11 flex flex-col gap-3">
                 <SectionHeading>{vm.headings.registration}</SectionHeading>
                 <PortableText
-                  value={event.registrationText!}
+                  value={vm.registrationText}
                   components={createPortableTextComponents()}
                 />
               </section>
@@ -125,7 +131,7 @@ export function EventSingle({ event }: Props) {
         </div>
       </Container>
 
-      {vm.show.topics ? <TopicsSection topics={event.topics!} /> : null}
-    </section>
+      {vm.topics ? <TopicsSection topics={vm.topics} /> : null}
+    </>
   );
 }

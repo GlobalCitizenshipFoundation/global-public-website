@@ -1,5 +1,5 @@
-import { sanityClient } from "@/shared/sanity/client";
 import type { EventSingleType } from "@gcf/types";
+import { sanityClient } from "@/shared/sanity/client";
 
 import { EVENT_BY_SLUG_QUERY } from "./queries/eventBySlug.groq";
 

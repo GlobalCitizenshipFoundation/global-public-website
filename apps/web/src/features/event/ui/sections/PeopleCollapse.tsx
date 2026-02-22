@@ -1,9 +1,9 @@
 "use client";
 
-import React from "react";
-import Link from "next/link";
-import { path } from "@/shared/config/paths";
 import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
+import { path } from "@/shared/config/paths";
 
 type Person = {
   _id?: string;
@@ -49,7 +49,7 @@ export default function PeopleCollapse({
   layout = "grid",
 }: Props) {
   const list = isPersonRefArray(people) ? people : [];
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = useState(false);
 
   if (!list.length) return null;
 

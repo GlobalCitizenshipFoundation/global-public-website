@@ -1,3 +1,4 @@
+export * from "./models/article";
 export * from "./models/contributor";
 export * from "./models/event";
 export * from "./models/magazine";

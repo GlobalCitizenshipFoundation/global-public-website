@@ -1,12 +1,12 @@
 "use client";
 
-import React from "react";
 import type { RelatedPartnersType } from "@gcf/types";
-import PartnersLogo from "@/features/partners/ui/PartnersLogo";
+import { useCallback, useEffect, useState } from "react";
+import { Navigation } from "swiper/modules";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperInstance } from "swiper/types";
-import { Navigation } from "swiper/modules";
+import PartnersLogo from "@/features/partners/ui/PartnersLogo";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -17,19 +17,20 @@ interface Props {
   className?: string;
 }
 
+type SwiperWithLock = SwiperInstance & { isLocked?: boolean };
+
 function getIsLocked(s: SwiperInstance): boolean {
-  const rec = s as unknown as Record<string, unknown>;
-  return rec["isLocked"] === true;
+  return (s as SwiperWithLock).isLocked === true;
 }
 
 export const ConferencePartners: React.FC<Props> = ({ partners, title, className }) => {
   const slides = partners ?? [];
 
-  const [swiper, setSwiper] = React.useState<SwiperInstance | null>(null);
-  const [canPrev, setCanPrev] = React.useState(false);
-  const [canNext, setCanNext] = React.useState(false);
+  const [swiper, setSwiper] = useState<SwiperInstance | null>(null);
+  const [canPrev, setCanPrev] = useState(false);
+  const [canNext, setCanNext] = useState(false);
 
-  const updateNavState = React.useCallback((s: SwiperInstance | null) => {
+  const updateNavState = useCallback((s: SwiperInstance | null) => {
     if (!s) {
       setCanPrev(false);
       setCanNext(false);
@@ -47,9 +48,9 @@ export const ConferencePartners: React.FC<Props> = ({ partners, title, className
     setCanNext(!s.isEnd);
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (swiper) updateNavState(swiper);
-  }, [swiper, slides.length, updateNavState]);
+  }, [swiper, updateNavState]);
 
   if (!slides.length) return null;
 

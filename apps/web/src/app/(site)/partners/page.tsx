@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getPartners } from "@/features/partners/api/getPartners";
 import PartnersLogo from "@/features/partners/ui/PartnersLogo";
 import { Container } from "@/shared/ui/Container";
+import { Heading } from "@/shared/ui/Heading";
 
 export const metadata: Metadata = {
   title: "Partners",
@@ -13,7 +14,9 @@ const PartnersPage = async () => {
   return (
     <>
       <Container variant="big" className="mt-25">
-        <h2 className="text-titles mb-5 text-6xl font-semibold">Partners</h2>
+        <Heading as="h1" className="text-titles mb-5 text-6xl font-semibold">
+          Partners
+        </Heading>
         <p className="mb-23 text-2xl/normal font-normal">
           Transforming education for global citizenship and sustainable development. We work to
           wards transforming education for global citizenship and sustainable.

@@ -17,6 +17,7 @@ type Props = {
   totalPages: number;
   siblingCount?: number;
   boundaryCount?: number;
+  param?: string;
 };
 
 type PageItem = number | "gap-left" | "gap-right";

@@ -1,4 +1,5 @@
 export * from "./article";
+export * from "./articleCategory";
 export * from "./contributor";
 export * from "./event";
 export * from "./magazine";

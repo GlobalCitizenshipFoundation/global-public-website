@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "@app/(site)/globals.css";
+
 import { DM_Sans, Inter, Poppins } from "next/font/google";
+import AxeDevClient from "@/shared/dev/AxeDev.client";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -53,6 +55,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${inter.variable} ${poppins.variable} ${dm_sans.variable}`}>
       <body className="font-inter flex min-h-screen flex-col">
+        <AxeDevClient />
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded focus:bg-white focus:px-4 focus:py-2 focus:text-black"

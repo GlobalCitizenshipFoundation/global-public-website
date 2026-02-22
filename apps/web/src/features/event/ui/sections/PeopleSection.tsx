@@ -12,6 +12,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 
 import ContributorFrame from "@/features/contributors/ui/ContributorFrame";
+import { cn } from "@/shared/lib/cn";
 import { createPortableTextComponents } from "../../lib/portableTextComponents";
 import SectionHeading from "../components/SectionHeading";
 
@@ -21,13 +22,14 @@ type Props = {
   people: Array<{ _id: string }>;
 };
 
+type SwiperWithLock = SwiperInstance & { isLocked?: boolean };
+
 function getIsLocked(s: SwiperInstance): boolean {
-  const rec = s as unknown as Record<string, unknown>;
-  return rec["isLocked"] === true;
+  return (s as SwiperWithLock).isLocked === true;
 }
 
 export default function PeopleSection({ heading, text, people }: Props) {
-  const slides = people ?? [];
+  const slides = people;
   const hasText = Boolean(text?.length);
   const hasPeople = slides.length > 0;
 
@@ -42,8 +44,7 @@ export default function PeopleSection({ heading, text, people }: Props) {
       return;
     }
 
-    const locked = getIsLocked(s);
-    if (locked || s.slides.length <= 1) {
+    if (getIsLocked(s) || s.slides.length <= 1) {
       setCanPrev(false);
       setCanNext(false);
       return;
@@ -74,11 +75,11 @@ export default function PeopleSection({ heading, text, people }: Props) {
                 aria-label="Previous"
                 disabled={!canPrev}
                 onClick={() => swiper?.slidePrev()}
-                className={[
-                  "flex h-11 w-11 cursor-pointer items-center justify-center rounded-md",
+                className={cn(
+                  "flex h-11 w-11 items-center justify-center rounded-md",
                   "bg-gray text-white",
                   "transition-opacity disabled:cursor-not-allowed disabled:opacity-40",
-                ].join(" ")}
+                )}
               >
                 <FaChevronLeft />
               </button>
@@ -88,11 +89,11 @@ export default function PeopleSection({ heading, text, people }: Props) {
                 aria-label="Next"
                 disabled={!canNext}
                 onClick={() => swiper?.slideNext()}
-                className={[
-                  "flex h-11 w-11 cursor-pointer items-center justify-center rounded-md",
+                className={cn(
+                  "flex h-11 w-11 items-center justify-center rounded-md",
                   "bg-gray text-white",
                   "transition-opacity disabled:cursor-not-allowed disabled:opacity-40",
-                ].join(" ")}
+                )}
               >
                 <FaChevronRight />
               </button>
@@ -100,8 +101,8 @@ export default function PeopleSection({ heading, text, people }: Props) {
           ) : null}
         </div>
 
-        {hasText ? (
-          <PortableText value={text!} components={createPortableTextComponents()} />
+        {text?.length ? (
+          <PortableText value={text} components={createPortableTextComponents()} />
         ) : null}
       </div>
 

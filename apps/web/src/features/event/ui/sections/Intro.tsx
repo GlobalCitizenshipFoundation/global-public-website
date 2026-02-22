@@ -1,9 +1,7 @@
-import React from "react";
-import { PortableText } from "@portabletext/react";
 import type { EventSingleType } from "@gcf/types";
-
-import SectionHeading from "../components/SectionHeading";
+import { PortableText } from "@portabletext/react";
 import { createPortableTextComponents } from "../../lib/portableTextComponents";
+import SectionHeading from "../components/SectionHeading";
 
 type Props = {
   heading: string;

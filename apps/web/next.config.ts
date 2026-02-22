@@ -9,26 +9,20 @@ function buildCsp(isDev: boolean) {
     "default-src 'self'",
     "base-uri 'self'",
     "form-action 'self'",
-
-    // To zostaw - chroni przed osadzaniem TWOJEJ strony w iframe
     "frame-ancestors 'none'",
-
     "object-src 'none'",
+
     "img-src 'self' data: blob: https://cdn.sanity.io",
+
+    "media-src 'self' blob: https://cdn.sanity.io",
+
     "font-src 'self' data:",
     "style-src 'self' 'unsafe-inline'",
     scriptSrc,
 
-    // API/asset Sanity
     "connect-src 'self' https://cdn.sanity.io https://*.api.sanity.io",
 
-    // KLUCZOWE: pozwól na iframe z konkretnych hostów
-    [
-      "frame-src 'self'",
-      "https://www.youtube.com",
-      "https://www.youtube-nocookie.com",
-      "https://player.vimeo.com",
-    ].join(" "),
+    ["frame-src 'self'", "https://www.youtube.com", "https://player.vimeo.com"].join(" "),
 
     "upgrade-insecure-requests",
   ].join("; ");
@@ -57,7 +51,10 @@ const nextConfig: NextConfig = {
           // OK - chroni twoją stronę przed byciem osadzoną
           { key: "X-Frame-Options", value: "DENY" },
 
-          { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+          {
+            key: "Permissions-Policy",
+            value: "camera=(), microphone=(), geolocation=()",
+          },
           ...(isDev
             ? []
             : [

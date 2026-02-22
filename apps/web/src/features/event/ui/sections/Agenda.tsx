@@ -1,7 +1,10 @@
 import type { EventSingleType } from "@gcf/types";
 import { PortableText } from "@portabletext/react";
 import type { PortableTextBlock } from "@portabletext/types";
+import type React from "react";
 import { IoTime } from "react-icons/io5";
+
+import { cn } from "@/shared/lib/cn";
 import { formatEventTime } from "@/shared/lib/datetime";
 import { BreakLine } from "@/shared/ui/BreakLine";
 import { createPortableTextComponents } from "../../lib/portableTextComponents";
@@ -67,10 +70,14 @@ function minutesBetween(start?: string | null, end?: string | null): number | nu
 /* Badge styles */
 type BadgeStyle = { bg: string; fg: string };
 
+/**
+ * WCAG fix: foreground colors were too light on pastel backgrounds.
+ * We keep backgrounds and darken foreground text to reach 4.5:1.
+ */
 const BADGE_STYLES = [
-  { bg: "#FFF4E4", fg: "#937038" }, // yellow
-  { bg: "#EEF6F5", fg: "#148370" }, // green
-  { bg: "#F9EBE9", fg: "#DD664F" }, // red
+  { bg: "#FFF4E4", fg: "#6B4C1C" }, // yellow (darker fg)
+  { bg: "#EEF6F5", fg: "#0F5E50" }, // green (darker fg)
+  { bg: "#F9EBE9", fg: "#9A2F1E" }, // red (darker fg)
 ] as const satisfies readonly BadgeStyle[];
 
 const BADGE_FALLBACK: BadgeStyle = BADGE_STYLES[0];
@@ -203,14 +210,13 @@ function AccordionBox({
 
 export function Agenda({ heading, description, agenda }: Props) {
   const days = agenda ?? [];
-  const showDescription = Boolean(description?.length);
 
   return (
     <section className="mb-14 flex flex-col gap-1.5">
       <h2 className="text-titles mb-0 text-2xl lg:mb-4.5 lg:text-[42px]">{heading}</h2>
 
-      {showDescription ? (
-        <PortableText value={description!} components={createPortableTextComponents()} />
+      {description?.length ? (
+        <PortableText value={description} components={createPortableTextComponents()} />
       ) : null}
 
       {days.length ? (
@@ -292,10 +298,11 @@ export function Agenda({ heading, description, agenda }: Props) {
                                   "--badge-fg": badge.fg,
                                 } as React.CSSProperties
                               }
-                              className={[
-                                "bg-primary w-full rounded-md px-3 py-2 text-center text-[14px] font-medium text-white",
+                              className={cn(
+                                "w-full rounded-md px-3 py-2 text-center text-[14px] font-medium",
+                                "bg-primary text-white",
                                 "md:bg-(--badge-bg) md:text-(--badge-fg)",
-                              ].join(" ")}
+                              )}
                             >
                               Artificial Intelligence in Education
                             </div>
@@ -311,7 +318,7 @@ export function Agenda({ heading, description, agenda }: Props) {
                                 </div>
 
                                 {durationLabel ? (
-                                  <div className="mt-2 text-left text-[20px] leading-none text-[#928888]">
+                                  <div className="mt-2 text-left text-[20px] leading-none text-[#6B6B6B]">
                                     {durationLabel}
                                   </div>
                                 ) : null}
