@@ -1,4 +1,4 @@
-import { isRecord } from "sanity";
+import { isRecord } from "./isRecord";
 
 type SessionLike = {
   startAt?: unknown;

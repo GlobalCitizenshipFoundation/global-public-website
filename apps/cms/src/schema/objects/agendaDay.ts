@@ -1,5 +1,4 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
-import { isRecord } from "../helpers";
 import { asAgendaDayLike } from "../helpers/asAgednaDayLike";
 import { asSessionLike } from "../helpers/asSessionLike";
 import { asYmdLocal } from "../helpers/dates";
