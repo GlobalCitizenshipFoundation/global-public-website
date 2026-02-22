@@ -77,7 +77,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const title = pickTitle(event, slug);
   const description = pickDescription(event);
-  const ogImage = pickOgImage(event);
+  const ogImage = pickOgImage(event); // <-- TO DODAJEMY
 
   return {
     title,

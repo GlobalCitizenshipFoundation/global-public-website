@@ -1,5 +1,5 @@
-import { ImageResponse } from "next/og";
 import { unstable_cache } from "next/cache";
+import { ImageResponse } from "next/og";
 import { getEventBySlug } from "@/features/event/api/getEventBySlug";
 
 export const runtime = "edge";
