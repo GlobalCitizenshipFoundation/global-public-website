@@ -1,5 +1,6 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { isRecord } from "../helpers";
+import { asAgendaDayLike } from "../helpers/asAgednaDayLike";
 import { asSessionLike } from "../helpers/asSessionLike";
 import { asYmdLocal } from "../helpers/dates";
 
@@ -24,16 +25,15 @@ export const agendaDay = defineType({
   ],
   validation: (Rule) =>
     Rule.custom((dayObj) => {
-      if (!isRecord(dayObj)) return true;
+      const day = asAgendaDayLike(dayObj);
+      if (!day) return true;
 
-      const dayYMD = asYmdLocal(dayObj["date"]);
-      const sessionsUnknown = dayObj["sessions"];
+      const dayYMD = asYmdLocal(day.date);
+      const sessionsUnknown = day.sessions;
 
       if (!dayYMD || !Array.isArray(sessionsUnknown)) return true;
 
       for (const sess of sessionsUnknown) {
-        if (!isRecord(sess)) continue;
-
         const s = asSessionLike(sess);
         if (!s) continue;
 
