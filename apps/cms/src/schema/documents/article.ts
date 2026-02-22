@@ -26,6 +26,14 @@ export const article = defineType({
     }),
 
     defineField({
+      name: "readingLength",
+      title: "Reading length (min)",
+      type: "number",
+      readOnly: true,
+      validation: (Rule) => Rule.min(0).integer(),
+    }),
+
+    defineField({
       type: "datetime",
       name: "publishedAt",
       title: "Published at",

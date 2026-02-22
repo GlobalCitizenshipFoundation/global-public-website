@@ -16,6 +16,7 @@ export const ARTICLES_LIST_BASE = `
     title,
     slug,
     description,
+    readingLength,
     publishedAt,
     coverImage{ asset->{ url, metadata{ dimensions, lqip } } }
   }
