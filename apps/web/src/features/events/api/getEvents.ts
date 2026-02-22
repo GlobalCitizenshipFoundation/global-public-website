@@ -13,16 +13,14 @@ type EventsQuery = {
 
 type EventsListResult<T> = { items: T[]; total: number };
 
+const ORDER: Record<NonNullable<EventsQuery["sort"]>, string> = {
+  date_desc: "order(startDateTime desc, eventHeading asc)",
+  date_asc: "order(startDateTime asc, eventHeading asc)",
+  title_asc: "order(eventHeading asc, startDateTime desc)",
+};
+
 function getOrderClause(sort: EventsQuery["sort"]) {
-  switch (sort) {
-    case "title_asc":
-      return "order(eventHeading asc, startDateTime desc)";
-    case "date_asc":
-      return "order(startDateTime asc, eventHeading asc)";
-    case "date_desc":
-    default:
-      return "order(startDateTime desc, eventHeading asc)";
-  }
+  return ORDER[sort ?? "date_desc"];
 }
 
 export async function getEvents(query: EventsQuery = {}): Promise<EventsListResult<EventCard>> {

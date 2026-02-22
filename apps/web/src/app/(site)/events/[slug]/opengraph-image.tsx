@@ -50,7 +50,7 @@ function getEventCached(slug: string) {
 function getStartDateTime(event: unknown): string | null {
   if (!event || typeof event !== "object") return null;
 
-  const v = (event as Record<string, unknown>)["startDateTime"];
+  const v = (event as { startDateTime?: unknown }).startDateTime;
   return typeof v === "string" ? v : null;
 }
 

@@ -22,7 +22,7 @@ export default function EventsListPage({
   return (
     <div className="bg-background-darker pt-29 pb-33">
       <Container>
-        <div className="flex flex-col gap-[60px]">
+        <div className="flex flex-col gap-15">
           <EventsToolbar title={title} />
           <EventsGrid items={items} />
           <EventsPagination page={page} total={total} perPage={perPage} />

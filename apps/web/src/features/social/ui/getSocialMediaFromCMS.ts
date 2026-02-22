@@ -1,10 +1,8 @@
-// getSocialMediaFromCMS.ts
 import { socialPlatforms } from "@/shared/config/social";
 
-export type ContributorSocials = Record<string, string | undefined>;
-
-// Zrób union jeśli możesz, inaczej zostaw string i potem zawęź w UI
 export type SocialKind = (typeof socialPlatforms)[number]["name"];
+
+export type ContributorSocials = Partial<Record<SocialKind, string>>;
 
 export type SocialLinkData = {
   href: string;
@@ -13,11 +11,15 @@ export type SocialLinkData = {
 };
 
 export function getSocialLinksFromCMS(contributor: ContributorSocials): SocialLinkData[] {
-  return socialPlatforms
-    .filter((platform) => Boolean(contributor[platform.name]))
-    .map((platform) => ({
-      href: contributor[platform.name]!,
-      label: platform.label,
-      kind: platform.name,
-    }));
+  return socialPlatforms.flatMap((platform) => {
+    const href = contributor[platform.name];
+    if (!href) return [];
+    return [
+      {
+        href,
+        label: platform.label,
+        kind: platform.name,
+      },
+    ];
+  });
 }

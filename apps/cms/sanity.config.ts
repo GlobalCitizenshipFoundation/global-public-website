@@ -1,5 +1,5 @@
-import { defineConfig } from "sanity";
 import { visionTool } from "@sanity/vision";
+import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
 import { schemaTypes } from "./src/schema/schemaTypes";
 

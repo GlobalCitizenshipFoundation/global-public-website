@@ -1,8 +1,7 @@
 "use client";
 
-import React from "react";
-import { socialIcons } from "@/shared/config/social-icons";
 import type { SocialName } from "@/shared/config/social";
+import { socialIcons } from "@/shared/config/social-icons";
 
 interface SocialLinkProps {
   label?: string;

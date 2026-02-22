@@ -42,13 +42,13 @@
 }
 
 details.session-acc .chev-open {
-  display: none !important;
+  display: none;
 }
 details.session-acc[open] .chev-open {
-  display: flex !important;
+  display: flex;
 }
 details.session-acc[open] .chev-closed {
-  display: none !important;
+  display: none;
 }
 
 @media print {
@@ -59,7 +59,7 @@ details.session-acc[open] .chev-closed {
 
   html,
   body {
-    background: white !important;
+    background: white;
   }
 
   @page {
@@ -67,7 +67,7 @@ details.session-acc[open] .chev-closed {
   }
 
   .no-print {
-    display: none !important;
+    display: none;
   }
 
   .print-area {

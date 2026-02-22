@@ -7,8 +7,11 @@ export const runtime = "nodejs";
 
 const UPSTREAM_TIMEOUT_MS = 25_000;
 
-// Env przez index signature (TS4111-friendly)
-const SITE_URL = process.env["NEXT_PUBLIC_SITE_URL"] ?? null;
+function env(name: "NEXT_PUBLIC_SITE_URL") {
+  return process.env[name];
+}
+
+const SITE_URL = env("NEXT_PUBLIC_SITE_URL");
 
 function allowedOriginFromSiteUrl(): string | null {
   if (!SITE_URL) return null;

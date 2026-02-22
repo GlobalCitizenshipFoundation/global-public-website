@@ -11,16 +11,14 @@ type ArticlesQuery = {
 
 type ArticlesListResult<T> = { items: T[]; total: number };
 
+const ORDER: Record<NonNullable<ArticlesQuery["sort"]>, string> = {
+  date_desc: "order(publishedAt desc, title asc)",
+  date_asc: "order(publishedAt asc, title asc)",
+  title_asc: "order(title asc, publishedAt desc)",
+};
+
 function getOrderClause(sort: ArticlesQuery["sort"]) {
-  switch (sort) {
-    case "title_asc":
-      return "order(title asc, publishedAt desc)";
-    case "date_asc":
-      return "order(publishedAt asc, title asc)";
-    case "date_desc":
-    default:
-      return "order(publishedAt desc, title asc)";
-  }
+  return ORDER[sort ?? "date_desc"];
 }
 
 export async function getArticles(

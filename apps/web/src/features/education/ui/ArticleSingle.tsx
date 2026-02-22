@@ -13,19 +13,13 @@ export default function ArticleSingleComponent({ article }: Props) {
   const portableTextComponents: PortableTextComponents = {
     block: {
       h2: ({ children }) => (
-        <h2 className="text-titles text-2xl [overflow-wrap:anywhere] break-words lg:text-[42px]">
-          {children}
-        </h2>
+        <h2 className="text-titles text-2xl wrap-anywhere lg:text-[42px]">{children}</h2>
       ),
       h3: ({ children }) => (
-        <h3 className="text-titles text-lg font-semibold [overflow-wrap:anywhere] break-words lg:text-2xl">
-          {children}
-        </h3>
+        <h3 className="text-titles text-lg font-semibold wrap-anywhere lg:text-2xl">{children}</h3>
       ),
       normal: ({ children }) => (
-        <p className="text-body text-sm [overflow-wrap:anywhere] break-words whitespace-normal lg:text-xl">
-          {children}
-        </p>
+        <p className="text-body text-sm wrap-anywhere whitespace-normal lg:text-xl">{children}</p>
       ),
     },
     list: {
@@ -42,7 +36,7 @@ export default function ArticleSingleComponent({ article }: Props) {
     <article className="bg-background-primary w-full overflow-x-hidden">
       <Container variant="big">
         <header className="space-y-4">
-          <h1 className="text-titles text-3xl font-semibold lg:text-[52px] [overflow-wrap:anywhere] break-words">
+          <h1 className="text-titles text-3xl font-semibold lg:text-[52px] wrap-anywhere">
             {article.title}
           </h1>
 

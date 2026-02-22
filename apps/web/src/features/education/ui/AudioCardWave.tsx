@@ -153,8 +153,8 @@ export default function AudioCardWave({ title, caption, audioUrl }: Props) {
         </div>
 
         <div className="min-w-0">
-          <div ref={containerRef} className="mt-[18px] h-[42px] w-full min-w-0" />
-          <div className="mt-[13px] text-right text-sm font-semibold tabular-nums text-black/80">
+          <div ref={containerRef} className="mt-4.5 h-10.5 w-full min-w-0" />
+          <div className="mt-3.25 text-right text-sm font-semibold tabular-nums text-black/80">
             {fmt(current)} / {fmt(duration)}
           </div>
         </div>

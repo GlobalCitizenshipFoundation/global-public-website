@@ -109,7 +109,7 @@ export default function Pagination({
       ref={(el) => {
         navRef.current = el;
       }}
-      className="flex items-center justify-center gap-[11px]"
+      className="flex items-center justify-center gap-2.75"
       aria-label="Pagination"
     >
       <div className={slotWidth}>
@@ -124,7 +124,7 @@ export default function Pagination({
         </button>
       </div>
 
-      <div className="flex items-center gap-[11px]">
+      <div className="flex items-center gap-2.75">
         {items.map((it) => {
           if (it === "gap-left" || it === "gap-right") {
             return (

@@ -51,8 +51,8 @@ export default function SearchBox({
   const inputId = useId();
 
   return (
-    <div className="block w-full max-w-[400px]">
-      <div className="flex h-[60px] w-full overflow-hidden rounded-lg border border-secondary-borders bg-white">
+    <div className="block w-full max-w-100">
+      <div className="flex h-15 w-full overflow-hidden rounded-lg border border-secondary-borders bg-white">
         <input
           id={`search-${inputId}`}
           name="search"
@@ -76,7 +76,7 @@ export default function SearchBox({
           disabled={!canClear}
           aria-label="Clear search"
           className={[
-            "h-full w-[60px] shrink-0",
+            "h-full w-15 shrink-0",
             "grid place-items-center",
             "bg-primary text-white",
             "transition-opacity",
