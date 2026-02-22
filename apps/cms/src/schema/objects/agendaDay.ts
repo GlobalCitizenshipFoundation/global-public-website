@@ -1,5 +1,6 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { isRecord } from "../helpers";
+import { asSessionLike } from "../helpers/asSessionLike";
 import { asYmdLocal } from "../helpers/dates";
 
 export const agendaDay = defineType({
@@ -33,8 +34,11 @@ export const agendaDay = defineType({
       for (const sess of sessionsUnknown) {
         if (!isRecord(sess)) continue;
 
-        const startYMD = asYmdLocal(sess["startAt"]);
-        const endYMD = asYmdLocal(sess["endAt"]);
+        const s = asSessionLike(sess);
+        if (!s) continue;
+
+        const startYMD = asYmdLocal(s.startAt);
+        const endYMD = asYmdLocal(s.endAt);
 
         if (!startYMD || !endYMD) continue;
 
