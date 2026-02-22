@@ -1,6 +1,5 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { headingField, portableTextField, urlField } from "../fields";
-import { isRecord } from "../helpers";
 import { asVenueLocationLike } from "../helpers/asVenueLocationLike";
 import { asDate } from "../helpers/dates";
 import { type AttendanceMode, type EventDoc, getDoc, type PricingStatus } from "../helpers/getDoc";
