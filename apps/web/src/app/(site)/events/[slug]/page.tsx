@@ -1,3 +1,4 @@
+// apps/web/src/app/(site)/events/[slug]/page.tsx
 import type { EventSingleType } from "@gcf/types";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -16,10 +17,13 @@ function pickTitle(event: EventSingleType, slug: string) {
     "eventHeading" in event &&
     typeof event.eventHeading === "string" &&
     event.eventHeading.trim()
-  )
+  ) {
     return event.eventHeading;
+  }
 
-  if ("title" in event && typeof event.title === "string" && event.title.trim()) return event.title;
+  if ("title" in event && typeof event.title === "string" && event.title.trim()) {
+    return event.title;
+  }
 
   return slug.replace(/-/g, " ");
 }
@@ -29,15 +33,17 @@ function pickDescription(event: EventSingleType) {
     "metaDescription" in event &&
     typeof event.metaDescription === "string" &&
     event.metaDescription.trim()
-  )
+  ) {
     return event.metaDescription;
+  }
 
   if (
     "shortDescription" in event &&
     typeof event.shortDescription === "string" &&
     event.shortDescription.trim()
-  )
+  ) {
     return event.shortDescription;
+  }
 
   return "Event by Global Citizenship Foundation.";
 }
@@ -77,7 +83,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const title = pickTitle(event, slug);
   const description = pickDescription(event);
-  const ogImage = pickOgImage(event); // <-- TO DODAJEMY
+  const ogImage = pickOgImage(event);
 
   return {
     title,
@@ -86,10 +92,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title,
       description,
       type: "article",
-      ...(ogImage ? { images: [{ url: ogImage, alt: title }] } : {}),
+      ...(ogImage ? { images: [{ url: ogImage, alt: title, width: 1200, height: 630 }] } : {}),
     },
     twitter: {
-      card: ogImage ? "summary_large_image" : "summary",
+      card: "summary_large_image",
       title,
       description,
       ...(ogImage ? { images: [ogImage] } : {}),
