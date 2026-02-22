@@ -25,8 +25,14 @@ const poppins = Poppins({
   display: "swap",
 });
 
+function env(name: "NEXT_PUBLIC_SITE_URL"): string | undefined {
+  return process.env[name];
+}
+
+const siteUrl = env("NEXT_PUBLIC_SITE_URL") ?? "http://localhost:3000";
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://twoja-domena.org"), // <- ustaw jak masz domenę
+  metadataBase: new URL(siteUrl), // <- ustaw jak masz domenę
   title: {
     default: "Global Citizenship Foundation",
     template: "%s | Global Citizenship Foundation",
