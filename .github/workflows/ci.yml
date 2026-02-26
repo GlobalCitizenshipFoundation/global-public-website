@@ -2,9 +2,9 @@ name: CI
 
 on:
   pull_request:
-    branches: [main, develop]
+    branches: [main]
   push:
-    branches: [main, develop]
+    branches: [main]
 
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
@@ -63,16 +63,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Node (with pnpm cache)
+      # 1) Node bez cache (bo cache: pnpm wymaga pnpm w PATH)
+      - name: Setup Node (no cache yet)
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: pnpm
-          cache-dependency-path: pnpm-lock.yaml
 
-      - name: Update Corepack (signature fixes)
-        run: npm i -g corepack@latest
-
+      # 2) Aktywuj pnpm przez Corepack na podstawie packageManager z root package.json
       - name: Enable Corepack + activate pnpm from packageManager
         run: |
           corepack enable
@@ -80,6 +77,14 @@ jobs:
           echo "Using pnpm spec: $PNPM_SPEC"
           corepack prepare "$PNPM_SPEC" --activate
           pnpm --version
+
+      # 3) Dopiero teraz wolno włączyć cache pnpm w setup-node
+      - name: Setup Node (with pnpm cache)
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
 
       - name: Prefetch deps to pnpm store
         run: pnpm fetch --frozen-lockfile
@@ -106,22 +111,25 @@ jobs:
           test -n "${NEXT_PUBLIC_SANITY_DATASET}" || (echo "Missing NEXT_PUBLIC_SANITY_DATASET (set vars.NEXT_PUBLIC_SANITY_DATASET)" && exit 1)
           test -n "${NEXT_PUBLIC_SANITY_API_VERSION}" || (echo "Missing NEXT_PUBLIC_SANITY_API_VERSION (set vars.NEXT_PUBLIC_SANITY_API_VERSION)" && exit 1)
 
+      - name: Setup Node (no cache yet)
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Enable Corepack + activate pnpm from packageManager
+        run: |
+          corepack enable
+          PNPM_SPEC="$(node -p "require('./package.json').packageManager")"
+          echo "Using pnpm spec: $PNPM_SPEC"
+          corepack prepare "$PNPM_SPEC" --activate
+          pnpm --version
+
       - name: Setup Node (restore pnpm cache)
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: pnpm
           cache-dependency-path: pnpm-lock.yaml
-
-      - name: Update Corepack (signature fixes)
-        run: npm i -g corepack@latest
-
-      - name: Enable Corepack + activate pnpm from packageManager
-        run: |
-          corepack enable
-          PNPM_SPEC="$(node -p "require('./package.json').packageManager")"
-          corepack prepare "$PNPM_SPEC" --activate
-          pnpm --version
 
       - name: Install (offline)
         run: pnpm install --frozen-lockfile --offline
@@ -166,22 +174,25 @@ jobs:
           test -n "${SANITY_STUDIO_DATASET}" || (echo "Missing SANITY_STUDIO_DATASET (set vars.SANITY_STUDIO_DATASET)" && exit 1)
           test -n "${SANITY_STUDIO_APP_ID}" || (echo "Missing SANITY_STUDIO_APP_ID (set vars.SANITY_STUDIO_APP_ID)" && exit 1)
 
+      - name: Setup Node (no cache yet)
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Enable Corepack + activate pnpm from packageManager
+        run: |
+          corepack enable
+          PNPM_SPEC="$(node -p "require('./package.json').packageManager")"
+          echo "Using pnpm spec: $PNPM_SPEC"
+          corepack prepare "$PNPM_SPEC" --activate
+          pnpm --version
+
       - name: Setup Node (restore pnpm cache)
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: pnpm
           cache-dependency-path: pnpm-lock.yaml
-
-      - name: Update Corepack (signature fixes)
-        run: npm i -g corepack@latest
-
-      - name: Enable Corepack + activate pnpm from packageManager
-        run: |
-          corepack enable
-          PNPM_SPEC="$(node -p "require('./package.json').packageManager")"
-          corepack prepare "$PNPM_SPEC" --activate
-          pnpm --version
 
       - name: Install (offline)
         run: pnpm install --frozen-lockfile --offline
