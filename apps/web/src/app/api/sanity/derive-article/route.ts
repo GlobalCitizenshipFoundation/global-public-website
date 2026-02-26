@@ -2,7 +2,7 @@ import type { PortableTextBlock } from "@portabletext/react";
 import { NextResponse } from "next/server";
 
 import { readingMinutes } from "@/features/education/lib/readingTime";
-import { sanityWriteClient } from "@/shared/sanity/server";
+import { getSanityWriteClient } from "@/shared/sanity/server";
 
 function isObj(x: unknown): x is Record<string, unknown> {
   return typeof x === "object" && x !== null;
@@ -48,6 +48,9 @@ export async function POST(req: Request) {
   const provided = req.headers.get("x-webhook-secret");
   if (provided !== secret) return unauthorized();
 
+  // ✅ dopiero po autoryzacji tworzysz klienta (wymaga tokena)
+  const sanityWriteClient = getSanityWriteClient();
+
   const json = (await req.json().catch(() => null)) as unknown;
   if (!isObj(json)) return badRequest("Invalid JSON");
 
@@ -55,7 +58,6 @@ export async function POST(req: Request) {
   if (type !== "article") return badRequest("Not an article");
 
   const id = getString(json, "documentId") ?? getString(json, "_id") ?? getString(json, "id");
-
   if (!id) return badRequest("Missing documentId");
 
   const doc = await sanityWriteClient.fetch<{ body?: unknown } | null>(
@@ -63,9 +65,7 @@ export async function POST(req: Request) {
     { id },
   );
 
-  if (!doc) {
-    return NextResponse.json({ ok: false, error: "Not found" }, { status: 404 });
-  }
+  if (!doc) return NextResponse.json({ ok: false, error: "Not found" }, { status: 404 });
 
   const blocks = isPortableTextBlockArray(doc.body) ? doc.body : undefined;
   const minutes = readingMinutes(blocks, 200);

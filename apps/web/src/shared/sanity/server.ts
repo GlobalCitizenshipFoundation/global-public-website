@@ -6,10 +6,12 @@ function requireEnv(name: string) {
   return v;
 }
 
-export const sanityWriteClient = createClient({
-  projectId: requireEnv("NEXT_PUBLIC_SANITY_PROJECT_ID"),
-  dataset: requireEnv("NEXT_PUBLIC_SANITY_DATASET"),
-  apiVersion: requireEnv("NEXT_PUBLIC_SANITY_API_VERSION"),
-  token: requireEnv("SANITY_WRITE_TOKEN"),
-  useCdn: false,
-});
+export function getSanityWriteClient() {
+  return createClient({
+    projectId: requireEnv("NEXT_PUBLIC_SANITY_PROJECT_ID"),
+    dataset: requireEnv("NEXT_PUBLIC_SANITY_DATASET"),
+    apiVersion: requireEnv("NEXT_PUBLIC_SANITY_API_VERSION"),
+    token: requireEnv("SANITY_WRITE_TOKEN"),
+    useCdn: false,
+  });
+}
