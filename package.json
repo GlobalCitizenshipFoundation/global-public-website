@@ -14,7 +14,7 @@
   },
   "engines": {
     "node": ">=24.13.0",
-    "pnpm": ">=10.29.1"
+    "pnpm": ">=10.29.2"
   },
   "description": "Global Citizenship Foundation public website monorepo (Next.js + Sanity).",
   "homepage": "https://github.com/GlobalCitizenshipFoundation/global-public-website#readme",
