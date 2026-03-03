@@ -1,6 +1,7 @@
 # Global Citizenship Foundation
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/2533c2e3-a8eb-474a-abf9-136fc621f4ff/deploy-status?branch=main)](https://app.netlify.com/projects/global-citizenship-foundation/deploys)
+![Last commit](https://img.shields.io/github/last-commit/GlobalCitizenshipFoundation/global-public-website)
 
 To jest **monorepo** - czyli jedno repozytorium zawiera kilka projektów:
 
@@ -236,25 +237,26 @@ Domyślnie: http://localhost:3333
 
 ---
 
-## Komendy w skrócie
+## Komendy
 
-DEV:
+| Komenda                          | Opis    |
+| -------------------------------- | ------- |
+| pnpm dev                         | Unknown |
+| pnpm -C apps/web dev             | Unknown |
+| pnpm -C apps/web build           | Unknown |
+| pnpm -C apps/web start           | Unknown |
+| pnpm -C apps/cms dev             | Unknown |
+| pnpm -C apps/cms build           | Unknown |
+| pnpm -C apps/cms start           | Unknown |
+| pnpm -C packages/types typecheck | Unknown |
+| pnpm -C packages/types build     | Unknown |
 
-- pnpm dev
+## Współtwórcy
 
-Web:
+Projekt ten istnieje dzięki wszystkim ludziom, którzy się do niego przyczyniają.
 
-- pnpm -C apps/web dev
-- pnpm -C apps/web build
-- pnpm -C apps/web start
+<a href="https://github.com/GlobalCitizenshipFoundation/global-public-website/graphs/contributors"><img src="https://contrib.rocks/image?repo=GlobalCitizenshipFoundation/global-public-website" /></a>
 
-CMS:
+## Licencja
 
-- pnpm -C apps/cms dev
-- pnpm -C apps/cms build
-- pnpm -C apps/cms start
-
-Types:
-
-- pnpm -C packages/types typecheck
-- pnpm -C packages/types build
+[MIT](LICENSE) © Mate Academy
