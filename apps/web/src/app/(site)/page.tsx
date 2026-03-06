@@ -24,14 +24,14 @@ export default function HomePage() {
             priority
             className="object-cover"
           />
-          <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/70 via-black/30 to-transparent" />
+          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,#060644_0%,rgba(6,6,68,0.9)_25%,rgba(25,25,25,0)_100%)]" />
           <Container
             variant="big"
             className="relative z-10 flex min-h-130 items-end pb-12 md:min-h-175 md:pb-16"
           >
             <div className="grid w-full grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16">
               <h1 className="text-background-primary text-4xl leading-tight font-semibold md:text-6xl">
-                Transforming education for everyone.
+                Transforming education for <span className="text-primary">everyone</span>.
               </h1>
               <div className="flex flex-col gap-6">
                 <p className="text-background-primary text-lg md:text-2xl">
