@@ -1,5 +1,6 @@
 import { cn } from "../lib/cn";
 import { forwardRef } from "react";
+import Image from "next/image";
 
 type Props = {
   direction: "prev" | "next";
@@ -20,14 +21,18 @@ export const SwiperButton = forwardRef<HTMLDivElement, Props>(
         )}
       >
         {direction === "prev" && (
-          <img
+          <Image
+            width={12}
+            height={21}
             src="/images/TriangleArrow-left.svg"
             alt="prev-slide"
             className="translate-x-[-2px]"
           />
         )}
         {direction === "next" && (
-          <img
+          <Image
+            width={12}
+            height={21}
             src="/images/TriangleArrow-right.svg"
             alt="next-slide"
             className="translate-x-[2px]"

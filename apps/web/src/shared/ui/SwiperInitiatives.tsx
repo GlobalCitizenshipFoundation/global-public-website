@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 
 // import swiper
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Swiper, SwiperSlide, SwiperRef } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
 import { SwiperButton } from "./SwiperButton";
@@ -20,7 +20,7 @@ interface Props {
 }
 
 export function SwiperInitiatives({ slidesPerView, slidesWidth }: Props) {
-  const containerRef = useRef<HTMLDivElement | null>(null);
+  const containerRef = useRef<SwiperRef | null>(null);
   const [containerWidth, setContainerWidth] = useState(0);
   const prevRef = useRef<HTMLDivElement>(null);
   const nextRef = useRef<HTMLDivElement>(null);
@@ -60,7 +60,7 @@ export function SwiperInitiatives({ slidesPerView, slidesWidth }: Props) {
         prevEl: prevRef.current,
         nextEl: nextRef.current,
       }}
-      onBeforeInit={(swiper: Swiper) => {
+      onBeforeInit={(swiper) => {
         if (swiper.params.navigation) {
           swiper.params.navigation.prevEl = prevRef.current;
           swiper.params.navigation.nextEl = nextRef.current;
