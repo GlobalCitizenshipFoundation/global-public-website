@@ -147,38 +147,26 @@ export default function HomePage() {
         </Container>
       </section>
       {/* DATA */}
-      <section className="bg-background-primary py-16 md:py-24">
+      <section className="bg-background-primary py-16 md:py-24 relative">
+        <div className="hidden min-[1701px]:block absolute top-10 left-0">
+          <Image
+            src="/images/arrow-section-right.png"
+            alt=""
+            aria-hidden="true"
+            width={400}
+            height={200}
+            className="h-auto w-full object-contain"
+          />
+        </div>
         <Container variant="regular">
-          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-[1fr_auto_1fr]">
-            <div className="hidden lg:block">
-              <Image
-                src="/images/arrow-section-right.png"
-                alt=""
-                aria-hidden="true"
-                width={400}
-                height={200}
-                className="h-auto w-full object-contain"
-              />
-            </div>
-            <div className="text-center">
-              <h2 className="text-gray text-4xl font-semibold md:text-6xl">Our 2021 Data</h2>
-              <p className="text-gray mt-4 text-lg md:text-2xl">
-                Here is a look back at the Global Citizenship Foundation&apos;s achievements and
-                milestones in 2021.
-              </p>
-            </div>
-            <div className="hidden lg:block">
-              <Image
-                src="/images/arrow-section-left.png"
-                alt=""
-                aria-hidden="true"
-                width={400}
-                height={200}
-                className="h-auto w-full object-contain"
-              />
-            </div>
+          <div className="text-center">
+            <h2 className="text-gray text-4xl font-semibold">Our 2021 Data</h2>
+            <p className="text-gray mt-4 text-lg md:text-xl max-w-150 m-auto">
+              Here is a look back at the Global Citizenship Foundation&apos;s achievements and
+              milestones in 2021.
+            </p>
           </div>
-          <div className="mt-12 grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-5">
+          <div className="flex justify-between max-[1024px]:justify-center flex-wrap items-center mt-10 gap-x-5 gap-y-10">
             {[
               { value: "9+", label: "Initiatives" },
               { value: "70+", label: "Countries" },
@@ -186,17 +174,27 @@ export default function HomePage() {
               { value: "4978+", label: "Young People" },
               { value: "20580+", label: "Education Leaders" },
             ].map((item) => (
-              <div key={item.label} className="flex flex-col gap-3">
-                <span className="text-gray text-3xl font-semibold md:text-[45px]">
+              <div key={item.label} className="flex flex-col gap-3 w-40 max-[1024px]:w-full">
+                <span className="text-gray text-3xl font-semibold md:text-[25px]">
                   {item.value}
                 </span>
-                <span className="border-t-home-liner text-gray border-t-2 pt-4 text-base md:text-xl">
+                <span className="border-t-home-liner text-gray border-t-2 pt-4 text-base md:text-s">
                   {item.label}
                 </span>
               </div>
             ))}
           </div>
         </Container>
+        <div className="hidden min-[1701px]:block absolute top-10 right-0">
+          <Image
+            src="/images/arrow-section-left.png"
+            alt=""
+            aria-hidden="true"
+            width={400}
+            height={200}
+            className="h-auto w-full object-contain"
+          />
+        </div>
       </section>
       {/* INITIATIVES */}
       <section className="bg-background-darker py-16 md:py-24">
