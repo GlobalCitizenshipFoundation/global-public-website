@@ -68,7 +68,7 @@ export function SwiperInitiatives({ slidesPerView, slidesWidth }: Props) {
         prevEl: prevRef.current,
         nextEl: nextRef.current,
       }}
-      onBeforeInit={(swiper) => {
+      onBeforeInit={(swiper: SwiperType) => {
         swiperRef.current = swiper;
         if (swiper.params.navigation && typeof swiper.params.navigation !== "boolean") {
           swiper.params.navigation.prevEl = prevRef.current;
