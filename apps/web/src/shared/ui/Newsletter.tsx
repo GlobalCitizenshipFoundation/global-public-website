@@ -2,7 +2,7 @@ import { ButtonPrimary } from "@/shared/ui/ButtonPrimary";
 
 export function Newsletter() {
   return (
-    <div className="bg-blue flex w-full min-h-141.5 py-10 flex-col items-center justify-center px-12.5">
+    <div className="bg-dark-blue flex w-full min-h-141.5 py-10 flex-col items-center justify-center px-12.5">
       <h2 className="font-poppins mb-4 text-[42px] font-semibold text-white text-center">
         Transform.Ed Briefing
       </h2>
