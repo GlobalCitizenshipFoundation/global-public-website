@@ -5,6 +5,7 @@ import { ButtonPrimary } from "@/shared/ui/ButtonPrimary";
 import { Container } from "@/shared/ui/Container";
 import { Newsletter } from "@/shared/ui/Newsletter";
 import { SwiperList } from "@/shared/ui/SwiperList";
+import { SwiperInitiatives } from "@/shared/ui/SwiperInitiatives";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -199,6 +200,9 @@ export default function HomePage() {
             textDescription="Realizing United Nations' Sustainable Development Goals and the transformation."
             gap={30}
           />
+          <div className="mt-12 overflow-hidden">
+            <SwiperInitiatives slidesPerView={4} slidesWidth={235} />
+          </div>
         </Container>
       </section>
       {/* MAGAZINE CTA */}
