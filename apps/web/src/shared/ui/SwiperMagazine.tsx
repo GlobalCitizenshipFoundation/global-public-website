@@ -53,7 +53,7 @@ export function SwiperMagazine() {
           prevEl: prevRef.current,
           nextEl: nextRef.current,
         }}
-        onSwiper={(swiper) => {
+        onSwiper={(swiper: SwiperType) => {
           swiperRef.current = swiper;
 
           if (swiper.params.navigation && typeof swiper.params.navigation !== "boolean") {
@@ -66,7 +66,7 @@ export function SwiperMagazine() {
 
           setCurrentSlide(swiper.realIndex + 1);
         }}
-        onSlideChange={(swiper) => {
+        onSlideChange={(swiper: SwiperType) => {
           setCurrentSlide(swiper.activeIndex + 1);
         }}
       >
