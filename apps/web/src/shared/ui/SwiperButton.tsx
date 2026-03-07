@@ -6,18 +6,20 @@ type Props = {
   direction: "prev" | "next";
   className?: string;
   isDisabled?: boolean;
+  name?: string;
 };
 
 export const SwiperButton = forwardRef<HTMLDivElement, Props>(
-  ({ direction, isDisabled, className }, ref) => {
+  ({ direction, isDisabled, className, name }, ref) => {
     return (
       <div
         ref={ref}
         className={cn(
           "w-13.75 h-13.75 rounded-full flex justify-center items-center cursor-pointer bg-[#EE435C]",
-          direction === "prev" ? `${className}-prev` : `${className}-next`,
+          direction === "prev" ? `${name}-prev` : `${name}-next`,
           isDisabled ? "bg-[#222222]" : "",
           "[&.swiper-button-disabled]:bg-[#222222]",
+          className,
         )}
       >
         {direction === "prev" && (

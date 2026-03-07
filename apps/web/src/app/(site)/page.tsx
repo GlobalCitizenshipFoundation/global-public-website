@@ -6,6 +6,7 @@ import { Container } from "@/shared/ui/Container";
 import { Newsletter } from "@/shared/ui/Newsletter";
 // import { SwiperList } from "@/shared/ui/SwiperList";
 import { SwiperInitiatives } from "@/shared/ui/SwiperInitiatives";
+import { SwiperMagazine } from "@/shared/ui/SwiperMagazine";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -220,6 +221,9 @@ export default function HomePage() {
             textDescription="The .ed Magazine is a carefully curated issue-based flagship digital publication."
             gap={30}
           />
+          <div className="mt-12 overflow-hidden">
+            <SwiperMagazine />
+          </div>
         </Container>
       </section>
       <section>

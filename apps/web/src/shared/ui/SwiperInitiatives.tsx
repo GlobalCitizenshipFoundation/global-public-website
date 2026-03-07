@@ -104,8 +104,8 @@ export function SwiperInitiatives({ slidesPerView, slidesWidth }: Props) {
       })}
 
       <div className="flex justify-between mt-10">
-        <SwiperButton ref={prevRef} direction="prev" className="swiper-initiatives" />
-        <SwiperButton ref={nextRef} direction="next" className="swiper-initiatives" />
+        <SwiperButton ref={prevRef} direction="prev" name="swiper-initiatives" />
+        <SwiperButton ref={nextRef} direction="next" name="swiper-initiatives" />
       </div>
     </Swiper>
   );
