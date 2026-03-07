@@ -59,7 +59,7 @@ export default function HomePage() {
                     src="/images/home-education.jpg"
                     alt="Education program session"
                     fill
-                    className="object-cover"
+                    className="z-1 object-cover rounded-tr-full rounded-br-full rounded-bl-full"
                   />
                 </div>
                 <div className="bg-background-primary absolute top-6 left-6 rounded-[20px] px-8 py-6">
@@ -73,7 +73,7 @@ export default function HomePage() {
                 aria-hidden="true"
                 width={538}
                 height={528}
-                className="pointer-events-none absolute -bottom-10 -left-10 hidden lg:block"
+                className="pointer-events-none absolute -bottom-10 -left-50 hidden lg:block z-0"
               />
             </div>
             {/* text block */}
