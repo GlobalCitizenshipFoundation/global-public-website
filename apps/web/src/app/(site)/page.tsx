@@ -4,7 +4,7 @@ import { DataEventHome } from "@/features/home/ui/DataEventHome";
 import { ButtonPrimary } from "@/shared/ui/ButtonPrimary";
 import { Container } from "@/shared/ui/Container";
 import { Newsletter } from "@/shared/ui/Newsletter";
-import { SwiperList } from "@/shared/ui/SwiperList";
+// import { SwiperList } from "@/shared/ui/SwiperList";
 import { SwiperInitiatives } from "@/shared/ui/SwiperInitiatives";
 
 export const metadata: Metadata = {
@@ -53,19 +53,21 @@ export default function HomePage() {
         <Container variant="regular">
           <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
             {/* image block */}
-            <div className="relative">
+            <div className="relative max-w-[820px]">
               <div className="relative overflow-hidden rounded-[20px]">
-                <div className="relative aspect-5/6 w-full">
+                <div className="z-1 relative aspect-5/6 max-lg:aspect-6/3 w-full">
                   <Image
                     src="/images/home-education.jpg"
                     alt="Education program session"
                     fill
-                    className="z-1 object-cover rounded-tr-full rounded-br-full rounded-bl-full"
+                    className="object-cover rounded-tr-full rounded-br-full rounded-bl-full"
                   />
                 </div>
-                <div className="bg-background-primary absolute top-6 left-6 rounded-[20px] px-8 py-6">
-                  <div className="text-gray text-5xl leading-none font-bold">70+</div>
-                  <div className="text-gray mt-1 text-lg font-medium">countries</div>
+                <div className="z-2 bg-background-primary absolute top-6 left-6 rounded-[20px] max-lg:px-4 max-lg:py-2">
+                  <div className="text-gray text-5xl max-lg:text-2xl leading-none font-bold">
+                    70+
+                  </div>
+                  <div className="text-gray mt-1 text-lg max-lg:text-sm font-medium">countries</div>
                 </div>
               </div>
               <Image
@@ -91,7 +93,11 @@ export default function HomePage() {
               </p>
               <div className="flex flex-col gap-3.5">
                 {educationButtons.map((label) => (
-                  <ButtonPrimary key={label} className="w-77.5 max-w-full" href="/education">
+                  <ButtonPrimary
+                    key={label}
+                    className="w-77.5 max-w-full sm:w-[253px]"
+                    href="/education"
+                  >
                     {label}
                   </ButtonPrimary>
                 ))}
@@ -112,7 +118,7 @@ export default function HomePage() {
             gap={30}
           />
         </Container>
-        <SwiperList />
+        {/* <SwiperList /> */}
       </section>
       {/* NEWS CTA */}
       <section className="bg-dark-blue relative py-16 md:py-24">
