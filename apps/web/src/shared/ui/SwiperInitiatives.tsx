@@ -22,7 +22,6 @@ interface Props {
 }
 
 export function SwiperInitiatives({ slidesPerView, slidesWidth }: Props) {
-  const containerRef = useRef<HTMLDivElement | null>(null);
   const swiperRef = useRef<SwiperType | null>(null);
   const prevRef = useRef<HTMLDivElement>(null);
   const nextRef = useRef<HTMLDivElement>(null);
@@ -30,8 +29,8 @@ export function SwiperInitiatives({ slidesPerView, slidesWidth }: Props) {
 
   useEffect(() => {
     const updateWidth = () => {
-      if (containerRef.current) {
-        setContainerWidth(containerRef.current.offsetWidth);
+      if (swiperRef.current) {
+        setContainerWidth(swiperRef.current.el.offsetWidth);
       }
     };
 
@@ -61,56 +60,53 @@ export function SwiperInitiatives({ slidesPerView, slidesWidth }: Props) {
   const exampleSwiperArr: ExampleSwiperCard[] = Array(12).fill(exampleSwiperCard);
 
   return (
-    <div ref={containerRef}>
-      <Swiper
-        ref={containerRef}
-        modules={[Navigation]}
-        slidesPerView="auto"
-        spaceBetween={spaceBetween}
-        navigation={{
-          prevEl: prevRef.current,
-          nextEl: nextRef.current,
-        }}
-        onBeforeInit={(swiper) => {
-          swiperRef.current = swiper;
-          if (swiper.params.navigation && typeof swiper.params.navigation !== "boolean") {
-            swiper.params.navigation.prevEl = prevRef.current;
-            swiper.params.navigation.nextEl = nextRef.current;
-          }
-        }}
-      >
-        {exampleSwiperArr.map((item, index) => {
-          return (
-            <SwiperSlide
-              key={`${index}-${item.title}`}
-              style={{
-                width: "auto",
-                flexShrink: 0,
-              }}
+    <Swiper
+      modules={[Navigation]}
+      slidesPerView="auto"
+      spaceBetween={spaceBetween}
+      navigation={{
+        prevEl: prevRef.current,
+        nextEl: nextRef.current,
+      }}
+      onBeforeInit={(swiper) => {
+        swiperRef.current = swiper;
+        if (swiper.params.navigation && typeof swiper.params.navigation !== "boolean") {
+          swiper.params.navigation.prevEl = prevRef.current;
+          swiper.params.navigation.nextEl = nextRef.current;
+        }
+      }}
+    >
+      {exampleSwiperArr.map((item, index) => {
+        return (
+          <SwiperSlide
+            key={`${index}-${item.title}`}
+            style={{
+              width: "auto",
+              flexShrink: 0,
+            }}
+          >
+            <div
+              style={{ "--my-width": `${slidesWidth}px` } as React.CSSProperties}
+              className="mb-5 rounded-[10px] w-[var(--my-width)] h-[240px]"
             >
-              <div
-                style={{ "--my-width": `${slidesWidth}px` } as React.CSSProperties}
-                className="mb-5 rounded-[10px] w-[var(--my-width)] h-[240px]"
-              >
-                <Image
-                  src={item.src}
-                  alt={item.title}
-                  width={slidesWidth}
-                  height={240}
-                  style={{ objectFit: "cover" }}
-                  className="rounded-[10px] h-[100%]"
-                />
-              </div>
-              <p className="text-black font-bold text-1xl/[103%]">{item.title}</p>
-            </SwiperSlide>
-          );
-        })}
+              <Image
+                src={item.src}
+                alt={item.title}
+                width={slidesWidth}
+                height={240}
+                style={{ objectFit: "cover" }}
+                className="rounded-[10px] h-[100%]"
+              />
+            </div>
+            <p className="text-black font-bold text-1xl/[103%]">{item.title}</p>
+          </SwiperSlide>
+        );
+      })}
 
-        <div className="flex justify-between mt-10">
-          <SwiperButton ref={prevRef} direction="prev" className="swiper-initiatives" />
-          <SwiperButton ref={nextRef} direction="next" className="swiper-initiatives" />
-        </div>
-      </Swiper>
-    </div>
+      <div className="flex justify-between mt-10">
+        <SwiperButton ref={prevRef} direction="prev" className="swiper-initiatives" />
+        <SwiperButton ref={nextRef} direction="next" className="swiper-initiatives" />
+      </div>
+    </Swiper>
   );
 }
