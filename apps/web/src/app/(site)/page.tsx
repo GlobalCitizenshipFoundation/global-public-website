@@ -4,10 +4,11 @@ import { DataEventHome } from "@/features/home/ui/DataEventHome";
 import { ButtonPrimary } from "@/shared/ui/ButtonPrimary";
 import { Container } from "@/shared/ui/Container";
 import { Newsletter } from "@/shared/ui/Newsletter";
-import { SwiperList } from "@/shared/ui/SwiperList";
+// import { SwiperList } from "@/shared/ui/SwiperList";
 import { SwiperInitiatives } from "@/shared/ui/SwiperInitiatives";
 import { SwiperMagazine } from "@/shared/ui/SwiperMagazine";
 import { SwiperCustomers } from "@/shared/ui/SwiperCustomers";
+import { SwiperEvents } from "@/shared/ui/SwiperEvents";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -109,7 +110,7 @@ export default function HomePage() {
         </Container>
       </section>
       {/* FEATURED EVENTS */}
-      <section className="flex w-full flex-col items-center justify-center gap-27 py-16 md:py-24">
+      <section className="flex w-full flex-col items-center justify-center gap-12 py-16 md:py-24">
         <Container variant="regular">
           <DataEventHome
             title={"Featured\nEvents"}
@@ -120,7 +121,10 @@ export default function HomePage() {
             gap={30}
           />
         </Container>
-        <SwiperList />
+        {/* new swiper  */}
+        <SwiperEvents slidesPerView={4} slidesWidth={420} />
+        {/* old swiper */}
+        {/* <SwiperList /> */}
       </section>
       {/* NEWS CTA */}
       <section className="bg-dark-blue relative py-16 md:py-24">

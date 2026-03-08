@@ -57,7 +57,7 @@ export function SwiperCustomers() {
         slidesPerView="auto"
         spaceBetween={30}
         loop
-        loopedSlides={exampleSwiperArr.length}
+        loopedslides={exampleSwiperArr.length}
         loopAdditionalSlides={2}
         style={{
           overflow: "visible",
