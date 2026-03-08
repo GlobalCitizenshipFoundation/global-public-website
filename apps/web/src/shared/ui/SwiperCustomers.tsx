@@ -57,7 +57,6 @@ export function SwiperCustomers() {
         slidesPerView="auto"
         spaceBetween={30}
         loop
-        loopedSlides={exampleSwiperArr.length}
         loopAdditionalSlides={2}
         style={{
           overflow: "visible",
@@ -68,6 +67,7 @@ export function SwiperCustomers() {
           nextEl: nextRef.current,
         }}
         onSwiper={(swiper: SwiperType) => {
+          swiper.params.loopedSlides = exampleSwiperArr.length;
           swiper.loopFix();
 
           swiperRef.current = swiper;
