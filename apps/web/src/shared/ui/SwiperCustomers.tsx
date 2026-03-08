@@ -5,11 +5,19 @@ import Image from "next/image";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperType } from "swiper";
+import type { Swiper as SwiperTypeOriginal } from "swiper";
 import { Navigation } from "swiper/modules";
 
 import "swiper/css";
 
 import { SwiperButton } from "./SwiperButton";
+
+interface SwiperTypeExtended extends SwiperTypeOriginal {
+  loopFix: () => void;
+  params: SwiperTypeOriginal["params"] & {
+    loopedSlides?: number;
+  };
+}
 
 interface ExampleSwiperCard {
   photo: string;
@@ -66,10 +74,9 @@ export function SwiperCustomers() {
           prevEl: prevRef.current,
           nextEl: nextRef.current,
         }}
-        onSwiper={(swiper: SwiperType) => {
+        onSwiper={(swiper: SwiperTypeExtended) => {
           swiper.params.loopedSlides = exampleSwiperArr.length;
           swiper.loopFix();
-
           swiperRef.current = swiper;
 
           if (swiper.params.navigation && typeof swiper.params.navigation !== "boolean") {
