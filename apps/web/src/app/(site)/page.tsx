@@ -206,7 +206,7 @@ export default function HomePage() {
             src="/images/arrow-section-right.png"
             alt=""
             aria-hidden="true"
-            width={400}
+            width={1000}
             height={200}
             className="h-auto w-full object-contain"
           />
@@ -243,7 +243,7 @@ export default function HomePage() {
             src="/images/arrow-section-left.png"
             alt=""
             aria-hidden="true"
-            width={400}
+            width={1000}
             height={200}
             className="h-auto w-full object-contain"
           />
