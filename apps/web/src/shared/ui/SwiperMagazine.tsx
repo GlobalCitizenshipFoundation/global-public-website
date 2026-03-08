@@ -48,6 +48,7 @@ export function SwiperMagazine() {
   return (
     <div className="relative min-[1025px]:pr-50">
       <Swiper
+        spaceBetween={30}
         modules={[Navigation]}
         navigation={{
           prevEl: prevRef.current,
