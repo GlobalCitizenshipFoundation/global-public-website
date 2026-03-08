@@ -113,7 +113,7 @@ export function SwiperCustomers() {
             );
           })}
         </Swiper>
-        <div className="max-[768px]:mt-10 min-[769px]:absolute min-[769px]:-top-32 min-[769px]:right-0 relative flex justify-between items-center gap-2">
+        <div className="max-[769px]:mt-10 min-[769px]:absolute min-[769px]:-top-32 min-[769px]:right-0 relative flex justify-between items-center gap-2">
           <SwiperButton ref={prevRef} direction="prev" name="swiper-customers" />
           <SwiperButton ref={nextRef} direction="next" name="swiper-customers" />
         </div>
