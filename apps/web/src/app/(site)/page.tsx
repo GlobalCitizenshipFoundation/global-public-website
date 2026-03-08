@@ -151,6 +151,54 @@ export default function HomePage() {
           </div>
         </Container>
       </section>
+      {/* INVOLVED */}
+      <section className="py-16 md:py-24">
+        <Container variant="regular">
+          <DataEventHome title={"Get Involved"} gap={30} />
+          <div className="flex justify-between md:flex-row flex-col mt-12 gap-10">
+            <div className="max-w-125 w-full rounded-lg bg-[#F2F2F2]">
+              <Image
+                src="/images/swiper-image.png"
+                alt=""
+                aria-hidden="true"
+                width={400}
+                height={265}
+                className="h-auto w-full object-contain rounded-t-lg"
+              />
+              <div className="p-10">
+                <h3 className="pb-2">Partner with Us</h3>
+                <h5 className="">Invest Towards A Much Better World</h5>
+                <p className="py-5">
+                  Our organization always appreciates the generosity and involvement.
+                </p>
+                <ButtonPrimary href="#" className="!w-[205px]">
+                  Write to us
+                </ButtonPrimary>
+              </div>
+            </div>
+            <div className="max-w-125 w-full rounded-lg bg-[#060644]">
+              <Image
+                src="/images/swiper-image.png"
+                alt=""
+                aria-hidden="true"
+                width={400}
+                height={265}
+                className="h-auto w-full object-contain rounded-t-lg"
+              />
+              <div className="p-10 text-white">
+                <h3 className="pb-2">Partner with Us</h3>
+                <h5 className="">Invest Towards A Much Better World</h5>
+                <p className="py-5 text-white">
+                  Our organization always appreciates the generosity and involvement.
+                </p>
+                <ButtonPrimary href="#" className="!w-[205px]">
+                  Write to us
+                </ButtonPrimary>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </section>
       {/* DATA */}
       <section className="bg-background-primary py-16 md:py-24 relative">
         <div className="hidden min-[1701px]:block absolute top-10 left-0">
