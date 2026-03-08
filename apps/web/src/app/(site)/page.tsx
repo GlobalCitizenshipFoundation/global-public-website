@@ -66,7 +66,7 @@ export default function HomePage() {
                     className="object-cover rounded-tr-full rounded-br-full rounded-bl-full"
                   />
                 </div>
-                <div className="z-2 bg-background-primary absolute top-6 left-6 rounded-[20px] max-lg:px-4 max-lg:py-2">
+                <div className="z-2 bg-background-primary absolute top-6 left-6 rounded-[20px] px-6 py-4  max-lg:px-4 max-lg:py-2">
                   <div className="text-gray text-5xl max-lg:text-2xl leading-none font-bold">
                     70+
                   </div>
