@@ -1,16 +1,16 @@
-// import { getContributors } from "@features/contributors/api/getContributors";
+import { getContributors } from "@features/contributors/api/getContributors";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-// import ContributorFrame from "@/features/contributors/ui/ContributorFrame";
 import { Container } from "@/shared/ui/Container";
+import { ContributorSwiper } from "@/features/contributors/ui/ContributorSwiper";
 
 export const metadata: Metadata = {
   title: "Contributors",
 };
 
 const ContributorsPage = async () => {
-  // const contributors = await getContributors();
+  const contributors = await getContributors();
   return (
     <>
       <section className="relative">
@@ -28,7 +28,7 @@ const ContributorsPage = async () => {
             via-[#0A0F3D]/30 via-55%
             to-transparent"
           />
-          <Container variant="regular" className="relative z-10 flex py-12 md:min-h-175 md:py-32">
+          <Container variant="big" className="relative z-10 flex py-12 md:min-h-175 md:py-32">
             <div className="">
               <h1 className="text-background-primary text-4xl leading-tight font-semibold md:text-6xl">
                 Our team
@@ -67,27 +67,40 @@ const ContributorsPage = async () => {
           </Container>
         </div>
       </section>
-      {/* <Container variant="big" className="mt-25">
-        <h2 className="text-titles mb-5 text-6xl font-semibold">Our Team Members</h2>
-        <p className="mb-23 text-2xl/normal font-normal">
-          Transforming education for global citizenship and sustainable development. We work to
-          wards transforming education for global citizenship and sustainable.
-        </p>
-      </Container>
-      <div className="bg-background-darker py-36">
+      <section className="py-8 md:py-12">
         <Container variant="big">
-          <h3 className="mb-3.5 text-[42px] font-semibold">Designer Team</h3>
-          <p className="text-font-normal mb-23 text-2xl/normal">
-            Transforming education for global citizenship and sustainable The Global Citizen ship
-            Foundation continues commitment Preparing young people for a smart future.
-          </p>
-          <div className="flex flex-wrap gap-10.5">
-            {contributors.map((contributor) => (
-              <ContributorFrame contributor={contributor} key={contributor._id} />
-            ))}
+          <div className="">
+            <h2 className="text-3xl md:text-5xl text-center">
+              Our <span className="text-primary">Design</span> <br />
+              Team Members
+            </h2>
+            <p className="text-l md:text-xl text-center text-light-gray font-normal max-w-220 mx-auto">
+              Transforming education for global citizenship and sustainable development. We work to
+              wards transforming education for global citizenship and sustainable.
+            </p>
+          </div>
+          <div className="mt-10">
+            <ContributorSwiper contributors={contributors} color="#C71C41" />
           </div>
         </Container>
-      </div> */}
+      </section>
+      <section className="py-8 md:py-12">
+        <Container variant="big">
+          <div className="">
+            <h2 className="text-3xl md:text-5xl text-center">
+              Our <span className="text-[#0000C0]">Development</span> <br />
+              Team Members
+            </h2>
+            <p className="text-l md:text-xl text-center text-light-gray font-normal max-w-220 mx-auto">
+              Transforming education for global citizenship and sustainable development. We work to
+              wards transforming education for global citizenship and sustainable.
+            </p>
+          </div>
+          <div className="mt-10">
+            <ContributorSwiper contributors={contributors} color="#0000C0" />
+          </div>
+        </Container>
+      </section>
     </>
   );
 };
