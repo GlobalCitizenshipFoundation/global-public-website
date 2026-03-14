@@ -82,7 +82,7 @@ export function ContributorSwiper({ contributors, color }: Props) {
           swiper.params.navigation.nextEl = nextRef.current;
         }
 
-        if (typeof swiper.params.pagination !== "boolean") {
+        if (swiper.params.pagination && typeof swiper.params.pagination !== "boolean") {
           swiper.params.pagination.el = paginationRef.current;
         }
       }}

@@ -13,6 +13,9 @@ export const Contributor: React.FC<FrameProps> = ({ contributor, style }) => {
   const photoUrl = contributor.photo?.asset?.url;
   const href = slug ? path.contributor(slug) : paths.contributors;
 
+  const name = contributor.name ?? "";
+  const role = contributor.designation ?? "";
+
   return (
     <Link
       style={style}
@@ -21,16 +24,16 @@ export const Contributor: React.FC<FrameProps> = ({ contributor, style }) => {
     >
       <div className="relative h-80 max-[768px]:h-55">
         <Image
-          src={photoUrl}
-          alt={contributor.name}
+          src={photoUrl || ""}
+          alt={name || "Contributor"}
           fill
           priority
           className="object-cover rounded-[12px]"
         />
       </div>
       <div className="px-4 py-6 flex-1 flex flex-col justify-end">
-        <h3 className="text-black pb-2">{contributor.name}</h3>
-        <p className="text-black">{contributor.designation}</p>
+        <h3 className="text-black pb-2">{name}</h3>
+        <p className="text-black">{role}</p>
       </div>
       <div className=""></div>
     </Link>
