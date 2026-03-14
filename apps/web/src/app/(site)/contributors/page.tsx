@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Container } from "@/shared/ui/Container";
 import { ContributorSwiper } from "@/features/contributors/ui/ContributorSwiper";
+import { Newsletter } from "@/shared/ui/Newsletter";
 
 export const metadata: Metadata = {
   title: "Contributors",
@@ -100,6 +101,9 @@ const ContributorsPage = async () => {
             <ContributorSwiper contributors={contributors} color="#0000C0" />
           </div>
         </Container>
+      </section>
+      <section>
+        <Newsletter />
       </section>
     </>
   );
