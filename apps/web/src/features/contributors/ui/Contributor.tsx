@@ -43,6 +43,13 @@ export const Contributor: React.FC<FrameProps> = ({ contributor }) => {
     },
   ];
 
+  const openMenu = (event: React.MouseEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    setHover(!hover);
+  };
+
   return (
     <Link
       href={href}
@@ -64,24 +71,18 @@ export const Contributor: React.FC<FrameProps> = ({ contributor }) => {
             { "opacity-80": hover },
           )}
         ></div>
-        <div
-          onMouseEnter={() => setHover(true)}
-          onMouseLeave={() => setHover(false)}
-          className="group absolute -bottom-5 right-5"
-        >
+        <div onClick={(event) => openMenu(event)} className="absolute -bottom-5 right-5">
           <div
-            className="
-              flex gap-2 flex-col-reverse
-              opacity-0 group-hover:opacity-100
-              translate-y-10 group-hover:-translate-y-2
-              transition duration-300
-              max-h-0 group-hover:max-h-80
-              pointer-events-none
-            "
+            className={cn(
+              "flex gap-2 flex-col-reverse opacity-0 translate-y-10 transition duration-300 max-h-0 pointer-events-none",
+              {
+                ["opacity-100 -translate-y-2 max-h-80 pointer-events-auto"]: hover,
+              },
+            )}
           >
             {socialMedia.map((item) => {
               return (
-                <a
+                <Link
                   href={item.href}
                   key={item.title}
                   className="rounded-full w-10 h-10 bg-[#BDBDBD] shadow-[0_6px_15px_rgba(0,0,0,0.7)]"
@@ -93,11 +94,18 @@ export const Contributor: React.FC<FrameProps> = ({ contributor }) => {
                     height="40"
                     className="object-cover rounded-full"
                   />
-                </a>
+                </Link>
               );
             })}
           </div>
-          <div className="relative rounded-full w-10 h-10 bg-black transition duration-300 group-hover:bg-[#3DB4A0] group-hover:rotate-45 ">
+          <div
+            className={cn(
+              "relative rounded-full w-10 h-10 bg-black transition duration-300 hover:bg-[#3DB4A0]",
+              {
+                ["bg-[#3DB4A0] rotate-45"]: hover,
+              },
+            )}
+          >
             <span className="rounded-full absolute w-5 h-0.5 bg-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></span>
             <span className="rounded-full absolute w-0.5 h-5 bg-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></span>
           </div>
