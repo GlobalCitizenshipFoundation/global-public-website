@@ -25,8 +25,8 @@ export function Faq() {
           </p>
         </div>
         <div className="pt-12">
-          {exampleArr.map((faq) => {
-            return <FaqItem faq={faq} />;
+          {exampleArr.map((faq, index) => {
+            return <FaqItem key={`${index}-${faq.title}`} faq={faq} />;
           })}
         </div>
       </Container>

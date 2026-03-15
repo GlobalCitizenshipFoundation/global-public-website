@@ -9,10 +9,9 @@ import { cn } from "@/shared/lib/cn";
 
 type FrameProps = {
   contributor: RelatedContributorsType;
-  style?: React.CSSProperties;
 };
 
-export const Contributor: React.FC<FrameProps> = ({ contributor, style }) => {
+export const Contributor: React.FC<FrameProps> = ({ contributor }) => {
   const [hover, setHover] = useState(false);
   const slug = contributor.slug?.current;
   const photoUrl = contributor.photo?.asset?.url;
@@ -43,13 +42,12 @@ export const Contributor: React.FC<FrameProps> = ({ contributor, style }) => {
       img: "/images/x.svg",
     },
   ];
-  console.log(hover);
+
   return (
     <Link
-      style={style}
       href={href}
       className={cn(
-        "overflow-hidden bg-[#DFDFDF] flex flex-col h-full rounded-[12px] max-w-85 max-[768px]:max-w-65 w-full transition duration-300",
+        "overflow-hidden bg-[#DFDFDF] flex flex-col rounded-[12px] w-full transition duration-300",
         { "bg-[#BDBDBD]": hover },
       )}
     >
@@ -58,8 +56,7 @@ export const Contributor: React.FC<FrameProps> = ({ contributor, style }) => {
           src={photoUrl || ""}
           alt={name || "Contributor"}
           fill
-          priority
-          className="object-cover rounded-[12px]"
+          className="absolute object-cover rounded-[12px]"
         />
         <div
           className={cn(
@@ -84,7 +81,7 @@ export const Contributor: React.FC<FrameProps> = ({ contributor, style }) => {
           >
             {socialMedia.map((item) => {
               return (
-                <Link
+                <a
                   href={item.href}
                   key={item.title}
                   className="rounded-full w-10 h-10 bg-[#BDBDBD] shadow-[0_6px_15px_rgba(0,0,0,0.7)]"
@@ -96,7 +93,7 @@ export const Contributor: React.FC<FrameProps> = ({ contributor, style }) => {
                     height="40"
                     className="object-cover rounded-full"
                   />
-                </Link>
+                </a>
               );
             })}
           </div>

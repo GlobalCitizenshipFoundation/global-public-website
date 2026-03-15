@@ -91,13 +91,14 @@ export function ContributorSwiper({ contributors, color }: Props) {
         return (
           <SwiperSlide
             key={`${index}-${contributor.name}`}
-            className="!h-auto flex"
+            className="!h-auto"
             style={{
-              width: "auto",
+              display: "flex",
+              maxWidth: slidesWidth,
               flexShrink: 0,
             }}
           >
-            <Contributor style={{ width: slidesWidth }} contributor={contributor} />
+            <Contributor contributor={contributor} />
           </SwiperSlide>
         );
       })}
