@@ -87,11 +87,10 @@ export function ContributorSwiper({ contributors, color }: Props) {
         }
       }}
     >
-      {contributors.map((contributor) => {
+      {contributors.map((contributor, index) => {
         return (
           <SwiperSlide
-            // key={`${index}-${contributor.name}`}
-            key={contributor.id}
+            key={`${index}-${contributor.name}`}
             className="!h-auto flex"
             style={{
               width: "auto",
