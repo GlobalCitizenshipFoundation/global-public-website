@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Container } from "@/shared/ui/Container";
 import { ContributorSwiper } from "@/features/contributors/ui/ContributorSwiper";
 import { Newsletter } from "@/shared/ui/Newsletter";
+import { Faq } from "@/shared/ui/Faq";
 
 export const metadata: Metadata = {
   title: "Contributors",
@@ -104,6 +105,9 @@ const ContributorsPage = async () => {
       </section>
       <section>
         <Newsletter />
+      </section>
+      <section>
+        <Faq />
       </section>
     </>
   );
