@@ -24,23 +24,27 @@ export default function ToggleGroup<T extends string>({
   variant = "tabs",
   ariaLabel,
 }: Props<T>) {
-  const wrapBase =
+  const scrollWrapBase =
     "flex flex-nowrap items-center overflow-x-auto whitespace-nowrap " +
     "[-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden";
 
   const btnBase =
-    "shrink-0 cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-2";
+    "cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-2";
 
   // TABS
   if (variant === "tabs") {
-    const wrap = cn(wrapBase, "h-[60px] gap-[18px] rounded-lg bg-white px-[18px]");
+    const wrap = cn(
+      "grid w-full grid-cols-3 items-center gap-[12px] rounded-lg bg-white p-[8px]",
+      "lg:inline-flex lg:w-auto lg:gap-[18px] lg:px-[18px] lg:py-[8px]",
+    );
 
     const tabBtn = cn(
       btnBase,
-      "h-[44px] rounded-md px-[12px] text-[20px] font-medium leading-none",
+      "flex h-[44px] w-full items-center justify-center rounded-md px-[12px] text-center text-[16px] font-medium leading-none",
       "text-ink",
       "hover:bg-[color-mix(in_oklch,var(--color-ink)_10%,transparent)]",
       "focus-visible:ring-primary/30",
+      "lg:w-auto lg:text-[20px]",
     );
 
     return (
@@ -68,11 +72,11 @@ export default function ToggleGroup<T extends string>({
   }
 
   // TYPES
-  const wrap = cn(wrapBase, "gap-[20px]");
+  const wrap = cn(scrollWrapBase, "gap-[20px]");
 
   const btn = cn(
     btnBase,
-    "h-[60px] rounded-lg border px-[20px] py-[14px] text-[20px] font-medium",
+    "shrink-0 h-[60px] rounded-lg border px-[20px] py-[14px] text-[20px] font-medium",
     "border-ink text-ink focus-visible:ring-ink/30",
   );
 

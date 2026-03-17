@@ -11,13 +11,13 @@ import {
   useState,
 } from "react";
 import { setSearchParams } from "@/shared/lib/url";
+import { cn } from "@/shared/lib/cn";
 
 type Props = {
   page: number;
   totalPages: number;
   siblingCount?: number;
   boundaryCount?: number;
-  param?: string;
 };
 
 type PageItem = number | "gap-left" | "gap-right";
@@ -34,7 +34,6 @@ export default function Pagination({
 
   const navRef = useRef<HTMLElement | null>(null);
 
-  // Anchor-preserving scroll state
   const pendingRef = useRef(false);
   const beforeTopRef = useRef<number | null>(null);
 
@@ -52,8 +51,6 @@ export default function Pagination({
     [page, totalPages, siblingCount, boundaryCount],
   );
 
-  // Run after EVERY render, but do work only when pendingRef says so.
-  // This keeps the UX stable and avoids fake deps that linters whine about.
   useLayoutEffect(() => {
     if (!pendingRef.current) return;
     if (!navRef.current) return;
@@ -89,42 +86,46 @@ export default function Pagination({
 
   if (totalPages <= 1) return null;
 
-  const baseBtn =
-    "h-[55px] rounded-md border px-[20px] text-[16px] font-medium cursor-pointer transition-colors border-navy text-navy " +
-    "hover:bg-navy hover:border-navy hover:text-white " +
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy/30";
+  const iconBtn =
+    "rounded-lg p-2 text-gray-900 transition-colors duration-200 " +
+    "hover:bg-gray-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-300 focus-visible:ring-offset-2 " +
+    "disabled:pointer-events-none disabled:opacity-40 cursor-pointer";
 
   const pageBtn =
-    "h-[55px] w-[55px] rounded-md border text-[16px] font-medium cursor-pointer transition-colors border-navy text-navy " +
-    "hover:bg-navy hover:border-navy hover:text-white " +
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy/30";
+    "flex h-14 w-14 items-center justify-center rounded-2xl border-2 text-2xl font-semibold transition-colors duration-200 " +
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-300 focus-visible:ring-offset-2 cursor-pointer disabled:pointer-events-none disabled:opacity-40";
 
-  const activeBtn = "border-navy bg-navy text-white hover:bg-navy";
+  const inactivePageBtn = "border-black bg-white text-black hover:bg-gray-100";
 
-  const slotWidth = "w-[110px] shrink-0";
-  const hidden = "invisible pointer-events-none";
+  const activePageBtn = "border-primary bg-primary text-white shadow-sm hover:bg-primary";
 
   return (
     <nav
       ref={(el) => {
         navRef.current = el;
       }}
-      className="flex items-center justify-center gap-2.75"
+      className="flex items-center justify-center gap-3"
       aria-label="Pagination"
     >
-      <div className={slotWidth}>
-        <button
-          type="button"
-          onClick={() => go(page - 1)}
-          className={[baseBtn, !canPrev ? hidden : ""].join(" ")}
-          disabled={!canPrev}
-          aria-disabled={!canPrev}
+      <button
+        type="button"
+        onClick={() => go(page - 1)}
+        className={iconBtn}
+        disabled={!canPrev}
+        aria-label="Previous Page"
+      >
+        <svg
+          className="h-8 w-8 stroke-[3]"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
         >
-          Prev
-        </button>
-      </div>
+          <path d="M15 19l-7-7 7-7" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
 
-      <div className="flex items-center gap-2.75">
+      <div className="flex items-center gap-2">
         {items.map((it) => {
           if (it === "gap-left" || it === "gap-right") {
             return (
@@ -133,7 +134,6 @@ export default function Pagination({
                 currentPage={page}
                 totalPages={totalPages}
                 onCommit={go}
-                className={baseBtn}
                 side={it}
               />
             );
@@ -144,7 +144,7 @@ export default function Pagination({
               key={it}
               type="button"
               onClick={() => go(it)}
-              className={[pageBtn, it === page ? activeBtn : ""].join(" ")}
+              className={cn(pageBtn, it === page ? activePageBtn : inactivePageBtn)}
               aria-current={it === page ? "page" : undefined}
               aria-label={`Go to page ${it}`}
             >
@@ -154,17 +154,23 @@ export default function Pagination({
         })}
       </div>
 
-      <div className={[slotWidth, "flex justify-end"].join(" ")}>
-        <button
-          type="button"
-          onClick={() => go(page + 1)}
-          className={[baseBtn, !canNext ? hidden : ""].join(" ")}
-          disabled={!canNext}
-          aria-disabled={!canNext}
+      <button
+        type="button"
+        onClick={() => go(page + 1)}
+        className={iconBtn}
+        disabled={!canNext}
+        aria-label="Next Page"
+      >
+        <svg
+          className="h-8 w-8 stroke-[3]"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
         >
-          Next
-        </button>
-      </div>
+          <path d="M9 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
     </nav>
   );
 }
@@ -173,10 +179,9 @@ function EllipsisJump(props: {
   currentPage: number;
   totalPages: number;
   onCommit: (page: number) => void;
-  className: string;
   side: "gap-left" | "gap-right";
 }) {
-  const { currentPage, totalPages, onCommit, className, side } = props;
+  const { currentPage, totalPages, onCommit, side } = props;
 
   const chunk = Math.max(5, Math.ceil(totalPages / 10));
   const suggested =
@@ -186,7 +191,7 @@ function EllipsisJump(props: {
 
   const digits = String(totalPages).length;
   const inputWidthClass =
-    digits <= 2 ? "w-12" : digits === 3 ? "w-14" : digits === 4 ? "w-16" : "w-20";
+    digits <= 2 ? "w-14" : digits === 3 ? "w-16" : digits === 4 ? "w-20" : "w-24";
 
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(String(suggested));
@@ -202,11 +207,13 @@ function EllipsisJump(props: {
 
   const commit = useCallback(() => {
     const n = Number.parseInt(value, 10);
+
     if (!Number.isFinite(n)) {
       setValue(String(suggested));
       setOpen(false);
       return;
     }
+
     onCommit(n);
     setOpen(false);
   }, [onCommit, suggested, value]);
@@ -215,7 +222,7 @@ function EllipsisJump(props: {
     return (
       <button
         type="button"
-        className={className}
+        className="flex h-14 w-10 items-end justify-center pb-2 text-3xl font-bold text-black"
         onClick={() => setOpen(true)}
         aria-label="Jump to page"
         title="Jump to page"
@@ -241,9 +248,9 @@ function EllipsisJump(props: {
         }
       }}
       className={[
-        "h-9 rounded-md border border-navy bg-white px-2 text-center text-[16px] font-medium text-navy",
+        "h-14 rounded-2xl border-2 border-black bg-white px-2 text-center text-xl font-semibold text-black",
         inputWidthClass,
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy/30",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-300 focus-visible:ring-offset-2",
       ].join(" ")}
       aria-label="Jump to page input"
     />
@@ -289,6 +296,7 @@ function getPaginationItems(opts: {
 
   const out: PageItem[] = [];
   const seen = new Set<string>();
+
   for (const it of items) {
     const key = String(it);
     if (!seen.has(key)) {
@@ -296,6 +304,7 @@ function getPaginationItems(opts: {
       out.push(it);
     }
   }
+
   return out;
 }
 
