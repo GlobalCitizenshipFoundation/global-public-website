@@ -58,7 +58,6 @@ export function SwiperEvents({ slidesPerView, slidesWidth }: Props) {
     }
   }, [containerWidth]);
 
-  console.log(spaceBetween, containerWidth);
   const exampleSwiperCard: ExampleSwiperCard = {
     src: "/images/swiper-image.png",
     kind: "Event",
