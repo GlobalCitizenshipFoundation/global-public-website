@@ -28,7 +28,7 @@ export default function ArticleListPage({ page, perPage, total, items, socials }
         <section className="mb-10">
           <h3 className="mb-3.5 text-[42px] font-semibold">Education</h3>
 
-          <div className="flex flex-col flex-wrap gap-5.5">
+          <div className="flex flex-col gap-5.5">
             <p>
               Transforming education for global citizenship and sustainable The Global Citizen ship
               Foundation continues commitment Preparing young people for a smart future.
@@ -50,9 +50,9 @@ export default function ArticleListPage({ page, perPage, total, items, socials }
             </button>
 
             <div className="flex items-center justify-between border-y border-[#DFDFDF] p-2">
-              <span className="font-bold">Sharing:</span>
+              <span className="hidden sm:block font-bold">Sharing:</span>
 
-              <div className="flex gap-3">
+              <div className="flex flex-wrap gap-3">
                 {socials.map((link) => (
                   <SocialLink
                     key={link.name}

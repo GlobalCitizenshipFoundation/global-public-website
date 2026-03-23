@@ -22,6 +22,12 @@ type Slug = {
   current: string;
 };
 
+export interface CategoryType {
+  _id: string;
+  name: string;
+  description: string;
+}
+
 export interface ArticleListItemType {
   _id: string;
   title: string;
@@ -29,7 +35,7 @@ export interface ArticleListItemType {
   description?: string;
   publishedAt: string;
   coverImage?: SanityImage;
-
+  category?: CategoryType;
   // ✅ z CMS (webhook go uzupełnia)
   readingLength?: number;
 }

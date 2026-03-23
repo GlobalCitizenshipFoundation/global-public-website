@@ -31,7 +31,7 @@ const SocialLink: React.FC<SocialLinkProps> = ({
   const baseClasses = "transition-all duration-300 ease-in-out";
 
   const variants: Record<NonNullable<SocialLinkProps["variant"]>, string> = {
-    button: `flex items-center justify-center w-[52px] h-[52px] rounded-md ${bgColor} ${hoverColor}`,
+    button: `flex items-center justify-center w-8 h-8 sm:w-[52px] sm:h-[52px] rounded-md ${bgColor} ${hoverColor}`,
     inline: "flex items-center gap-[7px]",
     vertical: "flex flex-col items-center gap-1",
   };

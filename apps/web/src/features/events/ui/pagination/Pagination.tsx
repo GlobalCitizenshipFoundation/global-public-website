@@ -18,6 +18,7 @@ type Props = {
   totalPages: number;
   siblingCount?: number;
   boundaryCount?: number;
+  pageParamKey?: string;
 };
 
 type PageItem = number | "gap-left" | "gap-right";
@@ -27,6 +28,7 @@ export default function Pagination({
   totalPages = 10,
   siblingCount = 1,
   boundaryCount = 1,
+  pageParamKey = "page",
 }: Props) {
   const router = useRouter();
   const pathname = usePathname();
@@ -75,13 +77,13 @@ export default function Pagination({
         pendingRef.current = true;
       }
 
-      const query = setSearchParams(sp, { page: safe });
+      const query = setSearchParams(sp, { [pageParamKey]: safe });
 
       startTransition(() => {
         router.replace(`${pathname}?${query}`, { scroll: false });
       });
     },
-    [page, pathname, router, sp, totalPages],
+    [page, pathname, router, sp, totalPages, pageParamKey],
   );
 
   if (totalPages <= 1) return null;

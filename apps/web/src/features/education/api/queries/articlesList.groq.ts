@@ -2,6 +2,7 @@ const ARTICLES_LIST_FILTER = `
   _type == "article"
   && defined(slug.current)
   && ($q == "" || title match ("*" + $q + "*"))
+  && ($categoryId == "" || category._ref == $categoryId)
 `;
 
 export const ARTICLES_LIST_BASE = `
@@ -15,6 +16,11 @@ export const ARTICLES_LIST_BASE = `
       slug,
       description,
       readingLength,
+      category -> {
+    _id,
+    name,
+    description
+  },
       publishedAt,
       coverImage{
         asset->{
