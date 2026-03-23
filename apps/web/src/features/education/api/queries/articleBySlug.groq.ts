@@ -5,6 +5,11 @@ export const ARTICLE_BY_SLUG_QUERY = `
   slug,
   description,
   publishedAt,
+  category -> {
+    _id,
+    title,
+    description
+  },
   coverImage{
     asset->{ url, metadata{ dimensions, lqip } }
   },

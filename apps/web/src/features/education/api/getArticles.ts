@@ -7,6 +7,7 @@ type ArticlesQuery = {
   sort?: "date_desc" | "date_asc" | "title_asc";
   page?: number;
   perPage?: number;
+  categoryId?: string;
 };
 
 type ArticlesListResult<T> = { items: T[]; total: number };
@@ -24,7 +25,7 @@ function getOrderClause(sort: ArticlesQuery["sort"]) {
 export async function getArticles(
   query: ArticlesQuery = {},
 ): Promise<ArticlesListResult<ArticleListItemType>> {
-  const { q = "", sort = "date_desc", page = 1, perPage = 8 } = query;
+  const { q = "", sort = "date_desc", page = 1, perPage = 8, categoryId = "" } = query;
 
   const start = (page - 1) * perPage;
   const end = start + perPage;
@@ -35,6 +36,7 @@ export async function getArticles(
     q: q.trim(),
     start,
     end,
+    categoryId,
   });
 
   return { items: res?.items ?? [], total: res?.total ?? 0 };
