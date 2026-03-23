@@ -21,6 +21,7 @@
   --color-subtitles: oklch(0.19 0 0); /* #141414 */
   --color-destignation: oklch(0.2 0 0); /* #161616 */
   --color-dark-blue: oklch(0.12 0.06 260); /* #00041C */
+  --color-blue: oklch(0.16 0.08 260); /* #060644 */
   --color-home-beige: oklch(0.97 0.01 85); /* #F8F5EE */
   --color-home-liner: oklch(0.78 0 0); /* #B7B7B7 */
   --color-background-beige: oklch(0.92 0 0); /* #E4E4E4 */

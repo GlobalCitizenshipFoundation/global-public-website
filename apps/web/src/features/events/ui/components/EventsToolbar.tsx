@@ -4,8 +4,10 @@ import { useMemo } from "react";
 import ToggleGroup from "@/shared/ui/ToggleGroup";
 import { useQueryPatch } from "@/shared/hooks/useQueryPatch";
 import SearchBox from "./SearchBox";
+import HorizontalScroller from "./HorizontalScroller";
 
 type EventType = "all" | "conference" | "consultation" | "panel_discussion" | "forum";
+
 type Tab = "all" | "upcoming" | "past";
 
 const TYPES = [
@@ -45,7 +47,7 @@ function patchIfChanged(
   }
 }
 
-export default function EventsToolbar({ title }: Props) {
+export default function EventsToolbar({ title = "All Events" }: Props) {
   const { sp, pushPatch } = useQueryPatch();
 
   const currentType = (sp.get("type") ?? "all") as EventType;
@@ -66,11 +68,11 @@ export default function EventsToolbar({ title }: Props) {
   );
 
   return (
-    <div className="flex flex-col gap-8">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <h1 className="text-3xl font-semibold md:text-[42px]">{title}</h1>
+    <section className="flex flex-col gap-6 md:gap-8">
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between lg:gap-6">
+        <h1 className="text-3xl font-semibold tracking-tight md:text-[42px]">{title}</h1>
 
-        <div className="w-full sm:w-auto">
+        <div className="w-full lg:w-auto lg:min-w-[360px]">
           <SearchBox
             initialValue={qFromUrl}
             onDebouncedChange={onDebouncedSearch}
@@ -79,31 +81,37 @@ export default function EventsToolbar({ title }: Props) {
         </div>
       </div>
 
-      <div className="flex flex-row justify-between gap-3 lg:items-center lg:gap-6">
-        <ToggleGroup
-          variant="tabs"
-          items={TABS}
-          value={currentTab}
-          onChange={(v) =>
-            patchIfChanged(sp, pushPatch, {
-              tab: v === "all" ? null : v,
-              page: 1,
-            })
-          }
-        />
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between lg:gap-6">
+        <div className="w-full lg:w-auto lg:flex-1">
+          <ToggleGroup
+            variant="tabs"
+            items={TABS}
+            value={currentTab}
+            onChange={(v) =>
+              patchIfChanged(sp, pushPatch, {
+                tab: v === "all" ? null : v,
+                page: 1,
+              })
+            }
+          />
+        </div>
 
-        <ToggleGroup
-          variant="types"
-          items={TYPES}
-          value={currentType}
-          onChange={(v) =>
-            patchIfChanged(sp, pushPatch, {
-              type: v === "all" ? null : v,
-              page: 1,
-            })
-          }
-        />
+        <div className="lg:min-w-0">
+          <HorizontalScroller>
+            <ToggleGroup
+              variant="types"
+              items={TYPES}
+              value={currentType}
+              onChange={(v) =>
+                patchIfChanged(sp, pushPatch, {
+                  type: v === "all" ? null : v,
+                  page: 1,
+                })
+              }
+            />
+          </HorizontalScroller>
+        </div>
       </div>
-    </div>
+    </section>
   );
 }

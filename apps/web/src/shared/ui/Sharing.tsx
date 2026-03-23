@@ -21,10 +21,10 @@ export function Sharing({ socialLinks, title = "Sharing:" }: Props) {
     <>
       <BreakLine className="mt-7.5" />
 
-      <section className="flex justify-between py-4.5">
+      <section className="flex justify-between py-4.5 gap-4.5">
         <p>{title}</p>
 
-        <div className="flex gap-8">
+        <div className="flex flex-wrap gap-8 ">
           {socialLinks.map((link) => (
             <SocialLink
               key={link.href}
@@ -45,11 +45,10 @@ export function Sharing({ socialLinks, title = "Sharing:" }: Props) {
             </span>
             <span className="text-borders group-hover:text-primary text-[16px]">Print</span>
           </button>
-          Print
         </div>
       </section>
 
-      <BreakLine className="mb-30" />
+      {/* <BreakLine className="mb-30" /> */}
     </>
   );
 }

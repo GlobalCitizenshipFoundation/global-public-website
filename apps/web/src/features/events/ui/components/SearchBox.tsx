@@ -36,6 +36,7 @@ export default function SearchBox({
       didMountRef.current = true;
       return;
     }
+
     if (!isEditingRef.current) return;
 
     const t = setTimeout(() => {
@@ -47,12 +48,11 @@ export default function SearchBox({
   }, [q, debounceMs]);
 
   const canClear = q.length > 0;
-
   const inputId = useId();
 
   return (
-    <div className="block w-full max-w-100">
-      <div className="flex h-15 w-full overflow-hidden rounded-lg border border-secondary-borders bg-white">
+    <div className="w-full">
+      <div className="flex h-14 w-full overflow-hidden rounded-xl border border-secondary-borders bg-white shadow-sm transition focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/15">
         <input
           id={`search-${inputId}`}
           name="search"
@@ -63,7 +63,7 @@ export default function SearchBox({
             setQ(e.target.value);
           }}
           placeholder="Search"
-          className="h-full w-full bg-transparent px-4 text-[18px] outline-none"
+          className="h-full w-full bg-transparent px-4 text-base text-text-primary outline-none placeholder:text-text-secondary"
         />
 
         <button
@@ -76,15 +76,15 @@ export default function SearchBox({
           disabled={!canClear}
           aria-label="Clear search"
           className={[
-            "h-full w-15 shrink-0",
-            "grid place-items-center",
-            "bg-primary text-white",
-            "transition-opacity",
-            canClear ? "cursor-pointer opacity-100" : "cursor-default opacity-50",
+            "grid h-full w-14 shrink-0 place-items-center",
+            "bg-primary text-white transition",
+            canClear
+              ? "cursor-pointer opacity-100 hover:brightness-95 active:brightness-90"
+              : "cursor-default opacity-45",
             "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30",
           ].join(" ")}
         >
-          <span className="text-2xl leading-none">
+          <span className="text-xl leading-none">
             <FaDeleteLeft />
           </span>
         </button>
