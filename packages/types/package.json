@@ -16,6 +16,9 @@
       "default": "./dist/index.js"
     }
   },
+  "dependencies": {
+    "@portabletext/types": "*"
+  },
   "peerDependencies": {
     "@portabletext/react": "^6.0.2"
   },
