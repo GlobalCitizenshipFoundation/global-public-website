@@ -202,6 +202,10 @@ importers:
         version: 8.55.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
 
   packages/types:
+    dependencies:
+      '@portabletext/types':
+        specifier: '*'
+        version: 4.0.1
     devDependencies:
       '@portabletext/react':
         specifier: ^6.0.2

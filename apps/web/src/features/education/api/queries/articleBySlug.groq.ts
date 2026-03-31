@@ -14,6 +14,16 @@ export const ARTICLE_BY_SLUG_QUERY = `
     asset->{ url, metadata{ dimensions, lqip } }
   },
   "audioUrl": audio.asset->url,
-  body
+  body,
+  endText,
+  sources,
+  readingLength,
+  authors,
+  partners[]->{
+    _id,
+    title,
+    slug,
+    logo{ asset->{ url } }
+  }
 }
 `;
