@@ -1,3 +1,6 @@
+import type { PartnerSingleType } from "./partner";
+import type { PortableTextBlock } from "@portabletext/types";
+
 interface ImageDimensions {
   _type: "sanity.imageDimensions";
   aspectRatio: number;
@@ -42,8 +45,11 @@ export interface ArticleSingleCmsType {
   publishedAt: string;
   coverImage?: SanityImage;
   audioUrl?: string;
-  body?: import("@portabletext/react").PortableTextBlock[];
-
+  body?: PortableTextBlock[];
+  endText?: PortableTextBlock[];
+  sources?: PortableTextBlock[];
+  authors?: string[];
+  partners?: PartnerSingleType[];
   // ✅ z CMS (webhook go uzupełnia)
   readingLength?: number;
 }
