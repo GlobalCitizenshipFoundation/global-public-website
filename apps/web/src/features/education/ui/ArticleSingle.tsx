@@ -7,6 +7,7 @@ import {
   PortableText,
   type PortableTextBlock,
   type PortableTextComponentProps,
+  type PortableTextListComponent,
 } from "@portabletext/react";
 import Image from "next/image";
 import AudioCardWave from "./AudioCardWave";
@@ -44,12 +45,12 @@ const ArticleSingleComponent: React.FC<Props> = ({ article }) => {
       ),
     },
     list: {
-      bullet: ({ children }: { children: React.ReactNode }) => (
+      bullet: (({ children }) => (
         <ul className="ml-6 list-disc space-y-4">{children}</ul>
-      ),
-      number: ({ children }: { children: React.ReactNode }) => (
+      )) as PortableTextListComponent,
+      number: (({ children }) => (
         <ol className="ml-6 list-decimal space-y-6">{children}</ol>
-      ),
+      )) as PortableTextListComponent,
     },
   };
 
