@@ -1,5 +1,5 @@
-import type { PartnerSingleType } from "./partner";
 import type { PortableTextBlock } from "@portabletext/types";
+import type { PartnerSingleType } from "./partner";
 
 interface ImageDimensions {
   _type: "sanity.imageDimensions";
