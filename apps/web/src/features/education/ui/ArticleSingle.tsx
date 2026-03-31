@@ -162,7 +162,7 @@ const ArticleSingleComponent: React.FC<Props> = ({ article }) => {
             {/* READING TIME */}
             {article.readingLength && (
               <div className="inline-flex space-x-2 rounded-[6px] border border-black px-2 py-1 text-sm">
-                <img src="/images/time.svg" alt="" />
+                <Image src="/images/time.svg" alt="" width={16} height={16} />
                 <span>
                   {article.readingLength} {article.readingLength > 1 ? "Minutes" : "Minute"} Read
                 </span>
@@ -175,10 +175,12 @@ const ArticleSingleComponent: React.FC<Props> = ({ article }) => {
                 <h3 className="font-semibold text-base mb-4">Authors</h3>
                 {article.authors.map((author) => (
                   <div key={author} className="flex flex-row items-center gap-x-3">
-                    <img
-                      src="/images/author1.png"
-                      alt={author}
-                      className="h-[60px] w-[60px] rounded-full object-cover shrink-0"
+                    <Image
+                      src={""}
+                      alt={""}
+                      width={60}
+                      height={60}
+                      className="rounded-full object-cover shrink-0"
                     />
                     <div className="flex flex-col">
                       <span className="font-semibold text-sm">{author}</span>
@@ -221,12 +223,13 @@ const ArticleSingleComponent: React.FC<Props> = ({ article }) => {
                     {article.partners.slice(0, 4).map((partner) => (
                       <div
                         key={partner.title}
-                        className="flex h-16 items-center justify-center rounded-lg bg-white p-3 shadow"
+                        className="relative flex h-16 items-center justify-center rounded-lg bg-white shadow"
                       >
-                        <img
-                          src={partner.logo?.asset.url}
+                        <Image
+                          src={partner.logo?.asset.url ?? ""}
                           alt={partner.title}
-                          className="max-h-full max-w-full object-contain"
+                          fill
+                          className="object-contain p-3"
                         />
                       </div>
                     ))}
@@ -248,10 +251,11 @@ const ArticleSingleComponent: React.FC<Props> = ({ article }) => {
             <section>
               <div style={{ backgroundColor: "#D9D9D9" }} className="rounded-lg p-5">
                 <div className="mb-3">
-                  <img
+                  <Image
                     src="/images/additionalLogo.svg"
                     alt="Creative Commons"
-                    className="h-10 w-20"
+                    width={80}
+                    height={40}
                   />
                 </div>
                 <div className="mb-4">
