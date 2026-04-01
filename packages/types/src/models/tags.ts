@@ -3,5 +3,5 @@ export interface TagSingleType {
   slug?: {
     current: string;
   };
-  title: string;
+  title?: string;
 }

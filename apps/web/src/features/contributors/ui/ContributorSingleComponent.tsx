@@ -52,7 +52,7 @@ function pickContributorSocials(c: ContributorSingleType): ContributorSocials {
 export async function ContributorSingleComponent({ contributor }: Props) {
   const socialLinks = getSocialLinksFromCMS(pickContributorSocials(contributor));
   const photoUrl = contributor.photo?.asset?.url;
-
+  console.log(contributor.tags);
   return (
     <>
       <section className="bg-background-darker py-10">

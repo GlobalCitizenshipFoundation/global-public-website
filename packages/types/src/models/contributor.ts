@@ -1,6 +1,7 @@
 import type { PortableTextBlock } from "../sanity/portableText";
 import type { ArticleListItemType } from "./article";
 import type { EventCard } from "./event";
+import type { TagSingleType } from "./tags";
 
 export interface ContributorCard {
   _id: string;
@@ -79,7 +80,7 @@ export interface ContributorSingleType {
 
   articles?: Array<ArticleListItemType>;
   events?: Array<EventCard>;
-  tags?: Array<string>;
+  tags?: TagSingleType[];
   mentors?: Array<ContributorCard>;
   mentees?: Array<ContributorCard>;
 
