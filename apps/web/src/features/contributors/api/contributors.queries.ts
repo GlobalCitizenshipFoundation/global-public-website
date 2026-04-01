@@ -50,6 +50,11 @@ export const CONTRIBUTOR_BY_SLUG_QUERY = `
     },
     articleDisplay,
     eventsDisplay,
+    tags[]->{
+      _id,
+      title,
+      slug
+    },
     "events": *[_type == "eventSingle" && references(^._id)] | order(startDateTime desc) {
       _id,
       slug,
