@@ -1,8 +1,35 @@
 import type { PortableTextBlock } from "../sanity/portableText";
+import type { ArticleListItemType } from "./article";
 import type { EventCard } from "./event";
+
+export interface ContributorCard {
+  _id: string;
+  member?: string;
+  slug?: { current: string };
+  name?: string;
+
+  photo?: {
+    asset: {
+      url: string;
+      metadata?: {
+        dimensions?: {
+          width: number;
+          height: number;
+          aspectRatio: number;
+        };
+        lqip?: string;
+      };
+    };
+  };
+
+  designation?: string;
+  organization?: string;
+  country?: string;
+}
 
 export interface ContributorSingleType {
   _id: string;
+  member?: string;
   title?: string;
   name?: string;
   slug?: { current: string };
@@ -50,7 +77,11 @@ export interface ContributorSingleType {
   articleDisplay?: boolean;
   eventsDisplay?: boolean;
 
+  articles?: Array<ArticleListItemType>;
   events?: Array<EventCard>;
+  tags?: Array<string>;
+  mentors?: Array<ContributorCard>;
+  mentees?: Array<ContributorCard>;
 
   header?: string;
   profileColour?: string;
@@ -59,5 +90,5 @@ export interface ContributorSingleType {
 
 export type RelatedContributorsType = Pick<
   ContributorSingleType,
-  "_id" | "slug" | "name" | "photo" | "designation" | "organization" | "country"
+  "_id" | "member" | "slug" | "name" | "photo" | "designation" | "organization" | "country"
 >;

@@ -3,5 +3,6 @@ export * from "./models/contributor";
 export * from "./models/event";
 export * from "./models/magazine";
 export * from "./models/partner";
+export * from "./models/teamMember";
 export * from "./sanity/image";
 export * from "./sanity/portableText";

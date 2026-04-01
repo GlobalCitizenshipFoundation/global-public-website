@@ -1,8 +1,9 @@
-import type { ContributorSingleType } from "@gcf/types";
+import type { ContributorSingleType, TeamMemberSingleType } from "@gcf/types";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getContributorBySlug } from "@/features/contributors/api/getContributorBySlug";
 import { ContributorSingleComponent } from "@/features/contributors/ui/ContributorSingleComponent";
+import { getTeamMemberBySlug } from "@/features/contributors/api/getTeamMemberBySlug";
 
 export const dynamic = "force-dynamic";
 
@@ -61,18 +62,66 @@ function buildDescription(contributor: unknown) {
   );
 }
 
+// export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+
+//   const { slug } = await params;
+//   const contributor = await getContributorBySlug(slug);
+
+//   if (!contributor) {
+//     return {
+//       title: "Contributor not found",
+//       robots: { index: false, follow: false },
+//     };
+//   }
+
+//   const data = contributor as unknown;
+//   const title = buildTitle(data, slug);
+//   const description = buildDescription(data);
+//   const ogImage = pickAssetUrl(data, ["image", "photo", "avatar", "profileImage"]);
+
+//   return {
+//     title,
+//     description,
+//     openGraph: {
+//       title,
+//       description,
+//       type: "profile",
+//       ...(ogImage ? { images: [{ url: ogImage, alt: title }] } : {}),
+//     },
+//     twitter: {
+//       card: ogImage ? "summary_large_image" : "summary",
+//       title,
+//       description,
+//       ...(ogImage ? { images: [ogImage] } : {}),
+//     },
+//   };
+// }
+
+// export default async function ContributorPage({ params }: PageProps) {
+//   const { slug } = await params;
+
+//   const contributor = await getContributorBySlug(slug);
+
+//   if (!contributor) return notFound();
+
+//   return <ContributorSingleComponent contributor={contributor as ContributorSingleType} />;
+// }
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const contributor = await getContributorBySlug(slug);
 
-  if (!contributor) {
+  const contributor = await getContributorBySlug(slug);
+  const teamMember = await getTeamMemberBySlug(slug);
+  const person = contributor ?? teamMember;
+
+  if (!person) {
     return {
-      title: "Contributor not found",
+      title: "Profile not found",
       robots: { index: false, follow: false },
     };
   }
 
-  const data = contributor as unknown;
+  const data = person as unknown;
   const title = buildTitle(data, slug);
   const description = buildDescription(data);
   const ogImage = pickAssetUrl(data, ["image", "photo", "avatar", "profileImage"]);
@@ -97,8 +146,17 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function ContributorPage({ params }: PageProps) {
   const { slug } = await params;
-  const contributor = await getContributorBySlug(slug);
-  if (!contributor) return notFound();
 
-  return <ContributorSingleComponent contributor={contributor as ContributorSingleType} />;
+  const contributor = await getContributorBySlug(slug);
+  const teamMember = await getTeamMemberBySlug(slug);
+
+  if (contributor) {
+    return <ContributorSingleComponent contributor={contributor as ContributorSingleType} />;
+  }
+
+  if (teamMember) {
+    return <ContributorSingleComponent contributor={teamMember as TeamMemberSingleType} />;
+  }
+
+  return notFound();
 }

@@ -5,6 +5,7 @@ import {
   eventSingle,
   magazinSingle,
   partnersSingle,
+  teamMember,
 } from "./documents";
 import {
   agendaDay,
@@ -29,6 +30,7 @@ export const schemaTypes = [
   // documents
   eventSingle,
   contributorSingle,
+  teamMember,
   partnersSingle,
   magazinSingle,
   article,

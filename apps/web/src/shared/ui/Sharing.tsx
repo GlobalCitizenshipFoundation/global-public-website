@@ -3,7 +3,7 @@
 import { FaPrint } from "react-icons/fa6";
 import SocialLink from "@/features/social/ui/SocialLink";
 import type { SocialName } from "@/shared/config/social";
-import { BreakLine } from "@/shared/ui/BreakLine";
+// import { BreakLine } from "@/shared/ui/BreakLine";
 
 type SocialItem = {
   kind: SocialName;
@@ -19,9 +19,9 @@ type Props = {
 export function Sharing({ socialLinks, title = "Sharing:" }: Props) {
   return (
     <>
-      <BreakLine className="mt-7.5" />
+      {/* <BreakLine className="mt-7.5" /> */}
 
-      <section className="flex justify-between py-4.5 gap-4.5">
+      <section className="mt-7.5 border-t border-b border-[var(--color-line)] flex justify-between py-4.5 gap-4.5">
         <p>{title}</p>
 
         <div className="flex flex-wrap gap-8 ">
@@ -47,6 +47,7 @@ export function Sharing({ socialLinks, title = "Sharing:" }: Props) {
           </button>
         </div>
       </section>
+      {/* <BreakLine className="mt-7.5" /> */}
 
       {/* <BreakLine className="mb-30" /> */}
     </>

@@ -1,4 +1,5 @@
 import { getContributors } from "@features/contributors/api/getContributors";
+import { getTeamMembers } from "@features/contributors/api/getTeamMembers";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -13,6 +14,8 @@ export const metadata: Metadata = {
 
 const ContributorsPage = async () => {
   const contributors = await getContributors();
+  const teamMembers = await getTeamMembers();
+
   return (
     <>
       <section className="relative">
@@ -99,7 +102,7 @@ const ContributorsPage = async () => {
             </p>
           </div>
           <div className="mt-10">
-            <ContributorSwiper contributors={contributors} color="#0000C0" />
+            <ContributorSwiper contributors={teamMembers} color="#0000C0" />
           </div>
         </Container>
       </section>

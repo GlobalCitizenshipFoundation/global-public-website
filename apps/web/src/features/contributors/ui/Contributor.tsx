@@ -51,7 +51,7 @@ export const Contributor: React.FC<FrameProps> = ({ contributor }) => {
   };
 
   return (
-    <div className="relative w-full flex flex-col">
+    <div className="relative w-full flex flex-col max-w-85">
       <Link
         href={href}
         className={cn(
