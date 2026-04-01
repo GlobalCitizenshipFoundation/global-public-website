@@ -12,7 +12,6 @@ import { Container } from "@/shared/ui/Container";
 import { Newsletter } from "@/shared/ui/Newsletter";
 import { PrintButton } from "@/shared/ui/PrintButton";
 import Sharing from "@/shared/ui/Sharing";
-import { Tags } from "@/shared/ui/Tags";
 import { ArticleFrame } from "./ArticleFrame";
 import { Contributor } from "./Contributor";
 
@@ -240,7 +239,22 @@ export async function ContributorSingleComponent({ contributor }: Props) {
         <section className="py-24 bg-background-darker">
           <Container variant="regular">
             <h3 className="text-3xl pb-4">Specialization Tags</h3>
-            <Tags tags={contributor.tags} />
+            <div className="flex flex-wrap gap-2.5">
+              {contributor.tags.map((tag, index) => (
+                <div
+                  key={index + tag._id}
+                  className={[
+                    "group",
+                    "cursor-default select-none",
+                    "hover:bg-white",
+                    "border-secondary-borders flex items-center justify-center rounded-4xl border px-4 py-2.5",
+                    "transition-colors",
+                  ].join(" ")}
+                >
+                  <span className="group-hover:text-primary transition-colors">{tag.title}</span>
+                </div>
+              ))}
+            </div>
           </Container>
         </section>
       ) : null}
