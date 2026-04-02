@@ -54,7 +54,7 @@ export async function ProfileComponent({ contributor }: Props) {
 
   return (
     <>
-      <section className="bg-background-darker py-10">
+      <section className="bg-background-darker py-10 mb-6">
         <Container variant="regular">
           {contributor.featuredProfile ? (
             <div>
@@ -155,7 +155,7 @@ export async function ProfileComponent({ contributor }: Props) {
           </div>
         </Container>
       </section>
-      <section className="py-6">
+      <section className="pb-15">
         <Container variant="regular">
           <p className="text-titles font-poppins mb-3.5 text-[42px] font-semibold">Biography</p>
 
@@ -166,7 +166,7 @@ export async function ProfileComponent({ contributor }: Props) {
         </Container>
       </section>
       {contributor.mentors && contributor.mentors.length > 0 ? (
-        <section className="py-6">
+        <section className="pb-15">
           <Container variant="regular">
             <p className="text-titles font-poppins mb-3.5 text-[42px] font-semibold">Mentors</p>
             <p className="">
@@ -183,7 +183,7 @@ export async function ProfileComponent({ contributor }: Props) {
         </section>
       ) : null}
       {contributor.mentees && contributor.mentees.length > 0 ? (
-        <section className="py-6">
+        <section className="pb-15">
           <Container variant="regular">
             <p className="text-titles font-poppins mb-3.5 text-[42px] font-semibold">Mentees</p>
             <p className="">
@@ -200,7 +200,7 @@ export async function ProfileComponent({ contributor }: Props) {
         </section>
       ) : null}
       {contributor.articles && contributor.articles.length > 0 ? (
-        <section className="py-20">
+        <section className="pb-15">
           <Container variant="regular">
             <section>
               <h3 className="mb-4 text-2xl font-semibold sm:text-3xl">

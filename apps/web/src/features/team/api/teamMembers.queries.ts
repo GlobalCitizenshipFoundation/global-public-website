@@ -44,6 +44,43 @@ export const TEAM_MEMBERS_BY_SLUG_QUERY = `
     bio,
     header,
     profileColour,
-    textColour
+    textColour,
+
+    tags[]->{
+      _id,
+      title,
+      slug
+    },
+    mentors[]->{
+      _id,
+      "member": "contributor",
+      name,
+      slug,
+      photo {
+        asset->{
+          url,
+          metadata { dimensions, lqip }
+        }
+      },
+      designation,
+      organization,
+      country
+    },
+
+    mentees[]->{
+      _id,
+      "member": "contributor",
+      name,
+      slug,
+      photo {
+        asset->{
+          url,
+          metadata { dimensions, lqip }
+        }
+      },
+      designation,
+      organization,
+      country
+    },
   }
 `;

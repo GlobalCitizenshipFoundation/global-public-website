@@ -1,4 +1,4 @@
-import { defineField, defineType } from "sanity";
+import { defineArrayMember, defineField, defineType } from "sanity";
 import { portableTextField } from "../fields/portableTextField";
 
 import { urlField } from "../fields/urlField";
@@ -155,6 +155,44 @@ export const teamMember = defineType({
       fieldset: "theme",
       validation: hexColorValidation,
       description: "HEX, e.g. #ffffff",
+    }),
+
+    defineField({
+      name: "tags",
+      title: "Tags",
+      type: "array",
+      fieldset: "relations",
+      of: [
+        defineArrayMember({
+          type: "reference",
+          to: [{ type: "tag" }],
+        }),
+      ],
+    }),
+    defineField({
+      name: "mentors",
+      title: "Mentors",
+      type: "array",
+      fieldset: "relations",
+      of: [
+        defineArrayMember({
+          type: "reference",
+          to: [{ type: "contributorSingle" }],
+        }),
+      ],
+    }),
+
+    defineField({
+      name: "mentees",
+      title: "Mentees",
+      type: "array",
+      fieldset: "relations",
+      of: [
+        defineArrayMember({
+          type: "reference",
+          to: [{ type: "contributorSingle" }],
+        }),
+      ],
     }),
   ],
   preview: {
