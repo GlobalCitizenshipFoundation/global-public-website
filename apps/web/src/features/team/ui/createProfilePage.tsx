@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ProfileComponent } from "./ProfileComponent";
-import type { ContributorSingleType } from "@gcf/types";
+import type { ProfileSingleType } from "@gcf/types";
 
 type PageProps = {
   params: { slug: string };
@@ -59,7 +59,7 @@ function buildDescription(contributor: unknown) {
 }
 
 type CreatePageOptions = {
-  getBySlug: (slug: string) => Promise<ContributorSingleType | null>;
+  getBySlug: (slug: string) => Promise<ProfileSingleType | null>;
 };
 
 export function createProfilePage({ getBySlug }: CreatePageOptions) {
