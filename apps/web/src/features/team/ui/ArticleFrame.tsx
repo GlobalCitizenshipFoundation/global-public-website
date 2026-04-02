@@ -19,6 +19,7 @@ type Props = {
 };
 
 export function ArticleFrame({ articles, color = "#C71C41" }: Props) {
+  const [locked, setLocked] = useState(false);
   const swiperRef = useRef<SwiperType | null>(null);
   const paginationRef = useRef<HTMLDivElement>(null);
   const prevRef = useRef<HTMLButtonElement | null>(null);
@@ -57,6 +58,7 @@ export function ArticleFrame({ articles, color = "#C71C41" }: Props) {
             "--swiper-pagination-bullet-inactive-opacity": "1",
           } as React.CSSProperties
         }
+        watchOverflow={true}
         slidesPerView="auto"
         slidesPerGroup={1}
         spaceBetween={spaceBetween}
@@ -74,6 +76,15 @@ export function ArticleFrame({ articles, color = "#C71C41" }: Props) {
         navigation={{
           prevEl: prevRef.current,
           nextEl: nextRef.current,
+        }}
+        onInit={(swiper) => {
+          setLocked(swiper.isLocked);
+        }}
+        onResize={(swiper) => {
+          setLocked(swiper.isLocked);
+        }}
+        onBreakpoint={(swiper) => {
+          setLocked(swiper.isLocked);
         }}
         onBeforeInit={(swiper: SwiperType) => {
           swiperRef.current = swiper;
@@ -101,7 +112,11 @@ export function ArticleFrame({ articles, color = "#C71C41" }: Props) {
           </SwiperSlide>
         ))}
 
-        <div className="mt-10 flex justify-center gap-33 max-[1540px]:gap-56 relative">
+        <div
+          className={cn("mt-10 flex justify-center gap-33 max-[1540px]:gap-56 relative", {
+            hidden: locked,
+          })}
+        >
           <div
             ref={paginationRef}
             className="swiper-pagination"

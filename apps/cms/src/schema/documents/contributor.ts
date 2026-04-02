@@ -165,6 +165,18 @@ export const contributorSingle = defineType({
       ],
     }),
     defineField({
+      name: "articles",
+      title: "Articles",
+      type: "array",
+      fieldset: "relations",
+      of: [
+        defineArrayMember({
+          type: "reference",
+          to: [{ type: "article" }],
+        }),
+      ],
+    }),
+    defineField({
       name: "events",
       title: "Events",
       type: "array",

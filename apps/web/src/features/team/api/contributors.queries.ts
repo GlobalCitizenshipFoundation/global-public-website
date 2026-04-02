@@ -55,6 +55,15 @@ export const CONTRIBUTOR_BY_SLUG_QUERY = `
       title,
       slug
     },
+    articles[]->{
+      _id,
+      title,
+      slug,
+      publishedAt,
+      coverImage {
+        asset->{ url }
+      }
+    },
     "events": *[_type == "eventSingle" && references(^._id)] | order(startDateTime desc) {
       _id,
       slug,
