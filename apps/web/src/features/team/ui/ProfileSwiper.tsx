@@ -2,24 +2,24 @@
 
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import type { RelatedContributorsType } from "@gcf/types";
 
 // import swiper
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperType } from "swiper";
 import { Navigation, Pagination } from "swiper/modules";
+import type { ProfileCardType } from "@gcf/types";
 import "swiper/css";
 import "swiper/css/pagination";
 
-import { Contributor } from "./Contributor";
 import { cn } from "@/shared/lib/cn";
+import { ProfileCard } from "./ProfileCard";
 
 type Props = {
-  contributors: RelatedContributorsType[];
+  profiles: ProfileCardType[];
   color: string;
 };
 
-export function ContributorSwiper({ contributors, color }: Props) {
+export function ProfileSwiper({ profiles, color }: Props) {
   const [locked, setLocked] = useState(false);
   const swiperRef = useRef<SwiperType | null>(null);
   const paginationRef = useRef<HTMLDivElement>(null);
@@ -98,10 +98,10 @@ export function ContributorSwiper({ contributors, color }: Props) {
         }
       }}
     >
-      {contributors.map((contributor, index) => {
+      {profiles.map((profile, index) => {
         return (
           <SwiperSlide
-            key={`${index}-${contributor.name}`}
+            key={`${index}-${profile.name}`}
             className="!h-auto"
             style={{
               display: "flex",
@@ -109,7 +109,7 @@ export function ContributorSwiper({ contributors, color }: Props) {
               flexShrink: 0,
             }}
           >
-            <Contributor contributor={contributor} />
+            <ProfileCard profile={profile} />
           </SwiperSlide>
         );
       })}

@@ -2,23 +2,30 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import type { RelatedContributorsType } from "@gcf/types";
+import type { ProfileCardType } from "@gcf/types";
 import { paths, path } from "@/shared/config/paths";
 import { useState } from "react";
 import { cn } from "@/shared/lib/cn";
 
 type FrameProps = {
-  contributor: RelatedContributorsType;
+  profile: ProfileCardType;
 };
 
-export const Contributor: React.FC<FrameProps> = ({ contributor }) => {
+export const ProfileCard: React.FC<FrameProps> = ({ profile }) => {
   const [hover, setHover] = useState(false);
-  const slug = contributor.slug?.current;
-  const photoUrl = contributor.photo?.asset?.url;
-  const href = slug ? path.contributor(slug) : paths.contributors;
+  const slug = profile.slug?.current;
+  const photoUrl = profile.photo?.asset?.url;
 
-  const name = contributor.name ?? "";
-  const role = contributor.designation ?? "";
+  function getHref(slug: string | undefined) {
+    if (profile.member === "contributor") {
+      return slug ? path.contributor(slug) : paths.contributors;
+    }
+
+    return slug ? path.teamMember(slug) : paths.teamMembers;
+  }
+
+  const name = profile.name ?? "";
+  const role = profile.designation ?? "";
 
   const socialMedia = [
     {
@@ -53,7 +60,7 @@ export const Contributor: React.FC<FrameProps> = ({ contributor }) => {
   return (
     <div className="relative w-full flex flex-col max-w-85">
       <Link
-        href={href}
+        href={getHref(slug)}
         className={cn(
           "overflow-hidden bg-[#DFDFDF] h-full flex flex-col rounded-[12px] w-full transition duration-300",
           { "bg-[#BDBDBD]": hover },
@@ -62,7 +69,7 @@ export const Contributor: React.FC<FrameProps> = ({ contributor }) => {
         <div className="relative h-80 max-[768px]:h-65">
           <Image
             src={photoUrl || ""}
-            alt={name || "Contributor"}
+            alt={name || "Person"}
             fill
             className="absolute object-cover rounded-[12px]"
           />

@@ -1,8 +1,8 @@
-import { getContributorBySlug } from "@/features/team/api/getContributorBySlug";
+import { getTeamMemberBySlug } from "@/features/team/api/getTeamMemberBySlug";
 import { createProfilePage } from "@/features/team/ui/createProfilePage";
 
 const { generateMetadata, Page } = createProfilePage({
-  getBySlug: getContributorBySlug,
+  getBySlug: getTeamMemberBySlug,
 });
 
 export { generateMetadata };

@@ -17,6 +17,7 @@ export const paths = {
   partners: "/partners",
   contributors: "/contributors",
   teamMembers: "/team-members",
+  team: "/team",
 
   contact: "/contact",
 

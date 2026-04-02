@@ -1,4 +1,4 @@
-import type { ContributorSingleType } from "@gcf/types";
+import type { ProfileSingleType } from "@gcf/types";
 import { PortableText } from "@portabletext/react";
 import Image from "next/image";
 import { EventCard } from "@/features/events/ui/cards/EventCard";
@@ -12,18 +12,18 @@ import { Container } from "@/shared/ui/Container";
 import { Newsletter } from "@/shared/ui/Newsletter";
 import { PrintButton } from "@/shared/ui/PrintButton";
 import Sharing from "@/shared/ui/Sharing";
+import { ProfileCard } from "./ProfileCard";
 import { ArticleFrame } from "./ArticleFrame";
-import { Contributor } from "./Contributor";
 
 type Props = {
-  contributor: ContributorSingleType;
+  contributor: ProfileSingleType;
 };
 
 /**
  * Mapuje typ CMS (ContributorSingleType) na “płaski” obiekt sociali, który rozumie getSocialLinksFromCMS.
  * DOPASUJ pola do tego co realnie masz w ContributorSingleType.
  */
-function pickContributorSocials(c: ContributorSingleType): ContributorSocials {
+function pickContributorSocials(c: ProfileSingleType): ContributorSocials {
   // Najczęściej w CMS te pola będą miały nazwy typu: twitter, instagram, facebook...
   // Podmień na prawdziwe nazwy z @gcf/types (to jest jedyna rzecz do dostosowania).
   return {
@@ -48,10 +48,10 @@ function pickContributorSocials(c: ContributorSingleType): ContributorSocials {
   };
 }
 
-export async function ContributorSingleComponent({ contributor }: Props) {
+export async function ProfileComponent({ contributor }: Props) {
   const socialLinks = getSocialLinksFromCMS(pickContributorSocials(contributor));
   const photoUrl = contributor.photo?.asset?.url;
-  console.log(contributor.tags);
+
   return (
     <>
       <section className="bg-background-darker py-10">
@@ -176,7 +176,7 @@ export async function ContributorSingleComponent({ contributor }: Props) {
 
             <div className="flex flex-wrap gap-5 mt-10 justify-between">
               {contributor.mentors.map((mentor) => {
-                return <Contributor key={mentor._id} contributor={mentor} />;
+                return <ProfileCard key={mentor._id} profile={mentor} />;
               })}
             </div>
           </Container>
@@ -193,7 +193,7 @@ export async function ContributorSingleComponent({ contributor }: Props) {
 
             <div className="flex flex-wrap gap-5 mt-10 justify-between">
               {contributor.mentees.map((mentee) => {
-                return <Contributor key={mentee._id} contributor={mentee} />;
+                return <ProfileCard key={mentee._id} profile={mentee} />;
               })}
             </div>
           </Container>

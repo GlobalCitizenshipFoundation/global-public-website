@@ -1,7 +1,7 @@
 import type { SanityImage } from "../sanity/image";
 import type { PortableTextBlock } from "../sanity/portableText";
-import type { RelatedContributorsType } from "./contributor";
 import type { RelatedPartnersType } from "./partner";
+import type { ProfileCardType } from "./profile";
 
 export type EventType = "conference" | "consultation" | "panel_discussion" | "forum";
 export type PricingStatus = "free" | "paid";
@@ -33,7 +33,7 @@ export type EventPartnerGroup = {
 
 export type AgendaPerson = {
   _key: string;
-  person: RelatedContributorsType;
+  person: ProfileCardType;
 };
 
 export type AgendaSession = {
@@ -92,11 +92,11 @@ type EventSingleBase = {
 
   speakersHeading?: string;
   speakersText?: PortableTextBlock[];
-  speakers?: RelatedContributorsType[];
+  speakers?: ProfileCardType[];
 
   steeringCommitteeHeading?: string;
   steeringCommitteeText?: PortableTextBlock[];
-  steeringCommittee?: RelatedContributorsType[];
+  steeringCommittee?: ProfileCardType[];
 
   partnersHeading?: string;
   partnersText?: PortableTextBlock[];
