@@ -26,6 +26,12 @@ export type ProfileCard = {
   designation?: string;
   organization?: string;
   country?: string;
+
+  twitter?: string;
+  linkedin?: string;
+  instagram?: string;
+  facebook?: string;
+  website?: string;
 };
 
 export interface ProfileSingleType extends ProfileCard {
@@ -33,12 +39,6 @@ export interface ProfileSingleType extends ProfileCard {
   emailId?: string;
   emailDisplay?: boolean;
   orcidId?: string;
-
-  twitter?: string;
-  linkedin?: string;
-  instagram?: string;
-  facebook?: string;
-  website?: string;
 
   featuredProfile?: boolean;
   shortBio?: string;
@@ -67,5 +67,17 @@ export interface ProfileSingleType extends ProfileCard {
 
 export type ProfileCardType = Pick<
   ProfileSingleType,
-  "_id" | "member" | "slug" | "name" | "photo" | "designation" | "organization" | "country"
+  | "_id"
+  | "member"
+  | "slug"
+  | "name"
+  | "photo"
+  | "designation"
+  | "organization"
+  | "country"
+  | "twitter"
+  | "linkedin"
+  | "instagram"
+  | "facebook"
+  | "website"
 >;

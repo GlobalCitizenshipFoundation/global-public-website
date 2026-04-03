@@ -10,7 +10,12 @@ export const TEAM_MEMBERS_LIST_QUERY = `
         url,
         metadata { dimensions }
       }
-    }
+    },
+    twitter,
+    linkedin,
+    instagram,
+    facebook,
+    website,
   }
 `;
 
