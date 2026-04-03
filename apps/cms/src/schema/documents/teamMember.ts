@@ -169,6 +169,7 @@ export const teamMember = defineType({
         }),
       ],
     }),
+
     defineField({
       name: "mentors",
       title: "Mentors",
@@ -177,9 +178,33 @@ export const teamMember = defineType({
       of: [
         defineArrayMember({
           type: "reference",
-          to: [{ type: "contributorSingle" }],
+          to: [{ type: "teamMember" }],
+          options: {
+            filter: ({ document }) => {
+              const id = document?._id?.replace(/^drafts\./, "");
+              return {
+                filter: `_id != $id && _id != $draftId`,
+                params: {
+                  id,
+                  draftId: `drafts.${id}`,
+                },
+              };
+            },
+          },
         }),
       ],
+      validation: (Rule) =>
+        Rule.custom((mentors, context) => {
+          const docId = context.document?._id?.replace(/^drafts\./, "");
+
+          if (!Array.isArray(mentors) || !docId) return true;
+
+          const hasSelf = mentors.some((m: any) => {
+            return m?._ref === docId || m?._ref === `drafts.${docId}`;
+          });
+
+          return hasSelf ? "Can't add yourself" : true;
+        }),
     }),
 
     defineField({
@@ -190,9 +215,33 @@ export const teamMember = defineType({
       of: [
         defineArrayMember({
           type: "reference",
-          to: [{ type: "contributorSingle" }],
+          to: [{ type: "teamMember" }],
+          options: {
+            filter: ({ document }) => {
+              const id = document?._id?.replace(/^drafts\./, "");
+              return {
+                filter: `_id != $id && _id != $draftId`,
+                params: {
+                  id,
+                  draftId: `drafts.${id}`,
+                },
+              };
+            },
+          },
         }),
       ],
+      validation: (Rule) =>
+        Rule.custom((mentees, context) => {
+          const docId = context.document?._id?.replace(/^drafts\./, "");
+
+          if (!Array.isArray(mentees) || !docId) return true;
+
+          const hasSelf = mentees.some((m: any) => {
+            return m?._ref === docId || m?._ref === `drafts.${docId}`;
+          });
+
+          return hasSelf ? "Can't add yourself" : true;
+        }),
     }),
   ],
   preview: {

@@ -53,7 +53,7 @@ export const TEAM_MEMBERS_BY_SLUG_QUERY = `
     },
     mentors[]->{
       _id,
-      "member": "contributor",
+      "member": "teamMember",
       name,
       slug,
       photo {
@@ -69,7 +69,7 @@ export const TEAM_MEMBERS_BY_SLUG_QUERY = `
 
     mentees[]->{
       _id,
-      "member": "contributor",
+      "member": "teamMember",
       name,
       slug,
       photo {
