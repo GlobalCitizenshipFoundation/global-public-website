@@ -5,6 +5,20 @@ import { urlField } from "../fields/urlField";
 import countryOptions from "../utils/countryOptions";
 import { hexColorValidation } from "../validation/hexColorValidation";
 
+type Ref = {
+  _ref: string;
+  _type: "reference";
+};
+
+function isRef(value: unknown): value is Ref {
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    "_ref" in value &&
+    typeof (value as { _ref?: unknown })._ref === "string"
+  );
+}
+
 export const teamMember = defineType({
   name: "teamMember",
   title: "Team Members",
@@ -179,31 +193,36 @@ export const teamMember = defineType({
         defineArrayMember({
           type: "reference",
           to: [{ type: "teamMember" }],
+
           options: {
             filter: ({ document }) => {
               const id = document?._id?.replace(/^drafts\./, "");
+
               return {
                 filter: `_id != $id && _id != $draftId`,
                 params: {
                   id,
-                  draftId: `drafts.${id}`,
+                  draftId: id ? `drafts.${id}` : undefined,
                 },
               };
             },
           },
         }),
       ],
+
       validation: (Rule) =>
         Rule.custom((mentors, context) => {
           const docId = context.document?._id?.replace(/^drafts\./, "");
 
           if (!Array.isArray(mentors) || !docId) return true;
 
-          const hasSelf = mentors.some((m: any) => {
-            return m?._ref === docId || m?._ref === `drafts.${docId}`;
+          const hasSelf = mentors.some((m) => {
+            if (!isRef(m)) return false;
+
+            return m._ref === docId || m._ref === `drafts.${docId}`;
           });
 
-          return hasSelf ? "Can't add yourself" : true;
+          return hasSelf ? "Can't add yourself as mentor" : true;
         }),
     }),
 
@@ -212,35 +231,41 @@ export const teamMember = defineType({
       title: "Mentees",
       type: "array",
       fieldset: "relations",
+
       of: [
         defineArrayMember({
           type: "reference",
           to: [{ type: "teamMember" }],
+
           options: {
             filter: ({ document }) => {
               const id = document?._id?.replace(/^drafts\./, "");
+
               return {
                 filter: `_id != $id && _id != $draftId`,
                 params: {
                   id,
-                  draftId: `drafts.${id}`,
+                  draftId: id ? `drafts.${id}` : undefined,
                 },
               };
             },
           },
         }),
       ],
+
       validation: (Rule) =>
         Rule.custom((mentees, context) => {
           const docId = context.document?._id?.replace(/^drafts\./, "");
 
           if (!Array.isArray(mentees) || !docId) return true;
 
-          const hasSelf = mentees.some((m: any) => {
-            return m?._ref === docId || m?._ref === `drafts.${docId}`;
+          const hasSelf = mentees.some((m) => {
+            if (!isRef(m)) return false;
+
+            return m._ref === docId || m._ref === `drafts.${docId}`;
           });
 
-          return hasSelf ? "Can't add yourself" : true;
+          return hasSelf ? "Can't add yourself as mentees" : true;
         }),
     }),
   ],
