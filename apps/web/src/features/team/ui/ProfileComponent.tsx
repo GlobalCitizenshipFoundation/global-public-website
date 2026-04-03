@@ -175,8 +175,8 @@ export async function ProfileComponent({ contributor }: Props) {
             </p>
 
             <div className="flex flex-wrap gap-5 mt-10 justify-between">
-              {contributor.mentors.map((mentor) => {
-                return <ProfileCard key={mentor._id} profile={mentor} />;
+              {contributor.mentors.map((mentor, index) => {
+                return <ProfileCard key={`${mentor._id}-${index}`} profile={mentor} />;
               })}
             </div>
           </Container>
@@ -192,8 +192,8 @@ export async function ProfileComponent({ contributor }: Props) {
             </p>
 
             <div className="flex flex-wrap gap-5 mt-10 justify-between">
-              {contributor.mentees.map((mentee) => {
-                return <ProfileCard key={mentee._id} profile={mentee} />;
+              {contributor.mentees.map((mentee, index) => {
+                return <ProfileCard key={`${mentee._id}-${index}`} profile={mentee} />;
               })}
             </div>
           </Container>
