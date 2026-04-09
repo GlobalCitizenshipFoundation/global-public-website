@@ -98,9 +98,9 @@ export function ArticleFrame({ articles, color = "#C71C41" }: Props) {
           }
         }}
       >
-        {articles.map((article) => (
+        {articles.map((article, index) => (
           <SwiperSlide
-            key={article._id}
+            key={`${article._id}-${index}`}
             className="!h-auto"
             style={{
               display: "flex",
