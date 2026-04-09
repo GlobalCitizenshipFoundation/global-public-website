@@ -1,11 +1,13 @@
 import type { PortableTextBlock } from "../sanity/portableText";
+import type { ArticleListItemType } from "./article";
 import type { EventCard } from "./event";
+import type { TagSingleType } from "./tags";
 
-export interface ContributorSingleType {
+export type ProfileCard = {
   _id: string;
-  title?: string;
-  name?: string;
+  member?: string;
   slug?: { current: string };
+  name?: string;
 
   photo?: {
     asset: {
@@ -21,20 +23,22 @@ export interface ContributorSingleType {
     };
   };
 
-  gender?: "male" | "female";
   designation?: string;
   organization?: string;
   country?: string;
-
-  emailId?: string;
-  emailDisplay?: boolean;
-  orcidId?: string;
 
   twitter?: string;
   linkedin?: string;
   instagram?: string;
   facebook?: string;
   website?: string;
+};
+
+export interface ProfileSingleType extends ProfileCard {
+  gender?: "male" | "female";
+  emailId?: string;
+  emailDisplay?: boolean;
+  orcidId?: string;
 
   featuredProfile?: boolean;
   shortBio?: string;
@@ -50,14 +54,30 @@ export interface ContributorSingleType {
   articleDisplay?: boolean;
   eventsDisplay?: boolean;
 
+  articles?: Array<ArticleListItemType>;
   events?: Array<EventCard>;
+  tags?: TagSingleType[];
+  mentors?: Array<ProfileCard>;
+  mentees?: Array<ProfileCard>;
 
   header?: string;
   profileColour?: string;
   textColour?: string;
 }
 
-export type RelatedContributorsType = Pick<
-  ContributorSingleType,
-  "_id" | "slug" | "name" | "photo" | "designation" | "organization" | "country"
+export type ProfileCardType = Pick<
+  ProfileSingleType,
+  | "_id"
+  | "member"
+  | "slug"
+  | "name"
+  | "photo"
+  | "designation"
+  | "organization"
+  | "country"
+  | "twitter"
+  | "linkedin"
+  | "instagram"
+  | "facebook"
+  | "website"
 >;

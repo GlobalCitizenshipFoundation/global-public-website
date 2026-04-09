@@ -3,12 +3,12 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import type { RelatedContributorsType } from "@gcf/types";
+import type { ProfileCardType } from "@gcf/types";
 
 import { paths, path } from "@/shared/config/paths";
 
 type FrameProps = {
-  contributor: RelatedContributorsType;
+  contributor: ProfileCardType;
   className?: string;
 };
 

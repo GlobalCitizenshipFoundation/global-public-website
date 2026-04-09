@@ -1,6 +1,7 @@
 export const CONTRIBUTORS_LIST_QUERY = `
   *[_type == "contributorSingle"] | order(name asc) {
     _id,
+    "member": "contributor",
     name,
     slug,
     designation,
@@ -9,13 +10,19 @@ export const CONTRIBUTORS_LIST_QUERY = `
         url,
         metadata { dimensions }
       }
-    }
+    },
+    twitter,
+    linkedin,
+    instagram,
+    facebook,
+    website,
   }
 `;
 
 export const CONTRIBUTOR_BY_SLUG_QUERY = `
   *[_type == "contributorSingle" && slug.current == $slug][0]{
     _id,
+    "member": "contributor",
     title,
     name,
     slug,
@@ -48,6 +55,20 @@ export const CONTRIBUTOR_BY_SLUG_QUERY = `
     },
     articleDisplay,
     eventsDisplay,
+    tags[]->{
+      _id,
+      title,
+      slug
+    },
+    articles[]->{
+      _id,
+      title,
+      slug,
+      publishedAt,
+      coverImage {
+        asset->{ url }
+      }
+    },
     "events": *[_type == "eventSingle" && references(^._id)] | order(startDateTime desc) {
       _id,
       slug,

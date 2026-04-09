@@ -1,8 +1,8 @@
-import type { RelatedContributorsType } from "@gcf/types";
+import type { ProfileCardType } from "@gcf/types";
 import Image from "next/image";
 
 interface Props {
-  people: RelatedContributorsType[];
+  people: ProfileCardType[];
 }
 
 export const PeoplePhotos: React.FC<Props> = ({ people }) => {

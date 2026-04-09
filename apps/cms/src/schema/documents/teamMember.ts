@@ -5,10 +5,24 @@ import { urlField } from "../fields/urlField";
 import countryOptions from "../utils/countryOptions";
 import { hexColorValidation } from "../validation/hexColorValidation";
 
-export const contributorSingle = defineType({
+type Ref = {
+  _ref: string;
+  _type: "reference";
+};
+
+function isRef(value: unknown): value is Ref {
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    "_ref" in value &&
+    typeof (value as { _ref?: unknown })._ref === "string"
+  );
+}
+
+export const teamMember = defineType({
+  name: "teamMember",
+  title: "Team Members",
   type: "document",
-  name: "contributorSingle",
-  title: "Contributors",
 
   fieldsets: [
     { name: "identity", title: "Identity", options: { collapsible: true, collapsed: false } },
@@ -106,13 +120,6 @@ export const contributorSingle = defineType({
       initialValue: false,
     }),
 
-    urlField("orcidId", "ORCiD ID"),
-    urlField("twitter", "Twitter / X URL"),
-    urlField("linkedin", "LinkedIn URL"),
-    urlField("instagram", "Instagram URL"),
-    urlField("facebook", "Facebook URL"),
-    urlField("website", "Website URL"),
-
     defineField({
       type: "boolean",
       title: "Featured Profile",
@@ -121,6 +128,13 @@ export const contributorSingle = defineType({
       initialValue: false,
     }),
 
+    urlField("orcidId", "ORCiD ID"),
+    urlField("twitter", "Twitter / X URL"),
+    urlField("linkedin", "LinkedIn URL"),
+    urlField("instagram", "Instagram URL"),
+    urlField("facebook", "Facebook URL"),
+    urlField("website", "Website URL"),
+
     defineField({
       type: "string",
       title: "Short Bio",
@@ -128,61 +142,8 @@ export const contributorSingle = defineType({
       fieldset: "content",
       validation: (Rule) => Rule.max(240),
     }),
+
     portableTextField("bio", "Bio"),
-
-    defineField({
-      name: "relatedProfiles",
-      title: "Related Profiles",
-      type: "array",
-      fieldset: "relations",
-      of: [defineArrayMember({ type: "reference", to: [{ type: "contributorSingle" }] })],
-    }),
-
-    defineField({
-      type: "boolean",
-      title: "Article display",
-      name: "articleDisplay",
-      fieldset: "visibility",
-      initialValue: false,
-    }),
-    defineField({
-      type: "boolean",
-      title: "Events display",
-      name: "eventsDisplay",
-      fieldset: "visibility",
-      initialValue: false,
-    }),
-    defineField({
-      name: "tags",
-      title: "Tags",
-      type: "array",
-      fieldset: "relations",
-      of: [
-        defineArrayMember({
-          type: "reference",
-          to: [{ type: "tag" }],
-        }),
-      ],
-    }),
-    defineField({
-      name: "articles",
-      title: "Articles",
-      type: "array",
-      fieldset: "relations",
-      of: [
-        defineArrayMember({
-          type: "reference",
-          to: [{ type: "article" }],
-        }),
-      ],
-    }),
-    defineField({
-      name: "events",
-      title: "Events",
-      type: "array",
-      fieldset: "relations",
-      of: [defineArrayMember({ type: "reference", to: [{ type: "eventSingle" }] })],
-    }),
 
     defineField({
       type: "string",
@@ -209,12 +170,109 @@ export const contributorSingle = defineType({
       validation: hexColorValidation,
       description: "HEX, e.g. #ffffff",
     }),
-  ],
 
+    defineField({
+      name: "tags",
+      title: "Tags",
+      type: "array",
+      fieldset: "relations",
+      of: [
+        defineArrayMember({
+          type: "reference",
+          to: [{ type: "tag" }],
+        }),
+      ],
+    }),
+
+    defineField({
+      name: "mentors",
+      title: "Mentors",
+      type: "array",
+      fieldset: "relations",
+      of: [
+        defineArrayMember({
+          type: "reference",
+          to: [{ type: "teamMember" }],
+
+          options: {
+            filter: ({ document }) => {
+              const id = document?._id?.replace(/^drafts\./, "");
+
+              return {
+                filter: `_id != $id && _id != $draftId`,
+                params: {
+                  id,
+                  draftId: id ? `drafts.${id}` : undefined,
+                },
+              };
+            },
+          },
+        }),
+      ],
+
+      validation: (Rule) =>
+        Rule.custom((mentors, context) => {
+          const docId = context.document?._id?.replace(/^drafts\./, "");
+
+          if (!Array.isArray(mentors) || !docId) return true;
+
+          const hasSelf = mentors.some((m) => {
+            if (!isRef(m)) return false;
+
+            return m._ref === docId || m._ref === `drafts.${docId}`;
+          });
+
+          return hasSelf ? "Can't add yourself as mentor" : true;
+        }),
+    }),
+
+    defineField({
+      name: "mentees",
+      title: "Mentees",
+      type: "array",
+      fieldset: "relations",
+
+      of: [
+        defineArrayMember({
+          type: "reference",
+          to: [{ type: "teamMember" }],
+
+          options: {
+            filter: ({ document }) => {
+              const id = document?._id?.replace(/^drafts\./, "");
+
+              return {
+                filter: `_id != $id && _id != $draftId`,
+                params: {
+                  id,
+                  draftId: id ? `drafts.${id}` : undefined,
+                },
+              };
+            },
+          },
+        }),
+      ],
+
+      validation: (Rule) =>
+        Rule.custom((mentees, context) => {
+          const docId = context.document?._id?.replace(/^drafts\./, "");
+
+          if (!Array.isArray(mentees) || !docId) return true;
+
+          const hasSelf = mentees.some((m) => {
+            if (!isRef(m)) return false;
+
+            return m._ref === docId || m._ref === `drafts.${docId}`;
+          });
+
+          return hasSelf ? "Can't add yourself as mentees" : true;
+        }),
+    }),
+  ],
   preview: {
     select: { title: "name", subtitle: "organization", media: "photo" },
     prepare({ title, subtitle, media }) {
-      return { title: title || "Contributor", subtitle: subtitle || "", media };
+      return { title: title || "Team Member", subtitle: subtitle || "", media };
     },
   },
 });

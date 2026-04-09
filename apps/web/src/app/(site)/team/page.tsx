@@ -1,18 +1,21 @@
-import { getContributors } from "@features/contributors/api/getContributors";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Container } from "@/shared/ui/Container";
-import { ContributorSwiper } from "@/features/contributors/ui/ContributorSwiper";
 import { Newsletter } from "@/shared/ui/Newsletter";
 import { Faq } from "@/shared/ui/Faq";
+import { getContributors } from "@/features/team/api/getContributors";
+import { getTeamMembers } from "@/features/team/api/getTeamMembers";
+import { ProfileSwiper } from "@/features/team/ui/ProfileSwiper";
 
 export const metadata: Metadata = {
-  title: "Contributors",
+  title: "Our Team",
 };
 
-const ContributorsPage = async () => {
+const TeamPage = async () => {
   const contributors = await getContributors();
+  const teamMembers = await getTeamMembers();
+  // console.log(contributors, teamMembers)
   return (
     <>
       <section className="relative">
@@ -82,7 +85,7 @@ const ContributorsPage = async () => {
             </p>
           </div>
           <div className="mt-10">
-            <ContributorSwiper contributors={contributors} color="#C71C41" />
+            <ProfileSwiper profiles={contributors} color="#C71C41" />
           </div>
         </Container>
       </section>
@@ -99,7 +102,7 @@ const ContributorsPage = async () => {
             </p>
           </div>
           <div className="mt-10">
-            <ContributorSwiper contributors={contributors} color="#0000C0" />
+            <ProfileSwiper profiles={teamMembers} color="#0000C0" />
           </div>
         </Container>
       </section>
@@ -113,4 +116,4 @@ const ContributorsPage = async () => {
   );
 };
 
-export default ContributorsPage;
+export default TeamPage;

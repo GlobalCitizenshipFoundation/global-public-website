@@ -16,6 +16,8 @@ export const paths = {
   magazine: "/magazine",
   partners: "/partners",
   contributors: "/contributors",
+  teamMembers: "/team-members",
+  team: "/team",
 
   contact: "/contact",
 
@@ -39,6 +41,7 @@ export const paths = {
 
 export const path = {
   contributor: (slug: string) => `${paths.contributors}/${assertSlug(slug)}`,
+  teamMember: (slug: string) => `${paths.teamMembers}/${assertSlug(slug)}`,
   event: (slug: string) => `${paths.events}/${assertSlug(slug)}`,
   magazinePost: (slug: string) => `${paths.magazine}/${assertSlug(slug)}`,
   partner: (slug: string) => `${paths.partners}/${assertSlug(slug)}`,

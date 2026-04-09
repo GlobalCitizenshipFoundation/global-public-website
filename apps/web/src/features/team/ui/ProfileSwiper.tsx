@@ -2,24 +2,25 @@
 
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import type { RelatedContributorsType } from "@gcf/types";
 
 // import swiper
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperType } from "swiper";
 import { Navigation, Pagination } from "swiper/modules";
+import type { ProfileCardType } from "@gcf/types";
 import "swiper/css";
 import "swiper/css/pagination";
 
-import { Contributor } from "./Contributor";
 import { cn } from "@/shared/lib/cn";
+import { ProfileCard } from "./ProfileCard";
 
 type Props = {
-  contributors: RelatedContributorsType[];
+  profiles: ProfileCardType[];
   color: string;
 };
 
-export function ContributorSwiper({ contributors, color }: Props) {
+export function ProfileSwiper({ profiles, color }: Props) {
+  const [locked, setLocked] = useState(false);
   const swiperRef = useRef<SwiperType | null>(null);
   const paginationRef = useRef<HTMLDivElement>(null);
   const prevRef = useRef<HTMLButtonElement | null>(null);
@@ -57,6 +58,7 @@ export function ContributorSwiper({ contributors, color }: Props) {
           "--swiper-pagination-bullet-inactive-opacity": "1",
         } as React.CSSProperties
       }
+      watchOverflow={true}
       slidesPerView="auto"
       slidesPerGroup={1}
       spaceBetween={spaceBetween}
@@ -75,6 +77,15 @@ export function ContributorSwiper({ contributors, color }: Props) {
         prevEl: prevRef.current,
         nextEl: nextRef.current,
       }}
+      onInit={(swiper) => {
+        setLocked(swiper.isLocked);
+      }}
+      onResize={(swiper) => {
+        setLocked(swiper.isLocked);
+      }}
+      onBreakpoint={(swiper) => {
+        setLocked(swiper.isLocked);
+      }}
       onBeforeInit={(swiper: SwiperType) => {
         swiperRef.current = swiper;
         if (swiper.params.navigation && typeof swiper.params.navigation !== "boolean") {
@@ -87,10 +98,10 @@ export function ContributorSwiper({ contributors, color }: Props) {
         }
       }}
     >
-      {contributors.map((contributor, index) => {
+      {profiles.map((profile, index) => {
         return (
           <SwiperSlide
-            key={`${index}-${contributor.name}`}
+            key={`${index}-${profile.name}`}
             className="!h-auto"
             style={{
               display: "flex",
@@ -98,16 +109,20 @@ export function ContributorSwiper({ contributors, color }: Props) {
               flexShrink: 0,
             }}
           >
-            <Contributor contributor={contributor} />
+            <ProfileCard profile={profile} />
           </SwiperSlide>
         );
       })}
-      <div className="mt-10 flex justify-center gap-33 max-[1540px]:gap-56 relative">
+      <div
+        className={cn("mt-10 flex justify-center gap-33 max-[1540px]:gap-56 relative", {
+          hidden: locked,
+        })}
+      >
         <div
           ref={paginationRef}
           className="swiper-pagination"
           // style={{ "--bullet-color": "#000" } as React.CSSProperties}
-        />
+        ></div>
         <button
           type="button"
           ref={prevRef}
