@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 const TeamPage = async () => {
   const contributors = await getContributors();
   const teamMembers = await getTeamMembers();
-  // console.log(contributors, teamMembers)
+
   return (
     <>
       <section className="relative">
