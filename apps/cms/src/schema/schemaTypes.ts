@@ -4,6 +4,7 @@ import {
   contributorSingle,
   eventSingle,
   magazinSingle,
+  pages,
   partnersSingle,
   tag,
   teamMember,
@@ -35,6 +36,7 @@ export const schemaTypes = [
   teamMember,
   partnersSingle,
   magazinSingle,
+  pages,
   article,
   articleCategory,
 ];

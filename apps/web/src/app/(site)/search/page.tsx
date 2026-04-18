@@ -8,6 +8,7 @@ import { ProfileSwiper } from "@/features/team/ui/ProfileSwiper";
 import { getTeamMembers } from "@/features/team/api/getTeamMembers";
 import { getMagazine } from "@/features/magazine/api/getMagazine";
 import { MagazinCard } from "@/features/magazine/ui/MagazinCard";
+import { getPages } from "@/features/pages/api/getPages";
 
 export const metadata: Metadata = {
   title: "Search",
@@ -23,6 +24,7 @@ type PageProps = {
 const SearchPage = async ({ searchParams }: PageProps) => {
   const teamMembers = await getTeamMembers();
   const magazins = await getMagazine();
+  const pages = await getPages();
 
   return (
     <>
@@ -48,15 +50,26 @@ const SearchPage = async ({ searchParams }: PageProps) => {
               Transforming education for global citizenship and sustainable The Global Citizen ship.
             </p>
           </div>
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-            <div className="">
-              <h4 className="pb-3">About</h4>
-              <p className="pb-5">Preparing young people for a smart future where quality.</p>
-              <ButtonPrimary href="/" className="!max-w-[220px]">
-                Learn more
-              </ButtonPrimary>
+          {pages?.length ? (
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3 auto-rows-fr">
+              {pages.map((page) => {
+                console.log(page);
+                return (
+                  <div className="h-full flex flex-col" key={page._id}>
+                    <h4 className="pb-3">{page.title}</h4>
+                    <p className="pb-5">{page.description}</p>
+                    <div className="mt-auto">
+                      <ButtonPrimary href={`/${page.link}`} className="!max-w-[220px]">
+                        {page.title}
+                      </ButtonPrimary>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
-          </div>
+          ) : (
+            <p className="text-borders text-base">No pages available right now.</p>
+          )}
         </Container>
       </section>
       <Container variant="big">
