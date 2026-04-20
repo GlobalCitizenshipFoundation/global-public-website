@@ -54,7 +54,12 @@ export interface ArticleSingleCmsType {
   body?: PortableTextBlock[];
   endText?: PortableTextBlock[];
   sources?: PortableTextBlock[];
-  authors?: string[];
+  authors?: {
+    name: string;
+    title?: string;
+    photo?: { asset: { url: string }; alt?: string };
+    slug?: { current: string };
+  }[];
   partners?: PartnerSingleType[];
   // ✅ z CMS (webhook go uzupełnia)
   readingLength?: number;

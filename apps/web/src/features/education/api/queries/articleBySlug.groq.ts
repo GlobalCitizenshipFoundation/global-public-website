@@ -18,7 +18,12 @@ export const ARTICLE_BY_SLUG_QUERY = `
   endText,
   sources,
   readingLength,
-  authors,
+  "authors": authors[]->{
+  name,
+  title,
+  photo { asset->{ url } },
+  slug
+},
   partners[]->{
     _id,
     title,

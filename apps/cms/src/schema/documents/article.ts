@@ -53,7 +53,12 @@ export const article = defineType({
       name: "authors",
       title: "Authors",
       type: "array",
-      of: [{ type: "string" }],
+      of: [
+        defineArrayMember({
+          type: "reference",
+          to: [{ type: "contributorSingle" }],
+        }),
+      ],
     }),
 
     defineField({
