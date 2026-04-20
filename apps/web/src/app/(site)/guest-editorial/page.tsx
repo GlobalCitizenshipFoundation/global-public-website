@@ -51,9 +51,11 @@ export default async function GuestEditorial({ searchParams }: PageProps) {
   return (
     <div className="mt-18 mb-36">
       <Container variant="big">
-        {categoriesWithItems.map(({ cat, items, total, page }) => (
+        {categoriesWithItems.map(({ cat, items, total, page }, index) => (
           <section key={cat._id} className="mb-10">
-            <h3 className="mb-3.5 text-[42px] font-semibold">{cat.name}</h3>
+            <h3 className="mb-3.5 text-[42px] font-semibold">
+              {index === 0 ? "Guest editorial" : cat.name}
+            </h3>
             {cat.description && <p className="mb-3.5">{cat.description}</p>}
             <ArticleList
               page={page}

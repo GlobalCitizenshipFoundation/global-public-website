@@ -174,19 +174,22 @@ const ArticleSingleComponent: React.FC<Props> = ({ article }) => {
               <section className="space-y-4">
                 <h3 className="font-semibold text-base mb-4">Authors</h3>
                 {article.authors.map((author) => (
-                  <div key={author} className="flex flex-row items-center gap-x-3">
+                  <div
+                    key={author.slug?.current ?? author.name}
+                    className="flex flex-row items-center gap-x-3"
+                  >
                     <Image
-                      src={""}
-                      alt={""}
+                      src={author.photo?.asset?.url ?? ""}
+                      alt={author.name ?? ""}
                       width={60}
                       height={60}
                       className="rounded-full object-cover shrink-0"
                     />
                     <div className="flex flex-col">
-                      <span className="font-semibold text-sm">{author}</span>
-                      <span className="text-xs text-gray-600">
-                        Designation, University of Educational Sciences
-                      </span>
+                      <span className="font-semibold text-sm">{author.name}</span>
+                      {author.title && (
+                        <span className="text-xs text-gray-600">{author.title}</span>
+                      )}
                     </div>
                   </div>
                 ))}
