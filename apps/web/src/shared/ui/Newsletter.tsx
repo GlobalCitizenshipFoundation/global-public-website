@@ -13,6 +13,7 @@ export function Newsletter() {
       </p>
       <div className="flex max-w-155 w-full gap-1.5 items-center flex-wrap">
         <input
+          suppressHydrationWarning
           className="placeholder-gray grow rounded-xl bg-white pl-4.75 min-h-15"
           placeholder="Type your email"
           type="text"

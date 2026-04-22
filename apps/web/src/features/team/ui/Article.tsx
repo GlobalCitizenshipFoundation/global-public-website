@@ -1,4 +1,4 @@
-import Link from "node_modules/next/link";
+import Link from "next/link";
 import Image from "next/image";
 import type { ArticleListItemType } from "@gcf/types";
 

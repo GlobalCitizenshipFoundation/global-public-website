@@ -35,7 +35,6 @@ export default function Pagination({
   const sp = useSearchParams();
 
   const navRef = useRef<HTMLElement | null>(null);
-
   const pendingRef = useRef(false);
   const beforeTopRef = useRef<number | null>(null);
 
@@ -88,36 +87,36 @@ export default function Pagination({
 
   if (totalPages <= 1) return null;
 
-  const iconBtn =
-    "rounded-lg p-2 text-gray-900 transition-colors duration-200 " +
-    "hover:bg-gray-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-300 focus-visible:ring-offset-2 " +
-    "disabled:pointer-events-none disabled:opacity-40 cursor-pointer";
+  const arrowBtn =
+    "grid h-10 w-10 place-items-center rounded-md cursor-pointer text-black transition " +
+    "hover:bg-black/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/20 " +
+    "disabled:pointer-events-none disabled:opacity-30";
 
   const pageBtn =
-    "flex h-14 w-14 items-center justify-center rounded-2xl border-2 text-2xl font-semibold transition-colors duration-200 " +
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-300 focus-visible:ring-offset-2 cursor-pointer disabled:pointer-events-none disabled:opacity-40";
+    "inline-flex h-10 min-w-10 items-center justify-center rounded-xl border px-3 cursor-pointer text-base font-semibold leading-none transition " +
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/20 " +
+    "disabled:pointer-events-none disabled:opacity-40";
 
-  const inactivePageBtn = "border-black bg-white text-black hover:bg-gray-100";
-
-  const activePageBtn = "border-primary bg-primary text-white shadow-sm hover:bg-primary";
+  const inactivePageBtn = "border-black bg-white text-black hover:bg-black/[0.04]";
+  const activePageBtn = "border-primary bg-primary text-white";
 
   return (
     <nav
       ref={(el) => {
         navRef.current = el;
       }}
-      className="flex items-center justify-center gap-3"
+      className="flex items-center justify-center gap-1.5"
       aria-label="Pagination"
     >
       <button
         type="button"
         onClick={() => go(page - 1)}
-        className={iconBtn}
+        className={arrowBtn}
         disabled={!canPrev}
-        aria-label="Previous Page"
+        aria-label="Previous page"
       >
         <svg
-          className="h-8 w-8 stroke-[3]"
+          className="h-6 w-6 stroke-[3]"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -127,7 +126,7 @@ export default function Pagination({
         </svg>
       </button>
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1.5">
         {items.map((it) => {
           if (it === "gap-left" || it === "gap-right") {
             return (
@@ -159,12 +158,12 @@ export default function Pagination({
       <button
         type="button"
         onClick={() => go(page + 1)}
-        className={iconBtn}
+        className={arrowBtn}
         disabled={!canNext}
-        aria-label="Next Page"
+        aria-label="Next page"
       >
         <svg
-          className="h-8 w-8 stroke-[3]"
+          className="h-6 w-6 stroke-[3]"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -193,7 +192,7 @@ function EllipsisJump(props: {
 
   const digits = String(totalPages).length;
   const inputWidthClass =
-    digits <= 2 ? "w-14" : digits === 3 ? "w-16" : digits === 4 ? "w-20" : "w-24";
+    digits <= 2 ? "w-10" : digits === 3 ? "w-12" : digits === 4 ? "w-14" : "w-16";
 
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(String(suggested));
@@ -224,7 +223,7 @@ function EllipsisJump(props: {
     return (
       <button
         type="button"
-        className="flex h-14 w-10 items-end justify-center pb-2 text-3xl font-bold text-black"
+        className="inline-flex h-10 min-w-10 items-center justify-center rounded-xl border border-black bg-white px-3 cursor-pointer text-base font-semibold leading-none text-black transition hover:bg-black/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/20"
         onClick={() => setOpen(true)}
         aria-label="Jump to page"
         title="Jump to page"
@@ -249,11 +248,10 @@ function EllipsisJump(props: {
           setOpen(false);
         }
       }}
-      className={[
-        "h-14 rounded-2xl border-2 border-black bg-white px-2 text-center text-xl font-semibold text-black",
+      className={cn(
+        "h-10 rounded-xl border border-black bg-white px-2 text-center text-sm font-semibold text-black cursor-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/20",
         inputWidthClass,
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-300 focus-visible:ring-offset-2",
-      ].join(" ")}
+      )}
       aria-label="Jump to page input"
     />
   );

@@ -27,15 +27,13 @@
 
     "types": ["node"],
 
-    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
-
-      "@app/*": ["src/app/*"],
-      "@shared/*": ["src/shared/*"],
-      "@features/*": ["src/features/*"],
-      "@entities/*": ["src/entities/*"],
-      "@widgets/*": ["src/widgets/*"]
+      "@/*": ["./src/*"],
+      "@app/*": ["./src/app/*"],
+      "@shared/*": ["./src/shared/*"],
+      "@features/*": ["./src/features/*"],
+      "@entities/*": ["./src/entities/*"],
+      "@widgets/*": ["./src/widgets/*"]
     },
 
     "plugins": [{ "name": "next" }],

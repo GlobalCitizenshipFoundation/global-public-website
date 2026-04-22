@@ -15,9 +15,9 @@ export default function EventsGrid({ items }: Props) {
   }
 
   return (
-    <div className="grid grid-cols-1 gap-x-6 gap-y-20 md:grid-cols-2 xl:grid-cols-3">
-      {list.map((event) => (
-        <EventCard key={event._id} event={event} />
+    <div className="grid grid-cols-1 gap-x-6 gap-y-9 md:grid-cols-2 xl:grid-cols-3">
+      {list.map((event, index) => (
+        <EventCard key={event._id} event={event} index={index} />
       ))}
     </div>
   );
