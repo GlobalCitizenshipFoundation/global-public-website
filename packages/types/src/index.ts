@@ -1,6 +1,7 @@
 export * from "./models/article";
 export * from "./models/event";
 export * from "./models/magazine";
+export * from "./models/pages";
 export * from "./models/partner";
 export * from "./models/profile";
 export * from "./models/tags";
