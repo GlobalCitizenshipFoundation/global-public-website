@@ -2,10 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import Pagination from "@/features/events/ui/pagination/Pagination";
 import { ButtonPrimary } from "@/shared/ui/ButtonPrimary";
-import type { ArticleListItemType } from "../../../../../../packages/types/src/models/article";
+import type { ArticleSingleCmsType } from "../../../../../../packages/types/src/models/article";
 
 type Props = {
-  items: ArticleListItemType[];
+  items: ArticleSingleCmsType[];
   total: number;
   page: number;
   perPage: number;
