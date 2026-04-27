@@ -16,14 +16,13 @@ type NavItem = {
 export const header: NavItem[] = [
   {
     label: "About Us",
-    href: paths.about,
+    href: paths.team,
     children: [
-      { label: "Who We Are", href: paths.about },
-      { label: "Our Project", href: paths.about },
-      { label: "GCED Innovative Mindset", href: paths.about },
+      { label: "Who We Are", href: paths.whoweare },
+      { label: "Our Project", href: paths.search },
     ],
   },
-  {
+  /*{
     label: "Governance",
     href: paths.governance,
     children: [
@@ -31,34 +30,19 @@ export const header: NavItem[] = [
       { label: "Value", href: paths.governance },
       { label: "Develop", href: paths.governance },
     ],
-  },
+  },*/
   {
     label: "Networks",
-    href: paths.networks,
-    children: [
-      { label: "Knowledge", href: paths.networks },
-      { label: "Socio-Emotional", href: paths.networks },
-      { label: "Behavioral", href: paths.networks },
-    ],
+    href: paths.education,
   },
   {
     label: "Initiatives",
     href: paths.initiatives,
-    children: [
-      { label: "Explore", href: paths.initiatives },
-      { label: "Learn", href: paths.initiatives },
-      { label: "Enhance", href: paths.initiatives },
-    ],
   },
   {
     label: "Events",
     href: paths.events,
     activeAlsoFor: [paths.events],
-    children: [
-      { label: "Upcoming Events", href: paths.events },
-      { label: "All Events", href: paths.events },
-      { label: "Popular Topics", href: paths.events },
-    ],
   },
   { label: "Publications", href: paths.magazine },
   { label: "Get Involved", href: paths.partners },
