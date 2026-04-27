@@ -10,7 +10,7 @@ export const paths = {
   about: "/about",
   governance: "/governance",
   networks: "/networks",
-  initiatives: "/initiatives",
+  initiatives: "/guest-editorial",
 
   events: "/events",
   magazine: "/magazine",
@@ -20,6 +20,8 @@ export const paths = {
   team: "/team",
 
   contact: "/contact",
+  whoweare: "/about/who-we-are",
+  search: "/search",
 
   secretariat: "/secretariat",
   community: "/community",

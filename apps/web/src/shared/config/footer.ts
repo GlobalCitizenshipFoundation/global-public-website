@@ -24,14 +24,11 @@ export const footer: FooterSection[] = [
     kind: "links",
     name: "Get Started",
     content: [
-      { label: "About Us", href: paths.about },
-      { label: "Secretariat", href: paths.secretariat },
-      { label: "Join Community", href: paths.community },
+      { label: "About Us", href: paths.team },
       { label: "Education", href: paths.education },
-      { label: "Newsletter", href: paths.newsletter },
     ],
   },
-  {
+  /*{
     kind: "links",
     name: "Resource",
     content: [
@@ -42,7 +39,7 @@ export const footer: FooterSection[] = [
       { label: "Support Desk", href: paths.support },
       { label: "Contact Us", href: paths.contact },
     ],
-  },
+  },*/
   { kind: "social", name: "Follow", content: socialLinks },
 ];
 
