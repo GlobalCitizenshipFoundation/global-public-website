@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 };
 
 const MagazinesPage = async () => {
-  const magazins = await getMagazine();
+  const magazines = await getMagazine();
 
   return (
     <>
@@ -20,19 +20,23 @@ const MagazinesPage = async () => {
         </p>
       </Container>
 
-      <div className="bg-background-darker py-16 md:py-24">
+      <section className="bg-background-darker py-16 md:py-24">
         <Container variant="big">
-          {magazins?.length ? (
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-              {magazins.map((magazin) => (
-                <MagazinCard key={magazin._id} magazin={magazin} />
+          {magazines?.length ? (
+            <ul className="grid list-none grid-cols-[repeat(auto-fit,minmax(min(100%,320px),1fr))] gap-x-8 gap-y-12 p-0">
+              {magazines.map((magazine) => (
+                <li key={magazine._id} className="flex min-w-0 justify-center">
+                  <MagazinCard magazin={magazine} />
+                </li>
               ))}
-            </div>
+            </ul>
           ) : (
-            <p className="text-borders text-base">No magazines available right now.</p>
+            <div className="rounded-2xl border border-black/10 bg-white/60 p-8 text-center">
+              <p className="text-gray text-base font-medium">No magazines available right now.</p>
+            </div>
           )}
         </Container>
-      </div>
+      </section>
     </>
   );
 };

@@ -170,31 +170,44 @@ const ArticleSingleComponent: React.FC<Props> = ({ article }) => {
             )}
 
             {/* AUTHORS */}
-            {article.authors && article.authors.length > 0 && (
+            {article.authors?.filter(Boolean).length ? (
               <section className="space-y-4">
-                <h3 className="font-semibold text-base mb-4">Authors</h3>
-                {article.authors.map((author) => (
-                  <div
-                    key={author.slug?.current ?? author.name}
-                    className="flex flex-row items-center gap-x-3"
-                  >
-                    <Image
-                      src={author.photo?.asset?.url ?? ""}
-                      alt={author.name ?? ""}
-                      width={60}
-                      height={60}
-                      className="rounded-full object-cover shrink-0"
-                    />
-                    <div className="flex flex-col">
-                      <span className="font-semibold text-sm">{author.name}</span>
-                      {author.title && (
-                        <span className="text-xs text-gray-600">{author.title}</span>
+                <h3 className="mb-4 text-base font-semibold">Authors</h3>
+
+                {article.authors.filter(Boolean).map((author) => {
+                  const imageUrl = author.photo?.asset?.url;
+
+                  return (
+                    <div
+                      key={author.slug?.current ?? author.name}
+                      className="flex flex-row items-center gap-x-3"
+                    >
+                      {imageUrl ? (
+                        <Image
+                          src={imageUrl}
+                          alt={author.name ?? ""}
+                          width={60}
+                          height={60}
+                          className="shrink-0 rounded-full object-cover"
+                        />
+                      ) : (
+                        <div
+                          className="h-[60px] w-[60px] shrink-0 rounded-full bg-gray-200"
+                          aria-hidden
+                        />
                       )}
+
+                      <div className="flex flex-col">
+                        <span className="text-sm font-semibold">{author.name}</span>
+                        {author.title ? (
+                          <span className="text-xs text-gray-600">{author.title}</span>
+                        ) : null}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </section>
-            )}
+            ) : null}
 
             {/* DISCLOSURE STATEMENT */}
             <section className="space-y-3">

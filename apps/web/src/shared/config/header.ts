@@ -20,6 +20,7 @@ export const header: NavItem[] = [
     children: [
       { label: "Who We Are", href: paths.whoweare },
       { label: "Our Project", href: paths.search },
+      { label: "Our Team", href: paths.team },
     ],
   },
   /*{

@@ -20,7 +20,7 @@ export default function Footer() {
 
   return (
     <Container as="footer" variant="footer" className="mt-12" aria-label="Site footer">
-      <div className="flex flex-col lg:mb-12 lg:flex-row lg:flex-wrap lg:gap-x-30 lg:gap-y-10">
+      <div className="flex justify-between flex-col lg:mb-12 lg:flex-row lg:flex-wrap lg:gap-x-30 lg:gap-y-10">
         <div className="mb-7.5 flex min-w-0 flex-col gap-6 lg:mb-0 lg:gap-5">
           <Logo />
 

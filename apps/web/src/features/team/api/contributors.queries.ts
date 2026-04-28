@@ -60,21 +60,31 @@ export const CONTRIBUTOR_BY_SLUG_QUERY = `
       title,
       slug
     },
-    articles[]->{
+    "articles": articles[defined(@._ref)][]->{
       _id,
       title,
       slug,
+      description,
       publishedAt,
+      readingLength,
       coverImage {
-        asset->{ url }
+        asset->{
+          url,
+          metadata { dimensions, lqip }
+        }
       }
     },
-    "events": *[_type == "eventSingle" && references(^._id)] | order(startDateTime desc) {
+    "events": events[defined(@._ref)][]->{
       _id,
       slug,
       eventHeading,
       startDateTime,
-      eventImage { asset->{ url } }
+      eventImage {
+        asset->{
+          url,
+          metadata { dimensions, lqip }
+        }
+      }
     },
     header,
     profileColour,

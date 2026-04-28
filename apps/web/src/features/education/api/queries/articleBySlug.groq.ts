@@ -5,30 +5,45 @@ export const ARTICLE_BY_SLUG_QUERY = `
   slug,
   description,
   publishedAt,
-  category -> {
+  category->{
     _id,
-    title,
+    name,
     description
   },
   coverImage{
-    asset->{ url, metadata{ dimensions, lqip } }
+    asset->{
+      url,
+      metadata{
+        dimensions,
+        lqip
+      }
+    }
   },
   "audioUrl": audio.asset->url,
   body,
   endText,
   sources,
   readingLength,
-  "authors": authors[]->{
-  name,
-  title,
-  photo { asset->{ url } },
-  slug
-},
-  partners[]->{
+  "authors": authors[defined(@._ref)][]->{
+    _id,
+    name,
+    title,
+    photo{
+      asset->{
+        url
+      }
+    },
+    slug
+  },
+  "partners": partners[defined(@._ref)][]->{
     _id,
     title,
     slug,
-    logo{ asset->{ url } }
+    logo{
+      asset->{
+        url
+      }
+    }
   }
 }
 `;
