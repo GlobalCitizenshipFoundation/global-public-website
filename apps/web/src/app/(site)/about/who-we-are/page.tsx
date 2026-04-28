@@ -11,6 +11,7 @@ const WhoWeArePage = async () => {
   const advantage = {
     title: "Capacity-Building",
     icon: "#",
+    img: "/images/wwa-1.svg",
   };
   const event = {
     title: "Global Citizenship Education",
@@ -49,7 +50,16 @@ const WhoWeArePage = async () => {
                     key={index}
                     className="bg-[#F6F4F0] px-6 py-5 rounded-xl flex items-center gap-4"
                   >
-                    <div className="w-11 h-11 bg-[#CA1F43] rounded-full"></div>
+                    <div className="w-11 h-11 bg-[#CA1F43] rounded-full relative flex items-center justify-center">
+                      <Image
+                        src={item.img}
+                        alt="Who we are"
+                        width={25}
+                        height={25}
+                        priority
+                        className="object-cover"
+                      />
+                    </div>
                     <p className="text-black font-medium text-lg">{item.title}</p>
                   </div>
                 );

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Container } from "@/shared/ui/Container";
-// import { Input } from "@/shared/ui/Input";
+import { Input } from "@/shared/ui/Input";
 import ArticleList from "@/features/education/ui/ArticleList";
 import EventsList from "@/features/events/ui/components/EventsList";
 import { ButtonPrimary } from "@/shared/ui/ButtonPrimary";
@@ -9,6 +9,8 @@ import { getTeamMembers } from "@/features/team/api/getTeamMembers";
 import { getMagazine } from "@/features/magazine/api/getMagazine";
 import { MagazinCard } from "@/features/magazine/ui/MagazinCard";
 import { getPages } from "@/features/pages/api/getPages";
+import { getArticles } from "@/features/education/api/getArticles";
+import { getEvents } from "@/features/events";
 
 export const metadata: Metadata = {
   title: "Search",
@@ -21,26 +23,58 @@ type PageProps = {
   }>;
 };
 
+export type SharedSearchParams = {
+  q?: string;
+  articlesPage?: string;
+  eventsPage?: string;
+};
+
+export function parseSharedSearchParams(sp: SharedSearchParams) {
+  const q = (sp.q ?? "").trim();
+
+  const parsePage = (v?: string) => {
+    const n = Number(v);
+    return Number.isFinite(n) && n > 1 ? Math.floor(n) : 1;
+  };
+
+  return {
+    q,
+    articlesPage: parsePage(sp.articlesPage),
+    eventsPage: parsePage(sp.eventsPage),
+  };
+}
+
 const SearchPage = async ({ searchParams }: PageProps) => {
   const teamMembers = await getTeamMembers();
   const magazins = await getMagazine();
   const pages = await getPages();
+
+  const sp = await searchParams;
+  const { q, articlesPage, eventsPage } = parseSharedSearchParams(sp);
+
+  const perPage = 8;
+
+  const [articles, events] = await Promise.all([
+    getArticles({ q, page: articlesPage, perPage }),
+    getEvents({ q, page: eventsPage, perPage }),
+  ]);
 
   return (
     <>
       <Container variant="big" className="mt-25">
         <div className="flex flex-col m-auto mb-20 items-center border-b border-gray-300 pb-20 max-w-250">
           <h2 className="text-titles mb-5 text-4xl font-semibold">How Can We Help</h2>
-          {/* <Input
-          value=""
-          onChange={() => { }}
-          placeholder="Search"
-          style={{ maxWidth: '550px' }}
-        /> */}
+          <Input />
         </div>
 
-        <ArticleList searchParams={searchParams} />
-        <EventsList searchParams={searchParams} />
+        <ArticleList
+          items={articles.items}
+          total={articles.total}
+          page={articlesPage}
+          perPage={8}
+        />
+
+        <EventsList items={events.items} total={events.total} page={eventsPage} perPage={8} />
       </Container>
       <section className="bg-[#F6F4F0] py-15">
         <Container variant="regular">
@@ -53,7 +87,6 @@ const SearchPage = async ({ searchParams }: PageProps) => {
           {pages?.length ? (
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3 auto-rows-fr">
               {pages.map((page) => {
-                console.log(page);
                 return (
                   <div className="h-full flex flex-col" key={page._id}>
                     <h4 className="pb-3">{page.title}</h4>

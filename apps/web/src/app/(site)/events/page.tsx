@@ -22,7 +22,7 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
 export default async function EventsPage({ searchParams }: PageProps) {
   const sp = await searchParams;
   const parsed = parseEventsSearchParams(sp);
-
+  console.log(parsed);
   const { items, total } = await getEvents(parsed);
 
   return (
