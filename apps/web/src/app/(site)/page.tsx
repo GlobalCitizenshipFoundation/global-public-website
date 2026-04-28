@@ -9,12 +9,14 @@ import { SwiperInitiatives } from "@/shared/ui/SwiperInitiatives";
 import { SwiperMagazine } from "@/shared/ui/SwiperMagazine";
 import { SwiperCustomers } from "@/shared/ui/SwiperCustomers";
 import { SwiperEvents } from "@/shared/ui/SwiperEvents";
+import { getHomePageData } from "@/features/home/api/getHomePageData";
 
 export const metadata: Metadata = {
   title: "Home",
 };
 
-export default function HomePage() {
+export default async function HomePage() {
+  const { featuredEvents, magazines } = await getHomePageData();
   const educationButtons = ["Institutions", "Organizations", "Education Leaders", "Educators"];
   return (
     <>
@@ -122,7 +124,7 @@ export default function HomePage() {
           />
         </Container>
         {/* new swiper  */}
-        <SwiperEvents slidesPerView={4} slidesWidth={420} />
+        <SwiperEvents items={featuredEvents} slidesPerView={4} slidesWidth={420} />
         {/* old swiper */}
         {/* <SwiperList /> */}
       </section>
@@ -273,7 +275,7 @@ export default function HomePage() {
             gap={30}
           />
           <div className="mt-12 overflow-hidden">
-            <SwiperMagazine />
+            <SwiperMagazine items={magazines} />
           </div>
         </Container>
       </section>

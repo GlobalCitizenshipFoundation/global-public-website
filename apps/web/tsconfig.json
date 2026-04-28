@@ -5,28 +5,21 @@
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
     "module": "ESNext",
     "moduleResolution": "Bundler",
-
     "strict": true,
     "noEmit": true,
     "skipLibCheck": true,
     "isolatedModules": true,
     "jsx": "preserve",
-
     "esModuleInterop": true,
     "resolveJsonModule": true,
-
     "forceConsistentCasingInFileNames": true,
     "noUncheckedIndexedAccess": true,
-
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-
     "incremental": true,
     "tsBuildInfoFile": "../../.cache/tsbuildinfo/web.tsbuildinfo",
-
     "types": ["node"],
-
     "paths": {
       "@/*": ["./src/*"],
       "@app/*": ["./src/app/*"],
@@ -35,11 +28,15 @@
       "@entities/*": ["./src/entities/*"],
       "@widgets/*": ["./src/widgets/*"]
     },
-
     "plugins": [{ "name": "next" }],
-
     "allowJs": false
   },
-  "include": ["src/next-env.d.ts", "src/**/*.ts", "src/**/*.tsx", ".next/types/**/*.ts"],
+  "include": [
+    "next-env.d.ts",
+    "src/**/*.d.ts",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
   "exclude": ["node_modules", ".next", "dist", "out", "build"]
 }

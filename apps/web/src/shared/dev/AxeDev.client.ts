@@ -8,39 +8,47 @@ export default function AxeDevClient() {
 
     let cancelled = false;
 
-    (async () => {
-      const axe = (await import("axe-core")).default;
+    const runAxe = async () => {
+      if (cancelled) return;
 
-      const run = async () => {
+      try {
+        const axe = (await import("axe-core")).default;
+
         if (cancelled) return;
 
-        try {
-          const results = await axe.run(document, {
-            resultTypes: ["violations"],
-          });
+        const results = await axe.run(document, {
+          resultTypes: ["violations"],
+        });
 
-          console.log(`[a11y] axe finished: violations=${results.violations.length}`);
+        console.info(`[a11y] axe finished: violations=${results.violations.length}`);
 
-          if (results.violations.length) {
-            console.group("[a11y] axe violations (all)");
-            for (const v of results.violations) {
-              console.log(`${v.impact ?? "unknown"}: ${v.id} - ${v.help}`);
-              for (const n of v.nodes) console.log("node:", n.target, n.failureSummary);
+        if (results.violations.length) {
+          console.group("[a11y] axe violations");
+
+          for (const violation of results.violations) {
+            console.info(`${violation.impact ?? "unknown"}: ${violation.id} - ${violation.help}`);
+
+            for (const node of violation.nodes) {
+              console.info("node:", node.target, node.failureSummary);
             }
-            console.groupEnd();
           }
-        } catch (err) {
-          console.error("[a11y] axe run failed", err);
-        }
-      };
 
-      run();
-      const t = window.setTimeout(run, 1500);
-      return () => window.clearTimeout(t);
-    })();
+          console.groupEnd();
+        }
+      } catch (error) {
+        console.error("[a11y] axe run failed", error);
+      }
+    };
+
+    void runAxe();
+
+    const timeoutId = window.setTimeout(() => {
+      void runAxe();
+    }, 1500);
 
     return () => {
       cancelled = true;
+      window.clearTimeout(timeoutId);
     };
   }, []);
 

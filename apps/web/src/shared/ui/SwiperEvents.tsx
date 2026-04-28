@@ -1,33 +1,42 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import type { EventCard } from "@gcf/types";
 import Image from "next/image";
-
-// import swiper
-import { Swiper, SwiperSlide } from "swiper/react";
-import type { Swiper as SwiperType } from "swiper";
+import { useEffect, useRef, useState } from "react";
 import { Navigation } from "swiper/modules";
+import type { Swiper as SwiperType } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 
-import { SwiperButton } from "./SwiperButton";
-import { formatEventDate } from "../lib/datetime/formatters";
+import { path, paths } from "@/shared/config/paths";
+import { formatEventDate } from "@/shared/lib/datetime/formatters";
 import { ButtonPrimary } from "./ButtonPrimary";
 import { Container } from "./Container";
+import { SwiperButton } from "./SwiperButton";
 
-interface Props {
-  slidesPerView: number;
-  slidesWidth: number;
+type Props = {
+  items?: EventCard[];
+  slidesPerView?: number;
+  slidesWidth?: number;
+};
+
+const EVENT_TYPE_LABEL: Partial<Record<string, string>> = {
+  conference: "Conference",
+  consultation: "Consultation",
+  panel_discussion: "Panel Discussion",
+  forum: "Forum",
+};
+
+function getEventHref(event: EventCard) {
+  const slug = event.slug?.current;
+  return slug ? path.event(slug) : paths.events;
 }
 
-interface ExampleSwiperCard {
-  src: string;
-  kind: string;
-  data: string;
-  title: string;
-  buttonTitle: string;
+function getEventTypeLabel(event: EventCard) {
+  return event.eventType ? (EVENT_TYPE_LABEL[event.eventType] ?? "Event") : "Event";
 }
 
-export function SwiperEvents({ slidesPerView, slidesWidth }: Props) {
+export function SwiperEvents({ items = [], slidesPerView = 4, slidesWidth = 420 }: Props) {
   const swiperRef = useRef<SwiperType | null>(null);
   const prevRef = useRef<HTMLDivElement>(null);
   const nextRef = useRef<HTMLDivElement>(null);
@@ -46,10 +55,8 @@ export function SwiperEvents({ slidesPerView, slidesWidth }: Props) {
     return () => window.removeEventListener("resize", updateWidth);
   }, []);
 
-  const spaceBetween = Math.max(
-    20,
-    (containerWidth - slidesPerView * slidesWidth) / (slidesPerView - 1),
-  );
+  const gapsCount = Math.max(slidesPerView - 1, 1);
+  const spaceBetween = Math.max(20, (containerWidth - slidesPerView * slidesWidth) / gapsCount);
 
   useEffect(() => {
     if (swiperRef.current) {
@@ -58,19 +65,16 @@ export function SwiperEvents({ slidesPerView, slidesWidth }: Props) {
     }
   }, [containerWidth]);
 
-  const exampleSwiperCard: ExampleSwiperCard = {
-    src: "/images/swiper-image.png",
-    kind: "Event",
-    data: "2023-09-15",
-    title:
-      "International Conference on Transformative Education for Human and Planetary Flourishing 2023",
-    buttonTitle: "Register to Participate",
-  };
-
-  const exampleArray: ExampleSwiperCard[] = Array(6).fill(exampleSwiperCard);
+  if (!items.length) {
+    return (
+      <Container variant="regular">
+        <p className="text-gray text-lg">No events available right now.</p>
+      </Container>
+    );
+  }
 
   return (
-    <div className="relative overflow-hidden w-full px-12.5">
+    <div className="relative w-full overflow-hidden px-12.5">
       <Swiper
         slidesPerView="auto"
         spaceBetween={spaceBetween}
@@ -81,49 +85,72 @@ export function SwiperEvents({ slidesPerView, slidesWidth }: Props) {
         }}
         onBeforeInit={(swiper: SwiperType) => {
           swiperRef.current = swiper;
+
           if (swiper.params.navigation && typeof swiper.params.navigation !== "boolean") {
             swiper.params.navigation.prevEl = prevRef.current;
             swiper.params.navigation.nextEl = nextRef.current;
           }
         }}
       >
-        {exampleArray.map((item, index) => {
-          const formattedStartDate = formatEventDate(item.data);
+        {items.map((event) => {
+          const href = getEventHref(event);
+          const imageUrl = event.eventImage?.asset?.url;
+          const formattedStartDate = event.startDateTime
+            ? formatEventDate(event.startDateTime)
+            : "Date to be announced";
 
           return (
             <SwiperSlide
-              key={`${index}-${item.title}`}
+              key={event._id}
               style={{
                 maxWidth: slidesWidth,
                 width: "100%",
                 flexShrink: 0,
               }}
             >
-              <div className="flex w-full flex-col">
-                <Image
-                  src={item.src}
-                  alt="Home-image"
-                  width={506}
-                  height={325}
-                  style={{ objectFit: "contain" }}
-                  className="mb-5 rounded-[10px]"
-                />
-                <div className="mb-6 flex justify-between">
-                  <span className="text-gray bg-background-beige flex rounded-[33px] px-5 py-2.5 text-l/[142%] font-medium">
-                    {item.kind}
-                  </span>
-                  <span className="text-gray flex text-l/[142%] font-medium">
-                    {formattedStartDate}
-                  </span>
+              <article className="flex h-full w-full flex-col">
+                <div className="relative mb-5 aspect-[506/325] w-full overflow-hidden rounded-[10px] bg-[#F2F2F2]">
+                  {imageUrl ? (
+                    <Image
+                      src={imageUrl}
+                      alt={event.eventHeading || "Event image"}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 420px"
+                      className="object-cover transition-transform duration-300 hover:scale-[1.02]"
+                    />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center px-6 text-center">
+                      <span className="text-gray text-sm font-medium">No event image</span>
+                    </div>
+                  )}
                 </div>
-                <h3 className="text-gray mb-8 text-xl/[125%] font-medium">{item.title}</h3>
-                <ButtonPrimary className="!w-[310px]" href="">
-                  {item.buttonTitle}
-                </ButtonPrimary>
-              </div>
+
+                <div className="mb-6 flex justify-between gap-4">
+                  <span className="text-gray bg-background-beige flex rounded-[33px] px-5 py-2.5 text-l/[142%] font-medium">
+                    {getEventTypeLabel(event)}
+                  </span>
+                  <time
+                    className="text-gray flex text-l/[142%] font-medium"
+                    dateTime={event.startDateTime}
+                  >
+                    {formattedStartDate}
+                  </time>
+                </div>
+
+                <h3 className="text-gray mb-8 line-clamp-3 text-xl/[125%] font-medium">
+                  {event.eventHeading}
+                </h3>
+
+                <div className="mt-auto">
+                  <ButtonPrimary className="!w-[310px]" href={href}>
+                    Register to Participate
+                  </ButtonPrimary>
+                </div>
+              </article>
             </SwiperSlide>
           );
         })}
+
         <Container className="p-0">
           <div className="mt-10 flex justify-between">
             <SwiperButton ref={prevRef} direction="prev" name="swiper-events" />

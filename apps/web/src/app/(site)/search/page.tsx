@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
-import { Container } from "@/shared/ui/Container";
-import { Input } from "@/shared/ui/Input";
+import { getArticles } from "@/features/education/api/getArticles";
 import ArticleList from "@/features/education/ui/ArticleList";
+import { getEvents } from "@/features/events";
 import EventsList from "@/features/events/ui/components/EventsList";
-import { ButtonPrimary } from "@/shared/ui/ButtonPrimary";
-import { ProfileSwiper } from "@/features/team/ui/ProfileSwiper";
-import { getTeamMembers } from "@/features/team/api/getTeamMembers";
 import { getMagazine } from "@/features/magazine/api/getMagazine";
 import { MagazinCard } from "@/features/magazine/ui/MagazinCard";
 import { getPages } from "@/features/pages/api/getPages";
-import { getArticles } from "@/features/education/api/getArticles";
-import { getEvents } from "@/features/events";
+import { getTeamMembers } from "@/features/team/api/getTeamMembers";
+import { ProfileSwiper } from "@/features/team/ui/ProfileSwiper";
+import { ButtonPrimary } from "@/shared/ui/ButtonPrimary";
+import { Container } from "@/shared/ui/Container";
+import { Input } from "@/shared/ui/Input";
 
 export const metadata: Metadata = {
   title: "Search",
@@ -18,6 +18,7 @@ export const metadata: Metadata = {
 
 type PageProps = {
   searchParams: Promise<{
+    q?: string;
     articlesPage?: string;
     eventsPage?: string;
   }>;
@@ -32,9 +33,9 @@ export type SharedSearchParams = {
 export function parseSharedSearchParams(sp: SharedSearchParams) {
   const q = (sp.q ?? "").trim();
 
-  const parsePage = (v?: string) => {
-    const n = Number(v);
-    return Number.isFinite(n) && n > 1 ? Math.floor(n) : 1;
+  const parsePage = (value?: string) => {
+    const page = Number(value);
+    return Number.isFinite(page) && page > 1 ? Math.floor(page) : 1;
   };
 
   return {
@@ -44,17 +45,16 @@ export function parseSharedSearchParams(sp: SharedSearchParams) {
   };
 }
 
-const SearchPage = async ({ searchParams }: PageProps) => {
-  const teamMembers = await getTeamMembers();
-  const magazins = await getMagazine();
-  const pages = await getPages();
-
+export default async function SearchPage({ searchParams }: PageProps) {
   const sp = await searchParams;
   const { q, articlesPage, eventsPage } = parseSharedSearchParams(sp);
 
   const perPage = 8;
 
-  const [articles, events] = await Promise.all([
+  const [teamMembers, magazines, pages, articles, events] = await Promise.all([
+    getTeamMembers(),
+    getMagazine(),
+    getPages(),
     getArticles({ q, page: articlesPage, perPage }),
     getEvents({ q, page: eventsPage, perPage }),
   ]);
@@ -62,8 +62,10 @@ const SearchPage = async ({ searchParams }: PageProps) => {
   return (
     <>
       <Container variant="big" className="mt-25">
-        <div className="flex flex-col m-auto mb-20 items-center border-b border-gray-300 pb-20 max-w-250">
-          <h2 className="text-titles mb-5 text-4xl font-semibold">How Can We Help</h2>
+        <div className="m-auto mb-20 flex max-w-250 flex-col items-center border-b border-gray-300 pb-20">
+          <h1 className="text-titles mb-5 text-4xl font-semibold">
+            How Can We Help
+          </h1>
           <Input />
         </div>
 
@@ -71,84 +73,109 @@ const SearchPage = async ({ searchParams }: PageProps) => {
           items={articles.items}
           total={articles.total}
           page={articlesPage}
-          perPage={8}
+          perPage={perPage}
         />
 
-        <EventsList items={events.items} total={events.total} page={eventsPage} perPage={8} />
+        <EventsList
+          items={events.items}
+          total={events.total}
+          page={eventsPage}
+          perPage={perPage}
+        />
       </Container>
+
       <section className="bg-[#F6F4F0] py-15">
         <Container variant="regular">
           <div className="mb-10 max-w-[380px]">
-            <h3 className="mb-4 text-2xl font-semibold sm:text-3xl">Pages</h3>
-            <p className="">
-              Transforming education for global citizenship and sustainable The Global Citizen ship.
+            <h2 className="mb-4 text-2xl font-semibold sm:text-3xl">Pages</h2>
+            <p>
+              Transforming education for global citizenship and sustainable The
+              Global Citizen ship.
             </p>
           </div>
+
           {pages?.length ? (
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3 auto-rows-fr">
+            <div className="grid auto-rows-fr grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
               {pages.map((page) => {
+                const href = page.link?.startsWith("/")
+                  ? page.link
+                  : `/${page.link}`;
+
                 return (
-                  <div className="h-full flex flex-col" key={page._id}>
-                    <h4 className="pb-3">{page.title}</h4>
+                  <article className="flex h-full flex-col" key={page._id}>
+                    <h3 className="pb-3">{page.title}</h3>
                     <p className="pb-5">{page.description}</p>
+
                     <div className="mt-auto">
-                      <ButtonPrimary href={`/${page.link}`} className="!max-w-[220px]">
+                      <ButtonPrimary href={href} className="!max-w-[220px]">
                         {page.title}
                       </ButtonPrimary>
                     </div>
-                  </div>
+                  </article>
                 );
               })}
             </div>
           ) : (
-            <p className="text-borders text-base">No pages available right now.</p>
+            <p className="text-borders text-base">
+              No pages available right now.
+            </p>
           )}
         </Container>
       </section>
+
       <Container variant="big">
-        <div className="my-25">
+        <section className="my-25">
           <div className="flex justify-between gap-6">
             <div className="mb-10 max-w-[380px]">
-              <h3 className="mb-4 text-2xl font-semibold sm:text-3xl">Profiles</h3>
-              <p className="">
-                Transforming education for global citizenship and sustainable The Global Citizen
-                ship.
+              <h2 className="mb-4 text-2xl font-semibold sm:text-3xl">
+                Profiles
+              </h2>
+              <p>
+                Transforming education for global citizenship and sustainable
+                The Global Citizen ship.
               </p>
             </div>
-            <ButtonPrimary href="team" className="!max-w-[220px]">
+
+            <ButtonPrimary href="/team" className="!max-w-[220px]">
               All team
             </ButtonPrimary>
           </div>
+
           <ProfileSwiper profiles={teamMembers} color="#0000C0" />
-        </div>
+        </section>
       </Container>
+
       <section className="bg-[#C6E3DF] py-25">
         <Container variant="regular">
           <div className="flex justify-between gap-6">
             <div className="mb-10 max-w-[380px]">
-              <h3 className="mb-4 text-2xl font-semibold sm:text-3xl">Magazins</h3>
-              <p className="">
-                Transforming education for global citizenship and sustainable The Global Citizen
-                ship.
+              <h2 className="mb-4 text-2xl font-semibold sm:text-3xl">
+                Magazines
+              </h2>
+              <p>
+                Transforming education for global citizenship and sustainable
+                The Global Citizen ship.
               </p>
             </div>
-            <ButtonPrimary href="magazine" className="!max-w-[220px]">
-              All magazins
+
+            <ButtonPrimary href="/magazine" className="!max-w-[220px]">
+              All magazines
             </ButtonPrimary>
           </div>
-          {magazins?.length ? (
+
+          {magazines?.length ? (
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
-              {magazins.map((magazin) => (
-                <MagazinCard key={magazin._id} magazin={magazin} />
+              {magazines.map((magazine) => (
+                <MagazinCard key={magazine._id} magazin={magazine} />
               ))}
             </div>
           ) : (
-            <p className="text-borders text-base">No magazines available right now.</p>
+            <p className="text-borders text-base">
+              No magazines available right now.
+            </p>
           )}
         </Container>
       </section>
     </>
   );
-};
-
-export default SearchPage;
+}

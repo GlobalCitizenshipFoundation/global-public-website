@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import "@app/(site)/globals.css";
+import "./globals.css";
 
 import { DM_Sans, Inter, Poppins } from "next/font/google";
 import AxeDevClient from "@/shared/dev/AxeDev.client";
@@ -59,7 +59,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${poppins.variable} ${dm_sans.variable}`}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${inter.variable} ${poppins.variable} ${dm_sans.variable}`}
+    >
       <body className="font-inter flex min-h-screen flex-col">
         <AxeDevClient />
         <a

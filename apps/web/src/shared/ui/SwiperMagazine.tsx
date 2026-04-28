@@ -1,23 +1,27 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import type { MagazinSingleType } from "@gcf/types";
 import Image from "next/image";
-
-import { Swiper, SwiperSlide } from "swiper/react";
-import type { Swiper as SwiperType } from "swiper";
+import { useEffect, useRef, useState } from "react";
 import { Navigation } from "swiper/modules";
+import type { Swiper as SwiperType } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 
-import { SwiperButton } from "./SwiperButton";
+import { path, paths } from "@/shared/config/paths";
 import { ButtonPrimary } from "./ButtonPrimary";
+import { SwiperButton } from "./SwiperButton";
 
-interface ExampleSwiperCard {
-  src: string;
-  title: string;
-  href: string;
+type Props = {
+  items?: MagazinSingleType[];
+};
+
+function getMagazineHref(magazine: MagazinSingleType) {
+  const slug = magazine.slug?.current;
+  return slug ? path.magazinePost(slug) : paths.magazine;
 }
 
-export function SwiperMagazine() {
+export function SwiperMagazine({ items = [] }: Props) {
   const prevRef = useRef<HTMLDivElement>(null);
   const nextRef = useRef<HTMLDivElement>(null);
   const swiperRef = useRef<SwiperType | null>(null);
@@ -37,13 +41,9 @@ export function SwiperMagazine() {
     }
   }, []);
 
-  // swiper example
-  const exampleSwiperCard: ExampleSwiperCard = {
-    src: "/images/swiper-image.png",
-    title: "Embracing Digital Learning in the COVID-19 Era",
-    href: "#",
-  };
-  const exampleSwiperArr: ExampleSwiperCard[] = Array(6).fill(exampleSwiperCard);
+  if (!items.length) {
+    return <p className="text-gray text-lg">No magazine editions available right now.</p>;
+  }
 
   return (
     <div className="relative min-[1025px]:pr-50">
@@ -71,37 +71,51 @@ export function SwiperMagazine() {
           setCurrentSlide(swiper.activeIndex + 1);
         }}
       >
-        {exampleSwiperArr.map((item, index) => {
+        {items.map((magazine) => {
+          const href = getMagazineHref(magazine);
+          const imageUrl = magazine.magazinImage?.asset?.url;
+
           return (
-            <SwiperSlide key={`${index}-${item.title}`}>
-              <div className="flex gap-x-20 gap-y-5 max-[768px]:flex-col">
-                <div className="h-120 w-80 max-[768px]:h-60 max-[768px]:w-auto flex-shrink-0">
-                  <Image
-                    src={item.src}
-                    alt={item.title}
-                    width={320}
-                    height={460}
-                    style={{ objectFit: "cover" }}
-                    className="w-full h-full object-cover"
-                  />
+            <SwiperSlide key={magazine._id}>
+              <article className="flex gap-x-20 gap-y-5 max-[768px]:flex-col">
+                <div className="h-120 w-80 flex-shrink-0 max-[768px]:h-60 max-[768px]:w-auto">
+                  {imageUrl ? (
+                    <Image
+                      src={imageUrl}
+                      alt={magazine.title || "Magazine cover"}
+                      width={320}
+                      height={460}
+                      sizes="(max-width: 768px) 100vw, 320px"
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center bg-[#F2F2F2] px-6 text-center">
+                      <span className="text-gray text-sm font-medium">No magazine image</span>
+                    </div>
+                  )}
                 </div>
-                <div className="w-80 flex flex-col gap-y-5">
-                  <p className="text-[30px]/[125%] text-gray font-semibold">{item.title}</p>
+
+                <div className="flex w-80 flex-col gap-y-5">
+                  <h3 className="text-gray text-[30px]/[125%] font-semibold">{magazine.title}</h3>
+                  {magazine.shortIntro ? (
+                    <p className="text-gray text-base/[150%]">{magazine.shortIntro}</p>
+                  ) : null}
                   <div className="mt-auto min-[769px]:mb-12">
-                    <ButtonPrimary href={item.href}>View the Magazine</ButtonPrimary>
+                    <ButtonPrimary href={href}>View the Magazine</ButtonPrimary>
                   </div>
                 </div>
-              </div>
+              </article>
             </SwiperSlide>
           );
         })}
       </Swiper>
-      <div className="relative max-[1024px]:mt-10 min-[1025px]:absolute top-0 right-0 flex justify-between items-center h-[100%] gap-2">
+
+      <div className="relative top-0 right-0 flex h-[100%] items-center justify-between gap-2 max-[1024px]:mt-10 min-[1025px]:absolute">
         <SwiperButton ref={prevRef} direction="prev" name="swiper-magazine" className="mt-auto" />
         <span
           className="
           [-webkit-text-stroke:1px_#CFCFCF]
-          text-transparent font-semibold text-[70px]/[50%]
+          text-[70px]/[50%] font-semibold text-transparent
            min-[1025px]:absolute min-[1025px]:top-0 min-[1025px]:right-0
            min-[1025px]:text-[223px]/[75%]"
         >
