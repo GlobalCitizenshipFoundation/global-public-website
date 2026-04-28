@@ -45,6 +45,7 @@ export function MobileMenu() {
   const pathname = usePathname() ?? "/";
   const prevPathRef = useRef(pathname);
 
+  const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
   const [phase, setPhase] = useState<Phase>("closed");
 
   const drawerRef = useRef<HTMLDivElement | null>(null);
@@ -311,6 +312,84 @@ export function MobileMenu() {
               <div className="flex flex-col gap-1">
                 {links.map((item, idx) => {
                   const active = isActivePath(pathname, [item.href, ...(item.activeAlsoFor ?? [])]);
+                  const hasChildren = Boolean(item.children?.length);
+                  const isSubmenuOpen = openSubmenu === item.href;
+
+                  if (hasChildren) {
+                    return (
+                      <div key={item.href}>
+                        <button
+                          type="button"
+                          onClick={() => setOpenSubmenu(isSubmenuOpen ? null : item.href)}
+                          style={{
+                            transitionDelay: isOpen ? `${80 + idx * 35}ms` : "0ms",
+                          }}
+                          className={[
+                            "flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-base font-medium",
+                            "transition-all duration-200",
+                            isOpen ? "translate-x-0 opacity-100" : "translate-x-2 opacity-0",
+                            active
+                              ? "text-gray bg-black/5"
+                              : "text-gray/85 hover:text-gray hover:bg-black/5",
+                          ].join(" ")}
+                          aria-expanded={isSubmenuOpen}
+                        >
+                          <span className="relative inline-flex items-center gap-2">
+                            {active ? (
+                              <span
+                                className="bg-primary h-2 w-2 rounded-full"
+                                aria-hidden="true"
+                              />
+                            ) : null}
+                            {item.label}
+                          </span>
+
+                          <svg
+                            className={[
+                              "h-4 w-4 transition-transform duration-200",
+                              isSubmenuOpen ? "rotate-180" : "rotate-0",
+                            ].join(" ")}
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                          >
+                            <path
+                              d="M6 9l6 6 6-6"
+                              strokeWidth={2.5}
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        </button>
+
+                        {isSubmenuOpen ? (
+                          <div className="mt-1 ml-5 flex flex-col border-l border-black/10 pl-3">
+                            {item.children?.map((child) => {
+                              const childActive = isActivePath(pathname, child.href);
+
+                              return (
+                                <Link
+                                  key={child.href}
+                                  href={child.href}
+                                  aria-current={childActive ? "page" : undefined}
+                                  onClick={closeMenu}
+                                  className={[
+                                    "rounded-md px-3 py-2 text-sm font-medium transition-colors",
+                                    childActive
+                                      ? "text-gray bg-black/5"
+                                      : "text-gray/70 hover:text-gray hover:bg-black/5",
+                                  ].join(" ")}
+                                >
+                                  {child.label}
+                                </Link>
+                              );
+                            })}
+                          </div>
+                        ) : null}
+                      </div>
+                    );
+                  }
 
                   return (
                     <Link
