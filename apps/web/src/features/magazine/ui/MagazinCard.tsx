@@ -27,8 +27,8 @@ export function MagazinCard({ magazin }: Props) {
           className="absolute inset-0 z-10 rounded-[10px]"
         />
 
-        <div className="mb-5 overflow-hidden rounded-[10px]">
-          <div className="relative aspect-[5/7] w-full overflow-hidden rounded-[10px]">
+        <div className="mb-5 overflow-hidden">
+          <div className="relative aspect-[5/7] w-full overflow-hidden">
             {imageUrl ? (
               <Image
                 src={imageUrl}

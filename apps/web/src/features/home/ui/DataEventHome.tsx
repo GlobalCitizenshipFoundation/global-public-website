@@ -17,7 +17,7 @@ export function DataEventHome({ title, buttonTitle, textDescription, gap = 0 }: 
       {(buttonTitle || textDescription) && (
         <div className="flex w-full max-w-[450px] flex-col gap-4">
           {buttonTitle && (
-            <ButtonPrimary className="!w-[310px]" href={paths.events}>
+            <ButtonPrimary className="!w-[310px]" href={paths.magazine}>
               {buttonTitle}
             </ButtonPrimary>
           )}

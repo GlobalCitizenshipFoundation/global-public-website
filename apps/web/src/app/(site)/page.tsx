@@ -147,7 +147,7 @@ export default async function HomePage() {
               A well informed community is an empowered one as well, so take a look at some of the
               important stories we’ve curated for you.
             </p>
-            <ButtonPrimary className="w-77.5 max-w-full" href="/newsroom">
+            <ButtonPrimary className="w-77.5 max-w-full" href="#">
               Visit the Newsroom
             </ButtonPrimary>
           </div>
