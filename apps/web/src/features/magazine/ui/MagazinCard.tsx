@@ -19,12 +19,12 @@ export function MagazinCard({ magazin }: Props) {
   const title = magazin.title || "Untitled magazine";
 
   return (
-    <article className="group relative flex h-full w-full min-w-0 justify-center rounded-[10px]">
+    <article className="group relative flex h-full w-full min-w-0 justify-center">
       <div className="relative flex w-full max-w-[362px] flex-col">
         <Link
           href={href}
           aria-label={`Open magazine: ${title}`}
-          className="absolute inset-0 z-10 rounded-[10px]"
+          className="absolute inset-0 z-10"
         />
 
         <div className="mb-5 overflow-hidden">
