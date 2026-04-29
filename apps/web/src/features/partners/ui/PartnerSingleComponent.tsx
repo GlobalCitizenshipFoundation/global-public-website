@@ -25,7 +25,7 @@ const PartnerSingleComponent: React.FC<Props> = ({ partner }) => {
   return (
     <>
       {partner.headerImage?.asset?.url ? (
-        <div className="relative mb-10.5 h-120 w-full overflow-hidden">
+        <div className="relative z-0 mb-10.5 h-120 w-full overflow-hidden">
           <Image
             src={partner.headerImage.asset.url}
             alt={partner.title ? `${partner.title} header image` : "Partner header image"}
@@ -40,35 +40,35 @@ const PartnerSingleComponent: React.FC<Props> = ({ partner }) => {
       <Container>
         <div className="mb-16 flex flex-row justify-between gap-x-35">
           <div>
-            {partner.country && (
+            {partner.country ? (
               <p className="bg-background-panel text-gray mb-4.5 inline-block rounded-full px-6 py-2.75 text-lg font-medium">
                 {partner.country}
               </p>
-            )}
-            {partner.title && (
+            ) : null}
+
+            {partner.title ? (
               <h2 className="mb-11 text-6xl leading-[111%] font-semibold">{partner.title}</h2>
-            )}
-            {partner.shotrDescription && (
+            ) : null}
+
+            {partner.shotrDescription ? (
               <p className="text-2xl leading-[142%]">{partner.shotrDescription}</p>
-            )}
+            ) : null}
           </div>
 
-          <div className="-mt-35.5 w-75">
-            <div className="mb-7.5 flex h-75 w-75 items-center justify-center rounded-full bg-white p-5 shadow">
-              <div className="mb-7.5 flex h-75 w-75 items-center justify-center rounded-full bg-white p-5 shadow">
-                {partner.logo?.asset?.url ? (
-                  <div className="relative h-full w-full">
-                    <Image
-                      src={partner.logo.asset.url}
-                      alt={partner.title ?? "Partner logo"}
-                      fill
-                      sizes="300px"
-                      className="object-contain"
-                    />
-                  </div>
-                ) : null}
+          <div className="relative z-10 -mt-35.5 w-75 shrink-0">
+            {partner.logo?.asset?.url ? (
+              <div className="mb-7.5 flex aspect-square w-75 items-center justify-center rounded-full bg-white p-8 shadow">
+                <div className="relative h-full w-full">
+                  <Image
+                    src={partner.logo.asset.url}
+                    alt={partner.title ? `${partner.title} logo` : "Partner logo"}
+                    fill
+                    sizes="300px"
+                    className="object-contain"
+                  />
+                </div>
               </div>
-            </div>
+            ) : null}
 
             <div className="flex flex-col gap-4">
               {partner.websiteUrl ? (
@@ -79,7 +79,7 @@ const PartnerSingleComponent: React.FC<Props> = ({ partner }) => {
                   className="block"
                 >
                   <ButtonRegular className="bg-primary-darker h-9.5 w-full text-base font-normal text-white">
-                    {partner.websiteText ? partner.websiteText : "Visit Website"}
+                    {partner.websiteText || "Visit Website"}
                   </ButtonRegular>
                 </a>
               ) : null}
@@ -111,11 +111,10 @@ const PartnerSingleComponent: React.FC<Props> = ({ partner }) => {
 
         <BreakLine className="mb-15" />
 
-        <div className="mb-17.5">{partner.body && <PortableText value={partner.body} />}</div>
+        <div className="mb-17.5">{partner.body ? <PortableText value={partner.body} /> : null}</div>
 
-        {partner.quote && <p className="mb-20">{partner.quote}</p>}
+        {partner.quote ? <p className="mb-20">{partner.quote}</p> : null}
 
-        {/* Sharing też musi dostać dane, nie ikony */}
         <Sharing socialLinks={socialLinks} />
       </Container>
 
